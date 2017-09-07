@@ -39,7 +39,7 @@ export class WeatherForm extends React.Component {
 						type='text'
 						value={this.state.location}
 						onChange={this.handleChange}
-						placeholder="Search weather"
+						placeholder="Search weather by city"
 					/>
 					<button className="button expanded hollow">Get Weather</button>
 				</form>
