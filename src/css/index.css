@@ -1,0 +1,95 @@
+@import url('//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic');
+
+body {
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+.shadow {
+    -webkit-filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, .3));
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, .3));
+}
+
+.nav {
+    display: flex;
+}
+
+.nav li {
+    margin-right: 15px;
+}
+
+.active {
+    font-weight: bold;
+}
+
+/*For D3 demo traffic*/
+.link {
+    stroke: #555;
+}
+
+.node text {
+    fill: #000;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: "PT Sans", sans-serif;
+}
+
+text, tspan {
+    fill: #000;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: "PT Sans", sans-serif;
+}
+
+rect.responseTimesChart, tspan.averageLabel {
+    fill: #d75107;
+}
+
+rect.responseTimesChartMax, tspan.maxLabel {
+    fill: rgba(215, 81, 7, 0.38);
+}
+
+text.responseTimesText {
+    font-size: 13px;
+}
+
+.node circle, .nodeLegend circle {
+    stroke-width: 5px;
+    fill: #fff;
+    stroke: #d16107
+}
+
+.node circle.DEBUG, .nodeLegend circle.DEBUG {
+    stroke: #62679a
+}
+
+.node circle.INFO, .nodeLegend circle.INFO {
+    stroke: #008376;
+}
+
+.node circle.WARN, .nodeLegend circle.WARN {
+    stroke: #d1b948;
+}
+
+.node circle.ERROR, .nodeLegend circle.ERROR {
+    stroke: #c10901;
+}
+
+circle.az-center {
+    opacity: .0;
+}
+
+circle.az {
+    stroke-width: 5px;
+    opacity: .2;
+    fill: #666;
+    stroke: #666
+}
+
+.link.light {
+    opacity: .0;
+}
+
+text.label.az {
+    font-size: 20px;
+}
