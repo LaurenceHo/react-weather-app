@@ -6,6 +6,7 @@ import { getTemp } from '../api/openWeatherMap';
 export class Weather extends React.Component {
 	constructor (props) {
 		super (props);
+
 		this.state = {
 			isLoading: false
 		};
@@ -14,7 +15,11 @@ export class Weather extends React.Component {
 	}
 
 	handleSearch (location) {
-		this.setState ({ isLoading: true });
+		this.setState ({
+			isLoading: true,
+			location: undefined,
+			temp: undefined
+		});
 
 		getTemp (location).then ((temp) => {
 			this.setState ({
