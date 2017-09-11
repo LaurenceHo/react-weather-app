@@ -8,8 +8,6 @@ export class Nav extends React.Component {
 		this.state = {
 			location: ''
 		};
-
-		this.handleSubmit = this.handleSubmit.bind (this);
 	}
 
 	render () {
