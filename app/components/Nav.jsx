@@ -22,11 +22,6 @@ export class Nav extends React.Component {
 								About
 							</NavLink>
 						</li>
-						<li>
-							<NavLink activeClassName='active' to='/examples'>
-								Examples
-							</NavLink>
-						</li>
 					</ul>
 				</div>
 			</div>

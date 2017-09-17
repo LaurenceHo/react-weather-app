@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Nav } from './Nav';
 import { Main } from './Main';
 import { About } from './About';
-import { Examples } from './Examples';
 
 export class App extends React.Component {
 	render () {
@@ -14,7 +13,6 @@ export class App extends React.Component {
 					<Switch>
 						<Route exact path='/' component={Main}/>
 						<Route path='/about' component={About}/>
-						<Route path='/examples' component={Examples}/>
 						<Route render={() => {
 							return <p> Not found!!</p>
 						}}/>

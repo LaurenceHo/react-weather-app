@@ -1,7 +1,7 @@
 import React from 'react';
 import { WeatherMessage } from './WeatherMessage';
 import { WeatherForm } from './WeatherForm';
-import { getCurrentWeather } from '../api/openWeatherMap';
+import { getCurrentWeather } from '../api/OpenWeatherMap';
 import axios from 'axios';
 import * as _ from 'lodash';
 
@@ -49,6 +49,12 @@ export class Weather extends React.Component {
 					}
 				}, () => {
 					throw new Error ('Cannot get location');
+				});
+			} else {
+				this.setState ({
+					location: undefined,
+					weather: undefined,
+					isLoading: false
 				});
 			}
 		});
