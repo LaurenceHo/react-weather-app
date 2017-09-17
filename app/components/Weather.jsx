@@ -1,7 +1,9 @@
 import React from 'react';
 import { WeatherMessage } from './WeatherMessage';
 import { WeatherForm } from './WeatherForm';
-import { getTemp } from '../api/openWeatherMap';
+import { getCurrentWeather } from '../api/openWeatherMap';
+import axios from 'axios';
+import * as _ from 'lodash';
 
 export class Weather extends React.Component {
 	constructor (props) {
@@ -14,17 +16,55 @@ export class Weather extends React.Component {
 		this.handleSearch = this.handleSearch.bind (this);
 	}
 
-	handleSearch (location) {
+	componentDidMount () {
 		this.setState ({
-			isLoading: true,
 			location: undefined,
-			temp: undefined
+			weather: undefined,
+			isLoading: true
 		});
 
-		getTemp (location).then ((temp) => {
+		navigator.geolocation.getCurrentPosition ((location) => {
+			if ( navigator.geolocation ) {
+				const googleMapAPI = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
+					location.coords.latitude + ',' + location.coords.longitude + '&sensor=true';
+
+				return axios.get (googleMapAPI).then ((response) => {
+					if ( response.data.results.length > 0 ) {
+						let location = _.findLast (response.data.results, { 'types': [ "administrative_area_level_1", "political" ] });
+
+						const city = location.formatted_address;
+
+						getCurrentWeather (city).then ((weather) => {
+							console.log (weather);
+
+							this.setState ({
+								location: city,
+								weather: weather,
+								isLoading: false
+							});
+						}, (errorMessage) => {
+							this.setState ({ isLoading: false });
+							alert (errorMessage);
+						});
+					}
+				}, () => {
+					throw new Error ('Cannot get location');
+				});
+			}
+		});
+	}
+
+	handleSearch (location) {
+		this.setState ({
+			location: undefined,
+			weather: undefined,
+			isLoading: true
+		});
+
+		getCurrentWeather (location).then ((weather) => {
 			this.setState ({
 				location: location,
-				temp: temp,
+				weather: weather,
 				isLoading: false
 			});
 		}, (errorMessage) => {
@@ -37,15 +77,17 @@ export class Weather extends React.Component {
 		const renderMessage = () => {
 			if ( this.state.isLoading ) {
 				return <h3 className="text-center">Fetching weather...</h3>;
-			} else if ( this.state.temp && this.state.location ) {
-				return <WeatherMessage temp={this.state.temp} location={this.state.location}/>;
+			} else if ( this.state.weather && this.state.location ) {
+				return <WeatherMessage weather={this.state.weather} location={this.state.location}/>;
 			}
 		};
 
 		return (
 			<div>
-				<h1 className="text-center">Get Weather</h1>
-				<WeatherForm onSearch={this.handleSearch}/>
+				<div className="columns medium-6 large-4 small-centered">
+					<h2 className="text-center">Get Weather</h2>
+					<WeatherForm onSearch={this.handleSearch}/>
+				</div>
 				{renderMessage ()}
 			</div>
 		)
