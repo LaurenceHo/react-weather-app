@@ -32,7 +32,7 @@ export class Weather extends React.Component {
 
 				return axios.get (googleMapAPI).then ((response) => {
 					if ( response.data.results.length > 0 ) {
-						let location = _.findLast (response.data.results, { 'types': [ "administrative_area_level_1", "political" ] });
+						let location = _.findLast (response.data.results, { 'types': [ 'administrative_area_level_1', 'political' ] });
 
 						const city = location.formatted_address;
 
@@ -92,7 +92,7 @@ export class Weather extends React.Component {
 	render () {
 		const renderCurrentWeather = () => {
 			if ( this.state.isLoading ) {
-				return <h4 className="text-center">Fetching weather...</h4>;
+				return <h4 className='text-center'>Fetching weather...</h4>;
 			} else if ( this.state.weather && this.state.location ) {
 				return <WeatherData weather={this.state.weather}
 				                    location={this.state.location}
@@ -102,8 +102,8 @@ export class Weather extends React.Component {
 
 		return (
 			<div>
-				<div className="columns medium-6 large-4 small-centered">
-					<h2 className="text-center">Get Weather</h2>
+				<div className='columns medium-6 large-4 small-centered'>
+					<h2 className='text-center'>Get Weather</h2>
 					<WeatherForm onSearch={this.handleSearch}/>
 				</div>
 				{renderCurrentWeather ()}
@@ -150,9 +150,9 @@ class WeatherForm extends React.Component {
 						type='text'
 						value={this.state.location}
 						onChange={this.handleChange}
-						placeholder="Search weather by city"
+						placeholder='Search weather by city'
 					/>
-					<button className="button expanded hollow">Get Weather</button>
+					<button className='button expanded hollow'>Get Weather</button>
 				</form>
 			</div>
 		);
