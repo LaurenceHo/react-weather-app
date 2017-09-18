@@ -7,6 +7,7 @@ import 'foundation-sites/dist/css/foundation-float.css';
 import 'foundation-sites/dist/css/foundation-prototype.css';
 import 'foundation-sites/dist/css/foundation-rtl.css';
 import 'foundation-sites/dist/js/foundation.min';
+import './index.css';
 
 ReactDOM.render (
 	<App/>,

@@ -92,9 +92,10 @@ export class Weather extends React.Component {
 	render () {
 		const renderCurrentWeather = () => {
 			if ( this.state.isLoading ) {
-				return <h3 className="text-center">Fetching weather...</h3>;
+				return <h4 className="text-center">Fetching weather...</h4>;
 			} else if ( this.state.weather && this.state.location ) {
-				return <WeatherData weather={this.state.weather} location={this.state.location}
+				return <WeatherData weather={this.state.weather}
+				                    location={this.state.location}
 				                    forecast={this.state.forecast}/>;
 			}
 		};

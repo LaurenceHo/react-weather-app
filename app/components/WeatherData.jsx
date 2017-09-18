@@ -9,54 +9,62 @@ export class WeatherData extends React.Component {
 	}
 
 	render () {
-		const renderLineChart = (data) => {
-			console.log (data);
+		const renderDots = (x, y) => {
+			let data = this.props.forecast.list.splice (1);
+			data.pop ();
+
+			return (
+				<g>
+					{data.map ((d, i) => (
+						<circle className="dot"
+						        r="7"
+						        cx={x (d.date)}
+						        cy={y (d.main.temp)}
+						        fill="#7dc7f4"
+						        stroke="#3f5175"
+						        strokeWidth="4px"
+						        key={i}>
+						</circle>
+					))}
+				</g>
+			);
+		};
+
+		const renderForecast = (widthTemp, heightTemp) => {
+			const data = this.props.forecast.list;
 
 			let margin = { top: 10, right: 0, bottom: 10, left: 10 };
-			let width = 640 - margin.left - margin.right;
-			let height = 480 - margin.top - margin.bottom;
+			let width = widthTemp - margin.left - margin.right;
+			let height = heightTemp - margin.top - margin.bottom;
+			let parseTime = d3.utcParse ("%Y-%m-%d %H:%M:%S");
 
-			let x = d3.scaleTime ().rangeRound ([ 0, width ]);
-			let y = d3.scaleLinear ().rangeRound ([ height, 0 ]);
+			data.forEach (d => {
+				d.date = parseTime (d.dt_txt);
+			});
+
+			let x = d3.scaleTime ().domain (d3.extent (data, (d) => {
+				return d.date;
+			})).rangeRound ([ 0, width ]);
+			let y = d3.scaleLinear ().domain (d3.extent (data, (d) => {
+				return d.main.temp;
+			})).rangeRound ([ height, 0 ]);
+
 			let line = d3.line ()
 				.x ((d) => {
-					return x (d.dt);
+					return x (d.date);
 				})
 				.y ((d) => {
 					return y (d.main.temp);
 				});
 
-			x.domain (d3.extent (data, (d) => {
-				return moment.unix (d.dt);
-			}));
-			y.domain (d3.extent (data, (d) => {
-				return d.main.temp;
-			}));
-
 			return (
-				<path fill='none'
-				      stroke='steelblue'
-				      strokeLinejoin='round'
-				      strokeLinecap='round'
-				      strokeWidth='1.5'
-				      d={line}>
-				</path>
-			);
-		}
-
-		const renderForecast = () => {
-			return (
-				<svg width="640" height="480">
+				<svg width={widthTemp} height={heightTemp}>
 					<g transform='translate(10,10)'>
-						<g transform='translate(0,450)' fill='none' fontSize='10' textAnchor='middle'>
-							{
-								this.props.forecast.list.map (data => {
-									{
-										renderLineChart (data)
-									}
-								})
-							}
-						</g>
+						<path className="line shadow"
+						      strokeLinecap='round'
+						      d={line (data)}>
+						</path>
+						{renderDots (x, y)}
 					</g>
 				</svg>
 			);
@@ -105,7 +113,7 @@ export class WeatherData extends React.Component {
 				<div className="columns medium-10 large-8">
 					<h5 className="text-center">Weather and forecasts in {this.props.location}</h5>
 					<div>
-						{renderForecast ()}
+						{renderForecast (800, 480)}
 					</div>
 				</div>
 			</div>
