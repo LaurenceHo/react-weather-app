@@ -35,26 +35,7 @@ export class Weather extends React.Component {
 						let location = _.findLast (response.data.results, { 'types': [ 'administrative_area_level_1', 'political' ] });
 
 						const city = location.formatted_address;
-
-						getCurrentWeather (city).then ((weather) => {
-							this.setState ({
-								location: city,
-								weather: weather
-							});
-						}, (errorMessage) => {
-							this.setState ({ isLoading: false });
-							alert (errorMessage);
-						});
-
-						getForecast (city).then ((forecast) => {
-							this.setState ({
-								forecast: forecast,
-								isLoading: false
-							});
-						}, (errorMessage) => {
-							this.setState ({ isLoading: false });
-							alert (errorMessage);
-						});
+						this.getData(city);
 					}
 				}, () => {
 					throw new Error ('Cannot get location');
@@ -70,6 +51,28 @@ export class Weather extends React.Component {
 		});
 	}
 
+	getData(city) {
+		getCurrentWeather (city).then ((weather) => {
+			this.setState ({
+				location: city,
+				weather: weather
+			});
+		}, (errorMessage) => {
+			this.setState ({ isLoading: false });
+			alert (errorMessage);
+		});
+
+		getForecast (city).then ((forecast) => {
+			this.setState ({
+				forecast: forecast,
+				isLoading: false
+			});
+		}, (errorMessage) => {
+			this.setState ({ isLoading: false });
+			alert (errorMessage);
+		});
+	}
+
 	handleSearch (location) {
 		this.setState ({
 			location: undefined,
@@ -77,16 +80,7 @@ export class Weather extends React.Component {
 			isLoading: true
 		});
 
-		getCurrentWeather (location).then ((weather) => {
-			this.setState ({
-				location: location,
-				weather: weather,
-				isLoading: false
-			});
-		}, (errorMessage) => {
-			this.setState ({ isLoading: false });
-			alert (errorMessage);
-		});
+		this.getData(location);
 	}
 
 	render () {
