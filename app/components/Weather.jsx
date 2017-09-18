@@ -1,9 +1,10 @@
 import React from 'react';
-import { WeatherMessage } from './WeatherMessage';
-import { WeatherForm } from './WeatherForm';
-import { getCurrentWeather } from '../api/OpenWeatherMap';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import * as _ from 'lodash';
+
+import { WeatherData } from './WeatherData';
+import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 
 export class Weather extends React.Component {
 	constructor (props) {
@@ -20,6 +21,7 @@ export class Weather extends React.Component {
 		this.setState ({
 			location: undefined,
 			weather: undefined,
+			forecast: undefined,
 			isLoading: true
 		});
 
@@ -35,11 +37,18 @@ export class Weather extends React.Component {
 						const city = location.formatted_address;
 
 						getCurrentWeather (city).then ((weather) => {
-							console.log (weather);
-
 							this.setState ({
 								location: city,
-								weather: weather,
+								weather: weather
+							});
+						}, (errorMessage) => {
+							this.setState ({ isLoading: false });
+							alert (errorMessage);
+						});
+
+						getForecast (city).then ((forecast) => {
+							this.setState ({
+								forecast: forecast,
 								isLoading: false
 							});
 						}, (errorMessage) => {
@@ -54,6 +63,7 @@ export class Weather extends React.Component {
 				this.setState ({
 					location: undefined,
 					weather: undefined,
+					forecast: undefined,
 					isLoading: false
 				});
 			}
@@ -80,11 +90,12 @@ export class Weather extends React.Component {
 	}
 
 	render () {
-		const renderMessage = () => {
+		const renderCurrentWeather = () => {
 			if ( this.state.isLoading ) {
 				return <h3 className="text-center">Fetching weather...</h3>;
 			} else if ( this.state.weather && this.state.location ) {
-				return <WeatherMessage weather={this.state.weather} location={this.state.location}/>;
+				return <WeatherData weather={this.state.weather} location={this.state.location}
+				                    forecast={this.state.forecast}/>;
 			}
 		};
 
@@ -94,8 +105,59 @@ export class Weather extends React.Component {
 					<h2 className="text-center">Get Weather</h2>
 					<WeatherForm onSearch={this.handleSearch}/>
 				</div>
-				{renderMessage ()}
+				{renderCurrentWeather ()}
 			</div>
 		)
 	}
 }
+
+class WeatherForm extends React.Component {
+	constructor (props) {
+		super (props);
+
+		this.state = {
+			location: ''
+		};
+
+		this.handleChange = this.handleChange.bind (this);
+		this.handleSubmit = this.handleSubmit.bind (this);
+	}
+
+	handleChange (event) {
+		const value = event.target.value;
+
+		this.setState (() => {
+			return {
+				location: value
+			}
+		})
+	}
+
+	handleSubmit (event) {
+		event.preventDefault ();
+
+		this.props.onSearch (
+			this.state.location
+		)
+	};
+
+	render () {
+		return (
+			<div>
+				<form onSubmit={this.handleSubmit}>
+					<input
+						type='text'
+						value={this.state.location}
+						onChange={this.handleChange}
+						placeholder="Search weather by city"
+					/>
+					<button className="button expanded hollow">Get Weather</button>
+				</form>
+			</div>
+		);
+	}
+}
+
+WeatherForm.PropTypes = {
+	onSearch: PropTypes.func.isRequired
+};
