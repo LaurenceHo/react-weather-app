@@ -1,0 +1,37 @@
+# A beautiful weather web application using React, Webpack2, Babel, ES2015, foundation and D3.
+
+## Introduction
+This project demonstrates how to use react with foundation and D3.
+
+## Prerequisites
+The latest version of Nodejs need to be installed.
+
+### How do I get set up? ###
+
+1.Clone the repo: 
+```
+git clone https://LaurenceHo@bitbucket.org/LaurenceHo/reactjs-beautiful-weather.git
+```
+or
+```
+git clone https://github.com/bluegray1015/reactjs-beautiful-weather.git
+```
+
+2.Install npm package: 
+```
+npm install
+```
+
+3.Launch the app: 
+```
+npm run start
+```
+
+4.Visit in your browser: http://localhost:8080
+
+### Deploy to firebase
+1.Change the default project setting in the .firebaserc
+then
+```
+npm run deploy
+```
