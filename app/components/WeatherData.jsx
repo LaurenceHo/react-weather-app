@@ -11,20 +11,19 @@ export class WeatherData extends React.Component {
 
 	render () {
 		const renderDots = (x, y) => {
-			const data = this.props.forecast.list.slice (0, 9).splice (1);
-			data.pop ();
+			const data = this.props.forecast.list.slice (0, 8);
 
 			return (
 				<g>
 					{data.map ((d, i) => (
-						<circle className='dot'
-						        r='7'
+						<circle r='7'
 						        cx={x (d.date)}
 						        cy={y (d.main.temp)}
 						        fill='#7dc7f4'
 						        stroke='#3f5175'
 						        strokeWidth='4px'
-						        key={i}>
+						        key={i}
+						        transform='translate(30,0)'>
 						</circle>
 					))}
 				</g>
@@ -33,26 +32,29 @@ export class WeatherData extends React.Component {
 
 		const renderForecast = (width, height) => {
 			// ================= data setup =================
-			const data = this.props.forecast.list.slice (0, 9);
+			const data = this.props.forecast.list.slice (0, 8);
 
 			const margin = { top: 20, right: 50, bottom: 20, left: 50 };
 			const w = width - margin.left - margin.right;
 			const h = height - margin.top - margin.bottom;
-			const parseTime = d3.utcParse ('%Y-%m-%d %H:%M:%S');
 
 			data.forEach (d => {
-				d.date = parseTime (d.dt_txt);
+				d.date = moment.unix (d.dt).format ('HH:mm');
 				if ( !d.rain[ '3h' ] )
 					d.rain[ '3h' ] = 0;
 				else
 					d.rain[ '3h' ] = Math.round (d.rain[ '3h' ] * 1000) / 1000;
 			});
 
-			// ================= line chart for temperature =================
-			const x = d3.scaleTime ().domain (d3.extent (data, d => {
+			const x = d3.scaleBand ().domain (data.map (d => {
 				return d.date;
-			})).rangeRound ([ 0, w ]);
-			const y = d3.scaleLinear ().domain (d3.extent (data, d => {
+			})).rangeRound ([ 0, w ]).padding (0.3);
+
+			const yBar = d3.scaleLinear ().domain ([ 0, d3.max (data, (d) => {
+				return d.rain[ '3h' ];
+			}) ]).rangeRound ([ h, 0 ]);
+
+			const yLine = d3.scaleLinear ().domain (d3.extent (data, d => {
 				return d.main.temp;
 			})).rangeRound ([ h, 0 ]);
 
@@ -61,17 +63,8 @@ export class WeatherData extends React.Component {
 					return x (d.date);
 				})
 				.y (d => {
-					return y (d.main.temp);
+					return yLine (d.main.temp);
 				}).curve (d3.curveCardinal);
-
-			// ================= bar chart for Precipitation =================
-			const xBar = d3.scaleBand ().domain (data.map (d => {
-				return d.date;
-			})).rangeRound ([ 0, w ]).padding (0.3);
-
-			const yBar = d3.scaleLinear ().domain ([ 0, d3.max (data, (d) => {
-				return d.rain[ '3h' ];
-			}) ]).rangeRound ([ h, 0 ]);
 
 			const renderBarChart = data.map ((d, i) => {
 				return (
@@ -79,24 +72,23 @@ export class WeatherData extends React.Component {
 					      rx='3'
 					      ry='3'
 					      key={i}
-					      x={xBar (d.date)}
+					      x={x (d.date)}
 					      y={yBar (d.rain[ '3h' ])}
 					      height={h - yBar (d.rain[ '3h' ])}
-					      width={xBar.bandwidth ()}/>
+					      width={x.bandwidth ()}/>
 				);
 			});
 
 			// ================= axis =================
 			const xAxis = d3.axisBottom ()
 				.scale (x)
-				.tickValues (data.map ((d, i) => {
-					if ( i > 0 )
-						return d.date;
-				}).splice (1))
+				.tickValues (data.map ((d) => {
+					return d.date;
+				}))
 				.ticks (4);
 
 			const yAxis = d3.axisRight ()
-				.scale (y)
+				.scale (yLine)
 				.ticks (5)
 				.tickSize (w)
 				.tickFormat (d => {
@@ -111,19 +103,19 @@ export class WeatherData extends React.Component {
 			return (
 				<svg width={width} height={height}>
 					<g transform={translate}>
-						<Axis h={h} axis={yBarAxis} axisType='y-p'/>
-						{renderBarChart}
-
 						<Axis h={h} axis={xAxis} axisType='x'/>
 						<Axis h={h} axis={yAxis} axisType='y-t'/>
+						<Axis h={h} axis={yBarAxis} axisType='y-p'/>
+						{renderBarChart}
 						<path className='shadow'
 						      strokeLinecap='round'
 						      fill='none'
 						      stroke='#7dc7f4'
 						      strokeWidth='5px'
-						      d={line (data)}>
+						      d={line (data)}
+						      transform='translate(30,0)'>
 						</path>
-						{renderDots (x, y)}
+						{renderDots (x, yLine)}
 					</g>
 				</svg>
 			);
@@ -176,8 +168,7 @@ class Axis extends React.Component {
 			   shapeRendering='crispEdges'
 			   fill='#bbc7d9'
 			   strokeDasharray={this.props.axisType == 'y-t' ? '2,2' : ''}
-			   opacity='1'
-			   className="axis">
+			   opacity='1'>
 				{this.props.axisType == 'y-p'
 					? <text fill='#000' y='6' dy='0.71em' textAnchor='end' transform='rotate(-90)'>Precipitation, mm</text>
 					: ''}
