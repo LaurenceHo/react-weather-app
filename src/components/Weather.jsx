@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import * as _ from 'lodash';
 
 import { WeatherData } from './WeatherData';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
+import { getGeoCode, getTimeZone } from '../api/Google';
 
 export class Weather extends React.Component {
 	constructor (props) {
@@ -17,58 +17,83 @@ export class Weather extends React.Component {
 		this.handleSearch = this.handleSearch.bind (this);
 	}
 
+	cleanStateData () {
+		this.setState ({
+			location: undefined,
+			weather: undefined,
+			forecast: undefined,
+			timezone: undefined,
+			isLoading: false
+		});
+	}
+
 	componentDidMount () {
 		this.setState ({
 			location: undefined,
 			weather: undefined,
 			forecast: undefined,
+			timezone: undefined,
 			isLoading: true
 		});
 
 		navigator.geolocation.getCurrentPosition ((location) => {
 			if ( navigator.geolocation ) {
-				const googleMapAPI = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-					location.coords.latitude + ',' + location.coords.longitude + '&sensor=true';
-
-				return axios.get (googleMapAPI).then ((response) => {
-					if ( response.data.results.length > 0 ) {
-						let location = _.findLast (response.data.results, { 'types': [ 'administrative_area_level_1', 'political' ] });
+				getGeoCode (location.coords.latitude, location.coords.longitude).then (geocode => {
+					if ( geocode ) {
+						let location = _.findLast (geocode.results, { 'types': [ 'administrative_area_level_1', 'political' ] });
 
 						const city = location.formatted_address;
-						this.getData(city);
+						this.getData (city);
+					} else {
+						this.cleanStateData ();
+						alert ('Cannot find your location!');
 					}
-				}, () => {
-					throw new Error ('Cannot get location');
+				}, (errorMessage) => {
+					this.cleanStateData ();
+					alert (errorMessage);
 				});
 			} else {
-				this.setState ({
-					location: undefined,
-					weather: undefined,
-					forecast: undefined,
-					isLoading: false
-				});
+				this.cleanStateData ();
 			}
 		});
 	}
 
-	getData(city) {
-		getCurrentWeather (city).then ((weather) => {
-			this.setState ({
-				location: city,
-				weather: weather
-			});
+	getData (city) {
+		getCurrentWeather (city).then (weather => {
+			if ( weather ) {
+				this.setState ({
+					location: city,
+					weather: weather
+				});
+
+				let latitude = weather.coord.lat;
+				let longitude = weather.coord.lon;
+				getTimeZone (latitude, longitude).then (timezone => {
+					if ( timezone ) {
+						console.log (timezone);
+						this.setState ({
+							timezone: timezone
+						})
+					} else {
+						this.cleanStateData ();
+					}
+				});
+			} else {
+				this.cleanStateData ();
+				alert ('Cannot get the weather data!');
+			}
 		}, (errorMessage) => {
-			this.setState ({ isLoading: false });
+			this.cleanStateData ();
 			alert (errorMessage);
 		});
 
-		getForecast (city).then ((forecast) => {
+		getForecast (city).then (forecast => {
 			this.setState ({
 				forecast: forecast,
 				isLoading: false
 			});
 		}, (errorMessage) => {
-			this.setState ({ isLoading: false });
+			this.cleanStateData ();
 			alert (errorMessage);
 		});
 	}
@@ -77,10 +102,11 @@ export class Weather extends React.Component {
 		this.setState ({
 			location: undefined,
 			weather: undefined,
+			forecast: undefined,
+			timezone: undefined,
 			isLoading: true
 		});
-
-		this.getData(location);
+		this.getData (location);
 	}
 
 	render () {
@@ -90,7 +116,8 @@ export class Weather extends React.Component {
 			} else if ( this.state.weather && this.state.location ) {
 				return <WeatherData weather={this.state.weather}
 				                    location={this.state.location}
-				                    forecast={this.state.forecast}/>;
+				                    forecast={this.state.forecast}
+				                    timezone={this.state.timezone}/>;
 			}
 		};
 

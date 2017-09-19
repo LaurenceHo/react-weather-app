@@ -141,7 +141,8 @@ export class WeatherData extends React.Component {
 WeatherData.PropTypes = {
 	weather: PropTypes.object.isRequired,
 	location: PropTypes.string.isRequired,
-	forecast: PropTypes.object.isRequired
+	forecast: PropTypes.object.isRequired,
+	timezone: PropTypes.object.isRequired
 };
 
 class Axis extends React.Component {
