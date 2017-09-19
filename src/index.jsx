@@ -8,6 +8,7 @@ import 'foundation-sites/dist/css/foundation-prototype.css';
 import 'foundation-sites/dist/css/foundation-rtl.css';
 import 'foundation-sites/dist/js/foundation.min';
 import './css/index.css';
+import './assets/favicon.ico';
 
 ReactDOM.render (
 	<App/>,

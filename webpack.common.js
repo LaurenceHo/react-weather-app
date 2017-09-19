@@ -38,13 +38,18 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: [ 'style-loader', 'css-loader' ]
+			},
+			{
+				test: /\.(jpe?g|png|gif|ico)$/i,
+				use: ['file-loader?name=[name].[ext]']
 			}
 		]
 	},
 	plugins: [
 		new CleanWebpackPlugin ([ 'dist' ]),
 		new HtmlWebpackPlugin ({
-			template: 'src/index.html'
+			template: 'src/index.html',
+			favicon: 'src/assets/favicon.ico'
 		}),
 		// the plugin for jQuery
 		new ProvidePlugin ({
