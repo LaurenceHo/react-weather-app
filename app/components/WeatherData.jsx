@@ -40,10 +40,12 @@ export class WeatherData extends React.Component {
 
 			data.forEach (d => {
 				d.date = moment.unix (d.dt).format ('HH:mm');
+				if ( !d.rain )
+					d.rain = {};
 				if ( !d.rain[ '3h' ] )
 					d.rain[ '3h' ] = 0;
 				else
-					d.rain[ '3h' ] = Math.round (d.rain[ '3h' ] * 1000) / 1000;
+					d.rain[ '3h' ] = Math.round (d.rain[ '3h' ] * 100) / 100;
 			});
 
 			const x = d3.scaleBand ().domain (data.map (d => {
