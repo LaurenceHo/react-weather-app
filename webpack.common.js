@@ -7,7 +7,7 @@ const ProvidePlugin = require ('webpack/lib/ProvidePlugin');
 const CleanWebpackPlugin = require ('clean-webpack-plugin');
 
 module.exports = {
-	entry: './app/index.jsx',
+	entry: './src/index.jsx',
 	output: {
 		path: path.resolve (__dirname, 'dist'),
 		filename: '[name].bundle.js'
@@ -44,7 +44,7 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin ([ 'dist' ]),
 		new HtmlWebpackPlugin ({
-			template: 'app/index.html'
+			template: 'src/index.html'
 		}),
 		// the plugin for jQuery
 		new ProvidePlugin ({
