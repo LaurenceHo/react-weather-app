@@ -10,48 +10,6 @@ export class WeatherData extends React.Component {
 	}
 
 	render () {
-		const renderCurrentWeatherTable = () => {
-			const sunriseTime = moment.unix (this.props.weather.sys.sunrise);
-			const sunsetTime = moment.unix (this.props.weather.sys.sunset);
-
-			return (
-				<div className='columns medium-6 large-4' style={{ paddingTop: 30 }}>
-					<table>
-						<tbody>
-						<tr>
-							<td>Location</td>
-							<td>{this.props.location}</td>
-						</tr>
-						<tr>
-							<td>Temperature</td>
-							<td>{this.props.weather.main.temp} °C</td>
-						</tr>
-						<tr>
-							<td>Wind</td>
-							<td>{this.props.weather.wind.speed} m/s</td>
-						</tr>
-						<tr>
-							<td>Pressure</td>
-							<td>{this.props.weather.main.pressure} hpa</td>
-						</tr>
-						<tr>
-							<td>Humidity</td>
-							<td>{this.props.weather.main.humidity} %</td>
-						</tr>
-						<tr>
-							<td>Sunrise Time</td>
-							<td>{sunriseTime.hours ()}:{sunriseTime.minutes ()}</td>
-						</tr>
-						<tr>
-							<td>Sunset Time</td>
-							<td>{sunsetTime.hours ()}:{sunsetTime.minutes ()}</td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-			);
-		}
-
 		const renderDots = (x, y) => {
 			const data = this.props.forecast.list.slice (0, 9).splice (1);
 			data.pop ();
@@ -106,7 +64,29 @@ export class WeatherData extends React.Component {
 					return y (d.main.temp);
 				}).curve (d3.curveCardinal);
 
-			// ================= axis for temperature =================
+			// ================= bar chart for Precipitation =================
+			const xBar = d3.scaleBand ().domain (data.map (d => {
+				return d.date;
+			})).rangeRound ([ 0, w ]).padding (0.3);
+
+			const yBar = d3.scaleLinear ().domain ([ 0, d3.max (data, (d) => {
+				return d.rain[ '3h' ];
+			}) ]).rangeRound ([ h, 0 ]);
+
+			const renderBarChart = data.map ((d, i) => {
+				return (
+					<rect fill='#58657f'
+					      rx='3'
+					      ry='3'
+					      key={i}
+					      x={xBar (d.date)}
+					      y={yBar (d.rain[ '3h' ])}
+					      height={h - yBar (d.rain[ '3h' ])}
+					      width={xBar.bandwidth ()}/>
+				);
+			});
+
+			// ================= axis =================
 			const xAxis = d3.axisBottom ()
 				.scale (x)
 				.tickValues (data.map ((d, i) => {
@@ -123,31 +103,9 @@ export class WeatherData extends React.Component {
 					return d;
 				});
 
-			// ================= bar chart for Precipitation =================
-			const xBar = d3.scaleBand ().domain (data.map (d => {
-				return d.date;
-			})).rangeRound ([ 0, w ]).padding (0.3);
-
-			const yBar = d3.scaleLinear ().domain ([ 0, d3.max (data, (d) => {
-				return d.rain[ '3h' ];
-			}) ]).rangeRound ([ h, 0 ]);
-
 			const yBarAxis = d3.axisLeft ()
 				.scale (yBar)
 				.ticks (5);
-
-			const renderBarChart = data.map ((d, i) => {
-				return (
-					<rect fill='#58657f'
-					      rx='3'
-					      ry='3'
-					      key={i}
-					      x={xBar (d.date)}
-					      y={yBar (d.rain[ '3h' ])}
-					      height={h - yBar (d.rain[ '3h' ])}
-					      width={xBar.bandwidth ()}/>
-				);
-			});
 
 			const translate = 'translate(' + (margin.left) + ',' + (margin.top) + ')';
 			return (
@@ -174,7 +132,7 @@ export class WeatherData extends React.Component {
 		return (
 			<div style={{ paddingTop: 20 }}>
 				<h4 className='text-center'>Current weather and forecasts in your city</h4>
-				{renderCurrentWeatherTable ()}
+				<CurrentWeatherTable location={this.props.location} weather={this.props.weather}/>
 				<div className='columns medium-10 large-8' style={{ paddingTop: 10 }}>
 					<h5 className='text-center'>Weather and forecasts in {this.props.location}</h5>
 					<div>
@@ -235,4 +193,57 @@ Axis.PropTypes = {
 	h: PropTypes.number.isRequired,
 	axis: PropTypes.func.isRequired,
 	axisType: PropTypes.oneOf ([ 'x', 'y-p', 'y-t' ]).isRequired
+};
+
+class CurrentWeatherTable extends React.Component {
+	constructor (props) {
+		super (props);
+	}
+
+	render () {
+		const sunriseTime = moment.unix (this.props.weather.sys.sunrise);
+		const sunsetTime = moment.unix (this.props.weather.sys.sunset);
+
+		return (
+			<div className='columns medium-6 large-4' style={{ paddingTop: 30 }}>
+				<table>
+					<tbody>
+					<tr>
+						<td>Location</td>
+						<td>{this.props.location}</td>
+					</tr>
+					<tr>
+						<td>Temperature</td>
+						<td>{this.props.weather.main.temp} °C</td>
+					</tr>
+					<tr>
+						<td>Wind</td>
+						<td>{this.props.weather.wind.speed} m/s</td>
+					</tr>
+					<tr>
+						<td>Pressure</td>
+						<td>{this.props.weather.main.pressure} hpa</td>
+					</tr>
+					<tr>
+						<td>Humidity</td>
+						<td>{this.props.weather.main.humidity} %</td>
+					</tr>
+					<tr>
+						<td>Sunrise Time</td>
+						<td>{sunriseTime.hours ()}:{sunriseTime.minutes ()}</td>
+					</tr>
+					<tr>
+						<td>Sunset Time</td>
+						<td>{sunsetTime.hours ()}:{sunsetTime.minutes ()}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		);
+	}
+}
+
+CurrentWeatherTable.PropTypes = {
+	weather: PropTypes.object.isRequired,
+	location: PropTypes.string.isRequired
 };
