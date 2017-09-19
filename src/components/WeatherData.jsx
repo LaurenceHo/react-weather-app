@@ -32,6 +32,7 @@ export class WeatherData extends React.Component {
 
 		const renderForecast = (width, height) => {
 			// ================= data setup =================
+			const utcOffset = this.props.timezone.rawOffset / 3600;
 			const data = this.props.forecast.list.slice (0, 8);
 
 			const margin = { top: 20, right: 50, bottom: 20, left: 50 };
@@ -39,7 +40,7 @@ export class WeatherData extends React.Component {
 			const h = height - margin.top - margin.bottom;
 
 			data.forEach (d => {
-				d.date = moment.unix (d.dt).format ('HH:mm');
+				d.date = moment.unix (d.dt).utcOffset (utcOffset).format ('HH:mm');
 				if ( !d.rain )
 					d.rain = {};
 				if ( !d.rain[ '3h' ] )
@@ -124,10 +125,11 @@ export class WeatherData extends React.Component {
 		}
 
 		return (
-			<div style={{ paddingTop: 20 }}>
-				<h4 className='text-center'>Current weather and forecasts in your city</h4>
-				<CurrentWeatherTable location={this.props.location} weather={this.props.weather}/>
-				<div className='columns medium-10 large-8' style={{ paddingTop: 10 }}>
+			<div style={{ paddingTop: 30 }}>
+				<CurrentWeatherTable location={this.props.location}
+				                     weather={this.props.weather}
+				                     timezone={this.props.timezone}/>
+				<div className='columns medium-10 large-8'>
 					<h5 className='text-center'>Weather and forecasts in {this.props.location}</h5>
 					<div>
 						{renderForecast (800, 400)}
@@ -195,8 +197,9 @@ class CurrentWeatherTable extends React.Component {
 	}
 
 	render () {
-		const sunriseTime = moment.unix (this.props.weather.sys.sunrise);
-		const sunsetTime = moment.unix (this.props.weather.sys.sunset);
+		const utcOffset = this.props.timezone.rawOffset / 3600;
+		const sunriseTime = moment.unix (this.props.weather.sys.sunrise).utcOffset (utcOffset).format ('HH:mm');
+		const sunsetTime = moment.unix (this.props.weather.sys.sunset).utcOffset (utcOffset).format ('HH:mm');
 
 		return (
 			<div className='columns medium-6 large-4' style={{ paddingTop: 30 }}>
@@ -224,11 +227,11 @@ class CurrentWeatherTable extends React.Component {
 					</tr>
 					<tr>
 						<td>Sunrise Time</td>
-						<td>{sunriseTime.hours ()}:{sunriseTime.minutes ()}</td>
+						<td>{sunriseTime}</td>
 					</tr>
 					<tr>
 						<td>Sunset Time</td>
-						<td>{sunsetTime.hours ()}:{sunsetTime.minutes ()}</td>
+						<td>{sunsetTime}</td>
 					</tr>
 					</tbody>
 				</table>
@@ -239,5 +242,6 @@ class CurrentWeatherTable extends React.Component {
 
 CurrentWeatherTable.PropTypes = {
 	weather: PropTypes.object.isRequired,
-	location: PropTypes.string.isRequired
+	location: PropTypes.string.isRequired,
+	timezone: PropTypes.object.isRequired
 };
