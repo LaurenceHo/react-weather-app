@@ -15,7 +15,8 @@ export class WeatherData extends React.Component {
 				data: {
 					key: '',
 					temperature: '',
-					precipitation: ''
+					precipitation: '',
+					description: ''
 				}
 			}
 		}
@@ -32,7 +33,8 @@ export class WeatherData extends React.Component {
 				data: {
 					key: e.target.getAttribute ('data-key'),
 					temperature: e.target.getAttribute ('data-temperature'),
-					precipitation: e.target.getAttribute ('data-precipitation')
+					precipitation: e.target.getAttribute ('data-precipitation'),
+					description: e.target.getAttribute ('data-description')
 				},
 				pos: {
 					x: e.target.getAttribute ('cx'),
@@ -50,7 +52,8 @@ export class WeatherData extends React.Component {
 				data: {
 					key: '',
 					temperature: '',
-					precipitation: ''
+					precipitation: '',
+					description: ''
 				}
 			}
 		});
@@ -203,7 +206,8 @@ class Dots extends React.Component {
 					        onMouseOut={this.props.hideToolTip}
 					        data-key={moment.unix (d.dt).utcOffset (this.props.utcOffset).format ('MMM. DD  HH:mm')}
 					        data-temperature={d.main.temp}
-					        data-precipitation={d.rain[ '3h' ]}>
+					        data-precipitation={d.rain[ '3h' ]}
+					        data-description={d.weather[0].description}>
 					</circle>
 				))}
 			</g>
@@ -231,7 +235,7 @@ class ToolTip extends React.Component {
 		let x = 0;
 		let y = 0;
 		let width = 150, height = 70;
-		let transformText = 'translate(' + width / 2 + ',' + (height / 2 - 5) + ')';
+		let transformText = 'translate(' + width / 2 + ',' + (height / 2 - 14) + ')';
 		let transformArrow = "";
 
 		if ( this.props.tooltip.display == true ) {
@@ -276,14 +280,22 @@ class ToolTip extends React.Component {
 					<tspan is
 					       x="0"
 					       text-anchor="middle"
-					       font-size="12px"
+					       font-size="14px"
 					       fill="#ffffff">
 						{this.props.tooltip.data.key}
 					</tspan>
 					<tspan is
 					       x="0"
 					       text-anchor="middle"
-					       dy="25"
+					       dy="20"
+					       font-size="13px"
+					       fill="#a9f3ff">
+						{this.props.tooltip.data.description}
+					</tspan>
+					<tspan is
+					       x="0"
+					       text-anchor="middle"
+					       dy="20"
 					       font-size="12px"
 					       fill="#a9f3ff">
 						{this.props.tooltip.data.temperature} °C / {this.props.tooltip.data.precipitation} mm
