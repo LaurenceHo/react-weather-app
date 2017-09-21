@@ -16,8 +16,8 @@ interface WeatherDataState {
 }
 
 export class WeatherData extends React.Component<WeatherDataPropTypes, WeatherDataState> {
-	constructor(props: WeatherDataPropTypes) {
-		super(props);
+	constructor() {
+		super();
 
 		this.state = {
 			tooltip: {
@@ -200,10 +200,6 @@ interface DotsPropTypes {
 }
 
 class Dots extends React.Component<DotsPropTypes, any> {
-	constructor(props: DotsPropTypes) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<g>
@@ -234,10 +230,6 @@ interface ToolTipPropTypes {
 }
 
 class ToolTip extends React.Component<ToolTipPropTypes, any> {
-	constructor(props: ToolTipPropTypes) {
-		super(props);
-	}
-
 	render() {
 		let visibility = "hidden";
 		let transform = "";
@@ -284,22 +276,22 @@ class ToolTip extends React.Component<ToolTipPropTypes, any> {
 				<text visibility={visibility}
 				      transform={transformText}>
 					<tspan x="0"
-					       text-anchor="middle"
-					       font-size="14px"
+					       textAnchor="middle"
+					       fontSize="14px"
 					       fill="#ffffff">
 						{this.props.tooltip.data.key}
 					</tspan>
 					<tspan x="0"
-					       text-anchor="middle"
+					       textAnchor="middle"
 					       dy="20"
-					       font-size="13px"
+					       fontSize="13px"
 					       fill="#a9f3ff">
 						{this.props.tooltip.data.description}
 					</tspan>
 					<tspan x="0"
-					       text-anchor="middle"
+					       textAnchor="middle"
 					       dy="20"
-					       font-size="12px"
+					       fontSize="12px"
 					       fill="#a9f3ff">
 						{this.props.tooltip.data.temperature} °C / {this.props.tooltip.data.precipitation} mm
 					</tspan>
@@ -316,10 +308,6 @@ interface AxisPropTypes {
 };
 
 class Axis extends React.Component<AxisPropTypes, any> {
-	constructor(props: AxisPropTypes) {
-		super(props);
-	}
-
 	componentDidUpdate() {
 		this.renderAxis();
 	}

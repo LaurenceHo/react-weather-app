@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export class Nav extends React.Component<{}, {}> {
-	constructor(props: any) {
-		super(props);
-	}
-
+export class Nav extends React.Component<any, any> {
 	render() {
 		return (
 			<div className="top-bar">

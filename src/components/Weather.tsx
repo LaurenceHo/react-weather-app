@@ -14,8 +14,8 @@ interface WeatherState {
 }
 
 export class Weather extends React.Component<any, WeatherState> {
-	constructor(props: any) {
-		super(props);
+	constructor() {
+		super();
 
 		this.state = {
 			location: undefined,
