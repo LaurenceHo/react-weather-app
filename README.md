@@ -1,7 +1,7 @@
-# A beautiful weather web application using React, Webpack2, Babel, ES2015, foundation and D3.
+# A beautiful weather web application using React, Typescript, Webpack2, foundation and D3.
 
 ## Introduction
-This project demonstrates how to use react with foundation and D3.
+This project demonstrates how to use react, Typescript, foundation and D3.
 
 ## Prerequisites
 The latest version of Nodejs need to be installed.
@@ -31,7 +31,7 @@ npm run start
 
 ### Deploy to firebase
 1.Change the default project setting in the .firebaserc
-then
+2.Run:
 ```
 npm run deploy
 ```

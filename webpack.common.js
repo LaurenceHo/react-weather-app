@@ -7,7 +7,7 @@ const ProvidePlugin = require ('webpack/lib/ProvidePlugin');
 const CleanWebpackPlugin = require ('clean-webpack-plugin');
 
 module.exports = {
-	entry: './src/index.jsx',
+	entry: './src/index.tsx',
 	output: {
 		path: path.resolve (__dirname, 'dist'),
 		filename: '[name].bundle.js'
@@ -17,23 +17,20 @@ module.exports = {
 			path.join (__dirname, "dist"),
 			"node_modules"
 		],
-		extensions: [ '.js', '.jsx', '.json' ]
+		extensions: [ ".ts", ".tsx", '.js', '.json' ]
 	},
 	module: {
 		rules: [
 			{
+				test: /\.tsx?$/,
+				loader: "awesome-typescript-loader"
+			},
+			// All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+			{
+				enforce: "pre",
 				test: /\.js$/,
 				exclude: /(node_modules)/,
-				use: {
-					loader: 'babel-loader',
-					query: {
-						presets: [ "es2015" ]
-					}
-				}
-			},
-			{
-				test: /\.(jsx)$/,
-				use: 'babel-loader'
+				loader: "source-map-loader"
 			},
 			{
 				test: /\.css$/,

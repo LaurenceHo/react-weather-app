@@ -1,12 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export class Nav extends React.Component {
-	constructor (props) {
-		super (props);
+export class Nav extends React.Component<{}, {}> {
+	constructor(props: any) {
+		super(props);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="top-bar">
 				<div className="top-bar-left">

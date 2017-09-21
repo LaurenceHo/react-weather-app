@@ -1,40 +1,32 @@
 {
-  "name": "react-practise",
+  "name": "react-weather-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --progress --profile --watch",
+    "start": "webpack-dev-server --config webpack.dev.js --progress --profile --watch --open",
     "build": "webpack --config webpack.prod.js --progress --profile --bail",
     "deploy": "npm run build && firebase deploy",
     "firebase-init": "firebase login && firebase init"
   },
-  "author": "",
-  "license": "ISC",
-  "babel": {
-    "presets": [
-      "env",
-      "react",
-      "es2015"
-    ]
-  },
+  "author": "Laurence Ho",
+  "license": "MIT",
   "dependencies": {
+    "@types/d3": "^4.10.0",
+    "@types/lodash": "^4.14.74",
+    "@types/react": "^16.0.5",
+    "@types/react-dom": "^15.5.4",
+    "@types/react-router-dom": "^4.0.7",
     "axios": "^0.16.2",
     "d3": "^4.10.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "prop-types": "^15.5.10",
-    "query-string": "^5.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
+    "awesome-typescript-loader": "^3.2.3",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.28.7",
     "file-loader": "^0.11.2",
@@ -42,7 +34,9 @@
     "foundation-sites": "^6.4.3",
     "html-webpack-plugin": "^2.30.1",
     "jquery": "^3.2.1",
+    "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",
+    "typescript": "^2.5.2",
     "webpack": "^2.7.0",
     "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.0"

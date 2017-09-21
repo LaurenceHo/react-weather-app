@@ -1,18 +1,18 @@
-import React from 'react';
+import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Nav } from './Nav';
 import { Main } from './Main';
 import { About } from './About';
 
-export class App extends React.Component {
-	render () {
+export class App extends React.Component<any, any> {
+	render() {
 		return (
 			<Router>
 				<div>
 					<Nav/>
 					<Switch>
-						<Route exact path='/' component={Main}/>
-						<Route path='/about' component={About}/>
+						<Route exact path='/' component={Main as any}/>
+						<Route path='/about' component={About as any}/>
 						<Route render={() => {
 							return <p> Not found!!</p>
 						}}/>

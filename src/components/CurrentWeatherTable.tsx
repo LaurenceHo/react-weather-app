@@ -1,19 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import * as moment from 'moment';
 
-export class CurrentWeatherTable extends React.Component {
-	constructor (props) {
-		super (props);
+interface CurrentWeatherTablePropTypes {
+	weather: any
+	location: string
+	timezone: any
+};
+
+export class CurrentWeatherTable extends React.Component<CurrentWeatherTablePropTypes, any> {
+	constructor(props: CurrentWeatherTablePropTypes) {
+		super(props);
 	}
 
-	render () {
+	render() {
 		const utcOffset = this.props.timezone.rawOffset / 3600;
-		const sunriseTime = moment.unix (this.props.weather.sys.sunrise).utcOffset (utcOffset).format ('HH:mm');
-		const sunsetTime = moment.unix (this.props.weather.sys.sunset).utcOffset (utcOffset).format ('HH:mm');
+		const sunriseTime = moment.unix(this.props.weather.sys.sunrise).utcOffset(utcOffset).format('HH:mm');
+		const sunsetTime = moment.unix(this.props.weather.sys.sunset).utcOffset(utcOffset).format('HH:mm');
 
 		return (
-			<div className='columns medium-6 large-4' style={{ paddingTop: 30 }}>
+			<div className='columns medium-6 large-4' style={{paddingTop: 30}}>
 				<table>
 					<tbody>
 					<tr>
@@ -22,7 +27,7 @@ export class CurrentWeatherTable extends React.Component {
 					</tr>
 					<tr>
 						<td>Temperature</td>
-						<td>{Math.round (this.props.weather.main.temp * 10) / 10} °C</td>
+						<td>{Math.round(this.props.weather.main.temp * 10) / 10} °C</td>
 					</tr>
 					<tr>
 						<td>Wind</td>
@@ -50,9 +55,3 @@ export class CurrentWeatherTable extends React.Component {
 		);
 	}
 }
-
-CurrentWeatherTable.PropTypes = {
-	weather: PropTypes.object.isRequired,
-	location: PropTypes.string.isRequired,
-	timezone: PropTypes.object.isRequired
-};
