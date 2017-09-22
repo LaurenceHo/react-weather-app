@@ -70,13 +70,13 @@ export class Weather extends React.Component<any, WeatherState> {
 	}
 
 	getData(city: string) {
-		getCurrentWeather(city).then(weather => {
+		getCurrentWeather(city).then((weather: any) => {
 			if (weather) {
 				let latitude = weather.coord.lat;
 				let longitude = weather.coord.lon;
 				getTimeZone(latitude, longitude).then(timezone => {
 					if (timezone) {
-						getForecast(city).then(forecast => {
+						getForecast(city).then((forecast: any) => {
 							if (forecast) {
 								this.setState({
 									location: city,
@@ -88,14 +88,14 @@ export class Weather extends React.Component<any, WeatherState> {
 							} else {
 								this.cleanStateData();
 							}
-						}, (errorMessage) => {
+						}, (errorMessage: any) => {
 							this.cleanStateData();
 							alert(errorMessage);
 						});
 					} else {
 						this.cleanStateData();
 					}
-				}, (errorMessage) => {
+				}, (errorMessage: any) => {
 					this.cleanStateData();
 					alert(errorMessage);
 				});
@@ -103,7 +103,7 @@ export class Weather extends React.Component<any, WeatherState> {
 				this.cleanStateData();
 				alert('Cannot get the weather data!');
 			}
-		}, (errorMessage) => {
+		}, (errorMessage: any) => {
 			this.cleanStateData();
 			alert(errorMessage);
 		});
