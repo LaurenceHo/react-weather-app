@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { bindActionCreators } from 'redux';
 import * as _ from 'lodash';
 
 import { WeatherData } from './WeatherData';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
+import { connect } from 'react-redux';
+import { setAllWeatherDataIntoStore } from '../redux/actions';
 
 interface WeatherState {
 	isLoading: boolean,
@@ -13,7 +16,7 @@ interface WeatherState {
 	timezone: any
 }
 
-export class Weather extends React.Component<any, WeatherState> {
+class Weather extends React.Component<any, WeatherState> {
 	constructor() {
 		super();
 
@@ -85,6 +88,8 @@ export class Weather extends React.Component<any, WeatherState> {
 									forecast: forecast,
 									isLoading: false
 								});
+
+								this.props.setAllWeatherDataIntoStore(this.state);
 							} else {
 								this.cleanStateData();
 							}
@@ -151,9 +156,10 @@ interface WeatherFormProps {
 interface WeatherFormState {
 	location: string
 }
+
 class WeatherForm extends React.Component<WeatherFormProps, WeatherFormState> {
-	constructor(props: WeatherFormProps) {
-		super(props);
+	constructor() {
+		super();
 
 		this.state = {
 			location: ''
@@ -197,3 +203,18 @@ class WeatherForm extends React.Component<WeatherFormProps, WeatherFormState> {
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch: any) => {
+	return bindActionCreators({
+		setAllWeatherDataIntoStore
+	}, dispatch);
+};
+
+const mapStateToProps = (state: WeatherState) => ({
+	location: state.location,
+	weather: state.weather,
+	forecast: state.forecast,
+	timezone: state.timezone
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Weather);

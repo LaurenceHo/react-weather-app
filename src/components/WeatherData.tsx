@@ -70,10 +70,12 @@ export class WeatherData extends React.Component<WeatherDataPropTypes, WeatherDa
 	}
 
 	render() {
+		const {weather, location, forecast, timezone} = this.props;
+
 		const renderForecast = (width: number, height: number) => {
 			// ================= data setup =================
-			const utcOffset = this.props.timezone.rawOffset / 3600;
-			const data = this.props.forecast.list.slice(0, 8);
+			const utcOffset = timezone.rawOffset / 3600;
+			const data = forecast.list.slice(0, 8);
 
 			const margin = {top: 20, right: 50, bottom: 20, left: 50};
 			const w = width - margin.left - margin.right;
@@ -176,11 +178,11 @@ export class WeatherData extends React.Component<WeatherDataPropTypes, WeatherDa
 
 		return (
 			<div style={{paddingTop: 30}}>
-				<CurrentWeatherTable location={this.props.location}
-				                     weather={this.props.weather}
-				                     timezone={this.props.timezone}/>
+				<CurrentWeatherTable location={location}
+				                     weather={weather}
+				                     timezone={timezone}/>
 				<div className='columns medium-10 large-8'>
-					<h5 className='text-center'>Weather and forecasts in {this.props.location}</h5>
+					<h5 className='text-center'>Weather and forecasts in {location}</h5>
 					<div>
 						{renderForecast(800, 400)}
 					</div>
