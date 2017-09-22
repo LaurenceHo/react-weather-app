@@ -236,7 +236,7 @@ class ToolTip extends React.Component<ToolTipPropTypes, any> {
 		let x = 0;
 		let y = 0;
 		let width = 150, height = 70;
-		let transformText = 'translate(' + (width / 2 - 62) + ',' + (height / 2 - 14) + ')';
+		let transformText = 'translate(' + width / 2 + ',' + (height / 2 - 14) + ')';
 		let transformArrow = "";
 
 		if (this.props.tooltip.display == true) {
