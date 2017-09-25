@@ -15,8 +15,7 @@ import 'foundation-sites/dist/js/foundation.min';
 import './css/index.css';
 import './assets/favicon.ico';
 
-const initialState = {};
-const store: any = createStore(reducers, initialState, devToolsEnhancer({}));
+const store: any = createStore(reducers, devToolsEnhancer({}));
 
 ReactDOM.render(
 	<Provider store={store}>

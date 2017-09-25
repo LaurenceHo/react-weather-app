@@ -2,11 +2,12 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import * as _ from 'lodash';
 
-import { WeatherData } from './WeatherData';
+import { WeatherData } from '../components/WeatherData';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 import { connect } from 'react-redux';
 import { setAllWeatherDataIntoStore } from '../redux/actions';
+import { WeatherForm } from '../components/WeatherForm';
 
 interface WeatherState {
 	isLoading: boolean,
@@ -149,72 +150,19 @@ class Weather extends React.Component<any, WeatherState> {
 	}
 }
 
-interface WeatherFormProps {
-	onSearch: any
-}
-
-interface WeatherFormState {
-	location: string
-}
-
-class WeatherForm extends React.Component<WeatherFormProps, WeatherFormState> {
-	constructor() {
-		super();
-
-		this.state = {
-			location: ''
-		};
-
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+const mapStateToProps = (state: any) => {
+	return {
+		location: state.location,
+		weather: state.weather,
+		forecast: state.forecast,
+		timezone: state.timezone
 	}
-
-	handleChange(event: any) {
-		const value = event.target.value;
-
-		this.setState(() => {
-			return {
-				location: value
-			}
-		})
-	}
-
-	handleSubmit(event: any) {
-		event.preventDefault();
-
-		this.props.onSearch(
-			this.state.location
-		)
-	};
-
-	render() {
-		return (
-			<div>
-				<form onSubmit={this.handleSubmit}>
-					<input
-						type='text'
-						value={this.state.location}
-						onChange={this.handleChange}
-						placeholder='Search weather by city'
-					/>
-					<button className='button expanded hollow'>Get Weather</button>
-				</form>
-			</div>
-		);
-	}
-}
+};
 
 const mapDispatchToProps = (dispatch: any) => {
 	return bindActionCreators({
 		setAllWeatherDataIntoStore
 	}, dispatch);
 };
-
-const mapStateToProps = (state: WeatherState) => ({
-	location: state.location,
-	weather: state.weather,
-	forecast: state.forecast,
-	timezone: state.timezone
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Weather);

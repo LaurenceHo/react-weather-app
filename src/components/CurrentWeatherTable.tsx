@@ -9,7 +9,7 @@ interface CurrentWeatherTablePropTypes {
 
 export class CurrentWeatherTable extends React.Component<CurrentWeatherTablePropTypes, any> {
 	render() {
-		const utcOffset = this.props.timezone.rawOffset / 3600;
+		const utcOffset = (this.props.timezone.rawOffset + this.props.timezone.dstOffset) / 3600;
 		const sunriseTime = moment.unix(this.props.weather.sys.sunrise).utcOffset(utcOffset).format('HH:mm');
 		const sunsetTime = moment.unix(this.props.weather.sys.sunset).utcOffset(utcOffset).format('HH:mm');
 
