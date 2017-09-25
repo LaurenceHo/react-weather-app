@@ -6,7 +6,7 @@ import { WeatherData } from '../components/WeatherData';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 import { connect } from 'react-redux';
-import { setAllWeatherDataIntoStore } from '../redux/actions';
+import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import { WeatherForm } from '../components/WeatherForm';
 
 interface WeatherState {
@@ -21,35 +21,11 @@ class Weather extends React.Component<any, WeatherState> {
 	constructor() {
 		super();
 
-		this.state = {
-			location: undefined,
-			weather: undefined,
-			forecast: undefined,
-			timezone: undefined,
-			isLoading: false
-		};
-
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
-	cleanStateData() {
-		this.setState({
-			location: undefined,
-			weather: undefined,
-			forecast: undefined,
-			timezone: undefined,
-			isLoading: false
-		});
-	}
-
 	componentDidMount() {
-		this.setState({
-			location: undefined,
-			weather: undefined,
-			forecast: undefined,
-			timezone: undefined,
-			isLoading: true
-		});
+		this.props.fetchingData();
 
 		navigator.geolocation.getCurrentPosition((location) => {
 			if (navigator.geolocation) {
@@ -60,15 +36,15 @@ class Weather extends React.Component<any, WeatherState> {
 						const city = location.formatted_address;
 						this.getData(city);
 					} else {
-						this.cleanStateData();
+						this.props.fetchingDataFailure();
 						alert('Cannot find your location!');
 					}
 				}, (errorMessage: any) => {
-					this.cleanStateData();
+					this.props.fetchingDataFailure();
 					alert(errorMessage);
 				});
 			} else {
-				this.cleanStateData();
+				this.props.fetchingDataFailure();
 			}
 		});
 	}
@@ -82,59 +58,53 @@ class Weather extends React.Component<any, WeatherState> {
 					if (timezone) {
 						getForecast(city).then((forecast: any) => {
 							if (forecast) {
-								this.setState({
+								this.props.fetchingDataSuccess();
+								this.props.setAllWeatherDataIntoStore({
 									location: city,
 									weather: weather,
 									timezone: timezone,
 									forecast: forecast,
 									isLoading: false
 								});
-
-								this.props.setAllWeatherDataIntoStore(this.state);
 							} else {
-								this.cleanStateData();
+								this.props.fetchingDataFailure();
 							}
 						}, (errorMessage: any) => {
-							this.cleanStateData();
+							this.props.fetchingDataFailure();
 							alert(errorMessage);
 						});
 					} else {
-						this.cleanStateData();
+						this.props.fetchingDataFailure();
 					}
 				}, (errorMessage: any) => {
-					this.cleanStateData();
+					this.props.fetchingDataFailure();
 					alert(errorMessage);
 				});
 			} else {
-				this.cleanStateData();
+				this.props.fetchingDataFailure();
 				alert('Cannot get the weather data!');
 			}
 		}, (errorMessage: any) => {
-			this.cleanStateData();
+			this.props.fetchingDataFailure();
 			alert(errorMessage);
 		});
 	}
 
 	handleSearch(location: string) {
-		this.setState({
-			location: undefined,
-			weather: undefined,
-			forecast: undefined,
-			timezone: undefined,
-			isLoading: true
-		});
+		this.props.fetchingData();
 		this.getData(location);
 	}
 
 	render() {
+		console.log('###### Render PROPS: ', this.props);
 		const renderCurrentWeather = () => {
-			if (this.state.isLoading) {
+			if (this.props.isLoading) {
 				return <h4 className='text-center'>Fetching weather...</h4>;
-			} else if (this.state.weather && this.state.location) {
-				return <WeatherData weather={this.state.weather}
-				                    location={this.state.location}
-				                    forecast={this.state.forecast}
-				                    timezone={this.state.timezone}/>;
+			} else if (this.props.weather && this.props.location) {
+				return <WeatherData weather={this.props.weather}
+				                    location={this.props.location}
+				                    forecast={this.props.forecast}
+				                    timezone={this.props.timezone}/>;
 			}
 		};
 
@@ -155,12 +125,16 @@ const mapStateToProps = (state: any) => {
 		location: state.location,
 		weather: state.weather,
 		forecast: state.forecast,
-		timezone: state.timezone
+		timezone: state.timezone,
+		isLoading: state.isLoading
 	}
 };
 
 const mapDispatchToProps = (dispatch: any) => {
 	return bindActionCreators({
+		fetchingData,
+		fetchingDataSuccess,
+		fetchingDataFailure,
 		setAllWeatherDataIntoStore
 	}, dispatch);
 };
