@@ -1,21 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import * as moment from 'moment';
 import * as d3 from 'd3';
-import { CurrentWeatherTable } from './CurrentWeatherTable';
 
-interface WeatherDataPropTypes {
-	weather: any
-	location: string
-	forecast: any
-	timezone: any
-};
+import { CurrentWeatherTable } from './CurrentWeatherTable';
 
 interface WeatherDataState {
 	tooltip: any
 }
 
-export class WeatherData extends React.Component<WeatherDataPropTypes, WeatherDataState> {
+class WeatherData extends React.Component<any, WeatherDataState> {
 	constructor() {
 		super();
 
@@ -70,7 +65,7 @@ export class WeatherData extends React.Component<WeatherDataPropTypes, WeatherDa
 	}
 
 	render() {
-		const {weather, location, forecast, timezone} = this.props;
+		const {weather, location, forecast, timezone, error} = this.props;
 
 		const renderForecast = (width: number, height: number) => {
 			// ================= data setup =================
@@ -191,6 +186,19 @@ export class WeatherData extends React.Component<WeatherDataPropTypes, WeatherDa
 		)
 	};
 }
+
+const mapStateToProps = (state: any) => {
+	return {
+		location: state.location,
+		weather: state.weather,
+		forecast: state.forecast,
+		timezone: state.timezone,
+		isLoading: state.isLoading,
+		error: state.error
+	}
+};
+
+export default connect(mapStateToProps)(WeatherData);
 
 interface DotsPropTypes {
 	data: any

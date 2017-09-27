@@ -5,7 +5,8 @@ const initialState = {
 	weather: {},
 	timezone: {},
 	forecast: {},
-	isLoading: false
+	isLoading: false,
+	error: {}
 }
 
 export const reducers = (state: any = initialState, action: any) => {
@@ -25,11 +26,15 @@ export const reducers = (state: any = initialState, action: any) => {
 		case ACTION.FETCHING_DATA_FAILURE:
 			return {
 				...state,
-				isLoading: false
+				isLoading: false,
+				error: action.error
 			}
 
 		case ACTION.SET_ALL_WEATHER_DATA_INTO_STORE:
-			return action.payload;
+			return {
+				...action.payload,
+				error: {}
+			}
 
 		default:
 			return state

@@ -1,23 +1,15 @@
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
-import { WeatherData } from '../components/WeatherData';
+import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
+import WeatherData from '../components/WeatherData';
+import { WeatherForm } from '../components/WeatherForm';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
-import { connect } from 'react-redux';
-import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
-import { WeatherForm } from '../components/WeatherForm';
 
-interface WeatherState {
-	isLoading: boolean,
-	location: string,
-	weather: any,
-	forecast: any,
-	timezone: any
-}
-
-class Weather extends React.Component<any, WeatherState> {
+class Weather extends React.Component<any, any> {
 	constructor() {
 		super();
 
@@ -36,15 +28,13 @@ class Weather extends React.Component<any, WeatherState> {
 						const city = location.formatted_address;
 						this.getData(city);
 					} else {
-						this.props.fetchingDataFailure();
-						alert('Cannot find your location!');
+						this.props.fetchingDataFailure('Cannot find your location');
 					}
 				}, (errorMessage: any) => {
-					this.props.fetchingDataFailure();
-					alert(errorMessage);
+					this.props.fetchingDataFailure(errorMessage);
 				});
 			} else {
-				this.props.fetchingDataFailure();
+				this.props.fetchingDataFailure('Cannot get geolocation');
 			}
 		});
 	}
@@ -67,26 +57,22 @@ class Weather extends React.Component<any, WeatherState> {
 									isLoading: false
 								});
 							} else {
-								this.props.fetchingDataFailure();
+								this.props.fetchingDataFailure('Cannot get the forecast');
 							}
 						}, (errorMessage: any) => {
-							this.props.fetchingDataFailure();
-							alert(errorMessage);
+							this.props.fetchingDataFailure(errorMessage);
 						});
 					} else {
-						this.props.fetchingDataFailure();
+						this.props.fetchingDataFailure('Cannot get timezone');
 					}
 				}, (errorMessage: any) => {
-					this.props.fetchingDataFailure();
-					alert(errorMessage);
+					this.props.fetchingDataFailure(errorMessage);
 				});
 			} else {
-				this.props.fetchingDataFailure();
-				alert('Cannot get the weather data!');
+				this.props.fetchingDataFailure('Cannot get the weather data');
 			}
 		}, (errorMessage: any) => {
-			this.props.fetchingDataFailure();
-			alert(errorMessage);
+			this.props.fetchingDataFailure(errorMessage);
 		});
 	}
 
@@ -97,14 +83,13 @@ class Weather extends React.Component<any, WeatherState> {
 
 	render() {
 		console.log('###### Render PROPS: ', this.props);
+		const {weather, location} = this.props;
+
 		const renderCurrentWeather = () => {
 			if (this.props.isLoading) {
 				return <h4 className='text-center'>Fetching weather...</h4>;
-			} else if (this.props.weather && this.props.location) {
-				return <WeatherData weather={this.props.weather}
-				                    location={this.props.location}
-				                    forecast={this.props.forecast}
-				                    timezone={this.props.timezone}/>;
+			} else if (weather && location) {
+				return <WeatherData/>;
 			}
 		};
 

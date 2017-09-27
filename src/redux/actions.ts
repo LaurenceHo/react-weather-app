@@ -15,9 +15,10 @@ export function fetchingDataSuccess() {
 	}
 }
 
-export function fetchingDataFailure() {
+export function fetchingDataFailure(error: any) {
 	return {
 		type: FETCHING_DATA_FAILURE,
+		error
 	}
 }
 
