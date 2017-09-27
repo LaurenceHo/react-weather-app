@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import * as moment from 'moment';
 import * as d3 from 'd3';
 
@@ -67,10 +68,10 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 	render() {
 		const {weather, location, forecast, timezone, error} = this.props;
 
-		const renderForecast = (width: number, height: number) => {
+		const renderForecast = (index: number, width: number, height: number) => {
 			// ================= data setup =================
 			const utcOffset = timezone.rawOffset / 3600;
-			const data = forecast.list.slice(0, 8);
+			const data = forecast.list.slice(index, index + 8);
 
 			const margin = {top: 20, right: 50, bottom: 20, left: 50};
 			const w = width - margin.left - margin.right;
@@ -178,8 +179,23 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 				                     timezone={timezone}/>
 				<div className='columns medium-10 large-8'>
 					<h5 className='text-center'>Weather and forecasts in {location}</h5>
+					<Tabs>
+						<TabList>
+							<Tab>Today</Tab>
+							<Tab>Tomorrow</Tab>
+							<Tab>After Tomorrow</Tab>
+						</TabList>
+						<TabPanel>
+							{renderForecast(0, 800, 400)}
+						</TabPanel>
+						<TabPanel>
+							{renderForecast(8, 800, 400)}
+						</TabPanel>
+						<TabPanel>
+							{renderForecast(16, 800, 400)}
+						</TabPanel>
+					</Tabs>
 					<div>
-						{renderForecast(800, 400)}
 					</div>
 				</div>
 			</div>
