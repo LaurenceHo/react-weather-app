@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
+import { WeatherIcon } from './WeatherIcon';
+import { WindIcon } from "./WindIcon";
 
 interface CurrentWeatherTablePropTypes {
 	weather: any
@@ -24,7 +26,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 					</tr>
 					<tr>
 						<td>Weather</td>
-						<td>{weather.weather[0].description}</td>
+						<td><WeatherIcon code={weather.weather[0].id}/> {weather.weather[0].description}</td>
 					</tr>
 					<tr>
 						<td>Cloud Cover</td>
@@ -36,7 +38,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 					</tr>
 					<tr>
 						<td>Wind</td>
-						<td>{weather.wind.speed} m/s</td>
+						<td><WindIcon degree={weather.wind.deg}/> {weather.wind.speed} m/s</td>
 					</tr>
 					<tr>
 						<td>Pressure</td>
