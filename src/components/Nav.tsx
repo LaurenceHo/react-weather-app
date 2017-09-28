@@ -6,7 +6,7 @@ export class Nav extends React.Component<any, any> {
 		return (
 			<nav className='navbar navbar-expand-lg navbar-light bg-light'>
 				<a className='navbar-brand'>
-					<img src="favicon.ico" width="40" height="30"
+					<img src="assets/favicon.ico" width="40" height="30"
 					     className="d-inline-block align-top" alt=""
 					     style={{paddingRight: 5}}/>
 					React Weather App

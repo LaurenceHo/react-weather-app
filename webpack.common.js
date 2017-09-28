@@ -5,6 +5,7 @@ const path = require ('path');
 const HtmlWebpackPlugin = require ('html-webpack-plugin');
 const ProvidePlugin = require ('webpack/lib/ProvidePlugin');
 const CleanWebpackPlugin = require ('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	entry: './src/index.tsx',
@@ -38,23 +39,50 @@ module.exports = {
 			},
 			{
 				test: /\.(jpe?g|png|gif|ico)$/i,
-				use: [ 'file-loader?name=[name].[ext]' ]
+				use: [ 'file-loader' ]
+			},
+			{
+				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				use: ["url-loader?limit=10000&mimetype=application/font-woff"]
+			},
+			{
+				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				use: ["file-loader"]
 			}
 		]
 	},
 	plugins: [
 		new CleanWebpackPlugin ([ 'dist' ]),
+		/*
+       * Plugin: HtmlWebpackPlugin
+       * Description: Simplifies creation of HTML files to serve your webpack bundles.
+       * This is especially useful for webpack bundles that include a hash in the filename
+       * which changes every compilation.
+       *
+       * See: https://github.com/ampedandwired/html-webpack-plugin
+       */
 		new HtmlWebpackPlugin ({
-			template: 'src/index.html',
-			favicon: 'src/assets/favicon.ico'
+			template: 'src/index.html'
 		}),
-		// the plugin for jQuery
+		// install jQuery and popper as the plugin for bootstrap4
 		new ProvidePlugin ({
 			$: 'jquery',
 			jQuery: 'jquery',
 			'window.jQuery': 'jquery',
 			Popper: [ 'popper.js', 'default' ]
-		})
+		}),
+		/*
+       * Plugin: CopyWebpackPlugin
+       * Description: Copy files and directories in webpack.
+       *
+       * Copies project static assets.
+       *
+       * See: https://www.npmjs.com/package/copy-webpack-plugin
+       */
+		new CopyWebpackPlugin([{
+			from: 'src/assets',
+			to: 'assets',
+		}]),
 	]
 };
 

@@ -11,7 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tabs/style/react-tabs.css';
 
 import './css/index.css';
-import './assets/favicon.ico';
 
 const store: any = createStore(reducers, devToolsEnhancer({}));
 
