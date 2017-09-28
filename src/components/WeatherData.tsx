@@ -173,11 +173,11 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 		}
 
 		return (
-			<div style={{paddingTop: 30}}>
+			<div style={{paddingTop: 30}} className='row'>
 				<CurrentWeatherTable location={location}
 				                     weather={weather}
 				                     timezone={timezone}/>
-				<div className='columns medium-10 large-8'>
+				<div className='col-8'>
 					<h5 className='text-center'>Weather and forecasts in {location}</h5>
 					<Tabs>
 						<TabList>
@@ -186,13 +186,13 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 							<Tab>After Tomorrow</Tab>
 						</TabList>
 						<TabPanel>
-							{renderForecast(0, 800, 400)}
+							{renderForecast(0, 720, 360)}
 						</TabPanel>
 						<TabPanel>
-							{renderForecast(8, 800, 400)}
+							{renderForecast(8, 720, 360)}
 						</TabPanel>
 						<TabPanel>
-							{renderForecast(16, 800, 400)}
+							{renderForecast(16, 720, 360)}
 						</TabPanel>
 					</Tabs>
 					<div>

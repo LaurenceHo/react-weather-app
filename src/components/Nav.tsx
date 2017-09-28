@@ -4,13 +4,18 @@ import { NavLink } from 'react-router-dom';
 export class Nav extends React.Component<any, any> {
 	render() {
 		return (
-			<div className="top-bar">
-				<div className="top-bar-left">
-					<ul className="menu">
-						<li className="menu-text">React Weather App</li>
+			<nav className='navbar navbar-expand-lg navbar-light bg-light'>
+				<a className='navbar-brand'>
+					<img src="favicon.ico" width="40" height="30"
+					     className="d-inline-block align-top" alt=""
+					     style={{paddingRight: 5}}/>
+					React Weather App
+				</a>
+				<div className='collapse navbar-collapse' id='navbarNav'>
+					<ul className='nav'>
 						<li>
 							<NavLink exact activeClassName='active' to='/'>
-								Get Weather
+								Weather
 							</NavLink>
 						</li>
 						<li>
@@ -20,7 +25,7 @@ export class Nav extends React.Component<any, any> {
 						</li>
 					</ul>
 				</div>
-			</div>
+			</nav>
 		);
 	}
 }

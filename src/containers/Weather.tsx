@@ -22,16 +22,18 @@ class Weather extends React.Component<any, any> {
 		navigator.geolocation.getCurrentPosition((location) => {
 			if (navigator.geolocation) {
 				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
-					if (geocode) {
+					if (geocode && !geocode.error_message) {
 						let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
 						const city = location.formatted_address;
 						this.getData(city);
+					} else if (geocode.error_message) {
+						this.props.fetchingDataFailure(geocode.error_message);
 					} else {
 						this.props.fetchingDataFailure('Cannot find your location');
 					}
 				}, (errorMessage: any) => {
-					this.props.fetchingDataFailure(errorMessage);
+					this.props.fetchingDataFailure('Cannot find your location');
 				});
 			} else {
 				this.props.fetchingDataFailure('Cannot get geolocation');
@@ -60,19 +62,19 @@ class Weather extends React.Component<any, any> {
 								this.props.fetchingDataFailure('Cannot get the forecast');
 							}
 						}, (errorMessage: any) => {
-							this.props.fetchingDataFailure(errorMessage);
+							this.props.fetchingDataFailure(errorMessage.data.message);
 						});
 					} else {
 						this.props.fetchingDataFailure('Cannot get timezone');
 					}
 				}, (errorMessage: any) => {
-					this.props.fetchingDataFailure(errorMessage);
+					this.props.fetchingDataFailure('Cannot get timezone');
 				});
 			} else {
 				this.props.fetchingDataFailure('Cannot get the weather data');
 			}
 		}, (errorMessage: any) => {
-			this.props.fetchingDataFailure(errorMessage);
+			this.props.fetchingDataFailure(errorMessage.message);
 		});
 	}
 
@@ -83,20 +85,25 @@ class Weather extends React.Component<any, any> {
 
 	render() {
 		console.log('###### Render PROPS: ', this.props);
-		const {weather, location} = this.props;
+		const {weather, location, isLoading, error} = this.props;
 
 		const renderCurrentWeather = () => {
-			if (this.props.isLoading) {
+			if (isLoading) {
 				return <h4 className='text-center'>Fetching weather...</h4>;
 			} else if (weather && location) {
 				return <WeatherData/>;
+			} else if (error) {
+				return (
+					<div className="alert alert-danger" role="alert">
+						{error}
+					</div>
+				);
 			}
 		};
 
 		return (
-			<div>
-				<div className='columns medium-6 large-4 small-centered'>
-					<h2 className='text-center'>Get Weather</h2>
+			<div className='container'>
+				<div className='row justify-content-center' style={{paddingTop: 40, paddingBottom: 30}}>
 					<WeatherForm onSearch={this.handleSearch}/>
 				</div>
 				{renderCurrentWeather()}
@@ -111,7 +118,8 @@ const mapStateToProps = (state: any) => {
 		weather: state.weather,
 		forecast: state.forecast,
 		timezone: state.timezone,
-		isLoading: state.isLoading
+		isLoading: state.isLoading,
+		error: state.error
 	}
 };
 

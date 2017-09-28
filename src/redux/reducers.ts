@@ -6,7 +6,7 @@ const initialState = {
 	timezone: {},
 	forecast: {},
 	isLoading: false,
-	error: {}
+	error: ''
 }
 
 export const reducers = (state: any = initialState, action: any) => {

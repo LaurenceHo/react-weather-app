@@ -40,17 +40,18 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 
 	render() {
 		return (
-			<div>
-				<form onSubmit={this.handleSubmit}>
+			<form onSubmit={this.handleSubmit} className="form-inline">
 					<input
 						type='text'
 						value={this.state.location}
 						onChange={this.handleChange}
 						placeholder='Search weather by city'
+						className="form-control"
+						style={{paddingRight: 10}}
+						required
 					/>
-					<button className='button expanded hollow'>Get Weather</button>
-				</form>
-			</div>
+				<button className='btn btn-primary'>Search</button>
+			</form>
 		);
 	}
 }

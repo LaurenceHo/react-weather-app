@@ -15,8 +15,8 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 		const sunsetTime = moment.unix(weather.sys.sunset).utcOffset(utcOffset).format('HH:mm');
 
 		return (
-			<div className='columns medium-6 large-4' style={{paddingTop: 30}}>
-				<table>
+			<div className='col-4' style={{paddingTop: 30}}>
+				<table className='table table-striped'>
 					<tbody>
 					<tr>
 						<td>Location</td>
