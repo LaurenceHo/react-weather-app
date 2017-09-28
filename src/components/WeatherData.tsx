@@ -78,7 +78,7 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 			const h = height - margin.top - margin.bottom;
 
 			data.forEach((d: any) => {
-				d.time = moment.unix(d.dt).utcOffset(utcOffset).format('HH:mm');
+				d.time = moment.unix(d.dt).utcOffset(utcOffset).format('MMM-DD HH:mm');
 				d.main.temp = Math.round(d.main.temp * 10) / 10;
 
 				if (!d.rain)
@@ -113,7 +113,7 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 
 			const renderBarChart = data.map((d: any, i: number) => {
 				return (
-					<rect fill='#58657f'
+					<rect fill='#A4A4A4'
 					      rx='3'
 					      ry='3'
 					      key={i}
