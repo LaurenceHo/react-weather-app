@@ -360,7 +360,7 @@ class Axis extends React.Component<AxisPropTypes, any> {
 					? <text fill='#000' y='6' dy='0.71em' textAnchor='end' transform='rotate(-90)'>Precipitation, mm</text>
 					: ''}
 				{this.props.axisType == 'y-t'
-					? <text fill='#000' y='725' dy='0.71em' textAnchor='end' transform='rotate(-90)'>Temperature, °C</text>
+					? <text fill='#000' y='645' dy='0.71em' textAnchor='end' transform='rotate(-90)'>Temperature, °C</text>
 					: ''}
 			</g>
 		);
