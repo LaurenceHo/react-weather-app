@@ -23,6 +23,14 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 						<td>{location}</td>
 					</tr>
 					<tr>
+						<td>Weather</td>
+						<td>{weather.weather[0].description}</td>
+					</tr>
+					<tr>
+						<td>Cloud Cover</td>
+						<td>{weather.clouds.all} %</td>
+					</tr>
+					<tr>
 						<td>Temperature</td>
 						<td>{Math.round(weather.main.temp * 10) / 10} °C</td>
 					</tr>

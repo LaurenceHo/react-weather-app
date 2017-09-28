@@ -9,6 +9,10 @@ import { WeatherForm } from '../components/WeatherForm';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 
+import { timezone } from '../../sample/timezone';
+import { weather } from '../../sample/weather';
+import { forecast } from '../../sample/forecast';
+
 class Weather extends React.Component<any, any> {
 	constructor() {
 		super();
@@ -18,11 +22,11 @@ class Weather extends React.Component<any, any> {
 
 	componentDidMount() {
 		this.props.fetchingData();
-
+		//this.mockData();
 		navigator.geolocation.getCurrentPosition((location) => {
 			if (navigator.geolocation) {
 				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
-					if (geocode && !geocode.error_message) {
+					if (geocode.status === 'OK') {
 						let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
 						const city = location.formatted_address;
@@ -32,22 +36,29 @@ class Weather extends React.Component<any, any> {
 					} else {
 						this.props.fetchingDataFailure('Cannot find your location');
 					}
-				}, (errorMessage: any) => {
-					this.props.fetchingDataFailure('Cannot find your location');
 				});
-			} else {
-				this.props.fetchingDataFailure('Cannot get geolocation');
 			}
+		});
+	}
+
+	mockData() {
+		this.props.fetchingDataSuccess();
+		this.props.setAllWeatherDataIntoStore({
+			location: 'Auckland, NZ',
+			weather: weather,
+			timezone: timezone,
+			forecast: forecast,
+			isLoading: false
 		});
 	}
 
 	getData(city: string) {
 		getCurrentWeather(city).then((weather: any) => {
-			if (weather) {
+			if (weather && weather.cod === 200) {
 				let latitude = weather.coord.lat;
 				let longitude = weather.coord.lon;
 				getTimeZone(latitude, longitude).then(timezone => {
-					if (timezone) {
+					if (timezone.status === 'OK') {
 						getForecast(city).then((forecast: any) => {
 							if (forecast) {
 								this.props.fetchingDataSuccess();
@@ -58,20 +69,16 @@ class Weather extends React.Component<any, any> {
 									forecast: forecast,
 									isLoading: false
 								});
-							} else {
-								this.props.fetchingDataFailure('Cannot get the forecast');
 							}
 						}, (errorMessage: any) => {
 							this.props.fetchingDataFailure(errorMessage.data.message);
 						});
+					} else if (timezone.error_message) {
+						this.props.fetchingDataFailure(timezone.error_message);
 					} else {
 						this.props.fetchingDataFailure('Cannot get timezone');
 					}
-				}, (errorMessage: any) => {
-					this.props.fetchingDataFailure('Cannot get timezone');
 				});
-			} else {
-				this.props.fetchingDataFailure('Cannot get the weather data');
 			}
 		}, (errorMessage: any) => {
 			this.props.fetchingDataFailure(errorMessage.message);
