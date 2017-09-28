@@ -38,7 +38,7 @@ module.exports = {
 			},
 			{
 				test: /\.(jpe?g|png|gif|ico)$/i,
-				use: ['file-loader?name=[name].[ext]']
+				use: [ 'file-loader?name=[name].[ext]' ]
 			}
 		]
 	},
@@ -51,7 +51,9 @@ module.exports = {
 		// the plugin for jQuery
 		new ProvidePlugin ({
 			$: 'jquery',
-			jQuery: 'jquery'
+			jQuery: 'jquery',
+			'window.jQuery': 'jquery',
+			Popper: [ 'popper.js', 'default' ]
 		})
 	]
 };
