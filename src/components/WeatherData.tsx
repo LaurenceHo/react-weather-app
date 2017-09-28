@@ -173,12 +173,12 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 		}
 
 		return (
-			<div style={{paddingTop: 30}} className='row'>
+			<div className='row'>
 				<CurrentWeatherTable location={location}
 				                     weather={weather}
 				                     timezone={timezone}/>
 				<div className='col-8'>
-					<h5 className='text-center'>Weather and forecasts in {location}</h5>
+					<h5 className='text-center' style={{paddingBottom: 10}}>Weather and forecasts in {location}</h5>
 					<Tabs>
 						<TabList>
 							<Tab>Today</Tab>

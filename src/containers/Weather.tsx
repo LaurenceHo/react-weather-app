@@ -103,7 +103,7 @@ class Weather extends React.Component<any, any> {
 
 		return (
 			<div className='container'>
-				<div className='row justify-content-center' style={{paddingTop: 40, paddingBottom: 30}}>
+				<div className='row justify-content-center' style={{paddingTop: 40, paddingBottom: 40}}>
 					<WeatherForm onSearch={this.handleSearch}/>
 				</div>
 				{renderCurrentWeather()}
