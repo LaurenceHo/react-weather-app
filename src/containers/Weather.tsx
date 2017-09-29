@@ -23,6 +23,8 @@ class Weather extends React.Component<any, any> {
 	componentDidMount() {
 		this.props.fetchingData();
 		this.mockData();
+
+		// For PROD
 		// navigator.geolocation.getCurrentPosition((location) => {
 		// 	if (navigator.geolocation) {
 		// 		getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {

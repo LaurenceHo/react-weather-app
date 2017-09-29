@@ -1,4 +1,14 @@
+// Rain
+export const LIGHT_RAIN = 500;
+export const MODERATE_RAIN = 501;
+export const SHOWER_RAIN = 521;
+
+// Clouds
 export const CLEAR_SKY = 800;
+export const FEW_CLOUDS = 801;
+export const SCATTERED_CLOUDS = 802;
+export const BROKEN_CLOUDS = 803;
+export const OVERCAST_CLOUDS = 804;
 
 // Wind
 export const WIND_N = 0;
