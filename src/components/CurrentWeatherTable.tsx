@@ -50,11 +50,11 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 					</tr>
 					<tr>
 						<td>Sunrise Time</td>
-						<td>{sunriseTime}</td>
+						<td><i className="wi wi-sunrise"></i> {sunriseTime}</td>
 					</tr>
 					<tr>
 						<td>Sunset Time</td>
-						<td>{sunsetTime}</td>
+						<td><i className="wi wi-sunset"></i> {sunsetTime}</td>
 					</tr>
 					</tbody>
 				</table>
