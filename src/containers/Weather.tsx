@@ -9,9 +9,9 @@ import { WeatherForm } from '../components/WeatherForm';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 
-import { timezone } from '../../sample/timezone';
-import { weather } from '../../sample/weather';
-import { forecast } from '../../sample/forecast';
+// import { timezone } from '../../sample/timezone';
+// import { weather } from '../../sample/weather';
+// import { forecast } from '../../sample/forecast';
 
 class Weather extends React.Component<any, any> {
 	constructor() {
@@ -22,37 +22,37 @@ class Weather extends React.Component<any, any> {
 
 	componentDidMount() {
 		this.props.fetchingData();
-		this.mockData();
+		//this.mockData();
 
 		// For PROD
-		// navigator.geolocation.getCurrentPosition((location) => {
-		// 	if (navigator.geolocation) {
-		// 		getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
-		// 			if (geocode.status === 'OK') {
-		// 				let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
-		//
-		// 				const city = location.formatted_address;
-		// 				this.getData(city);
-		// 			} else if (geocode.error_message) {
-		// 				this.props.fetchingDataFailure(geocode.error_message);
-		// 			} else {
-		// 				this.props.fetchingDataFailure('Cannot find your location');
-		// 			}
-		// 		});
-		// 	}
-		// });
-	}
+		navigator.geolocation.getCurrentPosition((location) => {
+			if (navigator.geolocation) {
+				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
+					if (geocode.status === 'OK') {
+						let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
-	mockData() {
-		this.props.fetchingDataSuccess();
-		this.props.setAllWeatherDataIntoStore({
-			location: 'Auckland, NZ',
-			weather: weather,
-			timezone: timezone,
-			forecast: forecast,
-			isLoading: false
+						const city = location.formatted_address;
+						this.getData(city);
+					} else if (geocode.error_message) {
+						this.props.fetchingDataFailure(geocode.error_message);
+					} else {
+						this.props.fetchingDataFailure('Cannot find your location');
+					}
+				});
+			}
 		});
 	}
+
+	// mockData() {
+	// 	this.props.fetchingDataSuccess();
+	// 	this.props.setAllWeatherDataIntoStore({
+	// 		location: 'Auckland, NZ',
+	// 		weather: weather,
+	// 		timezone: timezone,
+	// 		forecast: forecast,
+	// 		isLoading: false
+	// 	});
+	// }
 
 	getData(city: string) {
 		getCurrentWeather(city).then((weather: any) => {
