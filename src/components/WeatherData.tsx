@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+const ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import * as moment from 'moment';
@@ -12,8 +12,8 @@ interface WeatherDataState {
 }
 
 class WeatherData extends React.Component<any, WeatherDataState> {
-	constructor() {
-		super();
+	constructor(props: any) {
+		super(props);
 
 		this.state = {
 			tooltip: {
@@ -25,7 +25,7 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 					description: ''
 				}
 			}
-		}
+		};
 
 		this.showToolTip = this.showToolTip.bind(this);
 		this.hideToolTip = this.hideToolTip.bind(this);
@@ -94,13 +94,13 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 			})).rangeRound([0, w]).padding(0.3);
 
 			const yBar = d3.scaleLinear().domain([0, d3.max(data, (d: any) => {
-				let rain: number = d.rain['3h']
-				return rain;
+                let rain: number = d.rain['3h'];
+                return rain;
 			})]).rangeRound([h, 0]);
 
 			const yLine = d3.scaleLinear().domain(d3.extent(data, (d: any) => {
-				let temp: number = d.main.temp;
-				return temp;
+                let temp: number = d.main.temp;
+                return temp;
 			})).rangeRound([h, 0]);
 
 			const line = d3.line()
@@ -257,20 +257,20 @@ interface ToolTipPropTypes {
 
 class ToolTip extends React.Component<ToolTipPropTypes, any> {
 	render() {
-		let visibility = "hidden";
-		let transform = "";
+		let visibility = 'hidden';
+		let transform = '';
 		let x = 0;
 		let y = 0;
 		let width = 150, height = 70;
 		let transformText = 'translate(' + width / 2 + ',' + (height / 2 - 14) + ')';
-		let transformArrow = "";
+		let transformArrow = '';
 
 		if (this.props.tooltip.display == true) {
 			let position = this.props.tooltip.pos;
 
 			x = position.x;
 			y = position.y;
-			visibility = "visible";
+			visibility = 'visible';
 
 			if (y > height) {
 				transform = 'translate(' + ((x - width / 2) + 30) + ',' + (y - height - 20) + ')';
@@ -280,45 +280,45 @@ class ToolTip extends React.Component<ToolTipPropTypes, any> {
 				transformArrow = 'translate(' + (width / 2 - 20) + ',' + 0 + ') rotate(180,20,0)';
 			}
 		} else {
-			visibility = "hidden"
+			visibility = 'hidden'
 		}
 
 		return (
 			<g transform={transform}>
-				<rect className="shadow"
+				<rect className='shadow'
 				      width={width}
 				      height={height}
-				      rx="5"
-				      ry="5"
+				      rx='5'
+				      ry='5'
 				      visibility={visibility}
-				      fill="#6391da"
-				      opacity=".9"/>
-				<polygon className="shadow"
-				         points="10,0  30,0  20,10"
+				      fill='#6391da'
+				      opacity='.9'/>
+				<polygon className='shadow'
+				         points='10,0  30,0  20,10'
 				         transform={transformArrow}
-				         fill="#6391da"
-				         opacity=".9"
+				         fill='#6391da'
+				         opacity='.9'
 				         visibility={visibility}/>
 				<text visibility={visibility}
 				      transform={transformText}>
-					<tspan x="0"
-					       textAnchor="middle"
-					       fontSize="14px"
-					       fill="#ffffff">
+					<tspan x='0'
+					       textAnchor='middle'
+					       fontSize='14px'
+					       fill='#ffffff'>
 						{this.props.tooltip.data.key}
 					</tspan>
-					<tspan x="0"
-					       textAnchor="middle"
-					       dy="20"
-					       fontSize="13px"
-					       fill="#a9f3ff">
+					<tspan x='0'
+					       textAnchor='middle'
+					       dy='20'
+					       fontSize='13px'
+					       fill='#a9f3ff'>
 						{this.props.tooltip.data.description}
 					</tspan>
-					<tspan x="0"
-					       textAnchor="middle"
-					       dy="20"
-					       fontSize="12px"
-					       fill="#a9f3ff">
+					<tspan x='0'
+					       textAnchor='middle'
+					       dy='20'
+					       fontSize='12px'
+					       fill='#a9f3ff'>
 						{this.props.tooltip.data.temperature} °C / {this.props.tooltip.data.precipitation} mm
 					</tspan>
 				</text>

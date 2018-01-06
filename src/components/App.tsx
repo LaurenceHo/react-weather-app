@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Nav } from './Nav';
+import { NavBar } from './NavBar';
 import { About } from './About';
 import Weather from '../containers/Weather';
 
@@ -9,7 +9,7 @@ export class App extends React.Component<any, any> {
 		return (
 			<Router>
 				<div>
-					<Nav/>
+					<NavBar/>
 					<Switch>
 						<Route exact path='/' component={Weather as any}/>
 						<Route path='/about' component={About as any}/>

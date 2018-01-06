@@ -14,8 +14,8 @@ import { getGeoCode, getTimeZone } from '../api/Google';
 // import { forecast } from '../../sample/forecast';
 
 class Weather extends React.Component<any, any> {
-	constructor() {
-		super();
+	constructor(props: any) {
+		super(props);
 
 		this.handleSearch = this.handleSearch.bind(this);
 	}

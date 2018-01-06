@@ -9,8 +9,8 @@ interface WeatherFormState {
 }
 
 export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormState> {
-	constructor() {
-		super();
+	constructor(props: WeatherFormProps) {
+		super(props);
 
 		this.state = {
 			location: ''
