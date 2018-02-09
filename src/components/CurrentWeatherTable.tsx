@@ -7,7 +7,7 @@ interface CurrentWeatherTablePropTypes {
 	weather: any
 	location: string
 	timezone: any
-};
+}
 
 export class CurrentWeatherTable extends React.Component<CurrentWeatherTablePropTypes, any> {
 	render() {

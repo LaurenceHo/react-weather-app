@@ -36,7 +36,7 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 		this.props.onSearch(
 			this.state.location
 		)
-	};
+	}
 
 	render() {
 		return (

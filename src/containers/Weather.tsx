@@ -9,9 +9,10 @@ import { WeatherForm } from '../components/WeatherForm';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 
-// import { timezone } from '../../sample/timezone';
-// import { weather } from '../../sample/weather';
-// import { forecast } from '../../sample/forecast';
+// For mock data
+import { timezone } from '../../sample/timezone';
+import { weather } from '../../sample/weather';
+import { forecast } from '../../sample/forecast';
 
 class Weather extends React.Component<any, any> {
 	constructor(props: any) {
@@ -22,7 +23,7 @@ class Weather extends React.Component<any, any> {
 
 	componentDidMount() {
 		this.props.fetchingData();
-		//this.mockData();
+		// this.mockData();
 
 		// For PROD
 		navigator.geolocation.getCurrentPosition((location) => {
@@ -43,16 +44,16 @@ class Weather extends React.Component<any, any> {
 		});
 	}
 
-	// mockData() {
-	// 	this.props.fetchingDataSuccess();
-	// 	this.props.setAllWeatherDataIntoStore({
-	// 		location: 'Auckland, NZ',
-	// 		weather: weather,
-	// 		timezone: timezone,
-	// 		forecast: forecast,
-	// 		isLoading: false
-	// 	});
-	// }
+	mockData() {
+		this.props.fetchingDataSuccess();
+		this.props.setAllWeatherDataIntoStore({
+			location: 'Auckland, NZ',
+			weather: weather,
+			timezone: timezone,
+			forecast: forecast,
+			isLoading: false
+		});
+	}
 
 	getData(city: string) {
 		getCurrentWeather(city).then((weather: any) => {
