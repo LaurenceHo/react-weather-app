@@ -4,8 +4,8 @@
   "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --progress --profile --watch --open",
-    "build": "webpack --config webpack.prod.js --progress --profile --bail",
+    "start": "webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --open",
+    "build": "webpack --config config/webpack.prod.js --progress --profile --bail",
     "deploy": "npm run build && firebase deploy",
     "firebase-init": "firebase login && firebase init"
   },
