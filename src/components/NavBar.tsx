@@ -22,6 +22,11 @@ export const NavBar = () => {
 							About
 						</NavLink>
 					</li>
+					<li>
+						<NavLink activeClassName='active' to='/d3_demo_app'>
+							D3 Demo
+						</NavLink>
+					</li>
 				</ul>
 			</div>
 		</nav>

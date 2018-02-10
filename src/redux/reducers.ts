@@ -7,7 +7,7 @@ const initialState = {
 	forecast: {},
 	isLoading: false,
 	error: ''
-}
+};
 
 export const reducers = (state: any = initialState, action: any) => {
 	switch (action.type) {
@@ -15,28 +15,28 @@ export const reducers = (state: any = initialState, action: any) => {
 			return {
 				...state,
 				isLoading: true
-			}
+			};
 
 		case ACTION.FETCHING_DATA_SUCCESS:
 			return {
 				...state,
 				isLoading: false
-			}
+			};
 
 		case ACTION.FETCHING_DATA_FAILURE:
 			return {
 				...state,
 				isLoading: false,
 				error: action.error
-			}
+			};
 
 		case ACTION.SET_ALL_WEATHER_DATA_INTO_STORE:
 			return {
 				...action.payload,
 				error: ''
-			}
+			};
 
 		default:
 			return state
 	}
-}
+};

@@ -21,3 +21,56 @@ body {
 .active {
     font-weight: bold;
 }
+
+/*For D3 demo traffic*/
+.link {
+    stroke: #555;
+}
+
+.node text {
+    fill: #000;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: "PT Sans", sans-serif;
+}
+
+text, tspan {
+    fill: #000;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: "PT Sans", sans-serif;
+}
+
+rect.responseTimesChart, tspan.averageLabel {
+    fill: #d75107;
+}
+
+rect.responseTimesChartMax, tspan.maxLabel {
+    fill: rgba(215, 81, 7, 0.38);
+}
+
+text.responseTimesText {
+    font-size: 13px;
+}
+
+.node circle, .nodeLegend circle {
+    stroke-width: 5px;
+    fill: #fff;
+    stroke: #d16107
+}
+
+.node circle.DEBUG, .nodeLegend circle.DEBUG {
+    stroke: #62679a
+}
+
+.node circle.INFO, .nodeLegend circle.INFO {
+    stroke: #008376;
+}
+
+.node circle.WARN, .nodeLegend circle.WARN {
+    stroke: #d1b948;
+}
+
+.node circle.ERROR, .nodeLegend circle.ERROR {
+    stroke: #c10901;
+}

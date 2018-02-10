@@ -54,7 +54,7 @@
     "style-loader": "^0.18.2",
     "typescript": "^2.7.1",
     "url-loader": "^0.5.9",
-    "webpack": "^2.7.0",
+    "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.1"
   }
