@@ -14,7 +14,11 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 		let transformText = 'translate(' + width / 2 + ',' + (height / 2 - 14) + ')';
 		let transformArrow = '';
 
-		if (this.props.tooltip.display == true) {
+		if (this.props.tooltip.type === 'network') {
+			width = 160, height = 50;
+		}
+
+		if (this.props.tooltip.display === true) {
 			let position = this.props.tooltip.pos;
 
 			x = position.x;
@@ -32,6 +36,20 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 			visibility = 'hidden'
 		}
 
+		const renderText = () => {
+			if (this.props.tooltip.data.temperature && this.props.tooltip.data.precipitation) {
+				return (
+					<tspan x='0'
+					       textAnchor='middle'
+					       dy='20'
+					       fontSize='12px'
+					       fill='#a9f3ff'>
+						{this.props.tooltip.data.temperature} °C / {this.props.tooltip.data.precipitation} mm
+					</tspan>
+				);
+			}
+		};
+
 		return (
 			<g transform={transform}>
 				<rect className='shadow'
@@ -41,12 +59,12 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 				      ry='5'
 				      visibility={visibility}
 				      fill='#6391da'
-				      opacity='.9'/>
+				      opacity='.95'/>
 				<polygon className='shadow'
 				         points='10,0  30,0  20,10'
 				         transform={transformArrow}
 				         fill='#6391da'
-				         opacity='.9'
+				         opacity='.95'
 				         visibility={visibility}/>
 				<text visibility={visibility}
 				      transform={transformText}>
@@ -61,15 +79,9 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 					       dy='20'
 					       fontSize='13px'
 					       fill='#a9f3ff'>
-						{this.props.tooltip.data.description}
+						{this.props.tooltip.data.description ? this.props.tooltip.data.description : this.props.tooltip.data.group}
 					</tspan>
-					<tspan x='0'
-					       textAnchor='middle'
-					       dy='20'
-					       fontSize='12px'
-					       fill='#a9f3ff'>
-						{this.props.tooltip.data.temperature} °C / {this.props.tooltip.data.precipitation} mm
-					</tspan>
+					{renderText()}
 				</text>
 			</g>
 		);

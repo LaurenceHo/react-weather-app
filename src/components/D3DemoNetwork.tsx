@@ -5,8 +5,13 @@ import * as _ from 'lodash';
 
 import { TrafficService } from '../services/traffic';
 import { networkTraffic } from '../../sample/networkTraffic';
+import { ToolTip } from './ToolTip';
 
-export class D3DemoNetwork extends React.Component<any, any> {
+interface D3DemoNetworkState {
+	tooltip: any
+}
+
+export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 	nodes: any[] = [];
 	links: any[] = [];
 	hits: any[] = [];
@@ -28,6 +33,50 @@ export class D3DemoNetwork extends React.Component<any, any> {
 
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
+
+		this.state = {
+			tooltip: {
+				display: false,
+				data: {
+					key: '',
+					group: ''
+				},
+				type: 'network'
+			}
+		};
+
+		this.showToolTip = this.showToolTip.bind(this);
+		this.hideToolTip = this.hideToolTip.bind(this);
+	}
+
+	showToolTip(e: any) {
+		this.setState({
+			tooltip: {
+				display: true,
+				data: {
+					key: e.name,
+					group: e.group
+				},
+				pos: {
+					x: e.x,
+					y: e.y
+				},
+				type: 'network'
+			}
+		});
+	}
+
+	hideToolTip() {
+		this.setState({
+			tooltip: {
+				display: false,
+				data: {
+					key: '',
+					group: ''
+				},
+				type: 'network'
+			}
+		});
 	}
 
 	scaleFactor(): any {
@@ -81,6 +130,7 @@ export class D3DemoNetwork extends React.Component<any, any> {
 					<div className='svg-container'>
 						<svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
 						     height={this.height}>
+							<ToolTip tooltip={this.state.tooltip}/>
 						</svg>
 					</div>
 				</div>
@@ -137,10 +187,10 @@ export class D3DemoNetwork extends React.Component<any, any> {
 				.attr('r', this.scaleFactor() / 130)
 				.style('stroke', (d: any) => {
 					return d3.rgb(this.c10(d.group));
-				});
-			// for tooltip
-			// .on('mouseover', this.showDetail)
-			// .on('mouseout', this.hideDetail);
+				})
+				// for tooltip
+				.on('mouseover', this.showToolTip)
+				.on('mouseout', this.hideToolTip);
 
 			//for interaction
 			nodeEnter.call(d3.drag()
