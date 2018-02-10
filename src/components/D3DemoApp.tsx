@@ -17,6 +17,7 @@ export class D3DemoApp extends React.Component<any, any> {
 	trafficService: any = {};
 	requests: any[] = [];
 	isActive: boolean = true;
+	intervalId: number = 0;
 
 	constructor(props: any) {
 		super(props);
@@ -190,45 +191,57 @@ export class D3DemoApp extends React.Component<any, any> {
 			d3.event.subject.fy = null;
 		};
 
-		// process nodes data
-		let addedSomething = false;
-		for (let i = 0; i < appTraffic.nodes.length; i++) {
-			let nodeIndex = this.nodes.findIndex((node: any) => {
-				return node.name === appTraffic.nodes[i].name;
-			});
-			if (nodeIndex < 0) {
-				this.nodes.push(appTraffic.nodes[i]);
-				addedSomething = true;
+		const processData = () => {
+			// process nodes data
+			let addedSomething = false;
+			for (let i = 0; i < appTraffic.nodes.length; i++) {
+				let nodeIndex = this.nodes.findIndex((node: any) => {
+					return node.name === appTraffic.nodes[i].name;
+				});
+				if (nodeIndex < 0) {
+					this.nodes.push(appTraffic.nodes[i]);
+					addedSomething = true;
+				}
 			}
-		}
-		// process links data
-		for (let i = 0; i < appTraffic.links.length; i++) {
-			let found = false;
-			for (let k = 0; k < this.links.length; k++) {
-				if (appTraffic.nodes[appTraffic.links[i].source].name === this.links[k].source.name &&
-					appTraffic.nodes[appTraffic.links[i].target].name === this.links[k].target.name
-				) {
-					found = true;
-					break;
+			// process links data
+			for (let i = 0; i < appTraffic.links.length; i++) {
+				let found = false;
+				for (let k = 0; k < this.links.length; k++) {
+					if (appTraffic.nodes[appTraffic.links[i].source].name === this.links[k].source.name &&
+						appTraffic.nodes[appTraffic.links[i].target].name === this.links[k].target.name
+					) {
+						found = true;
+						break;
+					}
+				}
+
+				if (!found) {
+					this.links.push({
+						source: this.getNode(appTraffic.nodes[appTraffic.links[i].source].name),
+						target: this.getNode(appTraffic.nodes[appTraffic.links[i].target].name)
+					});
+					addedSomething = true;
 				}
 			}
 
-			if (!found) {
-				this.links.push({
-					source: this.getNode(appTraffic.nodes[appTraffic.links[i].source].name),
-					target: this.getNode(appTraffic.nodes[appTraffic.links[i].target].name)
-				});
-				addedSomething = true;
+			if (addedSomething) {
+				drawGraph();
 			}
-		}
 
-		if (addedSomething) {
-			drawGraph();
-		}
+			this.requests = this.trafficService.viewHits(null, appTraffic.hits, this.isActive);
+			this.trafficService.drawLegend(this.requests);
+			this.trafficService.drawResponseTimes();
+			this.trafficService.updateResponseTimes();
+		};
 
-		this.requests = this.trafficService.viewHits(null, appTraffic.hits, this.isActive);
-		this.trafficService.drawLegend(this.requests);
-		this.trafficService.drawResponseTimes();
-		this.trafficService.updateResponseTimes();
+		processData();
+
+		this.intervalId = setInterval(function () {
+			processData();
+		}.bind(this), 5000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.intervalId);
 	}
 }
