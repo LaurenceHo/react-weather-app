@@ -112,18 +112,16 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 					return yLine(d.main.temp);
 				}).curve(d3.curveCardinal);
 
-			const renderBarChart = data.map((d: any, i: number) => {
-				return (
-					<rect fill='#A4A4A4'
-					      rx='3'
-					      ry='3'
-					      key={i}
-					      x={x(d.time)}
-					      y={yBar(d.rain['3h'])}
-					      height={h - yBar(d.rain['3h'])}
-					      width={x.bandwidth()}/>
-				);
-			});
+			const renderBarChart = data.map((d: any, i: number) =>
+				<rect fill='#A4A4A4'
+				      rx='3'
+				      ry='3'
+				      key={i}
+				      x={x(d.time)}
+				      y={yBar(d.rain['3h'])}
+				      height={h - yBar(d.rain['3h'])}
+				      width={x.bandwidth()}/>
+			);
 
 			// ================= axis =================
 			const xAxis = d3.axisBottom(x)

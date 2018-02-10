@@ -10,12 +10,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
 	entry: './src/index.tsx',
 	output: {
-		path: path.resolve (__dirname, 'dist'),
+		path: path.resolve (__dirname, '../dist'),
 		filename: '[name].bundle.js'
 	},
 	resolve: {
 		modules: [
-			path.join (__dirname, "dist"),
+			path.join (__dirname, "../dist"),
 			"node_modules"
 		],
 		extensions: [ ".ts", ".tsx", '.js', '.json' ]
@@ -52,7 +52,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin ([ 'dist' ]),
+		new CleanWebpackPlugin ([ '../dist' ]),
 		/*
        * Plugin: HtmlWebpackPlugin
        * Description: Simplifies creation of HTML files to serve your webpack bundles.

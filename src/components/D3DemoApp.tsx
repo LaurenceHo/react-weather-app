@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import * as React from 'react';
 import * as d3 from 'd3';
 import { appTraffic } from '../../sample/appTraffic';
@@ -61,23 +62,21 @@ export class D3DemoApp extends React.Component<any, any> {
 	render() {
 		const nodeLegendItems = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'UNKNOWN'];
 
-		const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) => {
-			return (
-				<g className='nodeLegend' key={nodeLegendItem}>
-					<circle r={this.width / 200}
-					        className={nodeLegendItem}
-					        cx={this.width - 230}
-					        cy={index * 25 + 440}>
-					</circle>
-					<text dx={this.width - 210} dy={index * 25 + 444}>{nodeLegendItem}</text>
-				</g>
-			);
-		});
+		const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) =>
+			<g className='nodeLegend' key={nodeLegendItem}>
+				<circle r={this.width / 200}
+				        className={nodeLegendItem}
+				        cx={this.width - 230}
+				        cy={index * 25 + 440}>
+				</circle>
+				<text dx={this.width - 210} dy={index * 25 + 444}>{nodeLegendItem}</text>
+			</g>
+		);
 
 		return (
 			<div>
 				<span style={{paddingLeft: 20, paddingTop: 20}} className="is-active">Application Traffic</span>
-				&nbsp;|&nbsp;<a href="/d3_demo_network">Network Traffic</a>
+				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
 
 				<div id='chart'>
 					<div className='svg-container'>
