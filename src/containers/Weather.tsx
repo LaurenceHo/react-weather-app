@@ -94,7 +94,6 @@ class Weather extends React.Component<any, any> {
 	}
 
 	render() {
-		console.log('###### Render PROPS: ', this.props);
 		const {weather, location, isLoading, error} = this.props;
 
 		const renderCurrentWeather = () => {
