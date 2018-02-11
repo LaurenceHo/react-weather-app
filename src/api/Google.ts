@@ -12,7 +12,7 @@ export const getTimeZone = (latitude: number, longitude: number) => {
 	return axios.get(requestUrl).then((res) => {
 		return res.data;
 	});
-}
+};
 
 export const getGeoCode = (latitude: number, longitude: number) => {
 	const latitudeAndLongitude = latitude + ',' + longitude;
@@ -22,4 +22,4 @@ export const getGeoCode = (latitude: number, longitude: number) => {
 	return axios.get(requestUrl).then((res) => {
 		return res.data;
 	});
-}
+};

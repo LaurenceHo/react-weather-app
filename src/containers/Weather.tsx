@@ -6,7 +6,12 @@ import * as _ from 'lodash';
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import WeatherData from '../components/WeatherData';
 import { WeatherForm } from '../components/WeatherForm';
-import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
+import {
+	getCurrentWeatherByCity,
+	getCurrentWeatherByCoordinates,
+	getForecastByCity,
+	getForecastByCoordinates
+} from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 // For mock data
 import { timezone } from '../../sample/timezone';
@@ -28,10 +33,17 @@ class Weather extends React.Component<any, any> {
 		navigator.geolocation.getCurrentPosition(location => {
 			getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
 				if (geocode.status === 'OK') {
+					let sublocalityLocation: any = _.findLast(geocode.results, {'types': ["political", "sublocality", "sublocality_level_1"]});
 					let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
-					const city = location.formatted_address;
-					this.getData(city);
+					let city;
+					if (sublocalityLocation) {
+						city = sublocalityLocation.formatted_address;
+					} else {
+						city = location.formatted_address;
+					}
+
+					this.getData(city, geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
 				} else if (geocode.error_message) {
 					this.props.fetchingDataFailure(geocode.error_message);
 				} else {
@@ -40,7 +52,7 @@ class Weather extends React.Component<any, any> {
 			});
 		}, error => {
 			this.props.fetchingDataFailure(error.message + '. Use default location: Auckland, New Zealand');
-			this.getData('Auckland');
+			this.getData('Auckland', 0, 0);
 		});
 	}
 
@@ -55,42 +67,68 @@ class Weather extends React.Component<any, any> {
 		});
 	}
 
-	getData(city: string) {
-		getCurrentWeather(city).then((weather: any) => {
-			if (weather && weather.cod === 200) {
-				let latitude = weather.coord.lat;
-				let longitude = weather.coord.lon;
-				getTimeZone(latitude, longitude).then(timezone => {
-					if (timezone.status === 'OK') {
-						getForecast(city).then((forecast: any) => {
-							if (forecast) {
-								this.props.fetchingDataSuccess();
-								this.props.setAllWeatherDataIntoStore({
-									location: city,
-									weather: weather,
-									timezone: timezone,
-									forecast: forecast,
-									isLoading: false
-								});
-							}
-						}, (errorMessage: any) => {
-							this.props.fetchingDataFailure(errorMessage.data.message);
-						});
-					} else if (timezone.error_message) {
-						this.props.fetchingDataFailure(timezone.error_message);
-					} else {
-						this.props.fetchingDataFailure('Cannot get timezone');
-					}
-				});
-			}
-		}, (errorMessage: any) => {
-			this.props.fetchingDataFailure(errorMessage.message);
+	getData(city: string, lat: number, lon: number) {
+		if (lat !== 0 && lon !== 0) {
+			getCurrentWeatherByCoordinates(lat, lon).then((weather: any) => {
+				if (weather && weather.cod === 200) {
+					getTimeZone(lat, lon).then(timezone => {
+						if (timezone.status === 'OK') {
+							getForecastByCoordinates(lat, lon).then((forecast: any) => {
+								if (forecast) {
+									this.setDataToState(city, weather, timezone, forecast);
+								}
+							}, (errorMessage: any) => {
+								this.props.fetchingDataFailure(errorMessage.data.message);
+							});
+						} else if (timezone.error_message) {
+							this.props.fetchingDataFailure(timezone.error_message);
+						} else {
+							this.props.fetchingDataFailure('Cannot get timezone');
+						}
+					});
+				}
+			});
+		} else {
+			getCurrentWeatherByCity(city).then((weather: any) => {
+				if (weather && weather.cod === 200) {
+					let latitude = weather.coord.lat;
+					let longitude = weather.coord.lon;
+					getTimeZone(latitude, longitude).then(timezone => {
+						if (timezone.status === 'OK') {
+							getForecastByCity(city).then((forecast: any) => {
+								if (forecast) {
+									this.setDataToState(city, weather, timezone, forecast);
+								}
+							}, (errorMessage: any) => {
+								this.props.fetchingDataFailure(errorMessage.data.message);
+							});
+						} else if (timezone.error_message) {
+							this.props.fetchingDataFailure(timezone.error_message);
+						} else {
+							this.props.fetchingDataFailure('Cannot get timezone');
+						}
+					});
+				}
+			}, (errorMessage: any) => {
+				this.props.fetchingDataFailure(errorMessage.message);
+			});
+		}
+	}
+
+	private setDataToState(city: string, weather: any, timezone: any, forecast: any) {
+		this.props.fetchingDataSuccess();
+		this.props.setAllWeatherDataIntoStore({
+			location: city,
+			weather: weather,
+			timezone: timezone,
+			forecast: forecast,
+			isLoading: false
 		});
 	}
 
 	handleSearch(location: string) {
 		this.props.fetchingData();
-		this.getData(location);
+		this.getData(location, 0, 0);
 	}
 
 	render() {

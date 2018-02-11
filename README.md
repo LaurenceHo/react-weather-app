@@ -35,3 +35,6 @@ npm run start
 ```
 npm run deploy
 ```
+
+### Live demo
+https://react-beautiful-weather-app.firebaseapp.com/
