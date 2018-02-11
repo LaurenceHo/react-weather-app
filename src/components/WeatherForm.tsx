@@ -50,7 +50,7 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 						style={{paddingRight: 10}}
 						required
 					/>
-				<button className='btn btn-primary'>Search</button>
+				<button className='btn btn-primary' style={{marginLeft: 10}}>Search</button>
 			</form>
 		);
 	}

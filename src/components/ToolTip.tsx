@@ -79,7 +79,7 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 					       dy='20'
 					       fontSize='13px'
 					       fill='#a9f3ff'>
-						{this.props.tooltip.data.description ? this.props.tooltip.data.description : this.props.tooltip.data.group}
+						{this.props.tooltip.type === 'network' ? this.props.tooltip.data.group : this.props.tooltip.data.description}
 					</tspan>
 					{renderText()}
 				</text>

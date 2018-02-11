@@ -32,8 +32,7 @@ export const reducers = (state: any = initialState, action: any) => {
 
 		case ACTION.SET_ALL_WEATHER_DATA_INTO_STORE:
 			return {
-				...action.payload,
-				error: ''
+				...action.payload
 			};
 
 		default:

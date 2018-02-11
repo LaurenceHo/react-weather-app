@@ -8,7 +8,6 @@ import WeatherData from '../components/WeatherData';
 import { WeatherForm } from '../components/WeatherForm';
 import { getCurrentWeather, getForecast } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
-
 // For mock data
 import { timezone } from '../../sample/timezone';
 import { weather } from '../../sample/weather';
@@ -26,21 +25,22 @@ class Weather extends React.Component<any, any> {
 		// this.mockData();
 
 		// For PROD
-		navigator.geolocation.getCurrentPosition((location) => {
-			if (navigator.geolocation) {
-				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
-					if (geocode.status === 'OK') {
-						let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
+		navigator.geolocation.getCurrentPosition(location => {
+			getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
+				if (geocode.status === 'OK') {
+					let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
-						const city = location.formatted_address;
-						this.getData(city);
-					} else if (geocode.error_message) {
-						this.props.fetchingDataFailure(geocode.error_message);
-					} else {
-						this.props.fetchingDataFailure('Cannot find your location');
-					}
-				});
-			}
+					const city = location.formatted_address;
+					this.getData(city);
+				} else if (geocode.error_message) {
+					this.props.fetchingDataFailure(geocode.error_message);
+				} else {
+					this.props.fetchingDataFailure('Cannot find your location');
+				}
+			});
+		}, error => {
+			this.props.fetchingDataFailure(error.message + '. Use default location: Auckland, New Zealand');
+			this.getData('Auckland');
 		});
 	}
 
@@ -104,7 +104,9 @@ class Weather extends React.Component<any, any> {
 				return <WeatherData/>;
 			} else if (error) {
 				return (
-					<div className="alert alert-danger" role="alert">
+					<div className="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" className="close" data-dismiss="alert" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
 						{error}
 					</div>
 				);
