@@ -1,7 +1,7 @@
-# A beautiful weather web application using React, Redux, Typescript, Webpack2, Bootstrap4 and D3.
+# A beautiful weather web application using React, Redux, Typescript, Webpack3, Bootstrap4 and D3v4.
 
 ## Introduction
-This project demonstrates how to use React, Redux, Typescript, Bootstrap4 and D3. It is also including the two kinds of D3 force simulation demonstration, which is based on my personal interest and previous project. 
+This project demonstrates how to use React, Redux, Typescript, Webpack3, Bootstrap4 and D3v4. It is also including two kinds of D3 force simulation demonstrations, which is based on my personal interest and previous project. 
 
 ## Prerequisites
 The latest version of Nodejs and npm need to be installed.
