@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as d3 from 'd3';
 import { appTraffic } from '../../sample/appTraffic';
 import { TrafficService } from '../services/traffic';
+import { gauge } from "../services/gauge";
 
 export class D3DemoApp extends React.Component<any, any> {
 	nodes: any[] = [];
@@ -19,6 +20,7 @@ export class D3DemoApp extends React.Component<any, any> {
 	requests: any[] = [];
 	isActive: boolean = true;
 	intervalId: number = 0;
+	powerGauge: any = {};
 
 	constructor(props: any) {
 		super(props);
@@ -102,6 +104,22 @@ export class D3DemoApp extends React.Component<any, any> {
 		this.link = this.g.append("g").selectAll(".link");
 		this.node = this.g.append("g").selectAll(".node");
 		this.trafficService = new TrafficService(this.svg, this.width);
+
+		// Initial gauge
+		this.powerGauge = gauge('svg', {
+			size: 150,
+			clipWidth: 300,
+			clipHeight: 300,
+			ringWidth: 60,
+			maxValue: 1000,
+			transitionMs: 5000,
+			x: this.width * .7,
+			y: 0,
+			title: "Logs per second",
+			titleDx: 36,
+			titleDy: 90
+		});
+		this.powerGauge.render();
 
 		const drawGraph = () => {
 			// Apply the general update pattern to the nodes.
@@ -191,6 +209,8 @@ export class D3DemoApp extends React.Component<any, any> {
 		};
 
 		const processData = () => {
+			this.powerGauge.update(Math.random() * 1000);
+
 			// process nodes data
 			let addedSomething = false;
 			for (let i = 0; i < appTraffic.nodes.length; i++) {

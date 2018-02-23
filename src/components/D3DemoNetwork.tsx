@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { TrafficService } from '../services/traffic';
 import { networkTraffic } from '../../sample/networkTraffic';
 import { ToolTip } from './ToolTip';
+import { gauge } from '../services/gauge';
 
 interface D3DemoNetworkState {
 	tooltip: any
@@ -27,6 +28,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 	isActive: boolean = true;
 	intervalId: number = 0;
 	c10 = d3.scaleOrdinal(d3.schemeCategory10);
+	powerGauge: any = {};
 
 	constructor(props: any) {
 		super(props);
@@ -144,6 +146,22 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 		this.link = this.g.append("g").selectAll(".link");
 		this.node = this.g.append("g").selectAll(".node");
 		this.trafficService = new TrafficService(this.svg, this.width);
+
+		// Initial gauge
+		this.powerGauge = gauge('svg', {
+			size: 150,
+			clipWidth: 300,
+			clipHeight: 300,
+			ringWidth: 60,
+			maxValue: 1000,
+			transitionMs: 5000,
+			x: this.width * .7,
+			y: 0,
+			title: "Logs per second",
+			titleDx: 36,
+			titleDy: 90
+		});
+		this.powerGauge.render();
 
 		const drawGraph = () => {
 			this.node = this.node.data(this.nodes, (d: any) => {
@@ -276,6 +294,8 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 		};
 
 		const processData = () => {
+			this.powerGauge.update(Math.random() * 1000);
+
 			// process nodes data
 			let addedSomething = false;
 			// process nodes data
