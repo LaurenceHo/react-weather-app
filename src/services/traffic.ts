@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 
 export class TrafficService {
-	c20 = d3.scaleOrdinal(d3.schemeCategory20);
+	c10 = d3.scaleOrdinal(d3.schemeCategory10);
 	slowest = 0;
 	slowestMax = 0;
 	scaleMax = d3.scaleLinear().domain([0, 0]).range([2, 175]);
@@ -143,7 +143,7 @@ export class TrafficService {
 				.attr('class', 'hit');
 			if (requestId !== 'no-request-id') {
 				circle.attr('style', () => {
-					return 'fill:' + this.c20(requestId)
+					return 'fill:' + this.c10(requestId)
 				});
 			}
 
@@ -194,7 +194,7 @@ export class TrafficService {
 			})
 			.attr('style', (d: any) => {
 				if (d !== 'no-request-id') {
-					return 'fill:' + this.c20(d);
+					return 'fill:' + this.c10(d);
 				}
 				return '';
 			});
