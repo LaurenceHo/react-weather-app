@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Weather from './Weather';
-import { NavBar } from './NavBar';
+import NavBar from './NavBar';
 import { About } from './About';
 import { D3DemoApp } from './D3DemoApp';
 import { D3DemoNetwork } from './D3DemoNetwork';

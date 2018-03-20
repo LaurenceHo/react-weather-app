@@ -23,19 +23,13 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 	handleChange(event: any) {
 		const value = event.target.value;
 
-		this.setState(() => {
-			return {
-				location: value
-			}
-		})
+		this.setState({location: value});
 	}
 
 	handleSubmit(event: any) {
 		event.preventDefault();
 
-		this.props.onSearch(
-			this.state.location
-		)
+		this.props.onSearch(this.state.location);
 	}
 
 	render() {

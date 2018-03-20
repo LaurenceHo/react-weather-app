@@ -1,7 +1,7 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import WeatherData from './WeatherData';
@@ -18,11 +18,29 @@ import { getGeoCode, getTimeZone } from '../api/Google';
 // import { weather } from '../../sample/weather';
 // import { forecast } from '../../sample/forecast';
 
-class Weather extends React.Component<any, any> {
+interface WeatherState {
+	previousFilter: string
+}
+
+class Weather extends React.Component<any, WeatherState> {
 	constructor(props: any) {
 		super(props);
 
+		this.state = {
+			previousFilter: ''
+		};
+
 		this.handleSearch = this.handleSearch.bind(this);
+	}
+
+	componentWillReceiveProps(nextProps: any) {
+		if (this.state.previousFilter !== nextProps.filter) {
+			console.log(this.state.previousFilter);
+			console.log(nextProps.filter);
+
+			this.setState({previousFilter: nextProps.filter});
+			this.getData(0, 0);
+		}
 	}
 
 	componentDidMount() {
@@ -60,9 +78,10 @@ class Weather extends React.Component<any, any> {
 	}
 
 	// mockData() {
-	//  this.props.fetchingData('Auckland');
+	// 	this.props.fetchingData('Auckland');
 	// 	this.props.fetchingDataSuccess();
 	// 	this.props.setAllWeatherDataIntoStore({
+	// 		filter: 'Auckland',
 	// 		location: 'Auckland, NZ',
 	// 		weather: weather,
 	// 		timezone: timezone,
@@ -79,7 +98,7 @@ class Weather extends React.Component<any, any> {
 						if (timezone.status === 'OK') {
 							getForecastByCoordinates(lat, lon).then((forecast: any) => {
 								if (forecast) {
-									this.setDataToState(this.props.filter, weather, timezone, forecast);
+									this.setDataToStore(this.props.filter, weather, timezone, forecast);
 								}
 							}, (errorMessage: any) => {
 								this.props.fetchingDataFailure(errorMessage.data.message);
@@ -101,7 +120,7 @@ class Weather extends React.Component<any, any> {
 						if (timezone.status === 'OK') {
 							getForecastByCity(this.props.filter).then((forecast: any) => {
 								if (forecast) {
-									this.setDataToState(this.props.filter, weather, timezone, forecast);
+									this.setDataToStore(this.props.filter, weather, timezone, forecast);
 								}
 							}, (errorMessage: any) => {
 								this.props.fetchingDataFailure(errorMessage.data.message);
@@ -119,7 +138,7 @@ class Weather extends React.Component<any, any> {
 		}
 	}
 
-	private setDataToState(city: string, weather: any, timezone: any, forecast: any) {
+	private setDataToStore(city: string, weather: any, timezone: any, forecast: any) {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
 			filter: city,
