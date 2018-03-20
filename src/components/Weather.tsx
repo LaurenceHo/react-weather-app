@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import WeatherData from './WeatherData';
-import { WeatherForm } from './WeatherForm';
 import {
 	getCurrentWeatherByCity,
 	getCurrentWeatherByCoordinates,
@@ -35,11 +34,8 @@ class Weather extends React.Component<any, WeatherState> {
 
 	componentWillReceiveProps(nextProps: any) {
 		if (this.state.previousFilter !== nextProps.filter) {
-			console.log(this.state.previousFilter);
-			console.log(nextProps.filter);
-
 			this.setState({previousFilter: nextProps.filter});
-			this.getData(0, 0);
+			this.getWeatherData(0, 0);
 		}
 	}
 
@@ -60,20 +56,17 @@ class Weather extends React.Component<any, WeatherState> {
 					} else {
 						city = location.formatted_address;
 					}
+					this.setState({previousFilter: city});
 					this.props.fetchingData(city);
-					this.getData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
+					this.getWeatherData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
 				} else if (geocode.error_message) {
-					this.props.fetchingDataFailure(geocode.error_message + '. Use default location: Auckland, New Zealand');
-					this.props.fetchingData('Auckland');
-					this.getData(0, 0);
+					this.searchByDefaultLocation(geocode.error_message + '. Use default location: Auckland, New Zealand');
 				} else {
-					this.props.fetchingDataFailure('Cannot find your location');
+					this.searchByDefaultLocation('Cannot find your location. Use default location: Auckland, New Zealand');
 				}
 			});
 		}, error => {
-			this.props.fetchingDataFailure(error.message + '. Use default location: Auckland, New Zealand');
-			this.props.fetchingData('Auckland');
-			this.getData(0, 0);
+			this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
 		});
 	}
 
@@ -90,7 +83,14 @@ class Weather extends React.Component<any, WeatherState> {
 	// 	});
 	// }
 
-	getData(lat: number, lon: number) {
+	searchByDefaultLocation(message: string) {
+		this.props.fetchingDataFailure(message);
+		this.setState({previousFilter: 'Auckland'});
+		this.props.fetchingData('Auckland');
+		this.getWeatherData(0, 0);
+	}
+
+	getWeatherData(lat: number, lon: number) {
 		if (lat !== 0 && lon !== 0) {
 			getCurrentWeatherByCoordinates(lat, lon).then((weather: any) => {
 				if (weather && weather.cod === 200) {
@@ -152,7 +152,7 @@ class Weather extends React.Component<any, WeatherState> {
 
 	handleSearch(location: string) {
 		this.props.fetchingData(location);
-		this.getData(0, 0);
+		this.getWeatherData(0, 0);
 	}
 
 	render() {
@@ -176,10 +176,9 @@ class Weather extends React.Component<any, WeatherState> {
 
 		return (
 			<div className='container'>
-				<div className='row justify-content-center' style={{paddingTop: 40, paddingBottom: 40}}>
-					<WeatherForm onSearch={this.handleSearch}/>
+				<div style={{paddingTop: 40, paddingBottom: 40}}>
+					{renderCurrentWeather()}
 				</div>
-				{renderCurrentWeather()}
 			</div>
 		)
 	}

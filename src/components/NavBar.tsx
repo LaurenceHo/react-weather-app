@@ -43,7 +43,7 @@ class NavBar extends React.Component<any, any> {
 							</NavLink>
 						</li>
 					</ul>
-					<WeatherForm onSearch={this.handleSearch}/>
+					<WeatherForm onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
 				</div>
 			</nav>
 		);

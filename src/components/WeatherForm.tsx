@@ -2,6 +2,7 @@ import * as React from 'react';
 
 interface WeatherFormProps {
 	onSearch: any
+	isDisabled: boolean
 }
 
 interface WeatherFormState {
@@ -42,6 +43,7 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 					placeholder='Search weather by city'
 					className="form-control mr-sm-2"
 					required
+					disabled={this.props.isDisabled}
 				/>
 				<button className='btn btn-outline-primary my-2 my-sm-0'>Search</button>
 			</form>
