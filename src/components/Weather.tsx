@@ -45,8 +45,10 @@ class Weather extends React.Component<any, WeatherState> {
 
 		// For PROD
 		navigator.geolocation.getCurrentPosition(location => {
+			console.log('Got user location: ', location);
 			getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
 				if (geocode.status === 'OK') {
+					console.log('Got Geo code from google');
 					let sublocalityLocation: any = _.findLast(geocode.results, {'types': ["political", "sublocality", "sublocality_level_1"]});
 					let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
@@ -85,52 +87,62 @@ class Weather extends React.Component<any, WeatherState> {
 
 	searchByDefaultLocation(message: string) {
 		this.props.fetchingDataFailure(message);
+		setTimeout(this.delayFetchData.bind(this), 3000);
+	}
+
+	delayFetchData() {
 		this.setState({previousFilter: 'Auckland'});
 		this.props.fetchingData('Auckland');
 		this.getWeatherData(0, 0);
+	}
+
+	getTimeZoneAndForecast(lat: number, lon: number, weather: any, type: string) {
+		getTimeZone(lat, lon).then(timezone => {
+			if (timezone.status === 'OK') {
+				if (type === 'city') {
+					getForecastByCity(this.props.filter).then((forecast: any) => {
+						if (forecast) {
+							console.log('Got forecast by city');
+							this.setDataToStore(this.props.filter, weather, timezone, forecast);
+						}
+					}, (errorMessage: any) => {
+						this.props.fetchingDataFailure(errorMessage.data.message);
+					});
+				} else {
+					getForecastByCoordinates(lat, lon).then((forecast: any) => {
+						if (forecast) {
+							console.log('Got forecast by coordinates');
+							this.setDataToStore(this.props.filter, weather, timezone, forecast);
+						}
+					}, (errorMessage: any) => {
+						this.props.fetchingDataFailure(errorMessage.data.message);
+					});
+				}
+			} else if (timezone.error_message) {
+				this.props.fetchingDataFailure(timezone.error_message);
+			} else {
+				this.props.fetchingDataFailure('Cannot get timezone');
+			}
+		});
 	}
 
 	getWeatherData(lat: number, lon: number) {
 		if (lat !== 0 && lon !== 0) {
 			getCurrentWeatherByCoordinates(lat, lon).then((weather: any) => {
 				if (weather && weather.cod === 200) {
-					getTimeZone(lat, lon).then(timezone => {
-						if (timezone.status === 'OK') {
-							getForecastByCoordinates(lat, lon).then((forecast: any) => {
-								if (forecast) {
-									this.setDataToStore(this.props.filter, weather, timezone, forecast);
-								}
-							}, (errorMessage: any) => {
-								this.props.fetchingDataFailure(errorMessage.data.message);
-							});
-						} else if (timezone.error_message) {
-							this.props.fetchingDataFailure(timezone.error_message);
-						} else {
-							this.props.fetchingDataFailure('Cannot get timezone');
-						}
-					});
+					console.log('Got current weather by coordinates');
+					this.getTimeZoneAndForecast(lat, lon, weather, 'coordinates');
 				}
+			}, (errorMessage: any) => {
+				this.props.fetchingDataFailure(errorMessage.message);
 			});
 		} else {
 			getCurrentWeatherByCity(this.props.filter).then((weather: any) => {
 				if (weather && weather.cod === 200) {
+					console.log('Got current weather by city');
 					let latitude = weather.coord.lat;
 					let longitude = weather.coord.lon;
-					getTimeZone(latitude, longitude).then(timezone => {
-						if (timezone.status === 'OK') {
-							getForecastByCity(this.props.filter).then((forecast: any) => {
-								if (forecast) {
-									this.setDataToStore(this.props.filter, weather, timezone, forecast);
-								}
-							}, (errorMessage: any) => {
-								this.props.fetchingDataFailure(errorMessage.data.message);
-							});
-						} else if (timezone.error_message) {
-							this.props.fetchingDataFailure(timezone.error_message);
-						} else {
-							this.props.fetchingDataFailure('Cannot get timezone');
-						}
-					});
+					this.getTimeZoneAndForecast(latitude, longitude, weather, 'city');
 				}
 			}, (errorMessage: any) => {
 				this.props.fetchingDataFailure(errorMessage.message);
@@ -166,8 +178,8 @@ class Weather extends React.Component<any, WeatherState> {
 			} else if (error) {
 				return (
 					<div className="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" className="close" data-dismiss="alert" aria-label="Close"><span
-							aria-hidden="true">&times;</span></button>
+						<button type="button" className="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
 						{error}
 					</div>
 				);
