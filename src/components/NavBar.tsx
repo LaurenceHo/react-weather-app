@@ -2,15 +2,15 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export const NavBar = () =>
-	<nav className='navbar navbar-expand-lg navbar-light bg-light'>
+	<nav className='navbar navbar-expand-lg navbar-light' style={{backgroundColor: "#e3f2fd"}}>
 		<a className='navbar-brand'>
 			<img src="assets/favicon.ico" width="40" height="30"
 			     className="d-inline-block align-top" alt=""
 			     style={{paddingRight: 5}}/>
 			React Weather App
 		</a>
-		<div className='collapse navbar-collapse' id='navbarNav'>
-			<ul className='nav'>
+		<div className='collapse navbar-collapse' id='navbar'>
+			<ul className='nav mr-auto'>
 				<li>
 					<NavLink exact activeClassName='active' to='/'>
 						Weather

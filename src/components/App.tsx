@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Weather from '../containers/Weather';
+import Weather from './Weather';
 import { NavBar } from './NavBar';
 import { About } from './About';
 import { D3DemoApp } from './D3DemoApp';

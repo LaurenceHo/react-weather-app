@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
-import WeatherData from '../components/WeatherData';
-import { WeatherForm } from '../components/WeatherForm';
+import WeatherData from './WeatherData';
+import { WeatherForm } from './WeatherForm';
 import {
 	getCurrentWeatherByCity,
 	getCurrentWeatherByCoordinates,

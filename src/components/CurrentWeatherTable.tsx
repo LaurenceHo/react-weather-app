@@ -20,7 +20,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 			<div className='col-4' style={{paddingTop: 30}}>
 				<table className='table table-striped'>
 					<tbody>
-					<tr>
+					<tr className="table-primary">
 						<td>Location</td>
 						<td>{location}</td>
 					</tr>
@@ -28,7 +28,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 						<td>Weather</td>
 						<td><WeatherIcon code={weather.weather[0].id}/> {weather.weather[0].description}</td>
 					</tr>
-					<tr>
+					<tr className="table-primary">
 						<td>Cloud Cover</td>
 						<td>{weather.clouds.all} %</td>
 					</tr>
@@ -36,7 +36,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 						<td>Temperature</td>
 						<td>{Math.round(weather.main.temp * 10) / 10} °C</td>
 					</tr>
-					<tr>
+					<tr className="table-primary">
 						<td>Wind</td>
 						<td><WindIcon degree={weather.wind.deg}/> {weather.wind.speed} m/s</td>
 					</tr>
@@ -44,7 +44,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 						<td>Pressure</td>
 						<td>{weather.main.pressure} hpa</td>
 					</tr>
-					<tr>
+					<tr className="table-primary">
 						<td>Humidity</td>
 						<td>{weather.main.humidity} %</td>
 					</tr>
@@ -52,7 +52,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 						<td>Sunrise Time</td>
 						<td><i className="wi wi-sunrise"></i> {sunriseTime}</td>
 					</tr>
-					<tr>
+					<tr className="table-primary">
 						<td>Sunset Time</td>
 						<td><i className="wi wi-sunset"></i> {sunsetTime}</td>
 					</tr>
