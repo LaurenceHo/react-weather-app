@@ -1,6 +1,7 @@
 import * as ACTION from './actions';
 
 const initialState = {
+	filter: '',
 	location: '',
 	weather: {},
 	timezone: {},
@@ -14,6 +15,7 @@ export const reducers = (state: any = initialState, action: any) => {
 		case ACTION.FETCHING_DATA:
 			return {
 				...state,
+				filter: action.filter,
 				isLoading: true
 			};
 

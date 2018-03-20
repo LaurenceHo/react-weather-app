@@ -26,7 +26,7 @@ class Weather extends React.Component<any, any> {
 	}
 
 	componentDidMount() {
-		this.props.fetchingData();
+		this.props.fetchingData('');
 		// this.mockData();
 
 		// For PROD
@@ -42,21 +42,25 @@ class Weather extends React.Component<any, any> {
 					} else {
 						city = location.formatted_address;
 					}
-
-					this.getData(city, geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
+					this.props.fetchingData(city);
+					this.getData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
 				} else if (geocode.error_message) {
-					this.props.fetchingDataFailure(geocode.error_message);
+					this.props.fetchingDataFailure(geocode.error_message + '. Use default location: Auckland, New Zealand');
+					this.props.fetchingData('Auckland');
+					this.getData(0, 0);
 				} else {
 					this.props.fetchingDataFailure('Cannot find your location');
 				}
 			});
 		}, error => {
 			this.props.fetchingDataFailure(error.message + '. Use default location: Auckland, New Zealand');
-			this.getData('Auckland', 0, 0);
+			this.props.fetchingData('Auckland');
+			this.getData(0, 0);
 		});
 	}
 
 	// mockData() {
+	//  this.props.fetchingData('Auckland');
 	// 	this.props.fetchingDataSuccess();
 	// 	this.props.setAllWeatherDataIntoStore({
 	// 		location: 'Auckland, NZ',
@@ -67,7 +71,7 @@ class Weather extends React.Component<any, any> {
 	// 	});
 	// }
 
-	getData(city: string, lat: number, lon: number) {
+	getData(lat: number, lon: number) {
 		if (lat !== 0 && lon !== 0) {
 			getCurrentWeatherByCoordinates(lat, lon).then((weather: any) => {
 				if (weather && weather.cod === 200) {
@@ -75,7 +79,7 @@ class Weather extends React.Component<any, any> {
 						if (timezone.status === 'OK') {
 							getForecastByCoordinates(lat, lon).then((forecast: any) => {
 								if (forecast) {
-									this.setDataToState(city, weather, timezone, forecast);
+									this.setDataToState(this.props.filter, weather, timezone, forecast);
 								}
 							}, (errorMessage: any) => {
 								this.props.fetchingDataFailure(errorMessage.data.message);
@@ -89,15 +93,15 @@ class Weather extends React.Component<any, any> {
 				}
 			});
 		} else {
-			getCurrentWeatherByCity(city).then((weather: any) => {
+			getCurrentWeatherByCity(this.props.filter).then((weather: any) => {
 				if (weather && weather.cod === 200) {
 					let latitude = weather.coord.lat;
 					let longitude = weather.coord.lon;
 					getTimeZone(latitude, longitude).then(timezone => {
 						if (timezone.status === 'OK') {
-							getForecastByCity(city).then((forecast: any) => {
+							getForecastByCity(this.props.filter).then((forecast: any) => {
 								if (forecast) {
-									this.setDataToState(city, weather, timezone, forecast);
+									this.setDataToState(this.props.filter, weather, timezone, forecast);
 								}
 							}, (errorMessage: any) => {
 								this.props.fetchingDataFailure(errorMessage.data.message);
@@ -118,6 +122,7 @@ class Weather extends React.Component<any, any> {
 	private setDataToState(city: string, weather: any, timezone: any, forecast: any) {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
+			filter: city,
 			location: city,
 			weather: weather,
 			timezone: timezone,
@@ -127,8 +132,8 @@ class Weather extends React.Component<any, any> {
 	}
 
 	handleSearch(location: string) {
-		this.props.fetchingData();
-		this.getData(location, 0, 0);
+		this.props.fetchingData(location);
+		this.getData(0, 0);
 	}
 
 	render() {
@@ -163,6 +168,7 @@ class Weather extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
 	return {
+		filter: state.filter,
 		location: state.location,
 		weather: state.weather,
 		forecast: state.forecast,
