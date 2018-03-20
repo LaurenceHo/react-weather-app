@@ -14,9 +14,9 @@ import {
 } from '../api/OpenWeatherMap';
 import { getGeoCode, getTimeZone } from '../api/Google';
 // For mock data
-import { timezone } from '../../sample/timezone';
-import { weather } from '../../sample/weather';
-import { forecast } from '../../sample/forecast';
+// import { timezone } from '../../sample/timezone';
+// import { weather } from '../../sample/weather';
+// import { forecast } from '../../sample/forecast';
 
 class Weather extends React.Component<any, any> {
 	constructor(props: any) {
@@ -56,16 +56,16 @@ class Weather extends React.Component<any, any> {
 		});
 	}
 
-	mockData() {
-		this.props.fetchingDataSuccess();
-		this.props.setAllWeatherDataIntoStore({
-			location: 'Auckland, NZ',
-			weather: weather,
-			timezone: timezone,
-			forecast: forecast,
-			isLoading: false
-		});
-	}
+	// mockData() {
+	// 	this.props.fetchingDataSuccess();
+	// 	this.props.setAllWeatherDataIntoStore({
+	// 		location: 'Auckland, NZ',
+	// 		weather: weather,
+	// 		timezone: timezone,
+	// 		forecast: forecast,
+	// 		isLoading: false
+	// 	});
+	// }
 
 	getData(city: string, lat: number, lon: number) {
 		if (lat !== 0 && lon !== 0) {

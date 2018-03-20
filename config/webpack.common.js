@@ -24,7 +24,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				loader: "awesome-typescript-loader"
+				loader: "ts-loader"
 			},
 			// All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
 			{
