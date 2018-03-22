@@ -40,36 +40,38 @@ class Weather extends React.Component<any, WeatherState> {
 	}
 
 	componentDidMount() {
-		this.props.fetchingData('');
-		// this.mockData();
+		if (this.props.location.length === 0 && _.isEmpty(this.props.weather) && _.isEmpty(this.props.forecast)) {
+			this.props.fetchingData('');
+			// this.mockData();
 
-		// For PROD
-		navigator.geolocation.getCurrentPosition(location => {
-			console.log('Got user location: ', location);
-			getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
-				if (geocode.status === 'OK') {
-					console.log('Got Geo code from google');
-					let sublocalityLocation: any = _.findLast(geocode.results, {'types': ["political", "sublocality", "sublocality_level_1"]});
-					let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
+			// For PROD
+			navigator.geolocation.getCurrentPosition(location => {
+				console.log('Got user location: ', location);
+				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
+					if (geocode.status === 'OK') {
+						console.log('Got Geo code from google');
+						let sublocalityLocation: any = _.findLast(geocode.results, {'types': ["political", "sublocality", "sublocality_level_1"]});
+						let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
 
-					let city;
-					if (sublocalityLocation) {
-						city = sublocalityLocation.formatted_address;
+						let city;
+						if (sublocalityLocation) {
+							city = sublocalityLocation.formatted_address;
+						} else {
+							city = location.formatted_address;
+						}
+						this.setState({previousFilter: city});
+						this.props.fetchingData(city);
+						this.getWeatherData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
+					} else if (geocode.error_message) {
+						this.searchByDefaultLocation(geocode.error_message + '. Use default location: Auckland, New Zealand');
 					} else {
-						city = location.formatted_address;
+						this.searchByDefaultLocation('Cannot find your location. Use default location: Auckland, New Zealand');
 					}
-					this.setState({previousFilter: city});
-					this.props.fetchingData(city);
-					this.getWeatherData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng);
-				} else if (geocode.error_message) {
-					this.searchByDefaultLocation(geocode.error_message + '. Use default location: Auckland, New Zealand');
-				} else {
-					this.searchByDefaultLocation('Cannot find your location. Use default location: Auckland, New Zealand');
-				}
+				});
+			}, error => {
+				this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
 			});
-		}, error => {
-			this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
-		});
+		}
 	}
 
 	// mockData() {

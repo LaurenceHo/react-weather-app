@@ -191,8 +191,6 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 							{renderForecast(16, 720, 360)}
 						</TabPanel>
 					</Tabs>
-					<div>
-					</div>
 				</div>
 			</div>
 		);

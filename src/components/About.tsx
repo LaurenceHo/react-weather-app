@@ -6,7 +6,7 @@ export const About = () =>
 			<div className='col-8'>
 				<h1 className='text-center'>About</h1>
 				<p>
-					This is an open source weather web application using React, Redux, Typescript, Webpack2, Bootstrap4 and D3.
+					This is an open source weather web application using React, Redux, Typescript, Webpack4, Bootstrap4 and D3v5.
 				</p>
 				<p>
 					Source code:
