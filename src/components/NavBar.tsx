@@ -2,8 +2,11 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Col, Layout, Menu, Row } from 'antd';
 import { fetchingData } from '../redux/actions';
 import { WeatherForm } from './WeatherForm';
+
+const {Header} = Layout;
 
 class NavBar extends React.Component<any, any> {
 	constructor(props: any) {
@@ -18,34 +21,43 @@ class NavBar extends React.Component<any, any> {
 
 	render() {
 		return (
-			<nav className='navbar navbar-expand-lg navbar-light' style={{backgroundColor: "#e3f2fd"}}>
-				<a className='navbar-brand'>
-					<img src="assets/favicon.ico" width="40" height="30"
-					     className="d-inline-block align-top" alt=""
-					     style={{paddingRight: 5}}/>
-					React Weather App
-				</a>
-				<div className='collapse navbar-collapse' id='navbar'>
-					<ul className='nav mr-auto'>
-						<li>
-							<NavLink exact activeClassName='active' to='/'>
-								Weather
-							</NavLink>
-						</li>
-						<li>
-							<NavLink activeClassName='active' to='/about'>
-								About
-							</NavLink>
-						</li>
-						<li>
-							<NavLink activeClassName='active' to='/d3_demo_app'>
-								D3 Demo
-							</NavLink>
-						</li>
-					</ul>
-					<WeatherForm onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
-				</div>
-			</nav>
+			<Header>
+				<Row>
+					<Col span={2}>
+						<img src="assets/favicon.ico" width="40" height="30"
+						     className="d-inline-block align-top" alt=""
+						     style={{paddingRight: 5}}/>
+					</Col>
+					<Col span={18}>
+						<Menu
+							theme="dark"
+							mode="horizontal"
+							defaultSelectedKeys={['1']}
+							style={{lineHeight: '63px'}}>
+							<Menu.Item key="1">
+								<NavLink exact activeClassName='active' to='/'>
+									Weather
+								</NavLink>
+							</Menu.Item>
+							<Menu.Item key="2">
+								<NavLink activeClassName='active' to='/about'>
+									About
+								</NavLink>
+							</Menu.Item>
+							<Menu.Item key="3">
+								<NavLink activeClassName='active' to='/d3_demo_app'>
+									D3 Demo
+								</NavLink>
+							</Menu.Item>
+						</Menu>
+					</Col>
+					<Col span={4}>
+						<div>
+							<WeatherForm onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
+						</div>
+					</Col>
+				</Row>
+			</Header>
 		);
 	}
 }
