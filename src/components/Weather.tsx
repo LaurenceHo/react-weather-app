@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Col, Row } from 'antd';
+import { Alert, Col, Row, Spin } from 'antd';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import WeatherData from './WeatherData';
@@ -177,7 +177,7 @@ class Weather extends React.Component<any, WeatherState> {
 			if (isLoading) {
 				return (
 					<Row type="flex" justify="center">
-						<h2 className='text-center'>Fetching weather...</h2>
+						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
 					</Row>
 				);
 			} else if (weather && location) {

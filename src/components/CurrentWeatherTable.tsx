@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { Col, Table } from 'antd';
+import { WeatherIcon } from './WeatherIcon';
+import { WindIcon } from './WindIcon';
 
 interface CurrentWeatherTablePropTypes {
 	weather: any
@@ -17,36 +19,40 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 
 		const columns = [
 			{title: 'title', dataIndex: 'title'},
-			{title: 'value', dataIndex: 'value'},
+			{
+				title: 'value',
+				dataIndex: 'value',
+				render: (text: any, record: any, index: number) => {
+					if (index === 1) {
+						return (<span><WeatherIcon code={weather.weather[0].id}/> {weather.weather[0].description}</span>)
+					} else if (index === 4) {
+						return (<span><WindIcon degree={weather.wind.deg}/> {weather.wind.speed} m/s</span>);
+					} else if (index === 7) {
+						return (<span><i className="wi wi-sunrise"></i> {sunriseTime}</span>);
+					} else if (index === 8) {
+						return (<span><i className="wi sunset"></i> {sunsetTime}</span>);
+					} else {
+						return (<span>{record.value}</span>);
+					}
+				}
+			},
 		];
 
 		const data = [
 			{key: '1', title: 'Location', value: location},
-			// {
-			// 	key: '2',
-			// 	title: 'Weather',
-			// 	value: () => (<div><WeatherIcon code={weather.weather[0].id}/> {weather.weather[0].description}</div>)
-			// }
+			{key: '2', title: 'Weather', value: ''},
 			{key: '3', title: 'Cloud Cover', value: weather.clouds.all + ' %'},
 			{key: '4', title: 'Temperature', value: Math.round(weather.main.temp * 10) / 10 + ' °C'},
-			// {key: '5', title: 'Wind', value: () => (<div><WindIcon degree={weather.wind.deg}/> {weather.wind.speed} m/s</div>),
+			{key: '5', title: 'Wind', value: ''},
 			{key: '6', title: 'Pressure', value: weather.main.pressure + ' hpa'},
 			{key: '7', title: 'Humidity', value: weather.main.humidity + ' %'},
-			{key: '8', title: 'Sunrise Time', value: sunriseTime},
-			{key: '9', title: 'Sunset Time', value: sunsetTime}
+			{key: '8', title: 'Sunrise Time', value: ''},
+			{key: '9', title: 'Sunset Time', value: ''}
 		];
 
 		return (
-			<Col span={6} style={{paddingTop: 50}}>
+			<Col span={5} style={{paddingTop: 50}}>
 				<Table columns={columns} dataSource={data} pagination={false} showHeader={false}/>
-				{/*<td>Weather</td>*/}
-				{/*<td><WeatherIcon code={weather.weather[0].id}/> {weather.weather[0].description}</td>*/}
-				{/*<td>Wind</td>*/}
-				{/*<td><WindIcon degree={weather.wind.deg}/> {weather.wind.speed} m/s</td>*/}
-				{/*<td>Sunrise Time</td>*/}
-				{/*<td><i className="wi wi-sunrise"></i> {sunriseTime}</td>*/}
-				{/*<td>Sunset Time</td>*/}
-				{/*<td><i className="wi wi-sunset"></i> {sunsetTime}</td>*/}
 			</Col>
 		);
 	}
