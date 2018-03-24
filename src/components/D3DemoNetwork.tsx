@@ -141,7 +141,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 	}
 
 	componentDidMount() {
-		this.svg = d3.select("svg");
+		this.svg = d3.select("svg.svg-content-responsive");
 		this.g = this.svg.append("g");
 		this.link = this.g.append("g").selectAll(".link");
 		this.node = this.g.append("g").selectAll(".node");
