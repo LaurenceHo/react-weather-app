@@ -76,7 +76,7 @@ export class D3DemoApp extends React.Component<any, any> {
 		);
 
 		return (
-			<div>
+			<div style={{paddingTop: 10}}>
 				<span style={{paddingLeft: 20, paddingTop: 20}} className="is-active">Application Traffic</span>
 				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
 

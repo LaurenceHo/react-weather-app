@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { Input } from 'antd';
+
+const Search = Input.Search;
 
 interface WeatherFormProps {
 	onSearch: any
@@ -35,18 +38,16 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit} className="form-inline my-2 my-lg-0">
-				<input
-					type='text'
-					value={this.state.location}
-					onChange={this.handleChange}
-					placeholder='Search weather by city'
-					className="form-control mr-sm-2"
-					required
-					disabled={this.props.isDisabled}
-				/>
-				<button className='btn btn-outline-primary my-2 my-sm-0'>Search</button>
-			</form>
+			<Search
+				type='text'
+				value={this.state.location}
+				onChange={this.handleChange}
+				onPressEnter={this.handleSubmit}
+				placeholder='Search weather by city'
+				disabled={this.props.isDisabled}
+				style={{width: 250}}
+				enterButton
+			/>
 		);
 	}
 }

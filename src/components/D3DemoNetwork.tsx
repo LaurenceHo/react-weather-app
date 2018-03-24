@@ -124,7 +124,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
 	render() {
 		return (
-			<div>
+			<div style={{paddingTop: 10}}>
 				<Link to='/d3_demo_app' style={{paddingLeft: 20, paddingTop: 20}}>Application Traffic</Link>
 				&nbsp;|&nbsp;<span className='is-active'> Network Traffic</span>
 

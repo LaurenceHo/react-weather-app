@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Alert, Col, Row } from 'antd';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import WeatherData from './WeatherData';
@@ -174,25 +175,32 @@ class Weather extends React.Component<any, WeatherState> {
 
 		const renderCurrentWeather = () => {
 			if (isLoading) {
-				return <h4 className='text-center'>Fetching weather...</h4>;
+				return (
+					<Row type="flex" justify="center">
+						<h2 className='text-center'>Fetching weather...</h2>
+					</Row>
+				);
 			} else if (weather && location) {
 				return <WeatherData/>;
 			} else if (error) {
 				return (
-					<div className="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" className="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span></button>
-						{error}
-					</div>
+					<Row type="flex" justify="center">
+						<Col span={16}>
+							<Alert
+								message="Error"
+								description={error}
+								type="error"
+								showIcon
+							/>
+						</Col>
+					</Row>
 				);
 			}
 		};
 
 		return (
-			<div className='container'>
-				<div style={{paddingTop: 40, paddingBottom: 40}}>
-					{renderCurrentWeather()}
-				</div>
+			<div style={{paddingTop: 40, paddingBottom: 40}}>
+				{renderCurrentWeather()}
 			</div>
 		)
 	}

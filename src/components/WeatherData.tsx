@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import * as moment from 'moment';
 import * as d3 from 'd3';
-
+import { Col, Row, Tabs } from 'antd';
 import { CurrentWeatherTable } from './CurrentWeatherTable';
 import { ToolTip } from './ToolTip';
+
+const TabPane = Tabs.TabPane;
 
 interface WeatherDataState {
 	tooltip: any
@@ -169,30 +170,20 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 		};
 
 		return (
-			<div className='row'>
+			<Row type="flex" justify="center">
 				<CurrentWeatherTable location={location}
 				                     weather={weather}
 				                     timezone={timezone}/>
-				<div className='col-8'>
-					<h5 className='text-center' style={{paddingBottom: 10}}>Weather and forecasts in {location}</h5>
-					<Tabs>
-						<TabList>
-							<Tab>Today</Tab>
-							<Tab>Tomorrow</Tab>
-							<Tab>After Tomorrow</Tab>
-						</TabList>
-						<TabPanel>
-							{renderForecast(0, 720, 360)}
-						</TabPanel>
-						<TabPanel>
-							{renderForecast(8, 720, 360)}
-						</TabPanel>
-						<TabPanel>
-							{renderForecast(16, 720, 360)}
-						</TabPanel>
+				<Col span={1}/>
+				<Col span={12}>
+					<h2 style={{paddingBottom: 10}}>Weather and forecasts in {location}</h2>
+					<Tabs defaultActiveKey="1">
+						<TabPane tab="Today" key="1">{renderForecast(0, 720, 360)}</TabPane>
+						<TabPane tab="Tomorrow" key="2">{renderForecast(8, 720, 360)}</TabPane>
+						<TabPane tab="After Tomorrow" key="3">{renderForecast(16, 720, 360)}</TabPane>
 					</Tabs>
-				</div>
-			</div>
+				</Col>
+			</Row>
 		);
 	};
 }
