@@ -3,9 +3,8 @@
  */
 const path = require ('path');
 const HtmlWebpackPlugin = require ('html-webpack-plugin');
-const ProvidePlugin = require ('webpack/lib/ProvidePlugin');
 const CleanWebpackPlugin = require ('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require ('copy-webpack-plugin');
 
 module.exports = {
 	entry: './src/index.tsx',
@@ -43,11 +42,11 @@ module.exports = {
 			},
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				use: ["url-loader?limit=10000&mimetype=application/font-woff"]
+				use: [ "url-loader?limit=10000&mimetype=application/font-woff" ]
 			},
 			{
 				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				use: ["file-loader"]
+				use: [ "file-loader" ]
 			}
 		]
 	},
@@ -64,25 +63,16 @@ module.exports = {
 		new HtmlWebpackPlugin ({
 			template: 'src/index.html'
 		}),
-		// install jQuery and popper as the plugin for bootstrap4
-		new ProvidePlugin ({
-			$: 'jquery',
-			jQuery: 'jquery',
-			'window.jQuery': 'jquery',
-			Popper: [ 'popper.js', 'default' ]
-		}),
 		/*
        * Plugin: CopyWebpackPlugin
        * Description: Copy files and directories in webpack.
-       *
        * Copies project static assets.
-       *
        * See: https://www.npmjs.com/package/copy-webpack-plugin
        */
-		new CopyWebpackPlugin([{
+		new CopyWebpackPlugin ([ {
 			from: 'src/assets',
 			to: 'assets'
-		}])
+		} ])
 	]
 };
 

@@ -7,11 +7,7 @@ import { Provider } from 'react-redux';
 import { App } from "./components/app";
 import { reducers } from './redux/reducers';
 
-
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-tabs/style/react-tabs.css';
-
+import 'antd/dist/antd.css';
 import './css/index.css';
 
 const store: any = createStore(reducers, devToolsEnhancer({}));
