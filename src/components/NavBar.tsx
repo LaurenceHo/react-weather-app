@@ -2,50 +2,70 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Col, Layout, Menu, Row } from 'antd';
 import { fetchingData } from '../redux/actions';
-import { WeatherForm } from './WeatherForm';
+import { WeatherSearch } from './WeatherSearch';
 
-class NavBar extends React.Component<any, any> {
+const { Header } = Layout;
+
+interface NavBarState {
+	previousLocation: string
+}
+
+class NavBar extends React.Component<any, NavBarState> {
 	constructor(props: any) {
 		super(props);
 
+		this.state = { previousLocation: '' };
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	handleSearch(location: string) {
-		this.props.fetchingData(location);
+		if (this.state.previousLocation !== location && location) {
+			this.setState({ previousLocation: location });
+			this.props.fetchingData(location);
+		}
 	};
 
 	render() {
 		return (
-			<nav className='navbar navbar-expand-lg navbar-light' style={{backgroundColor: "#e3f2fd"}}>
-				<a className='navbar-brand'>
-					<img src="assets/favicon.ico" width="40" height="30"
-					     className="d-inline-block align-top" alt=""
-					     style={{paddingRight: 5}}/>
-					React Weather App
-				</a>
-				<div className='collapse navbar-collapse' id='navbar'>
-					<ul className='nav mr-auto'>
-						<li>
-							<NavLink exact activeClassName='active' to='/'>
-								Weather
-							</NavLink>
-						</li>
-						<li>
-							<NavLink activeClassName='active' to='/about'>
-								About
-							</NavLink>
-						</li>
-						<li>
-							<NavLink activeClassName='active' to='/d3_demo_app'>
-								D3 Demo
-							</NavLink>
-						</li>
-					</ul>
-					<WeatherForm onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
-				</div>
-			</nav>
+			<Header>
+				<Row>
+					<Col xs={2} sm={2} md={2} lg={2} xl={2}>
+						<img src="assets/favicon.ico" width="40" height="30"
+						     className="d-inline-block align-top" alt=""
+						     style={{ paddingRight: 5 }}/>
+					</Col>
+					<Col xs={16} sm={16} md={16} lg={16} xl={17}>
+						<Menu
+							theme="dark"
+							mode="horizontal"
+							defaultSelectedKeys={['1']}
+							style={{ lineHeight: '63px' }}>
+							<Menu.Item key="1">
+								<NavLink exact activeClassName='active' to='/'>
+									Weather
+								</NavLink>
+							</Menu.Item>
+							<Menu.Item key="2">
+								<NavLink activeClassName='active' to='/about'>
+									About
+								</NavLink>
+							</Menu.Item>
+							<Menu.Item key="3">
+								<NavLink activeClassName='active' to='/d3_demo_app'>
+									D3 Demo
+								</NavLink>
+							</Menu.Item>
+						</Menu>
+					</Col>
+					<Col xs={6} sm={6} md={6} lg={6} xl={5}>
+						<div>
+							<WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
+						</div>
+					</Col>
+				</Row>
+			</Header>
 		);
 	}
 }

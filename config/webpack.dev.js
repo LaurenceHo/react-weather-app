@@ -1,8 +1,8 @@
-const merge = require ('webpack-merge');
-const common = require ('./webpack.common.js');
-const HotModuleReplacementPlugin = require ('webpack/lib/HotModuleReplacementPlugin');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 
-module.exports = merge (common, {
+module.exports = merge(common, {
 	mode: 'development',
 	devtool: 'inline-source-map',
 	devServer: {
@@ -12,6 +12,6 @@ module.exports = merge (common, {
 		inline: true
 	},
 	plugins: [
-		new HotModuleReplacementPlugin ()
+		new HotModuleReplacementPlugin()
 	]
 });

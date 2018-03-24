@@ -11,12 +11,13 @@ const initialState = {
 };
 
 export const reducers = (state: any = initialState, action: any) => {
-	switch (action.type) {
+	switch ( action.type ) {
 		case ACTION.FETCHING_DATA:
 			return {
 				...state,
 				filter: action.filter,
-				isLoading: true
+				isLoading: true,
+				error: ''
 			};
 
 		case ACTION.FETCHING_DATA_SUCCESS:

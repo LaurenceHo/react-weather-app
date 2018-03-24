@@ -55,7 +55,7 @@ export const gauge = (container: any, configuration: any) => {
 
 	function configure(configuration: any) {
 		let prop = undefined;
-		for (prop in configuration) {
+		for ( prop in configuration ) {
 			config[prop] = configuration[prop];
 		}
 
