@@ -29,8 +29,6 @@ class Weather extends React.Component<any, WeatherState> {
 		this.state = {
 			previousFilter: ''
 		};
-
-		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps: any) {
@@ -105,20 +103,20 @@ class Weather extends React.Component<any, WeatherState> {
 				if (type === 'city') {
 					getForecastByCity(this.props.filter).then((forecast: any) => {
 						if (forecast) {
-							console.log('Got forecast by city');
+							console.log('Got forecast by city: ', this.props.filter);
 							this.setDataToStore(this.props.filter, weather, timezone, forecast);
 						}
-					}, (errorMessage: any) => {
-						this.props.fetchingDataFailure(errorMessage.data.message);
+					}, (error: any) => {
+						this.props.fetchingDataFailure(error.message);
 					});
 				} else {
 					getForecastByCoordinates(lat, lon).then((forecast: any) => {
 						if (forecast) {
-							console.log('Got forecast by coordinates');
+							console.log('Got forecast by coordinates: ', lat, lon);
 							this.setDataToStore(this.props.filter, weather, timezone, forecast);
 						}
-					}, (errorMessage: any) => {
-						this.props.fetchingDataFailure(errorMessage.data.message);
+					}, (error: any) => {
+						this.props.fetchingDataFailure(error.message);
 					});
 				}
 			} else if (timezone.error_message) {
@@ -133,22 +131,22 @@ class Weather extends React.Component<any, WeatherState> {
 		if (lat !== 0 && lon !== 0) {
 			getCurrentWeatherByCoordinates(lat, lon).then((weather: any) => {
 				if (weather && weather.cod === 200) {
-					console.log('Got current weather by coordinates');
+					console.log('Got current weather by coordinates: ', lat, lon);
 					this.getTimeZoneAndForecast(lat, lon, weather, 'coordinates');
 				}
-			}, (errorMessage: any) => {
-				this.props.fetchingDataFailure(errorMessage.message);
+			}, (error: any) => {
+				this.props.fetchingDataFailure(error.message);
 			});
 		} else {
 			getCurrentWeatherByCity(this.props.filter).then((weather: any) => {
 				if (weather && weather.cod === 200) {
-					console.log('Got current weather by city');
+					console.log('Got current weather by city: ', this.props.filter);
 					let latitude = weather.coord.lat;
 					let longitude = weather.coord.lon;
 					this.getTimeZoneAndForecast(latitude, longitude, weather, 'city');
 				}
-			}, (errorMessage: any) => {
-				this.props.fetchingDataFailure(errorMessage.message);
+			}, (error: any) => {
+				this.props.fetchingDataFailure(error.message);
 			});
 		}
 	}
@@ -165,24 +163,11 @@ class Weather extends React.Component<any, WeatherState> {
 		});
 	}
 
-	handleSearch(location: string) {
-		this.props.fetchingData(location);
-		this.getWeatherData(0, 0);
-	}
-
 	render() {
 		const {weather, location, isLoading, error} = this.props;
 
-		const renderCurrentWeather = () => {
-			if (isLoading) {
-				return (
-					<Row type="flex" justify="center">
-						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
-					</Row>
-				);
-			} else if (weather && location) {
-				return <WeatherData/>;
-			} else if (error) {
+		const renderError = () => {
+			if (error) {
 				return (
 					<Row type="flex" justify="center">
 						<Col span={16}>
@@ -198,8 +183,23 @@ class Weather extends React.Component<any, WeatherState> {
 			}
 		};
 
+		const renderCurrentWeather = () => {
+			if (isLoading) {
+				return (
+					<Row type="flex" justify="center">
+						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
+					</Row>
+				);
+			} else {
+				if (weather && location) {
+					return (<WeatherData/>);
+				}
+			}
+		};
+
 		return (
 			<div style={{paddingTop: 40, paddingBottom: 40}}>
+				{renderError()}
 				{renderCurrentWeather()}
 			</div>
 		)

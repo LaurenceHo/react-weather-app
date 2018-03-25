@@ -1,5 +1,4 @@
 body {
-    font-family: 'Lato', Arial, Helvetica, sans-serif;
     position: relative;
 }
 
@@ -29,14 +28,20 @@ body {
     fill: #000;
     cursor: pointer;
     font-size: 13px;
-    font-family: "PT Sans", sans-serif;
 }
 
 text, tspan {
     fill: #000;
     cursor: pointer;
     font-size: 12px;
-    font-family: "PT Sans", sans-serif;
+}
+
+text.axis-t {
+    fill: #7dc7f4;
+}
+
+text.axis-p {
+    fill: #A4A4A4;
 }
 
 rect.responseTimesChart, tspan.averageLabel {

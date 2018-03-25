@@ -16,7 +16,8 @@ export const reducers = (state: any = initialState, action: any) => {
 			return {
 				...state,
 				filter: action.filter,
-				isLoading: true
+				isLoading: true,
+				error: ''
 			};
 
 		case ACTION.FETCHING_DATA_SUCCESS:

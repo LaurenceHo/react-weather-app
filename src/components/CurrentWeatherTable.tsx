@@ -51,8 +51,8 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 		];
 
 		return (
-			<Col span={5} style={{paddingTop: 50}}>
-				<Table columns={columns} dataSource={data} pagination={false} showHeader={false}/>
+			<Col span={5} style={{paddingTop: 100}}>
+				<Table columns={columns} dataSource={data} pagination={false} showHeader={false} size={'small'}/>
 			</Col>
 		);
 	}
