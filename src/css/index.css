@@ -30,10 +30,10 @@ body {
     font-size: 13px;
 }
 
-text, tspan {
+text {
     fill: #000;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 text.axis-t {
@@ -44,6 +44,10 @@ text.axis-p {
     fill: #A4A4A4;
 }
 
+text.legendHeading, .responseHeading {
+    font-size: 16px;
+}
+
 rect.responseTimesChart, tspan.averageLabel {
     fill: #d75107;
 }
@@ -52,8 +56,8 @@ rect.responseTimesChartMax, tspan.maxLabel {
     fill: rgba(215, 81, 7, 0.38);
 }
 
-text.responseTimesText {
-    font-size: 13px;
+text.legendRequestId, text.responseTimesText tspan {
+    font-size: 12px;
 }
 
 .node circle, .nodeLegend circle {

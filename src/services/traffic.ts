@@ -200,6 +200,7 @@ export class TrafficService {
 			});
 
 		g.append('text')
+			.attr('class', 'legendRequestId')
 			.attr('dx', this.width - 220)
 			.attr('dy', (d: any, i: any) => {
 				return i * 20 + 34;

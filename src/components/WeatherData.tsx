@@ -167,6 +167,26 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 						      hideToolTip={this.hideToolTip}
 						      utcOffset={utcOffset}/>
 						<ToolTip tooltip={this.state.tooltip}/>
+
+						<rect x={width - 230} y='8' width='30' height='4' fill='#7dc7f4'/>
+						<circle r='5'
+						        cx={width - 245}
+						        cy='10'
+						        fill='#7dc7f4'
+						        stroke='#3f5175'
+						        strokeWidth='4px'
+						        transform='translate(30,0)'>
+						</circle>
+						<text dx={width - 200} dy='12'>Temperature</text>
+						<circle r='7'
+						        cx={width - 245}
+						        cy='28'
+						        fill='#A4A4A4'
+						        stroke='#fff'
+						        strokeWidth='2px'
+						        transform='translate(30,0)'>
+						</circle>
+						<text dx={width - 200} dy='32'>Precipitation</text>
 					</g>
 				</svg>
 			);
