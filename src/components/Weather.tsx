@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Col, Row, Spin } from 'antd';
+import { Alert, Card, Col, Row, Spin } from 'antd';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
 import WeatherData from './WeatherData';
@@ -159,6 +159,28 @@ class Weather extends React.Component<any, any> {
 	render() {
 		const {weather, location, isLoading, error} = this.props;
 
+		const errorHint = () => {
+			if (error.indexOf('404') !== -1) {
+				return (
+					<Row type="flex" justify="center" style={{paddingTop: 10}}>
+						<Col span={16}>
+							<Card title="Search engine is very flexible. How it works:">
+								<ul>
+									<li>Put the city's name or its part and get the list of the most proper cities in the world. Example -
+										London or Auckland. The more precise city name you put the more precise list you will get.
+									</li>
+									<li>To make it more precise put the city's name or its part, comma, the name of the country or
+										2-letter country code. You will get all proper cities in chosen country. The order is important -
+										the first is city name then comma then country. Example - Auckland, NZ or Auckland, New Zealand.
+									</li>
+								</ul>
+							</Card>
+						</Col>
+					</Row>
+				);
+			}
+		};
+
 		const renderCurrentWeather = () => {
 			if (isLoading) {
 				return (
@@ -169,16 +191,19 @@ class Weather extends React.Component<any, any> {
 			} else {
 				if (error) {
 					return (
-						<Row type="flex" justify="center">
-							<Col span={16}>
-								<Alert
-									message="Error"
-									description={error}
-									type="error"
-									showIcon
-								/>
-							</Col>
-						</Row>
+						<div>
+							<Row type="flex" justify="center">
+								<Col span={16}>
+									<Alert
+										message="Error"
+										description={error}
+										type="error"
+										showIcon
+									/>
+								</Col>
+							</Row>
+							{errorHint()}
+						</div>
 					);
 				} else if (weather && location) {
 					return (<WeatherData/>);

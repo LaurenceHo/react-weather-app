@@ -24,13 +24,13 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 				dataIndex: 'value',
 				render: (text: any, record: any, index: number) => {
 					if (index === 1) {
-						return (<span><WeatherIcon code={weather.weather[0].id}/> {weather.weather[0].description}</span>)
+						return (<span>{weather.weather[0].description} <WeatherIcon code={weather.weather[0].id}/></span>)
 					} else if (index === 4) {
 						return (<span><WindIcon degree={weather.wind.deg}/> {weather.wind.speed} m/s</span>);
 					} else if (index === 7) {
-						return (<span><i className="wi wi-sunrise"></i> {sunriseTime}</span>);
+						return (<span>{sunriseTime} <i className="wi wi-sunrise"></i></span>);
 					} else if (index === 8) {
-						return (<span><i className="wi sunset"></i> {sunsetTime}</span>);
+						return (<span>{sunsetTime} <i className="wi wi-sunset"></i></span>);
 					} else {
 						return (<span>{record.value}</span>);
 					}
@@ -39,7 +39,7 @@ export class CurrentWeatherTable extends React.Component<CurrentWeatherTableProp
 		];
 
 		const data = [
-			{key: '1', title: 'Location', value: location},
+			{key: '1', title: 'Location', value: location.split(',')[0]},
 			{key: '2', title: 'Weather', value: ''},
 			{key: '3', title: 'Cloud Cover', value: weather.clouds.all + ' %'},
 			{key: '4', title: 'Temperature', value: Math.round(weather.main.temp * 10) / 10 + ' °C'},

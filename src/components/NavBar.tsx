@@ -8,15 +8,23 @@ import { WeatherForm } from './WeatherForm';
 
 const {Header} = Layout;
 
-class NavBar extends React.Component<any, any> {
+interface NavBarState {
+	previousLocation: string
+}
+
+class NavBar extends React.Component<any, NavBarState> {
 	constructor(props: any) {
 		super(props);
 
+		this.state = {previousLocation: ''};
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	handleSearch(location: string) {
-		this.props.fetchingData(location);
+		if (this.state.previousLocation !== location && location) {
+			this.setState({previousLocation: location});
+			this.props.fetchingData(location);
+		}
 	};
 
 	render() {
