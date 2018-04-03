@@ -31,12 +31,12 @@ class NavBar extends React.Component<any, NavBarState> {
 		return (
 			<Header>
 				<Row>
-					<Col span={2}>
+					<Col xs={2} sm={2} md={2} lg={2} xl={2}>
 						<img src="assets/favicon.ico" width="40" height="30"
 						     className="d-inline-block align-top" alt=""
 						     style={{paddingRight: 5}}/>
 					</Col>
-					<Col span={18}>
+					<Col xs={16} sm={16} md={16} lg={16} xl={17}>
 						<Menu
 							theme="dark"
 							mode="horizontal"
@@ -59,7 +59,7 @@ class NavBar extends React.Component<any, NavBarState> {
 							</Menu.Item>
 						</Menu>
 					</Col>
-					<Col span={4}>
+					<Col xs={6} sm={6} md={6} lg={6} xl={5}>
 						<div>
 							<WeatherForm onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
 						</div>

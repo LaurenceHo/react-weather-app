@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 export const About = () =>
 	<div style={{paddingTop: 20}}>
 		<Row type="flex" justify="center">
-			<Col span={12}>
+			<Col span={14}>
 				<h1 className='text-center'>About</h1>
 				<p>
 					This is an open source weather web application using React, Redux, Typescript, Webpack4, Ant Design and D3v5.

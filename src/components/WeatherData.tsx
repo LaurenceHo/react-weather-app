@@ -14,8 +14,16 @@ interface WeatherDataState {
 }
 
 class WeatherData extends React.Component<any, WeatherDataState> {
+	width: number = 0;
+
 	constructor(props: any) {
 		super(props);
+
+		if (window.innerWidth < 992) {
+			this.width = 640;
+		} else {
+			this.width = window.innerWidth / 2;
+		}
 
 		this.state = {
 			tooltip: {
@@ -193,21 +201,27 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 		};
 
 		return (
-			<Row type="flex" justify="center">
-				<CurrentWeatherTable location={location}
-				                     weather={weather}
-				                     timezone={timezone}/>
-				<Col span={11}>
-					<h2 style={{paddingBottom: 10}}>Current weather and forecasts in {location}</h2>
-					<div style={{paddingLeft: 10}}>
-						<Tabs defaultActiveKey="1">
-							<TabPane tab="Today" key="1">{renderForecastChart(0, 640, 300)}</TabPane>
-							<TabPane tab="Tomorrow" key="2">{renderForecastChart(8, 640, 300)}</TabPane>
-							<TabPane tab="After Tomorrow" key="3">{renderForecastChart(16, 640, 300)}</TabPane>
-						</Tabs>
-					</div>
-				</Col>
-			</Row>
+			<div>
+				<Row type="flex" justify="center">
+					<Col span={24} style={{textAlign: 'center'}}>
+						<h2 style={{paddingBottom: 10}}>Current weather and forecasts in {location}</h2>
+					</Col>
+				</Row>
+				<Row type="flex" justify="center">
+					<CurrentWeatherTable location={location}
+					                     weather={weather}
+					                     timezone={timezone}/>
+					<Col xs={16} sm={16} md={16} lg={14} xl={12}>
+						<div style={{paddingLeft: 10}}>
+							<Tabs defaultActiveKey="1">
+								<TabPane tab="Today" key="1">{renderForecastChart(0, this.width, 300)}</TabPane>
+								<TabPane tab="Tomorrow" key="2">{renderForecastChart(8, this.width, 300)}</TabPane>
+								<TabPane tab="After Tomorrow" key="3">{renderForecastChart(16, this.width, 300)}</TabPane>
+							</Tabs>
+						</div>
+					</Col>
+				</Row>
+			</div>
 		);
 	};
 }

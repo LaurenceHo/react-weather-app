@@ -15,7 +15,6 @@ export class App extends React.Component<any, any> {
 			<Router>
 				<div>
 					<NavBar/>
-
 					<div style={{minHeight: 600}}>
 						<Switch>
 							<Route exact path='/' component={Weather as any}/>
