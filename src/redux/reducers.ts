@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const reducers = (state: any = initialState, action: any) => {
-	switch (action.type) {
+	switch ( action.type ) {
 		case ACTION.FETCHING_DATA:
 			return {
 				...state,

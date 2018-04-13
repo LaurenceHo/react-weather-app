@@ -76,14 +76,14 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 	}
 
 	render() {
-		const {weather, location, forecast, timezone} = this.props;
+		const { weather, location, forecast, timezone } = this.props;
 
 		const renderForecastChart = (index: number, width: number, height: number) => {
 			// ================= data setup =================
 			const utcOffset = timezone.rawOffset / 3600;
 			const data = forecast.list.slice(index, index + 8);
 
-			const margin = {top: 20, right: 50, bottom: 20, left: 50};
+			const margin = { top: 20, right: 50, bottom: 20, left: 50 };
 			const w = width - margin.left - margin.right;
 			const h = height - margin.top - margin.bottom;
 
@@ -203,8 +203,8 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 		return (
 			<div>
 				<Row type="flex" justify="center">
-					<Col span={24} style={{textAlign: 'center'}}>
-						<h2 style={{paddingBottom: 10}}>Current weather and forecasts in {location}</h2>
+					<Col span={24} style={{ textAlign: 'center' }}>
+						<h2 style={{ paddingBottom: 10 }}>Current weather and forecasts in {location}</h2>
 					</Col>
 				</Row>
 				<Row type="flex" justify="center">
@@ -212,7 +212,7 @@ class WeatherData extends React.Component<any, WeatherDataState> {
 					                     weather={weather}
 					                     timezone={timezone}/>
 					<Col xs={16} sm={16} md={16} lg={14} xl={12}>
-						<div style={{paddingLeft: 10}}>
+						<div style={{ paddingLeft: 10 }}>
 							<Tabs defaultActiveKey="1">
 								<TabPane tab="Today" key="1">{renderForecastChart(0, this.width, 300)}</TabPane>
 								<TabPane tab="Tomorrow" key="2">{renderForecastChart(8, this.width, 300)}</TabPane>

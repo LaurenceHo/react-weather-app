@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Col, Row } from 'antd';
 
 export const About = () =>
-	<div style={{paddingTop: 20}}>
+	<div style={{ paddingTop: 20 }}>
 		<Row type="flex" justify="center">
 			<Col span={14}>
 				<h1 className='text-center'>About</h1>

@@ -76,8 +76,8 @@ export class D3DemoApp extends React.Component<any, any> {
 		);
 
 		return (
-			<div style={{paddingTop: 10}}>
-				<span style={{paddingLeft: 20, paddingTop: 20}} className="is-active">Application Traffic</span>
+			<div style={{ paddingTop: 10 }}>
+				<span style={{ paddingLeft: 20, paddingTop: 20 }} className="is-active">Application Traffic</span>
 				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
 
 				<div id='chart'>
@@ -213,7 +213,7 @@ export class D3DemoApp extends React.Component<any, any> {
 
 			// process nodes data
 			let addedSomething = false;
-			for (let i = 0; i < appTraffic.nodes.length; i++) {
+			for ( let i = 0; i < appTraffic.nodes.length; i++ ) {
 				let nodeIndex = this.nodes.findIndex((node: any) => {
 					return node.name === appTraffic.nodes[i].name;
 				});
@@ -223,9 +223,9 @@ export class D3DemoApp extends React.Component<any, any> {
 				}
 			}
 			// process links data
-			for (let i = 0; i < appTraffic.links.length; i++) {
+			for ( let i = 0; i < appTraffic.links.length; i++ ) {
 				let found = false;
-				for (let k = 0; k < this.links.length; k++) {
+				for ( let k = 0; k < this.links.length; k++ ) {
 					if (appTraffic.nodes[appTraffic.links[i].source].name === this.links[k].source.name &&
 						appTraffic.nodes[appTraffic.links[i].target].name === this.links[k].target.name
 					) {

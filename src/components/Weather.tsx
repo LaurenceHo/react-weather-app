@@ -40,8 +40,8 @@ class Weather extends React.Component<any, any> {
 				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
 					if (geocode.status === 'OK') {
 						console.log('Got Geo code from google');
-						let sublocalityLocation: any = _.findLast(geocode.results, {'types': ["political", "sublocality", "sublocality_level_1"]});
-						let location: any = _.findLast(geocode.results, {'types': ['administrative_area_level_1', 'political']});
+						let sublocalityLocation: any = _.findLast(geocode.results, { 'types': ["political", "sublocality", "sublocality_level_1"] });
+						let location: any = _.findLast(geocode.results, { 'types': ['administrative_area_level_1', 'political'] });
 
 						let city;
 						if (sublocalityLocation) {
@@ -157,63 +157,55 @@ class Weather extends React.Component<any, any> {
 	}
 
 	render() {
-		const {weather, location, isLoading, error} = this.props;
-
-		const errorHint = () => {
-			if (error.indexOf('404') !== -1) {
-				return (
-					<Row type="flex" justify="center" style={{paddingTop: 10}}>
-						<Col span={16}>
-							<Card title="Search engine is very flexible. How it works:">
-								<ul>
-									<li>Put the city's name or its part and get the list of the most proper cities in the world. Example -
-										London or Auckland. The more precise city name you put the more precise list you will get.
-									</li>
-									<li>To make it more precise put the city's name or its part, comma, the name of the country or
-										2-letter country code. You will get all proper cities in chosen country. The order is important -
-										the first is city name then comma then country. Example - Auckland, NZ or Auckland, New Zealand.
-									</li>
-								</ul>
-							</Card>
-						</Col>
-					</Row>
-				);
-			}
-		};
+		const { weather, location, isLoading, error } = this.props;
 
 		const renderCurrentWeather = () => {
-			if (isLoading) {
+			if (error) {
 				return (
-					<Row type="flex" justify="center">
-						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
-					</Row>
-				);
-			} else {
-				if (error) {
-					return (
-						<div>
-							<Row type="flex" justify="center">
-								<Col span={16}>
-									<Alert
-										message="Error"
-										description={error}
-										type="error"
-										showIcon
-									/>
+					<div>
+						<Row type="flex" justify="center">
+							<Col xs={24} sm={24} md={18} lg={16} xl={16}>
+								<Alert
+									message="Error"
+									description={error}
+									type="error"
+									showIcon
+								/>
+							</Col>
+						</Row>
+						{error.indexOf('404') !== -1 ?
+							<Row type="flex" justify="center" style={{ paddingTop: 10 }}>
+								<Col xs={24} sm={24} md={18} lg={16} xl={16}>
+									<Card title="Search engine is very flexible. How it works:">
+										<ul>
+											<li>Put the city's name or its part and get the list of the most proper cities in the world.
+												Example - London or Auckland. The more precise city name you put the more precise list you will
+												get.
+											</li>
+											<li>To make it more precise put the city's name or its part, comma, the name of the country or
+												2-letter country code. You will get all proper cities in chosen country. The order is important
+												- the first is city name then comma then country. Example - Auckland, NZ or Auckland, New
+												Zealand.
+											</li>
+										</ul>
+									</Card>
 								</Col>
 							</Row>
-							{errorHint()}
-						</div>
-					);
-				} else if (weather && location) {
-					return (<WeatherData/>);
-				}
+							: null}
+					</div>
+				);
+			} else if (weather && location) {
+				return (<WeatherData/>);
 			}
 		};
 
 		return (
-			<div style={{paddingTop: 40, paddingBottom: 40}}>
-				{renderCurrentWeather()}
+			<div style={{ paddingTop: 40, paddingBottom: 40 }}>
+				{isLoading ?
+					<Row type="flex" justify="center">
+						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
+					</Row>
+					: renderCurrentWeather()}
 			</div>
 		)
 	}

@@ -26,7 +26,7 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 
 	handleChange(event: any) {
 		const value = event.target.value;
-		this.setState({location: value});
+		this.setState({ location: value });
 	}
 
 	handleSubmit() {
@@ -43,7 +43,7 @@ export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormSt
 				onPressEnter={this.handleSubmit}
 				placeholder='Search weather by city'
 				disabled={this.props.isDisabled}
-				style={{width: 250}}
+				style={{ width: 250 }}
 				enterButton
 			/>
 		);

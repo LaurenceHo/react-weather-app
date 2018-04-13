@@ -124,8 +124,8 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
 	render() {
 		return (
-			<div style={{paddingTop: 10}}>
-				<Link to='/d3_demo_app' style={{paddingLeft: 20, paddingTop: 20}}>Application Traffic</Link>
+			<div style={{ paddingTop: 10 }}>
+				<Link to='/d3_demo_app' style={{ paddingLeft: 20, paddingTop: 20 }}>Application Traffic</Link>
 				&nbsp;|&nbsp;<span className='is-active'> Network Traffic</span>
 
 				<div id='chart'>
@@ -299,7 +299,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 			// process nodes data
 			let addedSomething = false;
 			// process nodes data
-			for (let i = 0; i < networkTraffic.nodes.length; i++) {
+			for ( let i = 0; i < networkTraffic.nodes.length; i++ ) {
 				let found = _.find(this.nodes, (node: any) => {
 					return node.name === networkTraffic.nodes[i].name;
 				});
@@ -314,7 +314,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 			}
 
 			// process links data
-			for (let i = 0; i < networkTraffic.links.length; i++) {
+			for ( let i = 0; i < networkTraffic.links.length; i++ ) {
 				let found = _.find(this.links, (link: any) => {
 					return networkTraffic.links[i].source === link.source.name && networkTraffic.links[i].target === link.target.name;
 				});

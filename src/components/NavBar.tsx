@@ -6,7 +6,7 @@ import { Col, Layout, Menu, Row } from 'antd';
 import { fetchingData } from '../redux/actions';
 import { WeatherForm } from './WeatherForm';
 
-const {Header} = Layout;
+const { Header } = Layout;
 
 interface NavBarState {
 	previousLocation: string
@@ -16,13 +16,13 @@ class NavBar extends React.Component<any, NavBarState> {
 	constructor(props: any) {
 		super(props);
 
-		this.state = {previousLocation: ''};
+		this.state = { previousLocation: '' };
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	handleSearch(location: string) {
 		if (this.state.previousLocation !== location && location) {
-			this.setState({previousLocation: location});
+			this.setState({ previousLocation: location });
 			this.props.fetchingData(location);
 		}
 	};
@@ -34,14 +34,14 @@ class NavBar extends React.Component<any, NavBarState> {
 					<Col xs={2} sm={2} md={2} lg={2} xl={2}>
 						<img src="assets/favicon.ico" width="40" height="30"
 						     className="d-inline-block align-top" alt=""
-						     style={{paddingRight: 5}}/>
+						     style={{ paddingRight: 5 }}/>
 					</Col>
 					<Col xs={16} sm={16} md={16} lg={16} xl={17}>
 						<Menu
 							theme="dark"
 							mode="horizontal"
 							defaultSelectedKeys={['1']}
-							style={{lineHeight: '63px'}}>
+							style={{ lineHeight: '63px' }}>
 							<Menu.Item key="1">
 								<NavLink exact activeClassName='active' to='/'>
 									Weather

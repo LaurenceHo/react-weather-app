@@ -7,7 +7,7 @@ import { About } from './About';
 import { D3DemoApp } from './D3DemoApp';
 import { D3DemoNetwork } from './D3DemoNetwork';
 
-const {Footer} = Layout;
+const { Footer } = Layout;
 
 export class App extends React.Component<any, any> {
 	render() {
@@ -15,7 +15,7 @@ export class App extends React.Component<any, any> {
 			<Router>
 				<div>
 					<NavBar/>
-					<div style={{minHeight: 600}}>
+					<div style={{ minHeight: 600 }}>
 						<Switch>
 							<Route exact path='/' component={Weather as any}/>
 							<Route path='/about' component={About as any}/>
@@ -26,7 +26,7 @@ export class App extends React.Component<any, any> {
 							}}/>
 						</Switch>
 					</div>
-					<Footer style={{textAlign: 'center', background: '#fff'}}>
+					<Footer style={{ textAlign: 'center', background: '#fff' }}>
 						©2018 Created by Laurence Ho
 					</Footer>
 				</div>

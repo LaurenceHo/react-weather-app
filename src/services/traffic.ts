@@ -28,7 +28,7 @@ export class TrafficService {
 		let requests: any[] = [];
 		let startTime = new Date().getTime();
 
-		for (let i = 0; i < hits.length; i++) {
+		for ( let i = 0; i < hits.length; i++ ) {
 			if (hits[i].id === lastRunLogId) {
 				break;
 			}
@@ -51,7 +51,7 @@ export class TrafficService {
 			});
 
 			if (hits[i].statusCode && statusCodeIndex < 0 && (hits[i].statusCode < '200' || hits[i].statusCode > '299')) {
-				this.statusCodes.push({code: hits[i].statusCode, count: 1})
+				this.statusCodes.push({ code: hits[i].statusCode, count: 1 })
 			} else if (hits[i].statusCode && (hits[i].statusCode < '200' || hits[i].statusCode > '299')) {
 				this.statusCodes[statusCodeIndex].count++;
 			}
