@@ -1,5 +1,5 @@
+import { BaseType } from "d3";
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as moment from 'moment';
 import * as d3 from 'd3';
@@ -216,7 +216,8 @@ class WeatherForecast extends React.Component<any, WeatherDataState> {
 							<Tabs defaultActiveKey="1">
 								<TabPane tab="Today" key="1">{renderForecastChart(0, this.width, 300)}</TabPane>
 								<TabPane tab="Tomorrow" key="2">{renderForecastChart(8, this.width, 300)}</TabPane>
-								<TabPane tab="After Tomorrow" key="3">{renderForecastChart(16, this.width, 300)}</TabPane>
+								<TabPane tab="After Tomorrow"
+								         key="3">{renderForecastChart(16, this.width, 300)}</TabPane>
 							</Tabs>
 						</div>
 					</Col>
@@ -282,6 +283,8 @@ interface AxisPropTypes {
 }
 
 class Axis extends React.Component<AxisPropTypes, any> {
+	node: BaseType = null;
+
 	componentDidUpdate() {
 		this.renderAxis();
 	}
@@ -291,15 +294,15 @@ class Axis extends React.Component<AxisPropTypes, any> {
 	}
 
 	renderAxis() {
-		let node = ReactDOM.findDOMNode(this);
-		d3.select(node).call(this.props.axis);
+		d3.select(this.node).call(this.props.axis);
 	};
 
 	render() {
 		const translate = 'translate(0,' + (this.props.h) + ')';
 
 		return (
-			<g transform={this.props.axisType === 'x' ? translate : ''}
+			<g ref={node => this.node = node}
+			   transform={this.props.axisType === 'x' ? translate : ''}
 			   shapeRendering='crispEdges'
 			   strokeDasharray={this.props.axisType === 'y-t' ? '2,2' : ''}
 			   opacity='1'>
