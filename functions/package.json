@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.4",
     "firebase-admin": "^5.12.1",
     "firebase-functions": "^1.0.4",
     "lodash": "^4.17.10",

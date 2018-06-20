@@ -9,11 +9,11 @@ import { ToolTip } from './ToolTip';
 
 const TabPane = Tabs.TabPane;
 
-interface WeatherDataState {
+interface WeatherForecastState {
 	tooltip: any
 }
 
-class WeatherForecast extends React.Component<any, WeatherDataState> {
+class WeatherForecast extends React.Component<any, WeatherForecastState> {
 	width: number = 0;
 
 	constructor(props: any) {

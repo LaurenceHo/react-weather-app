@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { Alert, Card, Col, Row, Spin } from 'antd';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
-import WeatherData from './WeatherForecast';
+import WeatherForecast from './WeatherForecast';
+
 import {
 	getCurrentWeatherByCity,
 	getCurrentWeatherByCoordinates,
 	getForecastByCity,
-	getForecastByCoordinates
-} from '../api/OpenWeatherMap';
-import { getGeoCode, getTimeZone } from '../api/Google';
+	getForecastByCoordinates, getGeocode, getTimeZone
+} from '../api';
 // For mock data
 // import { timezone } from '../../sample/timezone';
 // import { weather } from '../../sample/weather';
@@ -36,26 +36,13 @@ class WeatherMain extends React.Component<any, any> {
 
 			// For PROD
 			navigator.geolocation.getCurrentPosition(location => {
-				console.log('Got user location: ', location);
-				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
+				getGeocode(location.coords.latitude, location.coords.longitude).then(geocode => {
 					if (geocode.status === 'OK') {
-						console.log('Got Geo code from google');
-						let sublocalityLocation: any = _.findLast(geocode.results, { 'types': ["political", "sublocality", "sublocality_level_1"] });
-						let location: any = _.findLast(geocode.results, { 'types': ['administrative_area_level_1', 'political'] });
-
-						let city;
-						if (sublocalityLocation) {
-							city = sublocalityLocation.formatted_address;
-						} else {
-							city = location.formatted_address;
-						}
-						this.props.fetchingData(city);
-						this.getWeatherData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng, city);
-					} else if (geocode.error_message) {
-						this.searchByDefaultLocation(geocode.error_message + '. Use default location: Auckland, New Zealand');
-					} else {
-						this.searchByDefaultLocation('Cannot find your location. Use default location: Auckland, New Zealand');
+						this.props.fetchingData(geocode.city);
+						this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
 					}
+				}).catch(error => {
+					this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
 				});
 			}, error => {
 				this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
@@ -195,7 +182,7 @@ class WeatherMain extends React.Component<any, any> {
 					</div>
 				);
 			} else if (weather && location) {
-				return (<WeatherData/>);
+				return (<WeatherForecast/>);
 			}
 		};
 
