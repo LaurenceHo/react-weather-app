@@ -43,9 +43,7 @@ export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSe
 				onPressEnter={this.handleSubmit}
 				placeholder='Search weather by city'
 				disabled={this.props.isDisabled}
-				style={{ width: 250 }}
-				enterButton
-			/>
+				enterButton/>
 		);
 	}
 }

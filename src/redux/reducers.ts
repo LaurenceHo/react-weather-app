@@ -1,6 +1,7 @@
 import * as ACTION from './actions';
 
 const initialState = {
+	units: 'si',
 	filter: '',
 	location: '',
 	weather: {},
@@ -11,7 +12,7 @@ const initialState = {
 };
 
 export const reducers = (state: any = initialState, action: any) => {
-	switch ( action.type ) {
+	switch (action.type) {
 		case ACTION.FETCHING_DATA:
 			return {
 				...state,
@@ -36,6 +37,12 @@ export const reducers = (state: any = initialState, action: any) => {
 		case ACTION.SET_ALL_WEATHER_DATA_INTO_STORE:
 			return {
 				...action.payload
+			};
+
+		case ACTION.SET_UNITS:
+			return {
+				...state,
+				units: action.units,
 			};
 
 		default:

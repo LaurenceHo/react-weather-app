@@ -2,6 +2,14 @@ export const SET_ALL_WEATHER_DATA_INTO_STORE = 'SET_ALL_WEATHER_DATA_INTO_STORE'
 export const FETCHING_DATA = 'FETCHING_DATA';
 export const FETCHING_DATA_SUCCESS = 'FETCHING_DATA_SUCCESS';
 export const FETCHING_DATA_FAILURE = 'FETCHING_DATA_FAILURE';
+export const SET_UNITS = 'SET_UNITS';
+
+export function setUnits(units: string) {
+	return {
+		type: SET_UNITS,
+		units
+	}
+}
 
 export function fetchingData(filter: string) {
 	return {

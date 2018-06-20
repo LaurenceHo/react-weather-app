@@ -2,151 +2,135 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Card, Col, Row, Spin } from 'antd';
+import { Alert, Col, Row, Spin } from 'antd';
 
-import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
-import WeatherData from './WeatherForecast';
 import {
-	getCurrentWeatherByCity,
-	getCurrentWeatherByCoordinates,
-	getForecastByCity,
-	getForecastByCoordinates
-} from '../api/OpenWeatherMap';
-import { getGeoCode, getTimeZone } from '../api/Google';
-// For mock data
-// import { timezone } from '../../sample/timezone';
-// import { weather } from '../../sample/weather';
-// import { forecast } from '../../sample/forecast';
+	fetchingData,
+	fetchingDataFailure,
+	fetchingDataSuccess,
+	setAllWeatherDataIntoStore,
+	setUnits
+} from '../redux/actions';
+import { Forecast, Timezone } from './DataModel';
+import WeatherForecast from './WeatherForecast';
+
+import {
+	getGeocode, getWeather
+} from '../api';
 
 class WeatherMain extends React.Component<any, any> {
 	constructor(props: any) {
 		super(props);
 	}
 
-	componentWillReceiveProps(nextProps: any) {
-		if (this.props.filter && (this.props.filter !== nextProps.filter)) {
-			this.getWeatherData(0, 0, nextProps.filter);
+	componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
+		// When user search weather by city name
+		if (prevProps.filter && (this.props.filter !== prevProps.filter)) {
+			this.getWeatherData(0, 0, this.props.filter);
+		}
+
+		if (this.props.units !== prevProps.units) {
+			if (this.props.timezone.latitude && this.props.timezone.longitude) {
+				this.props.fetchingData(this.props.filter);
+				this.getWeatherData(this.props.timezone.latitude, this.props.timezone.longitude, this.props.filter);
+			} else {
+				this.props.fetchingData(this.props.filter);
+				this.getWeatherData(0, 0, this.props.filter);
+			}
 		}
 	}
 
 	componentDidMount() {
 		if (this.props.location.length === 0 && _.isEmpty(this.props.weather) && _.isEmpty(this.props.forecast)) {
 			this.props.fetchingData('');
-			// this.mockData();
+			// Get user's coordinates when user access the web app, it will ask user's location permission
+			let options = {
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0
+			};
 
-			// For PROD
-			navigator.geolocation.getCurrentPosition(location => {
-				console.log('Got user location: ', location);
-				getGeoCode(location.coords.latitude, location.coords.longitude).then(geocode => {
+			const handleLocation = (location: any) => {
+				getGeocode(location.coords.latitude, location.coords.longitude, '').then((geocode: any) => {
 					if (geocode.status === 'OK') {
-						console.log('Got Geo code from google');
-						let sublocalityLocation: any = _.findLast(geocode.results, { 'types': ["political", "sublocality", "sublocality_level_1"] });
-						let location: any = _.findLast(geocode.results, { 'types': ['administrative_area_level_1', 'political'] });
-
-						let city;
-						if (sublocalityLocation) {
-							city = sublocalityLocation.formatted_address;
-						} else {
-							city = location.formatted_address;
-						}
-						this.props.fetchingData(city);
-						this.getWeatherData(geocode.results[0].geometry.location.lat, geocode.results[0].geometry.location.lng, city);
-					} else if (geocode.error_message) {
-						this.searchByDefaultLocation(geocode.error_message + '. Use default location: Auckland, New Zealand');
-					} else {
-						this.searchByDefaultLocation('Cannot find your location. Use default location: Auckland, New Zealand');
+						this.props.fetchingData(geocode.address);
+						this.getWeatherData(geocode.latitude, geocode.longitude, geocode.address);
 					}
+				}).catch(error => {
+					this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
 				});
-			}, error => {
+			};
+
+			const handleError = (error: any) => {
+				this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
+			};
+
+			navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+		}
+	}
+
+	/**
+	 * Only be called when error occurs
+	 * @param {string} message
+	 */
+	private searchByDefaultLocation(message: string) {
+		this.props.fetchingDataFailure(message);
+		setTimeout(this.delayFetchWeatherData.bind(this), 5000);
+	}
+
+	private delayFetchWeatherData() {
+		this.props.fetchingData('Auckland');
+		this.getWeatherData(0, 0, 'Auckland');
+	}
+
+	/**
+	 * If you set lat along with lon, then you must set city name as well, otherwise set (0, 0, city)
+	 * @param {number} lat
+	 * @param {number} lon
+	 * @param {string} city
+	 */
+	private getWeatherData(lat: number, lon: number, city: string) {
+		if (lat !== 0 && lon !== 0) {
+			// get weather and forecast info by latitude and longitude
+			getWeather(lat, lon, null, this.props.units).then((results: Forecast) => {
+				const timezone: Timezone = {
+					timezone: results.timezone,
+					offset: results.offset,
+					latitude: results.latitude,
+					longitude: results.longitude
+				};
+				const forecast = {
+					minutely: results.minutely,
+					hourly: results.hourly,
+					daily: results.daily
+				};
+
+				this.setDataToStore(city, results.currently, timezone, forecast);
+			}).catch(error => {
+				this.props.fetchingDataFailure(error);
+			});
+		} else {
+			// Get coordinates by city at first, after that get the weather and forecast info by coordinates
+			getGeocode(null, null, city).then((geocode: any) => {
+				if (geocode.status === 'OK') {
+					this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
+				}
+			}).catch(error => {
 				this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
 			});
 		}
 	}
 
-	// mockData() {
-	// 	this.props.fetchingData('Auckland');
-	// 	this.props.fetchingDataSuccess();
-	// 	this.props.setAllWeatherDataIntoStore({
-	// 		filter: 'Auckland',
-	// 		location: 'Auckland, NZ',
-	// 		weather: weather,
-	// 		timezone: timezone,
-	// 		forecast: forecast,
-	// 		isLoading: false
-	// 	});
-	// }
-
-	searchByDefaultLocation(message: string) {
-		this.props.fetchingDataFailure(message);
-		setTimeout(this.delayFetchData.bind(this), 3000);
-	}
-
-	delayFetchData() {
-		this.props.fetchingData('Auckland');
-		this.getWeatherData(0, 0, 'Auckland');
-	}
-
-	getTimeZoneAndForecast(lat: number, lon: number, weather: any, type: string, city: string) {
-		getTimeZone(lat, lon).then(timezone => {
-			if (timezone.status === 'OK') {
-				if (type === 'city' && city) {
-					getForecastByCity(city).then((forecast: any) => {
-						if (forecast) {
-							console.log('Got forecast by city: ', this.props.filter);
-							this.setDataToStore(this.props.filter, weather, timezone, forecast);
-						}
-					}, (error: any) => {
-						this.props.fetchingDataFailure(error.message);
-					});
-				} else {
-					getForecastByCoordinates(lat, lon).then((forecast: any) => {
-						if (forecast) {
-							console.log('Got forecast by coordinates: ', lat, lon);
-							this.setDataToStore(this.props.filter, weather, timezone, forecast);
-						}
-					}, (error: any) => {
-						this.props.fetchingDataFailure(error.message);
-					});
-				}
-			} else if (timezone.error_message) {
-				this.props.fetchingDataFailure(timezone.error_message);
-			} else {
-				this.props.fetchingDataFailure('Cannot get timezone');
-			}
-		});
-	}
-
-	getWeatherData(lat: number, lon: number, city: string) {
-		if (lat !== 0 && lon !== 0) {
-			getCurrentWeatherByCoordinates(lat, lon).then((weather: any) => {
-				if (weather && weather.cod === 200) {
-					console.log('Got current weather by coordinates: ', lat, lon);
-					this.getTimeZoneAndForecast(lat, lon, weather, 'coordinates', '');
-				}
-			}, (error: any) => {
-				this.props.fetchingDataFailure(error.message);
-			});
-		} else {
-			getCurrentWeatherByCity(city).then((weather: any) => {
-				if (weather && weather.cod === 200) {
-					console.log('Got current weather by city: ', city);
-					let latitude = weather.coord.lat;
-					let longitude = weather.coord.lon;
-					this.getTimeZoneAndForecast(latitude, longitude, weather, 'city', city);
-				}
-			}, (error: any) => {
-				if (error.message.indexOf('404') !== -1) {
-					this.props.fetchingDataFailure(`${error.message}. Cannot find the weather by ${city}`)
-				} else {
-					this.props.fetchingDataFailure(error.message);
-				}
-			});
-		}
-	}
-
+	/**
+	 * @param {string} city name
+	 * @param weather, the current weather info from the fetched weather result
+	 * @param timezone, the timezone info from the fetched weather result
+	 * @param forecast, the forecast info from the fetched weather result, which is including minutely, hourly and daily info
+	 */
 	private setDataToStore(city: string, weather: any, timezone: any, forecast: any) {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
+			units: this.props.units,
 			filter: city,
 			location: city,
 			weather: weather,
@@ -159,11 +143,11 @@ class WeatherMain extends React.Component<any, any> {
 	render() {
 		const { weather, location, isLoading, error } = this.props;
 
-		const renderCurrentWeather = () => {
+		const renderWeatherAndForecast = () => {
 			if (error) {
 				return (
 					<div>
-						<Row type="flex" justify="center">
+						<Row type="flex" justify="center" className='fetching-weather-content'>
 							<Col xs={24} sm={24} md={18} lg={16} xl={16}>
 								<Alert
 									message="Error"
@@ -173,39 +157,21 @@ class WeatherMain extends React.Component<any, any> {
 								/>
 							</Col>
 						</Row>
-						{error.indexOf('404') !== -1 ?
-							<Row type="flex" justify="center" style={{ paddingTop: 10 }}>
-								<Col xs={24} sm={24} md={18} lg={16} xl={16}>
-									<Card title="Search engine is very flexible. How it works:">
-										<ul>
-											<li>Put the city's name or its part and get the list of the most proper
-												cities in the world. Example - London or Auckland. The more precise city
-												name you put the more precise list you will get.
-											</li>
-											<li>To make it more precise put the city's name or its part, comma, the name
-												of the country or 2-letter country code. You will get all proper cities
-												in chosen country. The order is important - the first is city name then
-												comma then country. Example - Auckland, NZ or Auckland, New Zealand.
-											</li>
-										</ul>
-									</Card>
-								</Col>
-							</Row>
-							: null}
 					</div>
 				);
 			} else if (weather && location) {
-				return (<WeatherData/>);
+				return (<WeatherForecast/>);
 			}
 		};
 
 		return (
-			<div style={{ paddingTop: 40, paddingBottom: 40 }}>
+			<div>
 				{isLoading ?
-					<Row type="flex" justify="center">
-						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
+					<Row type="flex" justify="center" className='fetching-weather-content'>
+						<h2>Fetching weather</h2>
+						<Spin className='fetching-weather-spinner' size="large"/>
 					</Row>
-					: renderCurrentWeather()}
+					: renderWeatherAndForecast()}
 			</div>
 		)
 	}
@@ -213,6 +179,7 @@ class WeatherMain extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
 	return {
+		units: state.units,
 		filter: state.filter,
 		location: state.location,
 		weather: state.weather,
@@ -225,6 +192,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
 	return bindActionCreators({
+		setUnits,
 		fetchingData,
 		fetchingDataSuccess,
 		fetchingDataFailure,
