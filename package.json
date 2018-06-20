@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --open",
     "build": "webpack --config config/webpack.prod.js --progress --profile --bail",
     "deploy": "npm run build && firebase deploy",
-    "firebase-init": "firebase login && firebase init"
+    "firebase-init": "firebase login && firebase init",
+    "functions": "firebase deploy --only functions"
   },
   "author": "Laurence Ho",
   "license": "MIT",

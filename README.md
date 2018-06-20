@@ -1,7 +1,12 @@
 # A beautiful weather web application using React, Redux, Typescript, Webpack4, Ant Design and D3v5.
 
 ## Introduction
-This project demonstrates how to use React, Redux, Typescript, Webpack4, Ant Design and D3v5. It is also including two kinds of D3 force simulation demonstrations as well as gauge, which is based on my personal interest and previous project. 
+This project demonstrates how to use React, Redux, Typescript, Webpack4, Ant Design and D3v5. 
+It is also including two kinds of D3 force simulation demonstrations as well as gauge, which 
+is based on my personal interest and previous project. 
+
+Furthermore, this project also demonstrates how to deploy the web app to firebase, and use the cloud 
+function as a server with React frontend.
 
 ## Prerequisites
 The latest version of Nodejs and npm need to be installed.
@@ -30,11 +35,10 @@ npm run start
 4.Visit in your browser: http://localhost:8080
 
 ### Deploy to firebase
-1. Change the default project setting in the `.firebaserc`
-2. Then run:
-```
-npm run deploy
-```
+1. Run `npm run firebase-init`
+2. Change the default project setting in the `.firebaserc`
+3. If you want to deploy the whole project, run `npm run deploy`
+4. If you just want to deploy the cloud functions, run `npm run functions`
 
 ### Live demo
 https://react-beautiful-weather-app.firebaseapp.com/
