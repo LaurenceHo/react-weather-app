@@ -36,9 +36,10 @@ npm run start
 
 ### Deploy to firebase
 1. Run `npm run firebase-init`
-2. Change the default project setting in the `.firebaserc`
-3. If you want to deploy the whole project, run `npm run deploy`
-4. If you just want to deploy the cloud functions, run `npm run functions`
+2. Visit https://console.firebase.google.com to create a new project
+3. Then run `npm run add`
+4. If you want to deploy the whole project, run `npm run deploy`
+5. If you just want to deploy the cloud functions, run `npm run functions`
 
 ### Live demo
 https://react-beautiful-weather-app.firebaseapp.com/

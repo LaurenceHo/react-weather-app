@@ -8,6 +8,7 @@
     "build": "webpack --config config/webpack.prod.js --progress --profile --bail",
     "deploy": "npm run build && firebase deploy",
     "firebase-init": "firebase login && firebase init",
+    "add": "firebase use --add",
     "functions": "firebase deploy --only functions"
   },
   "author": "Laurence Ho",
