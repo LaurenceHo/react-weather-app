@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Alert, Card, Col, Row, Spin } from 'antd';
 
 import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
-import WeatherData from './WeatherData';
+import WeatherData from './WeatherForecast';
 import {
 	getCurrentWeatherByCity,
 	getCurrentWeatherByCoordinates,
@@ -18,7 +18,7 @@ import { getGeoCode, getTimeZone } from '../api/Google';
 // import { weather } from '../../sample/weather';
 // import { forecast } from '../../sample/forecast';
 
-class Weather extends React.Component<any, any> {
+class WeatherMain extends React.Component<any, any> {
 	constructor(props: any) {
 		super(props);
 	}
@@ -178,14 +178,14 @@ class Weather extends React.Component<any, any> {
 								<Col xs={24} sm={24} md={18} lg={16} xl={16}>
 									<Card title="Search engine is very flexible. How it works:">
 										<ul>
-											<li>Put the city's name or its part and get the list of the most proper cities in the world.
-												Example - London or Auckland. The more precise city name you put the more precise list you will
-												get.
+											<li>Put the city's name or its part and get the list of the most proper
+												cities in the world. Example - London or Auckland. The more precise city
+												name you put the more precise list you will get.
 											</li>
-											<li>To make it more precise put the city's name or its part, comma, the name of the country or
-												2-letter country code. You will get all proper cities in chosen country. The order is important
-												- the first is city name then comma then country. Example - Auckland, NZ or Auckland, New
-												Zealand.
+											<li>To make it more precise put the city's name or its part, comma, the name
+												of the country or 2-letter country code. You will get all proper cities
+												in chosen country. The order is important - the first is city name then
+												comma then country. Example - Auckland, NZ or Auckland, New Zealand.
 											</li>
 										</ul>
 									</Card>
@@ -232,4 +232,4 @@ const mapDispatchToProps = (dispatch: any) => {
 	}, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Weather);
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherMain);

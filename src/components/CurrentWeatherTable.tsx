@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { Col, Table } from 'antd';
-import { WeatherIcon } from './WeatherIcon';
-import { WindIcon } from './WindIcon';
+import { WeatherIcon } from './icon/WeatherIcon';
+import { WindIcon } from './icon/WindIcon';
 
 interface CurrentWeatherTablePropTypes {
 	weather: any

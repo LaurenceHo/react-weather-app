@@ -10,7 +10,7 @@ export const SCATTERED_CLOUDS = 802;
 export const BROKEN_CLOUDS = 803;
 export const OVERCAST_CLOUDS = 804;
 
-// Wind
+// Wind coming from
 export const WIND_N = 0;
 export const WIND_NNE = 1;
 export const WIND_NE = 2;

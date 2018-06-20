@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Layout, Menu, Row } from 'antd';
 import { fetchingData } from '../redux/actions';
-import { WeatherForm } from './WeatherForm';
+import { WeatherSearch } from './WeatherSearch';
 
 const { Header } = Layout;
 
@@ -61,7 +61,7 @@ class NavBar extends React.Component<any, NavBarState> {
 					</Col>
 					<Col xs={6} sm={6} md={6} lg={6} xl={5}>
 						<div>
-							<WeatherForm onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
+							<WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
 						</div>
 					</Col>
 				</Row>

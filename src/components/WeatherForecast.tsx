@@ -13,7 +13,7 @@ interface WeatherDataState {
 	tooltip: any
 }
 
-class WeatherData extends React.Component<any, WeatherDataState> {
+class WeatherForecast extends React.Component<any, WeatherDataState> {
 	width: number = 0;
 
 	constructor(props: any) {
@@ -237,7 +237,7 @@ const mapStateToProps = (state: any) => {
 	}
 };
 
-export default connect(mapStateToProps)(WeatherData);
+export default connect(mapStateToProps)(WeatherForecast);
 
 interface DotsPropTypes {
 	data: any

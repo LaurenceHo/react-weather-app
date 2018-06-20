@@ -3,17 +3,17 @@ import { Input } from 'antd';
 
 const Search = Input.Search;
 
-interface WeatherFormProps {
+interface WeatherSearchProps {
 	onSearch: any
 	isDisabled: boolean
 }
 
-interface WeatherFormState {
+interface WeatherSearchState {
 	location: string
 }
 
-export class WeatherForm extends React.Component<WeatherFormProps, WeatherFormState> {
-	constructor(props: WeatherFormProps) {
+export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSearchState> {
+	constructor(props: WeatherSearchProps) {
 		super(props);
 
 		this.state = {
