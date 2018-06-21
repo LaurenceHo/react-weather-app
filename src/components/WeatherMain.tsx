@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import * as moment from 'moment';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Card, Col, Row, Spin } from 'antd';
@@ -9,18 +8,15 @@ import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDa
 import WeatherForecast from './WeatherForecast';
 
 import {
-	getGeocode, getForecast, getWeather
+	getGeocode, getWeather
 } from '../api';
-// For mock data
-// import { weather } from '../../sample/weather';
-// import { forecast } from '../../sample/forecast';
 
 interface Timezone {
 	timezone: string,
 	offset: number
 }
 
-interface CurrentWeather {
+interface Weather {
 	time: number,
 	summary: string,
 	icon: string,
@@ -46,7 +42,7 @@ class WeatherMain extends React.Component<any, any> {
 	componentWillReceiveProps(nextProps: any) {
 		if (this.props.filter && (this.props.filter !== nextProps.filter)) {
 			// When user search weather by city name
-			this.getWeatherData(0, 0, nextProps.filter, 0);
+			this.getWeatherData(0, 0, nextProps.filter);
 		}
 	}
 
@@ -55,13 +51,13 @@ class WeatherMain extends React.Component<any, any> {
 			this.props.fetchingData('');
 			// this.mockData();
 
-			// Get user's coordinates when user access the web app
+			// Get user's coordinates when user access the web app, it will ask user's location permission
 			navigator.geolocation.getCurrentPosition(location => {
-				// Get city name for displaying
-				getGeocode(location.coords.latitude, location.coords.longitude, '').then(geocode => {
+				// Get city name for displaying on the home page
+				getGeocode(location.coords.latitude, location.coords.longitude, '').then((geocode: any) => {
 					if (geocode.status === 'OK') {
 						this.props.fetchingData(geocode.city);
-						this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city, 0);
+						this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
 					}
 				}).catch(error => {
 					this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
@@ -73,19 +69,6 @@ class WeatherMain extends React.Component<any, any> {
 		}
 	}
 
-	// mockData() {
-	// 	this.props.fetchingData('Auckland');
-	// 	this.props.fetchingDataSuccess();
-	// 	this.props.setAllWeatherDataIntoStore({
-	// 		filter: 'Auckland',
-	// 		location: 'Auckland, NZ',
-	// 		weather: weather,
-	// 		timezone: timezone,
-	// 		forecast: forecast,
-	// 		isLoading: false
-	// 	});
-	// }
-
 	searchByDefaultLocation(message: string) {
 		this.props.fetchingDataFailure(message);
 		setTimeout(this.delayFetchData.bind(this), 3000);
@@ -93,21 +76,21 @@ class WeatherMain extends React.Component<any, any> {
 
 	delayFetchData() {
 		this.props.fetchingData('Auckland');
-		this.getWeatherData(0, 0, 'Auckland', 0);
+		this.getWeatherData(0, 0, 'Auckland');
 	}
 
-	getWeatherData(lat: number, lon: number, city: string, time: number) {
+	getWeatherData(lat: number, lon: number, city: string) {
 		if (lat !== 0 && lon !== 0) {
 			// get current weather by latitude and longitude
-			getWeather(lat, lon, 'minutely').then(results => {
+			getWeather(lat, lon, null).then((results: any) => {
 				const timezone: Timezone = {
 					timezone: results.timezone,
 					offset: results.offset
 				};
 
-				const currenctWeather: CurrentWeather = {
+				const currenctWeather: Weather = {
 					time: results.currently.time,
-					summary: results.hourly.summary,
+					summary: results.minutely.summary,
 					icon: results.currently.icon,
 					nearestStormDistance: results.currently.nearestStormDistance,
 					precipIntensity: results.currently.precipIntensity,
@@ -123,22 +106,63 @@ class WeatherMain extends React.Component<any, any> {
 					visibility: results.currently.visibility
 				};
 
-				// After getting the current weather, retrieve the forecast
-				//TODO, setup timestamp for retrieving the forecast
-				getForecast(lat, lon, time, 'minutely').then(forecast => {
-					this.setDataToStore(city, currenctWeather, timezone, forecast);
-				}).catch(error => {
-					this.props.fetchingDataFailure(error.message);
+				let hourlyForecast: Weather[] = [];
+				results.hourly.data.forEach((data: any) => {
+					hourlyForecast.push({
+						time: data.time,
+						summary: data.summary,
+						icon: data.icon,
+						nearestStormDistance: data.nearestStormDistance,
+						precipIntensity: data.precipIntensity,
+						precipProbability: data.precipProbability,
+						precipType: data.precipType,
+						temperature: data.temperature,
+						humidity: data.humidity,
+						pressure: data.pressure,
+						windSpeed: data.windSpeed,
+						windGust: data.windGust,
+						cloudCover: data.cloudCover,
+						uvIndex: data.uvIndex,
+						visibility: data.visibility
+					});
 				});
+
+				let dailyForecast: Weather[] = [];
+				results.daily.data.forEach((data: any) => {
+					dailyForecast.push({
+						time: data.time,
+						summary: data.summary,
+						icon: data.icon,
+						nearestStormDistance: data.nearestStormDistance,
+						precipIntensity: data.precipIntensity,
+						precipProbability: data.precipProbability,
+						precipType: data.precipType,
+						temperature: data.temperature,
+						humidity: data.humidity,
+						pressure: data.pressure,
+						windSpeed: data.windSpeed,
+						windGust: data.windGust,
+						cloudCover: data.cloudCover,
+						uvIndex: data.uvIndex,
+						visibility: data.visibility
+					});
+				});
+
+				let forecast = {
+					hourly: hourlyForecast,
+					daily: dailyForecast
+				};
+
+				this.setDataToStore(city, currenctWeather, timezone, forecast);
 			}).catch(error => {
 				this.props.fetchingDataFailure(error);
 			});
 		} else {
 			// Get coordinates by city
-			getGeocode(null, null, city).then(geocode => {
+			getGeocode(null, null, city).then((geocode: any) => {
 				if (geocode.status === 'OK') {
 					this.props.fetchingData(geocode.city);
-					this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city, 0);
+					this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
 				}
 			}).catch(error => {
 				this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
@@ -175,7 +199,7 @@ class WeatherMain extends React.Component<any, any> {
 								/>
 							</Col>
 						</Row>
-						{error.indexOf('404') !== -1 ?
+						{!_.isUndefined(error) || !_.isNull(error) ?
 							<Row type="flex" justify="center" style={{ paddingTop: 10 }}>
 								<Col xs={24} sm={24} md={18} lg={16} xl={16}>
 									<Card title="Search engine is very flexible. How it works:">
