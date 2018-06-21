@@ -1,19 +1,66 @@
 const _ = require('lodash');
 const functions = require('firebase-functions');
 const request = require('request');
-const moment = require('moment');
 const cors = require('cors')({ origin: true });
 
 const apiKey = require('./apikey');
 
 const GOOGLE_MAPS_API_URL = 'https://maps.googleapis.com/maps/api/';
-const GOOGLE_TIMEZONE_API_URL = GOOGLE_MAPS_API_URL + 'timezone/json?location=';
-const GOOGLE_GETCODE_API_URL = GOOGLE_MAPS_API_URL + 'geocode/json?latlng=';
+const GEOCODE_API_URL = GOOGLE_MAPS_API_URL + 'geocode/json?';
+const DARK_SKY_API_URL = 'https://api.darksky.net/forecast/' + apiKey.darkSky;
 
-exports.getTimeZone = functions.https.onRequest((req, res) => {
-	const latitudeAndLongitude = req.query.lat + ',' + req.query.lon;
+exports.getGeocode = functions.https.onRequest((req, res) => {
+	let params = '';
+	if (_.isNull(req.query.lat) || _.isUndefined(req.query.lat) || _.isNull(req.query.lon) || _.isUndefined(req.query.lon)) {
+		params = `address=${req.query.address}`;
+	} else {
+		params = `latlng=${req.query.lat},${req.query.lon}`;
+	}
+	const requestUrl = `${GEOCODE_API_URL}${params}&key=${apiKey.google}`;
 
-	const requestUrl = `${GOOGLE_TIMEZONE_API_URL}${latitudeAndLongitude}&timestamp=${moment().unix()}&key=${apiKey.google}`;
+	cors(req, res, () => {
+		return request.get(requestUrl, (error, response, body) => {
+			if (error) {
+				return res.send(error);
+			}
+
+			const geocode = JSON.parse(body);
+			if (geocode.status === 'OK') {
+				const results = geocode.results;
+
+				let sublocality = _.findLast(results, { 'types': ['political', 'sublocality', 'sublocality_level_1'] });
+				let administrative_area = _.findLast(results, { 'types': ['administrative_area_level_1', 'political'] });
+				let locality = _.findLast(results, { 'types': ['locality', 'political'] });
+
+				let city;
+				if (sublocality) {
+					city = sublocality.formatted_address;
+				} else {
+					if (administrative_area) {
+						city = administrative_area.formatted_address;
+					} else {
+						city = locality.formatted_address;
+					}
+				}
+
+				let geocodeResponse = {
+					status: 'OK',
+					address: results[0].formatted_address,
+					latitude: results[0].geometry.location.lat,
+					longitude: results[0].geometry.location.lng,
+					city: city
+				};
+				return res.status(200).send(geocodeResponse);
+			} else {
+				return res.send(error);
+			}
+		});
+	});
+});
+
+exports.getWeather = functions.https.onRequest((req, res) => {
+	const params = req.query.lat + ',' + req.query.lon;
+	const requestUrl = `${DARK_SKY_API_URL}/${params}?exclude=${req.query.exclude}`;
 
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {
@@ -25,40 +72,16 @@ exports.getTimeZone = functions.https.onRequest((req, res) => {
 	});
 });
 
-exports.getGeocode = functions.https.onRequest((req, res) => {
-	const latitudeAndLongitude = req.query.lat + ',' + req.query.lon;
+exports.getForecast = functions.https.onRequest((req, res) => {
+	const params = req.query.lat + ',' + req.query.lon + ',' + req.query.time;
+	const requestUrl = `${DARK_SKY_API_URL}/${params}?exclude=${req.query.exclude}`;
 
-	const requestUrl = `${GOOGLE_GETCODE_API_URL}${latitudeAndLongitude}&sensor=true&key=${apiKey.google}`;
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {
 			if (error) {
 				return res.send(error);
 			}
-
-			const geocode = JSON.parse(body);
-
-			if (geocode.status === 'OK') {
-				const results = geocode.results;
-
-				let subLocalityLocation = _.findLast(results, { 'types': ['political', 'sublocality', 'sublocality_level_1'] });
-				let location = _.findLast(results, { 'types': ['administrative_area_level_1', 'political'] });
-
-				let city;
-				if (subLocalityLocation) {
-					city = subLocalityLocation.formatted_address;
-				} else {
-					city = location.formatted_address;
-				}
-
-				let geocodeResponse = {
-					status: 'OK',
-					address: results[0].formatted_address,
-					latitude: results[0].geometry.location.lat,
-					longitude: results[0].geometry.location.lng,
-					city: city
-				};
-				return res.status(200).send(geocodeResponse);
-			}
+			return res.status(200).send(JSON.parse(body));
 		});
 	});
 });
