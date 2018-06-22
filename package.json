@@ -6,10 +6,10 @@
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --open",
     "build": "webpack --config config/webpack.prod.js --progress --profile --bail",
-    "deploy": "npm run build && firebase deploy",
+    "firebase-deploy": "npm run build && firebase deploy",
     "firebase-init": "firebase login && firebase init",
-    "add": "firebase use --add",
-    "functions": "firebase deploy --only functions"
+    "firebase-add": "firebase use --add",
+    "deploy-functions": "firebase deploy --only functions"
   },
   "author": "Laurence Ho",
   "license": "MIT",
@@ -31,6 +31,7 @@
     "antd": "^3.6.3",
     "axios": "^0.18.0",
     "d3": "^5.5.0",
+    "echarts": "^4.1.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "react": "^16.4.1",

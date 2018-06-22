@@ -1,102 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
-    position: relative;
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
 }
 
-.shadow {
-    -webkit-filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, .3));
-    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, .3));
+::-webkit-scrollbar {
+    height: 0.8rem;
+    width: 0.8rem;
+    background-color: #666666;
 }
 
-.nav {
-    display: flex;
-}
-
-.nav li {
-    margin-right: 15px;
-}
-
-.active {
-    font-weight: bold;
-}
-
-/*For D3 demo traffic*/
-.link {
-    stroke: #555;
-}
-
-.node text {
-    fill: #000;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-text {
-    fill: #000;
-    cursor: pointer;
-    font-size: 10px;
-}
-
-text.axis-t {
-    fill: #7dc7f4;
-}
-
-text.axis-p {
-    fill: #A4A4A4;
-}
-
-text.legendHeading, .responseHeading {
-    font-size: 16px;
-}
-
-rect.responseTimesChart, tspan.averageLabel {
-    fill: #d75107;
-}
-
-rect.responseTimesChartMax, tspan.maxLabel {
-    fill: rgba(215, 81, 7, 0.38);
-}
-
-text.legendRequestId, text.responseTimesText tspan {
-    font-size: 12px;
-}
-
-.node circle, .nodeLegend circle {
-    stroke-width: 5px;
-    fill: #fff;
-    stroke: #d16107
-}
-
-.node circle.DEBUG, .nodeLegend circle.DEBUG {
-    stroke: #62679a
-}
-
-.node circle.INFO, .nodeLegend circle.INFO {
-    stroke: #008376;
-}
-
-.node circle.WARN, .nodeLegend circle.WARN {
-    stroke: #d1b948;
-}
-
-.node circle.ERROR, .nodeLegend circle.ERROR {
-    stroke: #c10901;
-}
-
-circle.az-center {
-    opacity: .0;
-}
-
-circle.az {
-    stroke-width: 5px;
-    opacity: .2;
-    fill: #666;
-    stroke: #666
-}
-
-.link.light {
-    opacity: .0;
-}
-
-text.label.az {
-    font-size: 20px;
+::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #A4A4A4;
 }

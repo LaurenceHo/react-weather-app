@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import { appTraffic } from '../../../sample/appTraffic';
 import { TrafficService } from '../../services/traffic';
 import { gauge } from "../../services/gauge";
+import './d3.css';
 
 export class D3DemoApp extends React.Component<any, any> {
 	nodes: any[] = [];

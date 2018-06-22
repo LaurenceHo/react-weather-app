@@ -22,9 +22,21 @@ interface Weather {
 	icon: string,
 	nearestStormDistance: number,
 	precipIntensity: number,
+	precipIntensityMax: number,
+	precipIntensityMaxTime: number,
 	precipProbability: number,
 	precipType: string,
 	temperature: number,
+	apparentTemperature: number,
+	temperatureHigh: number,
+	temperatureHighTime: number,
+	temperatureLow: number,
+	temperatureLowTime: number,
+	apparentTemperatureHigh: number,
+	apparentTemperatureHighTime: number,
+	apparentTemperatureLow: number,
+	apparentTemperatureLowTime: number,
+	dewPoint: number,
 	humidity: number,
 	pressure: number,
 	windSpeed: number,
@@ -32,6 +44,30 @@ interface Weather {
 	cloudCover: number,
 	uvIndex: number,
 	visibility: number
+}
+
+interface Forecast {
+	latitude: number,
+	longitude: number,
+	timezone: string,
+	currently: Weather,
+	minutely: {
+		summary: string,
+		icon: string,
+		data: Weather[],
+	}
+	hourly: {
+		summary: string,
+		icon: string,
+		data: Weather[]
+	},
+	daily: {
+		summary: string,
+		icon: string,
+		data: Weather[]
+	}
+	flags: Object,
+	offset: number
 }
 
 class WeatherMain extends React.Component<any, any> {
@@ -82,78 +118,19 @@ class WeatherMain extends React.Component<any, any> {
 	getWeatherData(lat: number, lon: number, city: string) {
 		if (lat !== 0 && lon !== 0) {
 			// get current weather by latitude and longitude
-			getWeather(lat, lon, null).then((results: any) => {
+			getWeather(lat, lon, null).then((results: Forecast) => {
 				const timezone: Timezone = {
 					timezone: results.timezone,
 					offset: results.offset
 				};
 
-				const currenctWeather: Weather = {
-					time: results.currently.time,
-					summary: results.minutely.summary,
-					icon: results.currently.icon,
-					nearestStormDistance: results.currently.nearestStormDistance,
-					precipIntensity: results.currently.precipIntensity,
-					precipProbability: results.currently.precipProbability,
-					precipType: results.currently.precipType,
-					temperature: results.currently.temperature,
-					humidity: results.currently.humidity,
-					pressure: results.currently.pressure,
-					windSpeed: results.currently.windSpeed,
-					windGust: results.currently.windGust,
-					cloudCover: results.currently.cloudCover,
-					uvIndex: results.currently.uvIndex,
-					visibility: results.currently.visibility
-				};
-
-				let hourlyForecast: Weather[] = [];
-				results.hourly.data.forEach((data: any) => {
-					hourlyForecast.push({
-						time: data.time,
-						summary: data.summary,
-						icon: data.icon,
-						nearestStormDistance: data.nearestStormDistance,
-						precipIntensity: data.precipIntensity,
-						precipProbability: data.precipProbability,
-						precipType: data.precipType,
-						temperature: data.temperature,
-						humidity: data.humidity,
-						pressure: data.pressure,
-						windSpeed: data.windSpeed,
-						windGust: data.windGust,
-						cloudCover: data.cloudCover,
-						uvIndex: data.uvIndex,
-						visibility: data.visibility
-					});
-				});
-
-				let dailyForecast: Weather[] = [];
-				results.daily.data.forEach((data: any) => {
-					dailyForecast.push({
-						time: data.time,
-						summary: data.summary,
-						icon: data.icon,
-						nearestStormDistance: data.nearestStormDistance,
-						precipIntensity: data.precipIntensity,
-						precipProbability: data.precipProbability,
-						precipType: data.precipType,
-						temperature: data.temperature,
-						humidity: data.humidity,
-						pressure: data.pressure,
-						windSpeed: data.windSpeed,
-						windGust: data.windGust,
-						cloudCover: data.cloudCover,
-						uvIndex: data.uvIndex,
-						visibility: data.visibility
-					});
-				});
-
 				let forecast = {
-					hourly: hourlyForecast,
-					daily: dailyForecast
+					minutely: results.minutely,
+					hourly: results.hourly,
+					daily: results.daily
 				};
 
-				this.setDataToStore(city, currenctWeather, timezone, forecast);
+				this.setDataToStore(city, results.currently, timezone, forecast);
 			}).catch(error => {
 				this.props.fetchingDataFailure(error);
 			});

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 
+import { ToolTip } from './ToolTip';
 import { TrafficService } from '../../services/traffic';
-import { networkTraffic } from '../../../sample/networkTraffic';
-import { ToolTip } from '../ToolTip';
 import { gauge } from '../../services/gauge';
+import { networkTraffic } from '../../../sample/networkTraffic';
+import './d3.css';
 
 interface D3DemoNetworkState {
 	tooltip: any
