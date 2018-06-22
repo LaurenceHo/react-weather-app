@@ -119,7 +119,7 @@ class WeatherMain extends React.Component<any, any> {
 							</Col>
 						</Row>
 						{!_.isUndefined(error) || !_.isNull(error) ?
-							<Row type="flex" justify="center" style={{ paddingTop: 10 }}>
+							<Row type="flex" justify="center" className='error'>
 								<Col xs={24} sm={24} md={18} lg={16} xl={16}>
 									<Card title="Search engine is very flexible. How it works:">
 										<ul>
@@ -147,7 +147,7 @@ class WeatherMain extends React.Component<any, any> {
 		return (
 			<div>
 				{isLoading ?
-					<Row type="flex" justify="center" style={{ paddingTop: 40, paddingBottom: 40 }}>
+					<Row type="flex" justify="center" className='fetching-weather'>
 						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
 					</Row>
 					: renderCurrentWeather()}

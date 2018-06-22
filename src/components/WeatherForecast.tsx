@@ -1,23 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Row } from 'antd';
 import { CurrentWeather } from './CurrentWeather';
+import { HourlyForecast } from './HourlyForecast';
 
 class WeatherForecast extends React.Component<any, any> {
-	width: number = 0;
-
 	constructor(props: any) {
 		super(props);
-
-		if (window.innerWidth < 992) {
-			this.width = 640;
-		} else {
-			this.width = window.innerWidth / 2;
-		}
-
-		this.state = {
-			//TODO
-		};
 	}
 
 	render() {
@@ -26,6 +14,7 @@ class WeatherForecast extends React.Component<any, any> {
 		return (
 			<div>
 				<CurrentWeather weather={weather} location={location} timezone={timezone} units={units}/>
+				<HourlyForecast units={units} timezone={timezone} hourly={forecast.hourly}/>
 			</div>
 		);
 	};

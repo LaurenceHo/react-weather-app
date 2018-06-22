@@ -1,14 +1,50 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
     font-size: 1.2rem;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.error {
+    padding-top: 2rem;
+}
+
+.fetching-weather {
+    padding-top: 4rem;
+}
+
+.current-weather-top {
+    background: #FAFAFA;
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+}
+
+.current-weather-location {
+    padding-top: 1rem;
+    font-size: 2rem;
+}
+
+.current-weather-icon {
+    font-size: 3rem;
+}
+
+.current-weather-sub-content {
+    font-size: 0.8rem;
+}
+
+.hourly-forecast-summary {
+    padding-top: 1rem;
+}
+
+.weather-chart {
+    height: 20rem;
+    width: 50rem;
 }
 
 ::-webkit-scrollbar {
     height: 0.8rem;
     width: 0.8rem;
-    background-color: #666666;
+    background-color: #333333;
 }
 
 ::-webkit-scrollbar-thumb {

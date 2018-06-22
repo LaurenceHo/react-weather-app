@@ -1,13 +1,17 @@
 const _ = require('lodash');
 const functions = require('firebase-functions');
 const request = require('request');
-const cors = require('cors')({ origin: true });
-
 const apiKey = require('./apikey');
 
 const GOOGLE_MAPS_API_URL = 'https://maps.googleapis.com/maps/api/';
 const GEOCODE_API_URL = GOOGLE_MAPS_API_URL + 'geocode/json?';
 const DARK_SKY_API_URL = 'https://api.darksky.net/forecast/' + apiKey.darkSky;
+
+const corsOptions = {
+	origin: 'https://react-beautiful-weather-app.firebaseapp.com/',
+	optionsSuccessStatus: 200
+};
+const cors = require('cors')(corsOptions);
 
 exports.getGeocode = functions.https.onRequest((req, res) => {
 	let params = '';

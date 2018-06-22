@@ -15,12 +15,10 @@ interface CurrentWeatherPropTypes {
 export class CurrentWeather extends React.Component<CurrentWeatherPropTypes, any> {
 	render() {
 		const { weather, location, timezone, units } = this.props;
-		//TODO
 
 		return (
 			<div>
-				<Row type="flex" justify="center"
-				     style={{ background: '#FAFAFA', fontSize: '0.8rem', padding: '0.5rem 0' }}>
+				<Row type="flex" justify="center" className='current-weather-top'>
 					<Col span={2}>
 						Wind: {weather.windSpeed} {units === 'us' ? 'mph' : 'kph'}
 						<WindIcon degree={weather.windBearing}/>
@@ -31,17 +29,17 @@ export class CurrentWeather extends React.Component<CurrentWeatherPropTypes, any
 					<Col span={2}>UV Index: {weather.uvIndex}</Col>
 					<Col span={2}>Visibility: {Math.round(weather.visibility)} {units === 'us' ? 'mi' : 'km'}</Col>
 				</Row>
-				<Row type="flex" justify="center" style={{ fontSize: '2rem' }}>
+				<Row type="flex" justify="center" className='current-weather-location'>
 					{location}
 				</Row>
 				<Row type="flex" justify="center">
-					<Col span={1} style={{ fontSize: '3rem' }}>
+					<Col span={1} className='current-weather-icon'>
 						<WeatherIcon icon={weather.icon}/>
 					</Col>
 					<Col span={3}>
 						<div>{moment.unix(weather.time).utcOffset(timezone.offset).format('YYYY-MM-DD HH:mm')}</div>
 						<div>{weather.summary} {weather.temperature}{units === 'us' ? '℉' : '℃'}</div>
-						<div style={{ fontSize: '0.8rem' }}>Feels
+						<div className='current-weather-sub-content'>Feels
 							like {weather.apparentTemperature}{units === 'us' ? '℉' : '℃'}</div>
 					</Col>
 				</Row>
