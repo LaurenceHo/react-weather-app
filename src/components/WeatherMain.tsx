@@ -65,14 +65,13 @@ class WeatherMain extends React.Component<any, any> {
 					timezone: results.timezone,
 					offset: results.offset
 				};
-
-				let forecast = {
+				const forecast = {
 					minutely: results.minutely,
 					hourly: results.hourly,
 					daily: results.daily
 				};
 
-				this.setDataToStore(city, results.currently, timezone, forecast);
+				this.setDataToStore(city, results.currently, timezone, forecast, results.flags.units);
 			}).catch(error => {
 				this.props.fetchingDataFailure(error);
 			});
@@ -89,7 +88,7 @@ class WeatherMain extends React.Component<any, any> {
 		}
 	}
 
-	private setDataToStore(city: string, weather: any, timezone: any, forecast: any) {
+	private setDataToStore(city: string, weather: any, timezone: any, forecast: any, units: string) {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
 			filter: city,
@@ -97,6 +96,7 @@ class WeatherMain extends React.Component<any, any> {
 			weather: weather,
 			timezone: timezone,
 			forecast: forecast,
+			units: units,
 			isLoading: false
 		});
 	}
@@ -145,9 +145,9 @@ class WeatherMain extends React.Component<any, any> {
 		};
 
 		return (
-			<div style={{ paddingTop: 40, paddingBottom: 40 }}>
+			<div>
 				{isLoading ?
-					<Row type="flex" justify="center">
+					<Row type="flex" justify="center" style={{ paddingTop: 40, paddingBottom: 40 }}>
 						<h2 className='text-center'>Fetching weather </h2><Spin size="large"/>
 					</Row>
 					: renderCurrentWeather()}
@@ -164,6 +164,7 @@ const mapStateToProps = (state: any) => {
 		forecast: state.forecast,
 		timezone: state.timezone,
 		isLoading: state.isLoading,
+		units: state.units,
 		error: state.error
 	}
 };

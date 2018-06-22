@@ -1,24 +1,36 @@
 import * as React from 'react';
-import * as Condition from '../../constants/WeatherConditionCode';
+import * as Condition from '../../constants/WeatherCondition';
 
 interface WeatherIconProps {
-	code: number
+	icon: string
 }
 
 export class WeatherIcon extends React.Component<WeatherIconProps, any> {
 	render() {
-		if (this.props.code === Condition.LIGHT_RAIN || this.props.code === Condition.SHOWER_RAIN) {
-			return (<i className="wi wi-showers"></i>);
-		} else if (this.props.code === Condition.MODERATE_RAIN) {
-			return (<i className="wi wi-hail"></i>);
-		} else if (this.props.code === Condition.CLEAR_SKY) {
-			return (<i className="wi wi-day-sunny"></i>);
-		} else if (this.props.code === Condition.FEW_CLOUDS || this.props.code === Condition.SCATTERED_CLOUDS) {
-			return (<i className="wi wi-cloud"></i>);
-		} else if (this.props.code === Condition.BROKEN_CLOUDS || this.props.code === Condition.OVERCAST_CLOUDS) {
-			return (<i className="wi wi-cloudy"></i>);
+		const { icon } = this.props;
+
+		if (icon === Condition.CLEAR_DAY) {
+			return (<i className="wi wi-day-sunny">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.CLEAR_NIGHT) {
+			return (<i className="wi wi-night-clear">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.RAIN) {
+			return (<i className="wi wi-rain">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.SNOW) {
+			return (<i className="wi wi-snow">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.SLEET) {
+			return (<i className="wi wi-sleet">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.WIND) {
+			return (<i className="wi wi-windy">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.FOG) {
+			return (<i className="wi wi-fog">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.CLOUDY) {
+			return (<i className="wi wi-cloudy">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.PARTLY_CLOUDY_DAY) {
+			return (<i className="wi wi-day-cloudy">{/*EMPTY*/}</i>);
+		} else if (icon === Condition.PARTLY_CLOUDY_NIGHT) {
+			return (<i className="wi wi-night-alt-cloudy">{/*EMPTY*/}</i>);
 		} else {
-			return (null);
+			return null;
 		}
 	}
 }

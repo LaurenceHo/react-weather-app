@@ -28,6 +28,7 @@ export interface Weather {
 	pressure: number,
 	windSpeed: number,
 	windGust: number,
+	windBearing: number,
 	cloudCover: number,
 	uvIndex: number,
 	visibility: number
@@ -53,6 +54,6 @@ export interface Forecast {
 		icon: string,
 		data: Weather[]
 	}
-	flags: Object,
+	flags: any,
 	offset: number
 }

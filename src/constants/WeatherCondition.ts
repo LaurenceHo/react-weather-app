@@ -1,14 +1,13 @@
-// Rain
-export const LIGHT_RAIN = 500;
-export const MODERATE_RAIN = 501;
-export const SHOWER_RAIN = 521;
-
-// Clouds
-export const CLEAR_SKY = 800;
-export const FEW_CLOUDS = 801;
-export const SCATTERED_CLOUDS = 802;
-export const BROKEN_CLOUDS = 803;
-export const OVERCAST_CLOUDS = 804;
+export const CLEAR_DAY = 'clear-day';
+export const CLEAR_NIGHT = 'clear-night';
+export const RAIN = 'rain';
+export const SNOW = 'snow';
+export const SLEET = 'sleet';
+export const WIND = 'wind';
+export const FOG = 'fog';
+export const CLOUDY = 'cloudy';
+export const PARTLY_CLOUDY_DAY = 'partly-cloudy-day';
+export const PARTLY_CLOUDY_NIGHT = 'partly-cloudy-night';
 
 // Wind coming from
 export const WIND_N = 0;

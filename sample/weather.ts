@@ -3,7 +3,7 @@ export const weather = {
 	'longitude': -73.961452,
 	'timezone': 'America/New_York',
 	'currently': {
-		'time': 1529557725,
+		'time': 1529557725,//06/21/2018 @ 5:08am (UTC)
 		'summary': 'Light Rain',
 		'icon': 'rain',
 		'nearestStormDistance': 0,
