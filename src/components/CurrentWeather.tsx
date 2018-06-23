@@ -21,7 +21,7 @@ export class CurrentWeather extends React.Component<CurrentWeatherPropTypes, any
 				<Row type="flex" justify="center" className='current-weather-top'>
 					<Col span={3}>
 						<span>
-						Rain: {weather.precipIntensity.toFixed(2)} {units === 'us' ? 'in' : 'mm'} / {weather.precipProbability * 100} <i className="wi wi-humidity"/>
+						Rain: {weather.precipIntensity.toFixed(2)} {units === 'us' ? 'in' : 'mm'} / {Math.round(weather.precipProbability * 100)} <i className="wi wi-humidity"/>
 						</span>
 					</Col>
 					<Col span={2}>

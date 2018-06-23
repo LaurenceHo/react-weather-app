@@ -15,18 +15,19 @@ const cors = require('cors')(corsOptions);
 
 exports.getGeocode = functions.https.onRequest((req, res) => {
 	let params = '';
-	if (_.isNull(req.query.lat) || _.isUndefined(req.query.lat) || _.isNull(req.query.lon) || _.isUndefined(req.query.lon)) {
+	if (!_.isNumber(req.query.lat) || !_.isNumber(req.query.lon)) {
 		params = `address=${req.query.address}`;
 	} else {
 		params = `latlng=${req.query.lat},${req.query.lon}`;
 	}
 	const requestUrl = `${GEOCODE_API_URL}${params}&key=${apiKey.google}`;
-
+	console.log(requestUrl);
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {
 			if (error) {
 				return res.send(error);
 			}
+			console.log(body);
 			const geocode = JSON.parse(body);
 			if (geocode.status === 'OK') {
 				const results = geocode.results;
@@ -55,7 +56,7 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
 				};
 				return res.status(200).send(geocodeResponse);
 			} else {
-				return res.send(error);
+				return res.status(response.statusCode).send(body);
 			}
 		});
 	});
@@ -64,12 +65,13 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
 exports.getWeather = functions.https.onRequest((req, res) => {
 	const params = req.query.lat + ',' + req.query.lon;
 	const requestUrl = `${DARK_SKY_API_URL}/${params}?exclude=${req.query.exclude}`;
-
+	console.log(requestUrl);
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {
 			if (error) {
-				return res.send(error);
+				return res.status(response.statusCode).send(body);
 			}
+			console.log(body);
 			return res.status(200).send(JSON.parse(body));
 		});
 	});
@@ -78,12 +80,13 @@ exports.getWeather = functions.https.onRequest((req, res) => {
 exports.getForecast = functions.https.onRequest((req, res) => {
 	const params = req.query.lat + ',' + req.query.lon + ',' + req.query.time;
 	const requestUrl = `${DARK_SKY_API_URL}/${params}?exclude=${req.query.exclude}`;
-
+	console.log(requestUrl);
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {
 			if (error) {
-				return res.send(error);
+				return res.status(response.statusCode).send(body);
 			}
+			console.log(body);
 			return res.status(200).send(JSON.parse(body));
 		});
 	});

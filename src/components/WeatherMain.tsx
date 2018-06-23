@@ -27,8 +27,6 @@ class WeatherMain extends React.Component<any, any> {
 	componentDidMount() {
 		if (this.props.location.length === 0 && _.isEmpty(this.props.weather) && _.isEmpty(this.props.forecast)) {
 			this.props.fetchingData('');
-			// this.mockData();
-
 			// Get user's coordinates when user access the web app, it will ask user's location permission
 			navigator.geolocation.getCurrentPosition(location => {
 				// Get city name for displaying on the home page
