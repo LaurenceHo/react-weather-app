@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Layout, Menu, Row } from 'antd';
+import { Button, Col, Layout, Menu, Row } from 'antd';
 import { fetchingData } from '../redux/actions';
 import { WeatherSearch } from './WeatherSearch';
 
@@ -29,19 +29,17 @@ class NavBar extends React.Component<any, NavBarState> {
 
 	render() {
 		return (
-			<Header>
+			<Header className='nav-bar'>
 				<Row>
-					<Col xs={2} sm={2} md={2} lg={2} xl={2}>
-						<img src="assets/favicon.ico" width="40" height="30"
-						     className="d-inline-block align-top" alt=""
-						     style={{ paddingRight: 5 }}/>
+					<Col xs={1} sm={1} md={1} lg={1} xl={1}>
+						<img src="assets/favicon.ico" width="35" height="30" alt=""/>
 					</Col>
 					<Col xs={16} sm={16} md={16} lg={16} xl={17}>
 						<Menu
 							theme="dark"
 							mode="horizontal"
 							defaultSelectedKeys={['1']}
-							style={{ lineHeight: '63px' }}>
+							className='nav-bar-menu'>
 							<Menu.Item key="1">
 								<NavLink exact activeClassName='active' to='/'>
 									Weather
@@ -63,6 +61,10 @@ class NavBar extends React.Component<any, NavBarState> {
 						<div>
 							<WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
 						</div>
+					</Col>
+					<Col xs={1} sm={1} md={1} lg={1} xl={1} className='nav-bar-icon'>
+						<Button type="primary" shape="circle" icon='github' size='large'
+						        href='https://github.com/bluegray1015/reactjs-beautiful-weather'/>
 					</Col>
 				</Row>
 			</Header>

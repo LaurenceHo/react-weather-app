@@ -37,8 +37,8 @@ export class CurrentWeather extends React.Component<CurrentWeatherPropTypes, any
 					{location}
 				</Row>
 				<Row type="flex" justify="center">
-					<Col span={1} className='current-weather-icon'>
-						<WeatherIcon icon={weather.icon}/>
+					<Col span={1}>
+						<WeatherIcon icon={weather.icon} size='3rem'/>
 					</Col>
 					<Col span={3}>
 						<div>{moment.unix(weather.time).utcOffset(timezone.offset).format('YYYY-MM-DD HH:mm')}</div>

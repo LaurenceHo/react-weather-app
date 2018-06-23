@@ -17,32 +17,31 @@ export class DailyForecast extends React.Component<DailyForecastPropTypes, any> 
 		const { timezone, daily, units } = this.props;
 
 		const renderDailyForecast = daily.data.map((f: Weather, i: number) =>
-			<Row type="flex" justify="center" className='daily-forecast-item-wrapper'>
-				<Col span={1} style={{ fontSize: '1.5rem', textAlign: 'center' }}>
-					<WeatherIcon icon={f.icon}/>
+			<Row type="flex" justify="center" className='daily-forecast-item-wrapper' key={f.time}>
+				<Col span={1}>
+					<WeatherIcon icon={f.icon} size='1.6rem'/>
 				</Col>
-				<Col span={2} style={{ textAlign: 'center' }}>
+				<Col span={2} className='daily-forecast-item-column'>
 					{i === 0 ? 'Today' : moment.unix(f.time).utcOffset(timezone.offset).format('ddd')}
 				</Col>
-				<Col span={1} style={{ textAlign: 'center' }}>
+				<Col span={1} className='daily-forecast-item-column'>
 					{Math.round(f.temperatureLow)}{units === 'us' ? '℉' : '℃'}
 					<div className='daily-forecast-item-font'>
 						@{moment.unix(f.temperatureLowTime).utcOffset(timezone.offset).format('ha')}
 					</div>
 				</Col>
-				<Col span={1} style={{ textAlign: 'center' }}>
+				<Col span={1} className='daily-forecast-item-column'>
 					{Math.round(f.temperatureHigh)}{units === 'us' ? '℉' : '℃'}
 					<div className='daily-forecast-item-font'>
 						@{moment.unix(f.temperatureHighTime).utcOffset(timezone.offset).format('ha')}
 					</div>
 				</Col>
-				<Col span={3} style={{ textAlign: 'center' }}>
+				<Col span={3} className='daily-forecast-item-column'>
 					<span>
-						{f.precipProbability * 100} <i
-						className="wi wi-humidity"/> / {f.precipIntensity.toFixed(2)} {units === 'us' ? 'in' : 'mm'}
+						{f.precipProbability * 100} <i className="wi wi-humidity"/> / {f.precipIntensity.toFixed(2)} {units === 'us' ? 'in' : 'mm'}
 					</span>
 				</Col>
-				<Col span={1} style={{ textAlign: 'center' }}>
+				<Col span={1} className='daily-forecast-item-column'>
 					<span>
 						{f.humidity * 100} <i className="wi wi-humidity"/>
 					</span>
@@ -61,16 +60,16 @@ export class DailyForecast extends React.Component<DailyForecastPropTypes, any> 
 				<Row type="flex" justify="center" className='daily-forecast-item-wrapper'>
 					<Col span={1}/>
 					<Col span={2}/>
-					<Col span={1} style={{ textAlign: 'center' }}>
+					<Col span={1} className='daily-forecast-item-column'>
 						Low
 					</Col>
-					<Col span={1} style={{ textAlign: 'center' }}>
+					<Col span={1} className='daily-forecast-item-column'>
 						High
 					</Col>
-					<Col span={3} style={{ textAlign: 'center' }}>
+					<Col span={3} className='daily-forecast-item-column'>
 						Rain
 					</Col>
-					<Col span={1} style={{ fontSize: '1.1rem', textAlign: 'center' }}>
+					<Col span={1} className='daily-forecast-item-column'>
 						Humidity
 					</Col>
 				</Row>

@@ -1,4 +1,4 @@
-# A weather web application using React, Redux, Typescript, Webpack4, Ant Design, D3v5 and firebase.
+# A weather web application using React, Redux, Typescript, Webpack4, Ant Design, D3v5, ECharts and firebase.
 
 ## Introduction
 This project demonstrates how to use React, Redux, Typescript, Webpack4, Ant Design, D3v5 and ECharts. 
@@ -6,7 +6,7 @@ It is also including two kinds of D3 force simulation demonstrations along with 
 is based on my personal interest and previous project. 
 
 Furthermore, this project also demonstrates how to deploy the web app to Google firebase, and use the cloud 
-function serverless platform with React frontend.
+function serverless platform with React frontend app.
 
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.

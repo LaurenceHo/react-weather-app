@@ -7,7 +7,17 @@ import { About } from './About';
 import { D3DemoApp } from './demo/D3DemoApp';
 import { D3DemoNetwork } from './demo/D3DemoNetwork';
 
-const { Footer } = Layout;
+import 'antd/lib/alert/style/css';
+import 'antd/lib/button/style/css';
+import 'antd/lib/card/style/css';
+import 'antd/lib/col/style/css';
+import 'antd/lib/input/style/css';
+import 'antd/lib/layout/style/css';
+import 'antd/lib/menu/style/css';
+import 'antd/lib/row/style/css';
+import 'antd/lib/spin/style/css';
+
+const { Footer, Content } = Layout;
 
 export class App extends React.Component<any, any> {
 	render() {
@@ -15,7 +25,7 @@ export class App extends React.Component<any, any> {
 			<Router>
 				<div>
 					<NavBar/>
-					<div style={{ minHeight: 600 }}>
+					<Content className='content'>
 						<Switch>
 							<Route exact path='/' component={Weather as any}/>
 							<Route path='/about' component={About as any}/>
@@ -25,8 +35,8 @@ export class App extends React.Component<any, any> {
 								return <p> Not found!!</p>
 							}}/>
 						</Switch>
-					</div>
-					<Footer style={{ textAlign: 'center', background: '#fff' }}>
+					</Content>
+					<Footer className='footer'>
 						©2018 Created by Laurence Ho
 					</Footer>
 				</div>

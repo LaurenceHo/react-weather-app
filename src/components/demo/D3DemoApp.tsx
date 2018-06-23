@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import * as React from 'react';
 import * as d3 from 'd3';
 import { appTraffic } from '../../../sample/appTraffic';
-import { TrafficService } from '../../services/traffic';
-import { gauge } from "../../services/gauge";
+import { TrafficService } from './traffic';
+import { gauge } from "./gauge";
 import './d3.css';
 
 export class D3DemoApp extends React.Component<any, any> {
@@ -77,8 +77,8 @@ export class D3DemoApp extends React.Component<any, any> {
 		);
 
 		return (
-			<div style={{ paddingTop: 10 }}>
-				<span style={{ paddingLeft: 20, paddingTop: 20 }} className="is-active">Application Traffic</span>
+			<div className='content'>
+				<span className="is-active nav-link">Application Traffic</span>
 				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
 
 				<div id='chart'>

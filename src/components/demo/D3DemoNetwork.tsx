@@ -4,8 +4,8 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 
 import { ToolTip } from './ToolTip';
-import { TrafficService } from '../../services/traffic';
-import { gauge } from '../../services/gauge';
+import { TrafficService } from './traffic';
+import { gauge } from './gauge';
 import { networkTraffic } from '../../../sample/networkTraffic';
 import './d3.css';
 
@@ -125,8 +125,8 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
 	render() {
 		return (
-			<div style={{ paddingTop: 10 }}>
-				<Link to='/d3_demo_app' style={{ paddingLeft: 20, paddingTop: 20 }}>Application Traffic</Link>
+			<div className='content'>
+				<Link to='/d3_demo_app' className='nav-link'>Application Traffic</Link>
 				&nbsp;|&nbsp;<span className='is-active'> Network Traffic</span>
 
 				<div id='chart'>
@@ -142,10 +142,10 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 	}
 
 	componentDidMount() {
-		this.svg = d3.select("svg.svg-content-responsive");
-		this.g = this.svg.append("g");
-		this.link = this.g.append("g").selectAll(".link");
-		this.node = this.g.append("g").selectAll(".node");
+		this.svg = d3.select('svg.svg-content-responsive');
+		this.g = this.svg.append('g');
+		this.link = this.g.append('g').selectAll('.link');
+		this.node = this.g.append('g').selectAll('.node');
 		this.trafficService = new TrafficService(this.svg, this.width);
 
 		// Initial gauge
@@ -158,7 +158,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 			transitionMs: 5000,
 			x: this.width * .7,
 			y: 0,
-			title: "Logs per second",
+			title: 'Logs per second',
 			titleDx: 36,
 			titleDy: 90
 		});
@@ -300,7 +300,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 			// process nodes data
 			let addedSomething = false;
 			// process nodes data
-			for ( let i = 0; i < networkTraffic.nodes.length; i++ ) {
+			for (let i = 0; i < networkTraffic.nodes.length; i++) {
 				let found = _.find(this.nodes, (node: any) => {
 					return node.name === networkTraffic.nodes[i].name;
 				});
@@ -315,7 +315,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 			}
 
 			// process links data
-			for ( let i = 0; i < networkTraffic.links.length; i++ ) {
+			for (let i = 0; i < networkTraffic.links.length; i++) {
 				let found = _.find(this.links, (link: any) => {
 					return networkTraffic.links[i].source === link.source.name && networkTraffic.links[i].target === link.target.name;
 				});

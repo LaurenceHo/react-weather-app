@@ -1,16 +1,45 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-family: 'Open Sans', sans-serif;
+}
+
+.content {
+    min-height: 40rem;
+}
+
+.footer {
+    text-align: center;
+    background: #FFF;
+}
+
+.about-content {
+    padding-top: 2rem;
+}
+
+.nav-bar {
+    padding: 0 1rem;
+}
+
+.nav-bar-menu {
+    line-height: 63px;
+}
+
+.nav-bar-icon {
+    text-align: right;
 }
 
 .error {
     padding: 2rem 2rem;
 }
 
-.fetching-weather {
+.fetching-weather-content {
     padding: 4rem 2rem;
+}
+
+.fetching-weather-spinner {
+    padding-left: 0.5rem;
 }
 
 .current-weather-top {
@@ -20,12 +49,8 @@ body {
 }
 
 .current-weather-location {
-    padding: 0 2rem 1rem 2rem;
+    padding: 1rem 2rem;
     font-size: 2rem;
-}
-
-.current-weather-icon {
-    font-size: 3rem;
 }
 
 .current-weather-sub-content {
@@ -47,6 +72,10 @@ body {
 
 .daily-forecast-item-font {
     font-size: 0.8rem;
+}
+
+.daily-forecast-item-column {
+    text-align: center;
 }
 
 #weather-chart-wrapper {
