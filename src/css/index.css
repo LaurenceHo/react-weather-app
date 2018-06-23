@@ -6,21 +6,21 @@ body {
 }
 
 .error {
-    padding-top: 2rem;
+    padding: 2rem 2rem;
 }
 
 .fetching-weather {
-    padding-top: 4rem;
+    padding: 4rem 2rem;
 }
 
 .current-weather-top {
     background: #FAFAFA;
     font-size: 0.8rem;
-    padding: 0.5rem 0;
+    padding: 0.5rem 2rem;
 }
 
 .current-weather-location {
-    padding-top: 1rem;
+    padding: 0 2rem 1rem 2rem;
     font-size: 2rem;
 }
 
@@ -32,8 +32,25 @@ body {
     font-size: 0.8rem;
 }
 
-.hourly-forecast-summary {
-    padding-top: 1rem;
+.forecast-summary {
+    padding: 1rem 2rem;
+}
+
+.forecast-title {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.daily-forecast-item-wrapper {
+    padding: 0.5rem 2rem;
+}
+
+.daily-forecast-item-font {
+    font-size: 0.8rem;
+}
+
+#weather-chart-wrapper {
+    padding: 0 2rem
 }
 
 .weather-chart {
@@ -44,7 +61,7 @@ body {
 ::-webkit-scrollbar {
     height: 0.8rem;
     width: 0.8rem;
-    background-color: #333333;
+    background-color: #FAFAFA;
 }
 
 ::-webkit-scrollbar-thumb {

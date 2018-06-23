@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { CurrentWeather } from './CurrentWeather';
+import { DailyForecast } from './DailyForecast';
 import { HourlyForecast } from './HourlyForecast';
 
 class WeatherForecast extends React.Component<any, any> {
@@ -14,7 +15,8 @@ class WeatherForecast extends React.Component<any, any> {
 		return (
 			<div>
 				<CurrentWeather weather={weather} location={location} timezone={timezone} units={units}/>
-				<HourlyForecast units={units} timezone={timezone} hourly={forecast.hourly}/>
+				<HourlyForecast timezone={timezone} units={units} hourly={forecast.hourly}/>
+				<DailyForecast timezone={timezone} units={units} daily={forecast.daily}/>
 			</div>
 		);
 	};

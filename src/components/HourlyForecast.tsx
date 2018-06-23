@@ -34,14 +34,13 @@ export class HourlyForecast extends React.Component<HourlyForecastPropTypes, any
 	};
 
 	render() {
-		const { timezone, units, hourly } = this.props;
+		const { hourly } = this.props;
 		return (
 			<div>
-				<Row type="flex" justify="center" className='hourly-forecast-summary'>
+				<Row type="flex" justify="center" className='forecast-summary'>
 					{hourly.summary}
 				</Row>
-				<Row type="flex" justify="center" id='weather-chart-wrapper'>
-				</Row>
+				<Row type="flex" justify="center" id='weather-chart-wrapper'/>
 			</div>
 		)
 	}

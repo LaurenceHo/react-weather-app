@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/legend';
-import 'echarts/lib/component/markArea';
 import 'echarts/lib/component/tooltip';
 import * as moment from 'moment';
 
@@ -72,7 +71,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 		],
 		tooltip: {
 			trigger: 'axis',
-			backgroundColor: '#FFFFFF',
+			backgroundColor: '#FFF',
 			borderWidth: 1,
 			borderColor: '#ccc',
 			padding: [8, 17],
