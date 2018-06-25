@@ -3,33 +3,42 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/tooltip';
-import * as moment from 'moment';
 
 import { Timezone } from './DataModel';
-
+import { Utils } from '../utils';
 
 export const chartConfig: any = (units: string, timezone: Timezone, hourly: any) => {
 	const formatterXAxisLabel = (value: number, index: number) => {
 		if (index === 0) {
 			return 'Now';
 		}
-		return moment.unix(value).utcOffset(timezone.offset).format('HH:mm').toString();
+		return Utils.getLocalTime(value, timezone.offset, 'HH:mm');
 	};
 
 	const formatterTooltip = (params: any) => {
 		const temperature = params[0];
 		const rain = params[1];
-		const time = moment.unix(temperature.name).utcOffset(timezone.offset).format('YYYY-MM-DD HH:mm').toString();
+		const time = Utils.getLocalTime(temperature.name, timezone.offset, 'YYYY-MM-DD HH:mm');
 
 		return `
     <div style="font-size:1rem; color:#949494; line-height:1.1rem;">${time}</div></br>
-    <div style="color:#2E2E2E; font-size:14px; font-weight:500;	line-height: 16px;">Temperature: ${temperature.value}${units === 'us' ? '℉' : '℃'}</div></br>
+    <div style="color:#2E2E2E; font-size:14px; font-weight:500;	line-height: 16px;">Temperature: ${Utils.getTemperature(temperature.value, units)}</div></br>
     <div style="color:#2E2E2E; font-size:14px; font-weight:500;	line-height: 16px;">Rain: ${rain.value} ${units === 'us' ? 'in' : 'mm'}</div>
    `;
 	};
 
-	const temperatureMax = (Math.round(Math.max.apply(null, _.map(hourly.data, 'temperature')) / 10) + 1.5) * 10;
-	const rainMax = Math.max.apply(null, _.map(hourly.data, 'precipIntensity'));
+	const roundTemperature = _.map(hourly.data, (n) => {
+		return Math.round(n.temperature);
+	});
+	const roundIntensity = _.map(hourly.data, (n) => {
+		if (units === 'us') {
+			return n.precipIntensity.toFixed(3);
+		} else if (units === 'si') {
+			return n.precipIntensity.toFixed(2);
+		}
+	});
+	const temperatureMax = (Math.round(Math.max.apply(null, roundTemperature) / 10) + 1.5) * 10;
+	const rainMax = Math.max.apply(null, roundIntensity);
 
 	return {
 		legend: {
@@ -87,7 +96,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 		series: [
 			{
 				name: 'Temperature',
-				data: _.map(hourly.data, 'temperature').slice(0, 23),
+				data: roundTemperature.slice(0, 23),
 				type: 'line',
 				smooth: true,
 				lineStyle: {
@@ -101,7 +110,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 			{
 				name: 'Rain',
 				type: 'bar',
-				data: _.map(hourly.data, 'precipIntensity').slice(0, 23),
+				data: roundIntensity.slice(0, 23),
 				yAxisIndex: 1,
 				itemStyle: {
 					color: '#A4A4A4'

@@ -1,6 +1,8 @@
 export interface Timezone {
 	timezone: string,
-	offset: number
+	offset: number,
+	latitude: number,
+	longitude: number
 }
 
 export interface Weather {

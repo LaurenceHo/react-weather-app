@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Card, Col, Row, Spin } from 'antd';
+import { Alert, Col, Row, Spin } from 'antd';
 
 import {
 	fetchingData,
@@ -23,14 +23,20 @@ class WeatherMain extends React.Component<any, any> {
 		super(props);
 	}
 
-	componentWillReceiveProps(nextProps: any) {
-		if (this.props.filter && (this.props.filter !== nextProps.filter)) {
-			// When user search weather by city name
-			this.getWeatherData(0, 0, nextProps.filter);
+	componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
+		// When user search weather by city name
+		if (prevProps.filter && (this.props.filter !== prevProps.filter)) {
+			this.getWeatherData(0, 0, this.props.filter);
 		}
 
-		if (this.props.units !== nextProps.units) {
-			this.getWeatherData(0, 0, this.props.filter);
+		if (this.props.units !== prevProps.units) {
+			if (this.props.timezone.latitude && this.props.timezone.longitude) {
+				this.props.fetchingData(this.props.filter);
+				this.getWeatherData(this.props.timezone.latitude, this.props.timezone.longitude, this.props.filter);
+			} else {
+				this.props.fetchingData(this.props.filter);
+				this.getWeatherData(0, 0, this.props.filter);
+			}
 		}
 	}
 
@@ -38,40 +44,60 @@ class WeatherMain extends React.Component<any, any> {
 		if (this.props.location.length === 0 && _.isEmpty(this.props.weather) && _.isEmpty(this.props.forecast)) {
 			this.props.fetchingData('');
 			// Get user's coordinates when user access the web app, it will ask user's location permission
-			navigator.geolocation.getCurrentPosition(location => {
-				// Get city name for displaying on the home page
+			let options = {
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0
+			};
+
+			const handleLocation = (location: any) => {
 				getGeocode(location.coords.latitude, location.coords.longitude, '').then((geocode: any) => {
 					if (geocode.status === 'OK') {
-						this.props.fetchingData(geocode.city);
-						this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
+						this.props.fetchingData(geocode.address);
+						this.getWeatherData(geocode.latitude, geocode.longitude, geocode.address);
 					}
 				}).catch(error => {
 					this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
 				});
-			}, error => {
-				// If user's block the location query, use the default location
+			};
+
+			const handleError = (error: any) => {
 				this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
-			});
+			};
+
+			navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
 		}
 	}
 
-	searchByDefaultLocation(message: string) {
+	/**
+	 * Only be called when error occurs
+	 * @param {string} message
+	 */
+	private searchByDefaultLocation(message: string) {
 		this.props.fetchingDataFailure(message);
-		setTimeout(this.delayFetchData.bind(this), 3000);
+		setTimeout(this.delayFetchWeatherData.bind(this), 5000);
 	}
 
-	delayFetchData() {
+	private delayFetchWeatherData() {
 		this.props.fetchingData('Auckland');
 		this.getWeatherData(0, 0, 'Auckland');
 	}
 
-	getWeatherData(lat: number, lon: number, city: string) {
+	/**
+	 * If you set lat along with lon, then you must set city name as well, otherwise set (0, 0, city)
+	 * @param {number} lat
+	 * @param {number} lon
+	 * @param {string} city
+	 */
+	private getWeatherData(lat: number, lon: number, city: string) {
 		if (lat !== 0 && lon !== 0) {
-			// get current weather by latitude and longitude
+			// get weather and forecast info by latitude and longitude
 			getWeather(lat, lon, null, this.props.units).then((results: Forecast) => {
 				const timezone: Timezone = {
 					timezone: results.timezone,
-					offset: results.offset
+					offset: results.offset,
+					latitude: results.latitude,
+					longitude: results.longitude
 				};
 				const forecast = {
 					minutely: results.minutely,
@@ -84,10 +110,9 @@ class WeatherMain extends React.Component<any, any> {
 				this.props.fetchingDataFailure(error);
 			});
 		} else {
-			// Get coordinates by city
+			// Get coordinates by city at first, after that get the weather and forecast info by coordinates
 			getGeocode(null, null, city).then((geocode: any) => {
 				if (geocode.status === 'OK') {
-					this.props.fetchingData(geocode.city);
 					this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
 				}
 			}).catch(error => {
@@ -96,6 +121,12 @@ class WeatherMain extends React.Component<any, any> {
 		}
 	}
 
+	/**
+	 * @param {string} city name
+	 * @param weather, the current weather info from the fetched weather result
+	 * @param timezone, the timezone info from the fetched weather result
+	 * @param forecast, the forecast info from the fetched weather result, which is including minutely, hourly and daily info
+	 */
 	private setDataToStore(city: string, weather: any, timezone: any, forecast: any) {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
@@ -112,11 +143,11 @@ class WeatherMain extends React.Component<any, any> {
 	render() {
 		const { weather, location, isLoading, error } = this.props;
 
-		const renderCurrentWeather = () => {
+		const renderWeatherAndForecast = () => {
 			if (error) {
 				return (
 					<div>
-						<Row type="flex" justify="center">
+						<Row type="flex" justify="center" className='fetching-weather-content'>
 							<Col xs={24} sm={24} md={18} lg={16} xl={16}>
 								<Alert
 									message="Error"
@@ -126,25 +157,6 @@ class WeatherMain extends React.Component<any, any> {
 								/>
 							</Col>
 						</Row>
-						{!_.isUndefined(error) || !_.isNull(error) ?
-							<Row type="flex" justify="center" className='error'>
-								<Col xs={24} sm={24} md={18} lg={16} xl={16}>
-									<Card title="Search engine is very flexible. How it works:">
-										<ul>
-											<li>Put the city's name or its part and get the list of the most proper
-												cities in the world. Example - London or Auckland. The more precise city
-												name you put the more precise list you will get.
-											</li>
-											<li>To make it more precise put the city's name or its part, comma, the name
-												of the country or 2-letter country code. You will get all proper cities
-												in chosen country. The order is important - the first is city name then
-												comma then country. Example - Auckland, NZ or Auckland, New Zealand.
-											</li>
-										</ul>
-									</Card>
-								</Col>
-							</Row>
-							: null}
 					</div>
 				);
 			} else if (weather && location) {
@@ -159,7 +171,7 @@ class WeatherMain extends React.Component<any, any> {
 						<h2>Fetching weather</h2>
 						<Spin className='fetching-weather-spinner' size="large"/>
 					</Row>
-					: renderCurrentWeather()}
+					: renderWeatherAndForecast()}
 			</div>
 		)
 	}

@@ -9,7 +9,6 @@ import { D3DemoNetwork } from './demo/D3DemoNetwork';
 
 import 'antd/lib/alert/style/css';
 import 'antd/lib/button/style/css';
-import 'antd/lib/card/style/css';
 import 'antd/lib/col/style/css';
 import 'antd/lib/dropdown/style/css';
 import 'antd/lib/icon/style/css';
