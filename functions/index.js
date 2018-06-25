@@ -15,10 +15,10 @@ const cors = require('cors')(corsOptions);
 
 exports.getGeocode = functions.https.onRequest((req, res) => {
 	let params = '';
-	if (!_.isNumber(req.query.lat) || !_.isNumber(req.query.lon)) {
-		params = `address=${req.query.address}`;
-	} else {
+	if ((req.query.lat !== 'null') && (req.query.lon !== 'null')) {
 		params = `latlng=${req.query.lat},${req.query.lon}`;
+	} else {
+		params = `address=${req.query.address}`;
 	}
 	const requestUrl = `${GEOCODE_API_URL}${params}&key=${apiKey.google}`;
 	console.log(requestUrl);
@@ -70,7 +70,7 @@ exports.getWeather = functions.https.onRequest((req, res) => {
 		requestUrl = requestUrl + `?exclude=${req.query.exclude}`;
 	}
 	if (req.query.units) {
-		requestUrl = requestUrl + `?units=${req.query.units}`
+		requestUrl = requestUrl + `&units=${req.query.units}`
 	}
 	console.log(requestUrl);
 	cors(req, res, () => {
@@ -92,7 +92,7 @@ exports.getForecast = functions.https.onRequest((req, res) => {
 		requestUrl = requestUrl + `?exclude=${req.query.exclude}`;
 	}
 	if (req.query.units) {
-		requestUrl = requestUrl + `?units=${req.query.units}`
+		requestUrl = requestUrl + `&units=${req.query.units}`
 	}
 	console.log(requestUrl);
 	cors(req, res, () => {
