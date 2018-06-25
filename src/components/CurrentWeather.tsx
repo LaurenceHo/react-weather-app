@@ -25,7 +25,7 @@ export class CurrentWeather extends React.Component<CurrentWeatherPropTypes, any
 						</span>
 					</Col>
 					<Col span={2}>
-						Wind: {Math.round(weather.windSpeed)} {units === 'us' ? 'mph' : 'kph'} <WindIcon degree={weather.windBearing}/>
+						Wind: {units === 'us' ? Math.round(weather.windSpeed) : Math.round(weather.windSpeed * 3.6)} {units === 'us' ? 'mph' : 'kph'} <WindIcon degree={weather.windBearing}/>
 					</Col>
 					<Col span={2}><span>Humidity: {weather.humidity * 100} <i className="wi wi-humidity"/></span></Col>
 					<Col span={3}>Pressure: {Math.round(weather.pressure)} {units === 'us' ? 'mb' : 'hPa'}</Col>

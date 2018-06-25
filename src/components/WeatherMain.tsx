@@ -4,7 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Card, Col, Row, Spin } from 'antd';
 
-import { fetchingData, fetchingDataFailure, fetchingDataSuccess, setAllWeatherDataIntoStore } from '../redux/actions';
+import {
+	fetchingData,
+	fetchingDataFailure,
+	fetchingDataSuccess,
+	setAllWeatherDataIntoStore,
+	setUnits
+} from '../redux/actions';
 import { Forecast, Timezone } from './DataModel';
 import WeatherForecast from './WeatherForecast';
 
@@ -21,6 +27,10 @@ class WeatherMain extends React.Component<any, any> {
 		if (this.props.filter && (this.props.filter !== nextProps.filter)) {
 			// When user search weather by city name
 			this.getWeatherData(0, 0, nextProps.filter);
+		}
+
+		if (this.props.units !== nextProps.units) {
+			this.getWeatherData(0, 0, this.props.filter);
 		}
 	}
 
@@ -58,7 +68,7 @@ class WeatherMain extends React.Component<any, any> {
 	getWeatherData(lat: number, lon: number, city: string) {
 		if (lat !== 0 && lon !== 0) {
 			// get current weather by latitude and longitude
-			getWeather(lat, lon, null).then((results: Forecast) => {
+			getWeather(lat, lon, null, this.props.units).then((results: Forecast) => {
 				const timezone: Timezone = {
 					timezone: results.timezone,
 					offset: results.offset
@@ -69,7 +79,7 @@ class WeatherMain extends React.Component<any, any> {
 					daily: results.daily
 				};
 
-				this.setDataToStore(city, results.currently, timezone, forecast, results.flags.units);
+				this.setDataToStore(city, results.currently, timezone, forecast);
 			}).catch(error => {
 				this.props.fetchingDataFailure(error);
 			});
@@ -86,15 +96,15 @@ class WeatherMain extends React.Component<any, any> {
 		}
 	}
 
-	private setDataToStore(city: string, weather: any, timezone: any, forecast: any, units: string) {
+	private setDataToStore(city: string, weather: any, timezone: any, forecast: any) {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
+			units: this.props.units,
 			filter: city,
 			location: city,
 			weather: weather,
 			timezone: timezone,
 			forecast: forecast,
-			units: units,
 			isLoading: false
 		});
 	}
@@ -157,19 +167,20 @@ class WeatherMain extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
 	return {
+		units: state.units,
 		filter: state.filter,
 		location: state.location,
 		weather: state.weather,
 		forecast: state.forecast,
 		timezone: state.timezone,
 		isLoading: state.isLoading,
-		units: state.units,
 		error: state.error
 	}
 };
 
 const mapDispatchToProps = (dispatch: any) => {
 	return bindActionCreators({
+		setUnits,
 		fetchingData,
 		fetchingDataSuccess,
 		fetchingDataFailure,

@@ -38,12 +38,12 @@ export class DailyForecast extends React.Component<DailyForecastPropTypes, any> 
 				</Col>
 				<Col span={3} className='daily-forecast-item-column'>
 					<span>
-						{f.precipProbability * 100} <i className="wi wi-humidity"/> / {f.precipIntensity.toFixed(2)} {units === 'us' ? 'in' : 'mm'}
+						{Math.round(f.precipProbability * 100)} <i className="wi wi-humidity"/> / {f.precipIntensity.toFixed(2)} {units === 'us' ? 'in' : 'mm'}
 					</span>
 				</Col>
 				<Col span={1} className='daily-forecast-item-column'>
 					<span>
-						{f.humidity * 100} <i className="wi wi-humidity"/>
+						{Math.round(f.humidity * 100)} <i className="wi wi-humidity"/>
 					</span>
 				</Col>
 			</Row>

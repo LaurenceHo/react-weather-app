@@ -1,9 +1,10 @@
+import { ClickParam } from 'antd/lib/menu';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Layout, Menu, Row } from 'antd';
-import { fetchingData } from '../redux/actions';
+import { Button, Col, Layout, Menu, Row, Dropdown, Icon } from 'antd';
+import { fetchingData, setUnits } from '../redux/actions';
 import { WeatherSearch } from './WeatherSearch';
 
 const { Header } = Layout;
@@ -18,6 +19,7 @@ class NavBar extends React.Component<any, NavBarState> {
 
 		this.state = { previousLocation: '' };
 		this.handleSearch = this.handleSearch.bind(this);
+		this.handleMenuClick = this.handleMenuClick.bind(this);
 	}
 
 	handleSearch(location: string) {
@@ -27,14 +29,27 @@ class NavBar extends React.Component<any, NavBarState> {
 		}
 	};
 
+	handleMenuClick(e: ClickParam) {
+		this.props.setUnits(e.key);
+	}
+
 	render() {
+		const menu = (
+			<Menu onClick={this.handleMenuClick}
+			      defaultSelectedKeys={[this.props.units]}
+			      selectedKeys={[this.props.units]}>
+				<Menu.Item key="us">℉,mph</Menu.Item>
+				<Menu.Item key="si">℃,kph</Menu.Item>
+			</Menu>
+		);
+
 		return (
 			<Header className='nav-bar'>
 				<Row>
 					<Col xs={1} sm={1} md={1} lg={1} xl={1}>
 						<img src="assets/favicon.ico" width="35" height="30" alt=""/>
 					</Col>
-					<Col xs={16} sm={16} md={16} lg={16} xl={17}>
+					<Col xs={14} sm={14} md={14} lg={14} xl={15}>
 						<Menu
 							theme="dark"
 							mode="horizontal"
@@ -62,6 +77,11 @@ class NavBar extends React.Component<any, NavBarState> {
 							<WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
 						</div>
 					</Col>
+					<Col xs={2} sm={2} md={2} lg={2} xl={2}>
+						<Dropdown overlay={menu} trigger={['click']} disabled={this.props.isLoading}>
+							<Button style={{ marginLeft: '0.8rem' }}>Units<Icon type="down"/></Button>
+						</Dropdown>
+					</Col>
 					<Col xs={1} sm={1} md={1} lg={1} xl={1} className='nav-bar-icon'>
 						<Button type="primary" shape="circle" icon='github' size='large'
 						        href='https://github.com/bluegray1015/reactjs-beautiful-weather'/>
@@ -74,6 +94,7 @@ class NavBar extends React.Component<any, NavBarState> {
 
 const mapStateToProps = (state: any) => {
 	return {
+		units: state.units,
 		filter: state.filter,
 		location: state.location,
 		weather: state.weather,
@@ -86,6 +107,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
 	return bindActionCreators({
+		setUnits,
 		fetchingData
 	}, dispatch);
 };

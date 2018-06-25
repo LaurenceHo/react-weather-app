@@ -24,12 +24,13 @@ class WeatherForecast extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
 	return {
+		units: state.units,
+		filter: state.filter,
 		location: state.location,
 		weather: state.weather,
 		forecast: state.forecast,
 		timezone: state.timezone,
 		isLoading: state.isLoading,
-		units: state.units,
 		error: state.error
 	}
 };

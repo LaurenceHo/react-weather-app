@@ -64,7 +64,14 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
 
 exports.getWeather = functions.https.onRequest((req, res) => {
 	const params = req.query.lat + ',' + req.query.lon;
-	const requestUrl = `${DARK_SKY_API_URL}/${params}?exclude=${req.query.exclude}`;
+	let requestUrl = `${DARK_SKY_API_URL}/${params}`;
+
+	if (req.query.exclude) {
+		requestUrl = requestUrl + `?exclude=${req.query.exclude}`;
+	}
+	if (req.query.units) {
+		requestUrl = requestUrl + `?units=${req.query.units}`
+	}
 	console.log(requestUrl);
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {
@@ -79,7 +86,14 @@ exports.getWeather = functions.https.onRequest((req, res) => {
 
 exports.getForecast = functions.https.onRequest((req, res) => {
 	const params = req.query.lat + ',' + req.query.lon + ',' + req.query.time;
-	const requestUrl = `${DARK_SKY_API_URL}/${params}?exclude=${req.query.exclude}`;
+	let requestUrl = `${DARK_SKY_API_URL}/${params}`;
+
+	if (req.query.exclude) {
+		requestUrl = requestUrl + `?exclude=${req.query.exclude}`;
+	}
+	if (req.query.units) {
+		requestUrl = requestUrl + `?units=${req.query.units}`
+	}
 	console.log(requestUrl);
 	cors(req, res, () => {
 		return request.get(requestUrl, (error, response, body) => {

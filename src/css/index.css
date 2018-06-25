@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-family: 'Open Sans', sans-serif;
 }
 
 .content {
     min-height: 40rem;
+    padding: 0;
 }
 
 .footer {
@@ -50,7 +51,7 @@ body {
 
 .current-weather-location {
     padding: 1rem 2rem;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .current-weather-sub-content {
@@ -62,7 +63,7 @@ body {
 }
 
 .forecast-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 500;
 }
 
