@@ -29,16 +29,16 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 
 	const roundTemperature = _.map(hourly.data, (n) => {
 		return Math.round(n.temperature);
-	});
+	}).slice(0, 23);
 	const roundIntensity = _.map(hourly.data, (n) => {
 		if (units === 'us') {
 			return n.precipIntensity.toFixed(3);
 		} else if (units === 'si') {
 			return n.precipIntensity.toFixed(2);
 		}
-	});
-	const temperatureMax = (Math.round(Math.max.apply(null, roundTemperature) / 10) + 1.5) * 10;
-	const rainMax = Math.max.apply(null, roundIntensity);
+	}).slice(0, 23);
+	const temperatureMax = (Math.round(Math.max.apply(null, roundTemperature) / 10) + 1) * 10;
+	const rainMax = (Math.max.apply(null, roundIntensity) * 2).toFixed(1);
 
 	return {
 		legend: {
@@ -96,7 +96,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 		series: [
 			{
 				name: 'Temperature',
-				data: roundTemperature.slice(0, 23),
+				data: roundTemperature,
 				type: 'line',
 				smooth: true,
 				lineStyle: {
@@ -110,7 +110,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 			{
 				name: 'Rain',
 				type: 'bar',
-				data: roundIntensity.slice(0, 23),
+				data: roundIntensity,
 				yAxisIndex: 1,
 				itemStyle: {
 					color: '#A4A4A4'
