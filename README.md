@@ -26,10 +26,10 @@ git clone https://github.com/bluegray1015/reactjs-beautiful-weather.git
 
 * Install npm package: 
 ```
-npm install
+npm i
 ```
 
-* Put your google & darksky API key into `./functions/apiKey.js`
+* Put your google & dark sky API key into `./functions/apiKey.js`
 
 * Launch the app: 
 ```
@@ -45,8 +45,12 @@ Please visit: https://cloud.google.com/functions/ for more detail
 1. Run `npm run firebase-init`
 2. Visit https://console.firebase.google.com to create a new project
 3. Add the firebase project into your local configuration `npm run firebase-add`
-4. If you want to deploy the whole project, run `npm run firebase-deploy`
-5. If you just want to deploy the cloud functions, run `npm run deploy-functions`
+4. You may need to change the default project setting in the `./.firebaserc`
+5. If you want to deploy the whole project, run `npm run firebase-deploy`
+6. If you just want to deploy the cloud functions, run `npm run deploy-functions`
 
 ### Live demo
 https://react-beautiful-weather-app.firebaseapp.com/
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

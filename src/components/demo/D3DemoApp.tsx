@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as d3 from 'd3';
 import { appTraffic } from '../../../sample/appTraffic';
 import { TrafficService } from './traffic';
-import { gauge } from "./gauge";
+import { gauge } from './gauge';
 import './d3.css';
 
 export class D3DemoApp extends React.Component<any, any> {
@@ -28,6 +28,12 @@ export class D3DemoApp extends React.Component<any, any> {
 
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
+	}
+
+	getNode(name: string) {
+		return this.nodes.find(node => {
+			return name === node.name;
+		})
 	}
 
 	componentWillMount() {
@@ -62,48 +68,11 @@ export class D3DemoApp extends React.Component<any, any> {
 			.force('center', d3.forceCenter(this.width / 2, this.height / 2));
 	}
 
-	render() {
-		const nodeLegendItems = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'UNKNOWN'];
-
-		const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) =>
-			<g className='nodeLegend' key={nodeLegendItem}>
-				<circle r={this.width / 200}
-				        className={nodeLegendItem}
-				        cx={this.width - 230}
-				        cy={index * 25 + 440}>
-				</circle>
-				<text dx={this.width - 210} dy={index * 25 + 444}>{nodeLegendItem}</text>
-			</g>
-		);
-
-		return (
-			<div className='content'>
-				<span className="is-active nav-link">Application Traffic</span>
-				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
-
-				<div id='chart'>
-					<div className='svg-container'>
-						<svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
-						     height={this.height}>
-							{renderNodeLegend}
-						</svg>
-					</div>
-				</div>
-			</div>
-		);
-	}
-
-	getNode(name: string) {
-		return this.nodes.find(node => {
-			return name === node.name;
-		})
-	}
-
 	componentDidMount() {
-		this.svg = d3.select("svg.svg-content-responsive");
-		this.g = this.svg.append("g");
-		this.link = this.g.append("g").selectAll(".link");
-		this.node = this.g.append("g").selectAll(".node");
+		this.svg = d3.select('svg.svg-content-responsive');
+		this.g = this.svg.append('g');
+		this.link = this.g.append('g').selectAll('.link');
+		this.node = this.g.append('g').selectAll('.node');
 		this.trafficService = new TrafficService(this.svg, this.width);
 
 		// Initial gauge
@@ -116,7 +85,7 @@ export class D3DemoApp extends React.Component<any, any> {
 			transitionMs: 5000,
 			x: this.width * .7,
 			y: 0,
-			title: "Logs per second",
+			title: 'Logs per second',
 			titleDx: 36,
 			titleDy: 90
 		});
@@ -132,7 +101,7 @@ export class D3DemoApp extends React.Component<any, any> {
 			const nodeEnter = this.node.enter()
 				.append('g').attr('class', 'node');
 			nodeEnter
-				.append("circle")
+				.append('circle')
 				.attr('class', (d: any) => {
 					return d.name + ' ' + d.priority;
 				})
@@ -152,7 +121,7 @@ export class D3DemoApp extends React.Component<any, any> {
 
 			// Apply the general update pattern to the links.
 			this.link = this.link.data(this.links, (d: any) => {
-				return d.source.name + "-" + d.target.name;
+				return d.source.name + '-' + d.target.name;
 			});
 			this.link.exit().remove();
 			this.link = this.link.enter()
@@ -214,7 +183,7 @@ export class D3DemoApp extends React.Component<any, any> {
 
 			// process nodes data
 			let addedSomething = false;
-			for ( let i = 0; i < appTraffic.nodes.length; i++ ) {
+			for (let i = 0; i < appTraffic.nodes.length; i++) {
 				let nodeIndex = this.nodes.findIndex((node: any) => {
 					return node.name === appTraffic.nodes[i].name;
 				});
@@ -224,9 +193,9 @@ export class D3DemoApp extends React.Component<any, any> {
 				}
 			}
 			// process links data
-			for ( let i = 0; i < appTraffic.links.length; i++ ) {
+			for (let i = 0; i < appTraffic.links.length; i++) {
 				let found = false;
-				for ( let k = 0; k < this.links.length; k++ ) {
+				for (let k = 0; k < this.links.length; k++) {
 					if (appTraffic.nodes[appTraffic.links[i].source].name === this.links[k].source.name &&
 						appTraffic.nodes[appTraffic.links[i].target].name === this.links[k].target.name
 					) {
@@ -263,5 +232,36 @@ export class D3DemoApp extends React.Component<any, any> {
 
 	componentWillUnmount() {
 		clearInterval(this.intervalId);
+	}
+
+	render() {
+		const nodeLegendItems = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'UNKNOWN'];
+
+		const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) =>
+			<g className='nodeLegend' key={nodeLegendItem}>
+				<circle r={this.width / 200}
+				        className={nodeLegendItem}
+				        cx={this.width - 230}
+				        cy={index * 25 + 440}>
+				</circle>
+				<text dx={this.width - 210} dy={index * 25 + 444}>{nodeLegendItem}</text>
+			</g>
+		);
+
+		return (
+			<div className='content'>
+				<span className="is-active nav-link">Application Traffic</span>
+				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
+
+				<div id='chart'>
+					<div className='svg-container'>
+						<svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
+						     height={this.height}>
+							{renderNodeLegend}
+						</svg>
+					</div>
+				</div>
+			</div>
+		);
 	}
 }

@@ -7,7 +7,7 @@ body {
 
 .content {
     min-height: 40rem;
-    padding: 0;
+    padding: 4rem 0 0 0;
 }
 
 .footer {
@@ -21,10 +21,13 @@ body {
 
 .nav-bar {
     padding: 0 1rem;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
 }
 
 .nav-bar-menu {
-    line-height: 63px;
+    line-height: 4rem;
 }
 
 .nav-bar-icon {

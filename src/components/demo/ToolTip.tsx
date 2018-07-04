@@ -15,7 +15,8 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 		let transformArrow = '';
 
 		if (this.props.tooltip.type === 'network') {
-			width = 160, height = 50;
+			width = 160;
+			height = 50;
 		}
 
 		if (this.props.tooltip.display === true) {
@@ -35,20 +36,6 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 		} else {
 			visibility = 'hidden'
 		}
-
-		const renderText = () => {
-			if (this.props.tooltip.data.temperature && this.props.tooltip.data.precipitation) {
-				return (
-					<tspan x='0'
-					       textAnchor='middle'
-					       dy='20'
-					       fontSize='12px'
-					       fill='#a9f3ff'>
-						{this.props.tooltip.data.temperature} °C / {this.props.tooltip.data.precipitation} mm
-					</tspan>
-				);
-			}
-		};
 
 		return (
 			<g transform={transform}>
@@ -70,18 +57,17 @@ export class ToolTip extends React.Component<ToolTipPropTypes, any> {
 				      transform={transformText}>
 					<tspan x='0'
 					       textAnchor='middle'
-					       fontSize='14px'
+					       fontSize='0.6rem'
 					       fill='#ffffff'>
 						{this.props.tooltip.data.key}
 					</tspan>
 					<tspan x='0'
 					       textAnchor='middle'
 					       dy='20'
-					       fontSize='13px'
+					       fontSize='0.6rem'
 					       fill='#a9f3ff'>
 						{this.props.tooltip.type === 'network' ? this.props.tooltip.data.group : this.props.tooltip.data.description}
 					</tspan>
-					{renderText()}
 				</text>
 			</g>
 		);

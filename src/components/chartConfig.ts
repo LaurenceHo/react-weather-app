@@ -21,9 +21,9 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 		const time = Utils.getLocalTime(temperature.name, timezone.offset, 'YYYY-MM-DD HH:mm');
 
 		return `
-    <div style="font-size:1rem; color:#949494; line-height:1.1rem;">${time}</div></br>
-    <div style="color:#2E2E2E; font-size:14px; font-weight:500;	line-height: 16px;">Temperature: ${Utils.getTemperature(temperature.value, units)}</div></br>
-    <div style="color:#2E2E2E; font-size:14px; font-weight:500;	line-height: 16px;">Rain: ${rain.value} ${units === 'us' ? 'in' : 'mm'}</div>
+    <div style="font-size:0.9rem; color:#949494; line-height:1.1rem;">${time}</div></br>
+    <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">Temperature: ${Utils.getTemperature(temperature.value, units)}</div></br>
+    <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">Rain: ${rain.value} ${units === 'us' ? 'in' : 'mm'}</div>
    `;
 	};
 

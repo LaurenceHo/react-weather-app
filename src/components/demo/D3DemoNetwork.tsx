@@ -47,12 +47,9 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 				type: 'network'
 			}
 		};
-
-		this.showToolTip = this.showToolTip.bind(this);
-		this.hideToolTip = this.hideToolTip.bind(this);
 	}
 
-	showToolTip(e: any) {
+	showToolTip = (e: any) => {
 		this.setState({
 			tooltip: {
 				display: true,
@@ -67,9 +64,9 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 				type: 'network'
 			}
 		});
-	}
+	};
 
-	hideToolTip() {
+	hideToolTip = () => {
 		this.setState({
 			tooltip: {
 				display: false,
@@ -80,7 +77,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 				type: 'network'
 			}
 		});
-	}
+	};
 
 	scaleFactor(): any {
 		if (this.width > this.height) {
@@ -121,24 +118,6 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 				}
 			}))
 			.force('center', d3.forceCenter(this.width / 2, this.height / 2));
-	}
-
-	render() {
-		return (
-			<div className='content'>
-				<Link to='/d3_demo_app' className='nav-link'>Application Traffic</Link>
-				&nbsp;|&nbsp;<span className='is-active'> Network Traffic</span>
-
-				<div id='chart'>
-					<div className='svg-container'>
-						<svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
-						     height={this.height}>
-							<ToolTip tooltip={this.state.tooltip}/>
-						</svg>
-					</div>
-				</div>
-			</div>
-		);
 	}
 
 	componentDidMount() {
@@ -353,5 +332,23 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
 	componentWillUnmount() {
 		clearInterval(this.intervalId);
+	}
+
+	render() {
+		return (
+			<div className='content'>
+				<Link to='/d3_demo_app' className='nav-link'>Application Traffic</Link>
+				&nbsp;|&nbsp;<span className='is-active'> Network Traffic</span>
+
+				<div id='chart'>
+					<div className='svg-container'>
+						<svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
+						     height={this.height}>
+							<ToolTip tooltip={this.state.tooltip}/>
+						</svg>
+					</div>
+				</div>
+			</div>
+		);
 	}
 }

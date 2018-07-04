@@ -19,19 +19,16 @@ export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSe
 		this.state = {
 			location: ''
 		};
-
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleChange(event: any) {
+	handleChange = (event: any) => {
 		const value = event.target.value;
 		this.setState({ location: value });
-	}
+	};
 
-	handleSubmit() {
+	handleSubmit = () => {
 		this.props.onSearch(this.state.location);
-	}
+	};
 
 	render() {
 		return (
