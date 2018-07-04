@@ -1,179 +1,161 @@
 import * as d3 from 'd3';
 
 export interface Config {
-	[key: string]: any
+  [ key: string ]: any;
 }
 
-export const gauge = (container: any, configuration: any) => {
-	let that = {
-		configure: {},
-		isRendered: {},
-		render: {},
-		update: {}
-	};
+export default class Gauge {
+  config: Config = {
+    size: 200,
+    clipWidth: 200,
+    clipHeight: 110,
+    ringInset: 20,
+    ringWidth: 20,
+    
+    pointerWidth: 10,
+    pointerTailLength: 5,
+    pointerHeadLengthPercent: 0.9,
+    
+    minValue: 0,
+    maxValue: 10,
+    
+    minAngle: -90,
+    maxAngle: 90,
+    
+    transitionMs: 750,
+    
+    majorTicks: 5,
+    labelFormat: d3.format('d'),
+    labelInset: 10,
+    
+    arcColorFn: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a'))
+  };
 
-	let config: Config = {
-		size: 200,
-		clipWidth: 200,
-		clipHeight: 110,
-		ringInset: 20,
-		ringWidth: 20,
+  configuration: any = null;
+  range: any;
+  r: any;
+  pointerHeadLength: any;
+  svg: any;
+  arc: any;
+  scale: any;
+  ticks: any;
+  tickData: any;
+  pointer: any;
+  
+  constructor(container: any, configuration: any) {
+    this.svg = container;
+    this.configuration = configuration;
+    this.configure(this.configuration);
+  }
+  
+  deg2rad(deg: number) {
+    return deg * Math.PI / 180;
+  }
+  
+  configure(configuration: any) {
+    for (const prop in configuration) {
+      if (configuration.hasOwnProperty(prop)) {
+        this.config[ prop ] = configuration[ prop ];
+      }
+    }
+    
+    this.range = this.config.maxAngle - this.config.minAngle;
+    this.r = this.config.size / 2;
+    this.pointerHeadLength = Math.round(this.r * this.config.pointerHeadLengthPercent);
+    
+    // a linear scale that maps domain values to a percent from 0..1
+    this.scale = d3.scaleLinear()
+      .range([ 0, 1 ])
+      .domain([ this.config.minValue, this.config.maxValue ]);
+    
+    this.ticks = this.scale.ticks(this.config.majorTicks);
+    this.tickData = d3.range(this.config.majorTicks).map(() => {
+      return 1 / this.config.majorTicks;
+    });
+    
+    this.arc = d3.arc()
+      .innerRadius(this.r - this.config.ringWidth - this.config.ringInset)
+      .outerRadius(this.r - this.config.ringInset)
+      .startAngle((d: any, i: number) => {
+        const ratio = d * i;
+        return this.deg2rad(this.config.minAngle + (ratio * this.range));
+      })
+      .endAngle((d: any, i: number) => {
+        const ratio = d * (i + 1);
+        return this.deg2rad(this.config.minAngle + (ratio * this.range));
+      });
+  }
+  
+  centerTranslation() {
+    return 'translate(' + this.r + ',' + this.r + ')';
+  }
+  
+  render(newValue: any) {
+    const gauge = this.svg.append('g')
+      .attr('class', 'gauge')
+      .attr('width', this.config.clipWidth)
+      .attr('height', this.config.clipHeight)
+      .attr('transform', 'translate(' + this.config.x + ',' + this.config.y + ')');
 
-		pointerWidth: 10,
-		pointerTailLength: 5,
-		pointerHeadLengthPercent: 0.9,
-
-		minValue: 0,
-		maxValue: 10,
-
-		minAngle: -90,
-		maxAngle: 90,
-
-		transitionMs: 750,
-
-		majorTicks: 5,
-		labelFormat: d3.format('d'),
-		labelInset: 10,
-
-		arcColorFn: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a'))
-	};
-
-	let range: any = undefined;
-	let r: any = undefined;
-	let pointerHeadLength: any = undefined;
-
-	let svg: any = undefined;
-	let arc: any = undefined;
-	let scale: any = undefined;
-	let ticks: any = undefined;
-	let tickData: any = undefined;
-	let pointer: any = undefined;
-
-	function deg2rad(deg: number) {
-		return deg * Math.PI / 180;
-	}
-
-	function configure(configuration: any) {
-		let prop = undefined;
-		for ( prop in configuration ) {
-			config[prop] = configuration[prop];
-		}
-
-		range = config.maxAngle - config.minAngle;
-		r = config.size / 2;
-		pointerHeadLength = Math.round(r * config.pointerHeadLengthPercent);
-
-		// a linear scale that maps domain values to a percent from 0..1
-		scale = d3.scaleLinear()
-			.range([0, 1])
-			.domain([config.minValue, config.maxValue]);
-
-		ticks = scale.ticks(config.majorTicks);
-		tickData = d3.range(config.majorTicks).map(() => {
-			return 1 / config.majorTicks;
-		});
-
-		arc = d3.arc()
-			.innerRadius(r - config.ringWidth - config.ringInset)
-			.outerRadius(r - config.ringInset)
-			.startAngle((d: any, i: number) => {
-				let ratio = d * i;
-				return deg2rad(config.minAngle + (ratio * range));
-			})
-			.endAngle((d: any, i: number) => {
-				let ratio = d * (i + 1);
-				return deg2rad(config.minAngle + (ratio * range));
-			});
-	}
-
-	that.configure = configure;
-
-	function centerTranslation() {
-		return 'translate(' + r + ',' + r + ')';
-	}
-
-	function isRendered() {
-		return (svg !== undefined);
-	}
-
-	that.isRendered = isRendered;
-
-	function render(newValue: any) {
-		svg = d3.select(container)
-			.append('svg:svg')
-			.attr('class', 'gauge')
-			.attr('width', config.clipWidth)
-			.attr('height', config.clipHeight)
-			.attr('x', config.x)
-			.attr('y', config.y);
-
-		svg.append('text')
-			.text(config.title)
-			.attr('dx', config.titleDx)
-			.attr('dy', config.titleDy)
-			.attr('class', config.class);
-
-		let centerTx = centerTranslation();
-
-		let arcs = svg.append('g')
-			.attr('class', 'arc')
-			.attr('transform', centerTx);
-
-		arcs.selectAll('path')
-			.data(tickData)
-			.enter().append('path')
-			.attr('fill', (d: any, i: number) => {
-				return config.arcColorFn(d * i);
-			})
-			.attr('d', arc);
-
-		let lg = svg.append('g')
-			.attr('class', 'label')
-			.attr('transform', centerTx);
-		lg.selectAll('text')
-			.data(ticks)
-			.enter().append('text')
-			.attr('transform', (d: any) => {
-				let ratio = scale(d);
-				let newAngle = config.minAngle + (ratio * range);
-				return 'rotate(' + newAngle + ') translate(0,' + (config.labelInset - r) + ')';
-			})
-			.text(config.labelFormat);
-
-		let lineData = [[config.pointerWidth / 2, 0],
-			[0, -pointerHeadLength],
-			[-(config.pointerWidth / 2), 0],
-			[0, config.pointerTailLength],
-			[config.pointerWidth / 2, 0]];
-		let pointerLine = d3.line().curve(d3.curveLinear);
-		let pg = svg.append('g').data([lineData])
-			.attr('class', 'pointer')
-			.attr('transform', centerTx);
-
-		pointer = pg.append('path')
-			.attr('d', pointerLine)
-			.attr('transform', 'rotate(' + config.minAngle + ')');
-
-		update(newValue === undefined ? 0 : newValue, undefined);
-	}
-
-	that.render = render;
-
-	function update(newValue: any, newConfiguration: any) {
-		if (newConfiguration !== undefined) {
-			configure(newConfiguration);
-		}
-		let ratio = scale(newValue);
-		let newAngle = config.minAngle + (ratio * range);
-		pointer.transition()
-			.duration(config.transitionMs)
-			.ease(d3.easeElastic)
-			.attr('transform', 'rotate(' + newAngle + ')');
-	}
-
-	that.update = update;
-
-	configure(configuration);
-
-	return that;
-};
+    gauge.append('text')
+      .text(this.config.title)
+      .attr('dx', this.config.titleDx)
+      .attr('dy', this.config.titleDy)
+      .attr('class', this.config.class);
+    
+    const centerTx = this.centerTranslation();
+    
+    const arcs = gauge.append('g')
+      .attr('class', 'arc')
+      .attr('transform', centerTx);
+    
+    arcs.selectAll('path')
+      .data(this.tickData)
+      .enter().append('path')
+      .attr('fill', (d: any, i: number) => {
+        return this.config.arcColorFn(d * i);
+      })
+      .attr('d', this.arc);
+    
+    const lg = gauge.append('g')
+      .attr('class', 'label')
+      .attr('transform', centerTx);
+    lg.selectAll('text')
+      .data(this.ticks)
+      .enter().append('text')
+      .attr('transform', (d: any) => {
+        const ratio = this.scale(d);
+        const newAngle = this.config.minAngle + (ratio * this.range);
+        return 'rotate(' + newAngle + ') translate(0,' + (this.config.labelInset - this.r) + ')';
+      })
+      .text(this.config.labelFormat);
+    
+    const lineData = [ [ this.config.pointerWidth / 2, 0 ],
+      [ 0, -this.pointerHeadLength ],
+      [ -(this.config.pointerWidth / 2), 0 ],
+      [ 0, this.config.pointerTailLength ],
+      [ this.config.pointerWidth / 2, 0 ] ];
+    const pointerLine = d3.line().curve(d3.curveLinear);
+    const pg = gauge.append('g').data([ lineData ])
+      .attr('class', 'pointer')
+      .attr('transform', centerTx);
+    
+    this.pointer = pg.append('path')
+      .attr('d', pointerLine)
+      .attr('transform', 'rotate(' + this.config.minAngle + ')');
+    
+    this.update(newValue === undefined ? 0 : newValue, undefined);
+  }
+  
+  update(newValue: any, newConfiguration: any) {
+    if (newConfiguration !== undefined) {
+      this.configure(newConfiguration);
+    }
+    const ratio = this.scale(newValue);
+    const newAngle = this.config.minAngle + (ratio * this.range);
+    this.pointer.transition()
+      .duration(this.config.transitionMs)
+      .ease(d3.easeElastic)
+      .attr('transform', 'rotate(' + newAngle + ')');
+  }
+}

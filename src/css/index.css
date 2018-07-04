@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body {
     font-size: 1rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .content {
     min-height: 40rem;
-    padding: 0;
+    padding: 4rem 0 0 0;
 }
 
 .footer {
@@ -21,10 +21,13 @@ body {
 
 .nav-bar {
     padding: 0 1rem;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
 }
 
 .nav-bar-menu {
-    line-height: 63px;
+    line-height: 4rem;
 }
 
 .nav-bar-icon {
@@ -50,16 +53,15 @@ body {
 }
 
 .current-weather-location {
-    padding: 1rem 2rem;
-    font-size: 1.8rem;
-}
-
-.current-weather-sub-content {
-    font-size: 0.8rem;
+    padding: 1rem 2rem 0.5rem 1rem;
+    font-size: 2rem;
+    font-weight: bolder;
 }
 
 .forecast-summary {
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .forecast-title {
@@ -68,7 +70,7 @@ body {
 }
 
 .daily-forecast-item-wrapper {
-    padding: 0.5rem 2rem;
+    padding: 0.2rem 2rem;
 }
 
 .daily-forecast-item-font {
