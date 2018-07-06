@@ -11,8 +11,8 @@ export class D3DemoApp extends React.Component<any, any> {
 	links: any[] = [];
 	hits: any[] = [];
 	simulation: any = {};
-	width: number = 0;
-	height: number = 0;
+	width: number = window.innerWidth;
+	height: number = window.innerHeight;
 	svg: any = {};
 	g: any = {};
 	link: any = {};
@@ -22,13 +22,6 @@ export class D3DemoApp extends React.Component<any, any> {
 	isActive: boolean = true;
 	intervalId: number = 0;
 	powerGauge: any = {};
-
-	constructor(props: any) {
-		super(props);
-
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
-	}
 
 	getNode(name: string) {
 		return this.nodes.find(node => {
@@ -249,7 +242,7 @@ export class D3DemoApp extends React.Component<any, any> {
 		);
 
 		return (
-			<div className='content'>
+			<div>
 				<span className="is-active nav-link">Application Traffic</span>
 				&nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
 

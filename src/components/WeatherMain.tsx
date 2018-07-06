@@ -19,10 +19,6 @@ import {
 } from '../api';
 
 class WeatherMain extends React.Component<any, any> {
-	constructor(props: any) {
-		super(props);
-	}
-
 	componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
 		// When user search weather by city name
 		if (prevProps.filter && (this.props.filter !== prevProps.filter)) {

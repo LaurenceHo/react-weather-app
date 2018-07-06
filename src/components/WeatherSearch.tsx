@@ -13,13 +13,9 @@ interface WeatherSearchState {
 }
 
 export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSearchState> {
-	constructor(props: WeatherSearchProps) {
-		super(props);
-
-		this.state = {
-			location: ''
-		};
-	}
+	state = {
+		location: ''
+	};
 
 	handleChange = (event: any) => {
 		const value = event.target.value;

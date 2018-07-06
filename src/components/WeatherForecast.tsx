@@ -5,10 +5,6 @@ import DailyForecast from './DailyForecast';
 import HourlyForecast from './HourlyForecast';
 
 class WeatherForecast extends React.Component<any, any> {
-	constructor(props: any) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<div>

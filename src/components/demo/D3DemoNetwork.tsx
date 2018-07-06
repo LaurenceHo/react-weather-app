@@ -18,8 +18,8 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 	links: any[] = [];
 	hits: any[] = [];
 	simulation: any = {};
-	width: number = 0;
-	height: number = 0;
+	width: number = window.innerWidth;
+	height: number = window.innerHeight;
 	svg: any = {};
 	g: any = {};
 	link: any = {};
@@ -31,23 +31,16 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 	c10 = d3.scaleOrdinal(d3.schemeCategory10);
 	powerGauge: any = {};
 
-	constructor(props: any) {
-		super(props);
-
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
-
-		this.state = {
-			tooltip: {
-				display: false,
-				data: {
-					key: '',
-					group: ''
-				},
-				type: 'network'
-			}
-		};
-	}
+	state = {
+		tooltip: {
+			display: false,
+			data: {
+				key: '',
+				group: ''
+			},
+			type: 'network'
+		}
+	};
 
 	showToolTip = (e: any) => {
 		this.setState({
@@ -336,7 +329,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
 	render() {
 		return (
-			<div className='content'>
+			<div>
 				<Link to='/d3_demo_app' className='nav-link'>Application Traffic</Link>
 				&nbsp;|&nbsp;<span className='is-active'> Network Traffic</span>
 

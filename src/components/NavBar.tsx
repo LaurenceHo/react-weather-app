@@ -14,24 +14,20 @@ interface NavBarState {
 }
 
 class NavBar extends React.Component<any, NavBarState> {
-	constructor(props: any) {
-		super(props);
+	state = {
+		previousLocation: ''
+	};
 
-		this.state = { previousLocation: '' };
-		this.handleSearch = this.handleSearch.bind(this);
-		this.handleMenuClick = this.handleMenuClick.bind(this);
-	}
-
-	handleSearch(location: string) {
+	handleSearch = (location: string) => {
 		if (this.state.previousLocation !== location && location) {
 			this.setState({ previousLocation: location });
 			this.props.fetchingData(location);
 		}
 	};
 
-	handleMenuClick(e: ClickParam) {
+	handleMenuClick = (e: ClickParam) => {
 		this.props.setUnits(e.key);
-	}
+	};
 
 	render() {
 		const menu = (
@@ -79,7 +75,7 @@ class NavBar extends React.Component<any, NavBarState> {
 					</Col>
 					<Col xs={2} sm={2} md={2} lg={2} xl={2}>
 						<Dropdown overlay={menu} trigger={['click']} disabled={this.props.isLoading}>
-							<Button style={{ marginLeft: '0.8rem' }}>Units<Icon type="down"/></Button>
+							<Button className='units-dropdown'>Units<Icon type="down"/></Button>
 						</Dropdown>
 					</Col>
 					<Col xs={1} sm={1} md={1} lg={1} xl={1} className='nav-bar-icon'>
