@@ -1,10 +1,10 @@
 import { Col, Row } from 'antd';
 import * as React from 'react';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
+
 import { Utils } from '../utils';
 import { Weather } from './DataModel';
-
+import { MoonIcon } from './icon/MoonIcon';
 import { WeatherIcon } from './icon/WeatherIcon';
 
 export class DailyForecast extends React.Component<any, any> {
@@ -16,8 +16,25 @@ export class DailyForecast extends React.Component<any, any> {
 				<Col span={1}>
 					<WeatherIcon icon={f.icon} size='1.6rem'/>
 				</Col>
-				<Col span={2} className='daily-forecast-item-column'>
+				<Col span={1} className='daily-forecast-item-column'>
 					{i === 0 ? 'Today' : Utils.getLocalTime(f.time, timezone.offset, 'ddd')}
+				</Col>
+				<Col span={1} className='daily-forecast-item-column'>
+					<i className="wi wi-sunrise"/>
+					<div className='daily-forecast-item-font'>
+						@{Utils.getLocalTime(f.sunriseTime, timezone.offset, 'hh:mm')}
+					</div>
+				</Col>
+				<Col span={1} className='daily-forecast-item-column'>
+					<i className="wi wi-sunset"/>
+					<div className='daily-forecast-item-font'>
+						@{Utils.getLocalTime(f.sunsetTime, timezone.offset, 'hh:mm')}
+					</div>
+				</Col>
+				<Col span={1} className='daily-forecast-item-column'>
+					<div style={{ fontSize: '1.8rem' }}>
+						<MoonIcon moonPhase={f.moonPhase} latitude={timezone.latitude}/>
+					</div>
 				</Col>
 				<Col span={1} className='daily-forecast-item-column'>
 					{Utils.getTemperature(f.temperatureLow, units)}
@@ -54,7 +71,13 @@ export class DailyForecast extends React.Component<any, any> {
 				</Row>
 				<Row type="flex" justify="center" className='daily-forecast-item-wrapper'>
 					<Col span={1}/>
-					<Col span={2}/>
+					<Col span={1}/>
+					<Col span={2} className='daily-forecast-item-column'>
+						Sun
+					</Col>
+					<Col span={1}>
+						Moon
+					</Col>
 					<Col span={1} className='daily-forecast-item-column'>
 						Low
 					</Col>

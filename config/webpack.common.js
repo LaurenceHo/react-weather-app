@@ -7,30 +7,30 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-	entry: './src/index.tsx',
+	entry: ['./src/index.tsx', 'whatwg-fetch'],
 	output: {
 		path: path.resolve(__dirname, '../dist'),
 		filename: '[name].bundle.js'
 	},
 	resolve: {
 		modules: [
-			path.join(__dirname, "../dist"),
-			"node_modules"
+			path.join(__dirname, '../dist'),
+			'node_modules'
 		],
-		extensions: [".ts", ".tsx", '.js', '.json']
+		extensions: ['.ts', '.tsx', '.js', '.json']
 	},
 	module: {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				loader: "ts-loader"
+				loader: 'ts-loader'
 			},
 			// All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
 			{
-				enforce: "pre",
+				enforce: 'pre',
 				test: /\.js$/,
 				exclude: /(node_modules)/,
-				loader: "source-map-loader"
+				loader: 'source-map-loader'
 			},
 			{
 				test: /\.css$/,
@@ -42,11 +42,11 @@ module.exports = {
 			},
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				use: ["url-loader?limit=10000&mimetype=application/font-woff"]
+				use: ['url-loader?limit=10000&mimetype=application/font-woff']
 			},
 			{
 				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				use: ["file-loader"]
+				use: ['file-loader']
 			}
 		]
 	},

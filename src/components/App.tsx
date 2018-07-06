@@ -7,17 +7,6 @@ import { About } from './About';
 import { D3DemoApp } from './demo/D3DemoApp';
 import { D3DemoNetwork } from './demo/D3DemoNetwork';
 
-import 'antd/lib/alert/style/css';
-import 'antd/lib/button/style/css';
-import 'antd/lib/col/style/css';
-import 'antd/lib/dropdown/style/css';
-import 'antd/lib/icon/style/css';
-import 'antd/lib/input/style/css';
-import 'antd/lib/layout/style/css';
-import 'antd/lib/menu/style/css';
-import 'antd/lib/row/style/css';
-import 'antd/lib/spin/style/css';
-
 const { Footer, Content } = Layout;
 
 export class App extends React.Component<any, any> {

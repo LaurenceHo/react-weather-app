@@ -19,7 +19,7 @@ class NavBar extends React.Component<any, NavBarState> {
 	};
 
 	handleSearch = (location: string) => {
-		if (this.state.previousLocation !== location && location) {
+		if (this.state.previousLocation.toLowerCase() !== location.toLowerCase() && location) {
 			this.setState({ previousLocation: location });
 			this.props.fetchingData(location);
 		}

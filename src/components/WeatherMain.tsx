@@ -127,7 +127,7 @@ class WeatherMain extends React.Component<any, any> {
 		this.props.fetchingDataSuccess();
 		this.props.setAllWeatherDataIntoStore({
 			units: this.props.units,
-			filter: city,
+			filter: this.props.filter,
 			location: city,
 			weather: weather,
 			timezone: timezone,

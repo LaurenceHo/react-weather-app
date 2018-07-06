@@ -42,7 +42,7 @@ export class WindIcon extends React.Component<WindIconProps, any> {
 		} else if (windCode === Condition.WIND_NNW) {
 			return (<i className="wi wi-wind wi-towards-sse"/>);
 		} else {
-			return (null);
+			return null;
 		}
 	}
 }
