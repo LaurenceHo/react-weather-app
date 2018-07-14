@@ -37,8 +37,8 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
 			return n.precipIntensity.toFixed(2);
 		}
 	}).slice(0, 23);
-	const temperatureMax = (Math.round(Math.max.apply(null, roundTemperature) / 10) + 1) * 10;
-	const rainMax = (Math.max.apply(null, roundIntensity) * 2).toFixed(1);
+	const temperatureMax = Math.round(Math.max.apply(null, roundTemperature) * 1.3);
+	const rainMax = (Math.max.apply(null, roundIntensity) * 1.3).toFixed(1);
 
 	return {
 		legend: {

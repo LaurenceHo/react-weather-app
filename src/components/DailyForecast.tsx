@@ -22,13 +22,13 @@ export class DailyForecast extends React.Component<any, any> {
 				<Col span={1} className='daily-forecast-item-column'>
 					<i className="wi wi-sunrise"/>
 					<div className='daily-forecast-item-font'>
-						@{Utils.getLocalTime(f.sunriseTime, timezone.offset, 'hh:mm')}
+						@{Utils.getLocalTime(f.sunriseTime, timezone.offset, 'HH:mm')}
 					</div>
 				</Col>
 				<Col span={1} className='daily-forecast-item-column'>
 					<i className="wi wi-sunset"/>
 					<div className='daily-forecast-item-font'>
-						@{Utils.getLocalTime(f.sunsetTime, timezone.offset, 'hh:mm')}
+						@{Utils.getLocalTime(f.sunsetTime, timezone.offset, 'HH:mm')}
 					</div>
 				</Col>
 				<Col span={1} className='daily-forecast-item-column'>

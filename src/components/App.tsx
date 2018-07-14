@@ -27,7 +27,7 @@ export class App extends React.Component<any, any> {
 						</Switch>
 					</Content>
 					<Footer className='footer'>
-						©2018 Created by Laurence Ho
+						©2018 Developed by Laurence Ho, v1.0.2
 					</Footer>
 				</div>
 			</Router>
