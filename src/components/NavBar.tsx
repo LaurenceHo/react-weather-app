@@ -80,7 +80,7 @@ class NavBar extends React.Component<any, NavBarState> {
 					</Col>
 					<Col xs={1} sm={1} md={1} lg={1} xl={1} className='nav-bar-icon'>
 						<Button type="primary" shape="circle" icon='github' size='large'
-						        href='https://github.com/bluegray1015/reactjs-beautiful-weather'/>
+						        href='https://github.com/LaurenceHo/reactjs-beautiful-weather'/>
 					</Col>
 				</Row>
 			</Header>

@@ -21,7 +21,7 @@ git clone https://LaurenceHo@bitbucket.org/LaurenceHo/reactjs-beautiful-weather.
 ```
 or
 ```
-git clone https://github.com/bluegray1015/reactjs-beautiful-weather.git
+git clone https://github.com/LaurenceHo/reactjs-beautiful-weather.git
 ```
 
 * Install npm package: 
