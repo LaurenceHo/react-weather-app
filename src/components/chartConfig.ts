@@ -1,11 +1,10 @@
-import * as _ from 'lodash';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/tooltip';
-
-import { Timezone } from './DataModel';
+import * as _ from 'lodash';
 import { Utils } from '../utils';
+import { Timezone } from './DataModel';
 
 export const chartConfig: any = (units: string, timezone: Timezone, hourly: any) => {
   const formatterXAxisLabel = (value: number, index: number) => {

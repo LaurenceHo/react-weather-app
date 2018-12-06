@@ -1,6 +1,6 @@
 import { Row } from 'antd';
-import * as React from 'react';
 import * as echarts from 'echarts/lib/echarts';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { chartConfig } from './chartConfig';

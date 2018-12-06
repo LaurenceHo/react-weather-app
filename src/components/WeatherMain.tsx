@@ -1,9 +1,9 @@
+import { Alert, Col, Row, Spin } from 'antd';
 import * as _ from 'lodash';
 import * as React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Col, Row, Spin } from 'antd';
-
+import { bindActionCreators } from 'redux';
+import { getGeocode, getWeather } from '../api';
 import {
   fetchingData,
   fetchingDataFailure,
@@ -13,8 +13,6 @@ import {
 } from '../redux/actions';
 import { Forecast, Timezone } from './DataModel';
 import WeatherForecast from './WeatherForecast';
-
-import { getGeocode, getWeather } from '../api';
 
 class WeatherMain extends React.Component<any, any> {
   componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {

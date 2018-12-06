@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
-
-import { ToolTip } from './ToolTip';
-import { TrafficService } from './traffic';
-import { gauge } from './gauge';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { networkTraffic } from '../../../sample/networkTraffic';
 import './d3.css';
+import { gauge } from './gauge';
+import { ToolTip } from './ToolTip';
+import { TrafficService } from './traffic';
 
 interface D3DemoNetworkState {
   tooltip: any

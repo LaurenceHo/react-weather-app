@@ -1,6 +1,6 @@
 import { location } from '../sample/location';
-import { weather_us } from '../sample/weather_us';
 import { weather_si } from '../sample/weather_si';
+import { weather_us } from '../sample/weather_us';
 
 const CLOUD_FUNCTION_URL = 'https://us-central1-react-beautiful-weather-app.cloudfunctions.net/';
 

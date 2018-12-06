@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Col, Row } from 'antd';
+import * as React from 'react';
 
 export const About = () =>
   <Row type="flex" justify="center" className='about-content'>

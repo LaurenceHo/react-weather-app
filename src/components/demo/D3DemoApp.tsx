@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import * as React from 'react';
 import * as d3 from 'd3';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { appTraffic } from '../../../sample/appTraffic';
-import { TrafficService } from './traffic';
-import { gauge } from './gauge';
 import './d3.css';
+import { gauge } from './gauge';
+import { TrafficService } from './traffic';
 
 export class D3DemoApp extends React.Component<any, any> {
   nodes: any[] = [];

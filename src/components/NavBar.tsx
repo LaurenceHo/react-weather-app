@@ -1,9 +1,9 @@
+import { Button, Col, Dropdown, Icon, Layout, Menu, Row } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Dropdown, Icon, Layout, Menu, Row } from 'antd';
 import { fetchingData, setUnits } from '../redux/actions';
 import { WeatherSearch } from './WeatherSearch';
 

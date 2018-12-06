@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Input } from 'antd';
+import * as React from 'react';
 
 const Search = Input.Search;
 
