@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import * as React from 'react';
 
 export const About = () =>
-  <Row type="flex" justify="center" className='about-content'>
+  <Row type='flex' justify='center' className='about-content'>
     <Col span={14}>
       <h1 className='text-center'>About</h1>
       <p>
@@ -11,8 +11,8 @@ export const About = () =>
       </p>
       <p>
         Source code:
-        <a href="https://github.com/bluegray1015/reactjs-beautiful-weather">GitHub</a> and
-        <a href="https://bitbucket.org/LaurenceHo/reactjs-beautiful-weather">BitBucket</a>
+        <a href='https://github.com/bluegray1015/reactjs-beautiful-weather'>GitHub</a> and
+        <a href='https://bitbucket.org/LaurenceHo/reactjs-beautiful-weather'>BitBucket</a>
       </p>
       <p>
         Here are most important libraries (dependencies) I used:

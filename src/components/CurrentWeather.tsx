@@ -11,27 +11,28 @@ export class CurrentWeather extends React.Component<any, any> {
     
     return (
       <div>
-        <Row type="flex" justify="center" className='current-weather-top'>
+        <Row type='flex' justify='center' className='current-weather-top'>
           <Col span={3}>
-						<span>
-						Rain: {Utils.getRain(weather.precipIntensity, weather.precipProbability, units)}
-              <i className="wi wi-humidity"/>
-						</span>
+            <span>
+              Rain: {Utils.getRain(weather.precipIntensity, weather.precipProbability, units)}
+              <i className='wi wi-humidity'/>
+            </span>
           </Col>
           <Col span={2}>
             Wind: {Utils.getWindSpeed(weather.windSpeed, units)} <WindIcon degree={weather.windBearing}/>
           </Col>
           <Col span={2}><span>Humidity: {Math.round(weather.humidity * 100)} <i
-            className="wi wi-humidity"/></span></Col>
+            className='wi wi-humidity'
+          /></span></Col>
           <Col span={3}>Pressure: {Utils.getPressure(weather.pressure, units)}</Col>
           <Col span={2}>Dew Point: {Utils.getTemperature(weather.dewPoint, units)}</Col>
           <Col span={2}>UV Index: {weather.uvIndex}</Col>
           <Col span={2}>Visibility: {Utils.getDistance(weather.visibility, units)}</Col>
         </Row>
-        <Row type="flex" justify="center" className='current-weather-location'>
+        <Row type='flex' justify='center' className='current-weather-location'>
           {location}
         </Row>
-        <Row type="flex" justify="center">
+        <Row type='flex' justify='center'>
           <Col span={1}>
             <WeatherIcon icon={weather.icon} size='3rem'/>
           </Col>
@@ -57,7 +58,7 @@ const mapStateToProps = (state: any) => {
     timezone: state.timezone,
     isLoading: state.isLoading,
     error: state.error
-  }
+  };
 };
 
 export default connect(mapStateToProps)(CurrentWeather);

@@ -21,6 +21,7 @@ export class HourlyForecast extends React.Component<any, any> {
       const weatherChart = document.getElementById('weather-chart');
       weatherChart.parentNode.removeChild(weatherChart);
     } catch (err) {
+      console.log('blahblah');
     }
     
     // Generate div element dynamically for ECharts
@@ -37,18 +38,18 @@ export class HourlyForecast extends React.Component<any, any> {
     chart.setOption(
       chartConfig(this.props.units, this.props.timezone, this.props.forecast.hourly)
     );
-  };
+  }
   
   render() {
     const {forecast} = this.props;
     return (
       <div>
-        <Row type="flex" justify="center" className='forecast-summary'>
+        <Row type='flex' justify='center' className='forecast-summary'>
           {forecast.hourly.summary}
         </Row>
-        <Row type="flex" justify="center" id='weather-chart-wrapper'/>
+        <Row type='flex' justify='center' id='weather-chart-wrapper'/>
       </div>
-    )
+    );
   }
 }
 
@@ -62,7 +63,7 @@ const mapStateToProps = (state: any) => {
     timezone: state.timezone,
     isLoading: state.isLoading,
     error: state.error
-  }
+  };
 };
 
 export default connect(mapStateToProps)(HourlyForecast);

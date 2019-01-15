@@ -36,7 +36,7 @@ class WeatherMain extends React.Component<any, any> {
     if (this.props.location.length === 0 && _.isEmpty(this.props.weather) && _.isEmpty(this.props.forecast)) {
       this.props.fetchingData('');
       // Get user's coordinates when user access the web app, it will ask user's location permission
-      let options = {
+      const options = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0
@@ -59,6 +59,42 @@ class WeatherMain extends React.Component<any, any> {
       
       navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
     }
+  }
+  
+  render() {
+    const {weather, location, isLoading, error} = this.props;
+    
+    const renderWeatherAndForecast = () => {
+      if (error) {
+        return (
+          <div>
+            <Row type='flex' justify='center' className='fetching-weather-content'>
+              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
+                <Alert
+                  message='Error'
+                  description={error}
+                  type='error'
+                  showIcon={true}
+                />
+              </Col>
+            </Row>
+          </div>
+        );
+      } else if (weather && location) {
+        return (<WeatherForecast/>);
+      }
+    };
+    
+    return (
+      <div>
+        {isLoading ?
+          <Row type='flex' justify='center' className='fetching-weather-content'>
+            <h2>Fetching weather</h2>
+            <Spin className='fetching-weather-spinner' size='large'/>
+          </Row>
+          : renderWeatherAndForecast()}
+      </div>
+    );
   }
   
   /**
@@ -116,8 +152,9 @@ class WeatherMain extends React.Component<any, any> {
   /**
    * @param {string} city name
    * @param weather, the current weather info from the fetched weather result
-   * @param timezone, the timezone info from the fetched weather result
-   * @param forecast, the forecast info from the fetched weather result, which is including minutely, hourly and daily info
+   * @param timezone, the Timezone info from the fetched weather result
+   * @param forecast, the forecast info from the fetched weather result,
+   * which is including minutely, hourly and daily info
    */
   private setDataToStore(city: string, weather: any, timezone: any, forecast: any) {
     this.props.fetchingDataSuccess();
@@ -125,47 +162,11 @@ class WeatherMain extends React.Component<any, any> {
       units: this.props.units,
       filter: this.props.filter,
       location: city,
-      weather: weather,
-      timezone: timezone,
-      forecast: forecast,
+      weather,
+      timezone,
+      forecast,
       isLoading: false
     });
-  }
-  
-  render() {
-    const {weather, location, isLoading, error} = this.props;
-    
-    const renderWeatherAndForecast = () => {
-      if (error) {
-        return (
-          <div>
-            <Row type="flex" justify="center" className='fetching-weather-content'>
-              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
-                <Alert
-                  message="Error"
-                  description={error}
-                  type="error"
-                  showIcon
-                />
-              </Col>
-            </Row>
-          </div>
-        );
-      } else if (weather && location) {
-        return (<WeatherForecast/>);
-      }
-    };
-    
-    return (
-      <div>
-        {isLoading ?
-          <Row type="flex" justify="center" className='fetching-weather-content'>
-            <h2>Fetching weather</h2>
-            <Spin className='fetching-weather-spinner' size="large"/>
-          </Row>
-          : renderWeatherAndForecast()}
-      </div>
-    )
   }
 }
 
@@ -179,7 +180,7 @@ const mapStateToProps = (state: any) => {
     timezone: state.timezone,
     isLoading: state.isLoading,
     error: state.error
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch: any) => {

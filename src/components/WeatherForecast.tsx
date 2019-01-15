@@ -13,7 +13,7 @@ class WeatherForecast extends React.Component<any, any> {
         <DailyForecast/>
       </div>
     );
-  };
+  }
 }
 
 const mapStateToProps = (state: any) => {
@@ -26,7 +26,7 @@ const mapStateToProps = (state: any) => {
     timezone: state.timezone,
     isLoading: state.isLoading,
     error: state.error
-  }
+  };
 };
 
 export default connect(mapStateToProps)(WeatherForecast);

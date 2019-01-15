@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-react"
+  ],
+  "rules": {
+    "jsx-wrap-multiline": false,
+    "jsx-no-multiline-js": false,
+
+    "trailing-comma": false,
+    "object-literal-sort-keys": false,
+    "member-access": false,
+    "interface-name": [true, "never-prefix"],
+    "class-name": true,
+    "arrow-parens": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
+
+    "no-console": false,
+    "no-debugger": false,
+    "no-submodule-imports": false,
+    "no-trailing-whitespace": false
+  }
+}

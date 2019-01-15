@@ -20,10 +20,16 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
     const time = Utils.getLocalTime(temperature.name, timezone.offset, 'YYYY-MM-DD HH:mm');
     
     return `
-    <div style="font-size:0.9rem; color:#949494; line-height:1.1rem;">${time}</div></br>
-    <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">Temperature: ${Utils.getTemperature(temperature.value, units)}</div></br>
-    <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">Rain: ${rain.value} ${units === 'us' ? 'in' : 'mm'}</div>
-   `;
+      <div style="font-size:0.9rem; color:#949494; line-height:1.1rem;">${time}</div>
+      </br>
+      <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">
+        Temperature:${Utils.getTemperature(temperature.value, units)}
+      </div>
+      </br>
+      <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">
+        Rain: ${rain.value} ${units === 'us' ? 'in' : 'mm'}
+      </div>
+     `;
   };
   
   const roundTemperature = _.map(hourly.data, (n) => {
@@ -90,7 +96,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
           color: '#666666',
           type: 'dashed'
         }
-      },
+      }
     },
     series: [
       {
@@ -103,8 +109,8 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
           width: 2
         },
         itemStyle: {
-          color: '#1869b7',
-        },
+          color: '#1869b7'
+        }
       },
       {
         name: 'Rain',

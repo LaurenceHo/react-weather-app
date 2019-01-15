@@ -9,8 +9,8 @@ export class Utils {
    * @returns {string}
    */
   static getLocalTime = (timestamp: number, offset: number, format: string): string => {
-    return `${moment.unix(timestamp).utcOffset(offset).format(format)}`
-  };
+    return `${moment.unix(timestamp).utcOffset(offset).format(format)}`;
+  }
   
   /**
    * @param {number} value
@@ -23,7 +23,7 @@ export class Utils {
     } else if (units === 'si') {
       return `${Math.round(value)} hPa`;
     }
-  };
+  }
   
   /**
    * @param {number} value
@@ -34,9 +34,9 @@ export class Utils {
     if (units === 'us') {
       return `${Math.round(value)} ℉`;
     } else if (units === 'si') {
-      return `${Math.round(value)} ℃`
+      return `${Math.round(value)} ℃`;
     }
-  };
+  }
   
   /**
    * @param {number} value
@@ -45,11 +45,11 @@ export class Utils {
    */
   static getWindSpeed = (value: number, units: string): string => {
     if (units === 'us') {
-      return `${Math.round(value)} mph`
+      return `${Math.round(value)} mph`;
     } else if (units === 'si') {
-      return `${Math.round(value * 3.6)} kph`
+      return `${Math.round(value * 3.6)} kph`;
     }
-  };
+  }
   
   /**
    * @param {number} intensity
@@ -63,7 +63,7 @@ export class Utils {
     } else if (units === 'si') {
       return `${intensity.toFixed(2)} mm / ${Math.round(chance * 100)} `;
     }
-  };
+  }
   
   static getDistance = (value: number, units: string): string => {
     if (units === 'us') {
@@ -71,5 +71,5 @@ export class Utils {
     } else if (units === 'si') {
       return `${Math.round(value)} km`;
     }
-  };
+  }
 }
