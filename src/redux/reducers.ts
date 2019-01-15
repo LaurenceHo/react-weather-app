@@ -46,6 +46,6 @@ export const reducers = (state: any = initialState, action: any) => {
       };
     
     default:
-      return state
+      return state;
   }
 };
