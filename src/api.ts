@@ -2,6 +2,12 @@ import { location } from '../sample/location';
 import { weather_si } from '../sample/weather_si';
 import { weather_us } from '../sample/weather_us';
 
+declare var process: {
+  env: {
+    NODE_ENV: string
+  }
+};
+
 const CLOUD_FUNCTION_URL = 'https://us-central1-react-beautiful-weather-app.cloudfunctions.net/';
 
 const checkStatus = (response: any) => {
@@ -18,7 +24,8 @@ export const getGeocode = (latitude: number, longitude: number, address: string)
   if (process.env.NODE_ENV === 'development') {
     return new Promise(resolve => setTimeout(resolve, 1000, location));
   } else {
-    const requestUrl = `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` + encodeURIComponent(address);
+    const requestUrl = `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` +
+      encodeURIComponent(address);
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)
@@ -35,7 +42,8 @@ export const getWeather = (latitude: number, longitude: number, exclude: string,
       return new Promise(resolve => setTimeout(resolve, 1000, weather_si));
     }
   } else {
-    const requestUrl = `${CLOUD_FUNCTION_URL}getWeather?lat=${latitude}&lon=${longitude}&exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
+    const requestUrl = `${CLOUD_FUNCTION_URL}getWeather?lat=${latitude}&lon=${longitude}&` +
+      `exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)
@@ -46,9 +54,10 @@ export const getWeather = (latitude: number, longitude: number, exclude: string,
 
 export const getForecast = (latitude: number, longitude: number, time: number, exclude: string, units: string) => {
   if (process.env.NODE_ENV === 'development') {
-    //TODO
+    // TODO
   } else {
-    const requestUrl = `${CLOUD_FUNCTION_URL}getForecast?lat=${latitude}&lon=${longitude}&time=${time}&exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
+    const requestUrl = `${CLOUD_FUNCTION_URL}getForecast?lat=${latitude}&lon=${longitude}&time=${time}` +
+      `&exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)

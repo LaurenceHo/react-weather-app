@@ -7,6 +7,7 @@
     "jsx-wrap-multiline": false,
     "jsx-no-multiline-js": false,
 
+    "prefer-for-of": false,
     "trailing-comma": false,
     "object-literal-sort-keys": false,
     "member-access": false,

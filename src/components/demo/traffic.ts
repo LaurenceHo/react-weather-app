@@ -2,6 +2,31 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 
 export class TrafficService {
+  static overlay() {
+    const el = document.getElementById('overlay');
+    el.style.visibility = (el.style.visibility === 'visible') ? 'hidden' : 'visible';
+  }
+  
+  static syntaxHighlight(json: any) {
+    if (typeof json !== 'string') {
+      json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(
+      /('(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\'])*'(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      (match: any) => {
+        let cls = 'number';
+        if (/^'/.test(match)) {
+          cls = /:$/.test(match) ? 'key' : 'string';
+        } else if (/true|false/.test(match)) {
+          cls = 'boolean';
+        } else if (/null/.test(match)) {
+          cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+  }
+  
   c10 = d3.scaleOrdinal(d3.schemeCategory10);
   slowest = 0;
   slowestMax = 0;
@@ -19,14 +44,15 @@ export class TrafficService {
   }
   
   viewHits(nodes: any[], hits: any[], isActive: boolean) {
-    if (!hits || hits.length === 0)
+    if (!hits || hits.length === 0) {
       return;
+    }
     
     let lastRunLogId = 0;
     let start = hits[ 0 ].timestamp;
     let delay = 0;
-    let requests: any[] = [];
-    let startTime = new Date().getTime();
+    const requests: any[] = [];
+    const startTime = new Date().getTime();
     
     for (let i = 0; i < hits.length; i++) {
       if (hits[ i ].id === lastRunLogId) {
@@ -46,23 +72,24 @@ export class TrafficService {
       }
       
       // count non 200 status codes
-      let statusCodeIndex = this.statusCodes.findIndex((item: any) => {
+      const statusCodeIndex = this.statusCodes.findIndex((item: any) => {
         return item.code === hits[ i ].statusCode;
       });
       
-      if (hits[ i ].statusCode && statusCodeIndex < 0 && (hits[ i ].statusCode < '200' || hits[ i ].statusCode > '299')) {
-        this.statusCodes.push({code: hits[ i ].statusCode, count: 1})
+      if (hits[ i ].statusCode && statusCodeIndex < 0 &&
+        (hits[ i ].statusCode < '200' || hits[ i ].statusCode > '299')) {
+        this.statusCodes.push({code: hits[ i ].statusCode, count: 1});
       } else if (hits[ i ].statusCode && (hits[ i ].statusCode < '200' || hits[ i ].statusCode > '299')) {
         this.statusCodes[ statusCodeIndex ].count++;
       }
       
       // collect response times
-      let responseTimesIndex = this.responseTimes.findIndex((item: any) => {
+      const responseTimesIndex = this.responseTimes.findIndex((item: any) => {
         return item.service === hits[ i ].target;
       });
       
       if (hits[ i ].processingTimeMs && responseTimesIndex < 0) {
-        hits[ i ].processingTimeMs = parseInt(hits[ i ].processingTimeMs);
+        hits[ i ].processingTimeMs = parseInt(hits[ i ].processingTimeMs, null);
         this.responseTimes.push({
           service: hits[ i ].target,
           count: 1,
@@ -71,9 +98,11 @@ export class TrafficService {
           max: hits[ i ].processingTimeMs
         });
       } else if (hits[ i ].processingTimeMs) {
-        hits[ i ].processingTimeMs = parseInt(hits[ i ].processingTimeMs);
-        this.responseTimes[ responseTimesIndex ].average = Math.round(((this.responseTimes[ responseTimesIndex ].average * this.responseTimes[ responseTimesIndex ].count)
-          + hits[ i ].processingTimeMs) / (this.responseTimes[ responseTimesIndex ].count + 1) * 10) / 10;
+        hits[ i ].processingTimeMs = parseInt(hits[ i ].processingTimeMs, null);
+        this.responseTimes[ responseTimesIndex ].average =
+          Math.round((
+            (this.responseTimes[ responseTimesIndex ].average * this.responseTimes[ responseTimesIndex ].count) +
+            hits[ i ].processingTimeMs) / (this.responseTimes[ responseTimesIndex ].count + 1) * 10) / 10;
         if (hits[ i ].processingTimeMs > this.responseTimes[ responseTimesIndex ].max) {
           this.responseTimes[ responseTimesIndex ].max = hits[ i ].processingTimeMs;
           this.responseTimes[ responseTimesIndex ].maxHit = hits[ i ];
@@ -87,8 +116,9 @@ export class TrafficService {
           this.updateResponseTimes();
         }
         this.responseTimes[ responseTimesIndex ].count++;
-        let now = new Date().getTime();
-        this.responseTimes[ responseTimesIndex ].rpm = Math.round(this.responseTimes[ responseTimesIndex ].count / ((now - startTime) / 1000) * 60);
+        const now = new Date().getTime();
+        this.responseTimes[ responseTimesIndex ].rpm =
+          Math.round(this.responseTimes[ responseTimesIndex ].count / ((now - startTime) / 1000) * 60);
       } else {
         hits[ i ].processingTimeMs = 0;
       }
@@ -101,10 +131,10 @@ export class TrafficService {
       if (isActive) {
         setTimeout(() => {
             if (nodes) {
-              let sourceNode = _.find(nodes, (node: any) => {
+              const sourceNode = _.find(nodes, (node: any) => {
                 return node.name === hits[ i ].source;
               });
-              let targetNode = _.find(nodes, (node: any) => {
+              const targetNode = _.find(nodes, (node: any) => {
                 return node.name === hits[ i ].target;
               });
               this.drawCircle(this.statusCodes, 'node' + sourceNode.index, 'node' + targetNode.index,
@@ -121,29 +151,34 @@ export class TrafficService {
     }
     this.requests = requests;
     if (hits && hits.length >= 1000) {
-      this.lastUpdate = "init";
+      this.lastUpdate = 'init';
     }
     this.updateLegend(this.requests);
     
     return this.requests;
-  };
+  }
   
-  drawCircle(statusCodes: any[], source: string, target: string, requestId: string, statusCode: any, processingTime: number) {
+  drawCircle(statusCodes: any[],
+             source: string,
+             target: string,
+             requestId: string,
+             statusCode: any,
+             processingTime: number) {
     if (statusCode === 'undefined') {
-      statusCode = null
+      statusCode = null;
     }
-    let tempLink: any = d3.select('line.' + source + '-' + target);
-    let link: any = tempLink._groups[ 0 ][ 0 ];
+    const tempLink: any = d3.select('line.' + source + '-' + target);
+    const link: any = tempLink._groups[ 0 ][ 0 ];
     
     if (link) {
-      let circle = this.svg.append('circle')
+      const circle = this.svg.append('circle')
         .attr('r', this.width / 350)
         .attr('cx', link.getAttribute('x1'))
         .attr('cy', link.getAttribute('y1'))
         .attr('class', 'hit');
       if (requestId !== 'no-request-id') {
         circle.attr('style', () => {
-          return 'fill:' + this.c10(requestId)
+          return 'fill:' + this.c10(requestId);
         });
       }
       
@@ -151,7 +186,7 @@ export class TrafficService {
         this.moveIt(circle, link.getAttribute('x2'), link.getAttribute('y2'), statusCode, false, processingTime);
       });
     }
-  };
+  }
   
   moveIt(item: any, x2: number, y2: number, statusCode: any, error: boolean, processingTime: number) {
     if (item) {
@@ -161,13 +196,15 @@ export class TrafficService {
         .attr('cy', y2)
         .on('end', (d: any) => item.remove());
     }
-  };
+  }
   
   drawLegend(requests: any[]) {
-    if (!requests || requests.length === 0)
+    if (!requests || requests.length === 0) {
       return;
+    }
     
-    if (this.svg.selectAll('.legendHeading')._groups[ 0 ] && this.svg.selectAll('.legendHeading')._groups[ 0 ].length === 0) {
+    if (this.svg.selectAll('.legendHeading')._groups[ 0 ] &&
+      this.svg.selectAll('.legendHeading')._groups[ 0 ].length === 0) {
       this.svg.append('text')
         .attr('dx', this.width - 240)
         .attr('dy', 20)
@@ -177,14 +214,14 @@ export class TrafficService {
     
     let legend = this.svg.selectAll('.legend');
     legend = legend.data(requests, (d: any) => {
-      return d
+      return d;
     });
     
-    let g = legend.enter().append('g').attr('class', (d: any) => {
-      return 'legend ' + d
+    const g = legend.enter().append('g').attr('class', (d: any) => {
+      return 'legend ' + d;
     });
     
-    let circle = g.append('circle');
+    const circle = g.append('circle');
     circle
       .attr('r', 6)
       .attr('class', 'hit')
@@ -206,17 +243,18 @@ export class TrafficService {
         return i * 20 + 34;
       })
       .text((d: any) => {
-        return d
+        return d;
       });
     legend.exit().remove();
-  };
+  }
   
   updateLegend(requests: any[]) {
-    if (!requests || requests.length === 0)
+    if (!requests || requests.length === 0) {
       return;
+    }
     
-    let items = this.svg.selectAll('.legend').data(requests, (d: any) => {
-      return d
+    const items = this.svg.selectAll('.legend').data(requests, (d: any) => {
+      return d;
     });
     items.select('circle')
       .transition()
@@ -229,8 +267,8 @@ export class TrafficService {
       .attr('dx', this.width - 220)
       .attr('dy', (d: any, i: any) => {
         return i * 20 + 34;
-      })
-  };
+      });
+  }
   
   drawResponseTimes() {
     if (this.svg.selectAll('.responseHeading')._groups[ 0 ].length === 0) {
@@ -268,7 +306,7 @@ export class TrafficService {
       return d.service;
     });
     
-    let g = responseItem.enter().append('g').attr('class', (d: any) => {
+    const g = responseItem.enter().append('g').attr('class', (d: any) => {
       return 'responseTime ' + d.service;
     });
     g.append('rect')
@@ -303,7 +341,7 @@ export class TrafficService {
       })
       .attr('class', 'responseTimesChart');
     
-    let label = g.append('text');
+    const label = g.append('text');
     label.attr('class', 'responseTimesText')
       .attr('dx', 20)
       .attr('dy', (d: any, i: number) => {
@@ -323,7 +361,7 @@ export class TrafficService {
       return d.rpm + ' rpm';
     }).attr('class', 'rpmLabel').attr('dx', 8)
       .on('click', (d: any) => {
-        let content = d3.select('#overlayContent');
+        const content = d3.select('#overlayContent');
         content.selectAll('*').remove();
         content.append('b').text('Details maximum log entry: ').append('br');
         content.append('pre').html(TrafficService.syntaxHighlight(d.maxHit)).append('br').append('br');
@@ -332,7 +370,7 @@ export class TrafficService {
       });
     
     responseItem.exit().remove();
-  };
+  }
   
   updateResponseTimes() {
     let responseItem = this.svg.selectAll('.responseTime');
@@ -363,39 +401,12 @@ export class TrafficService {
         }
         return w;
       });
-    let label = responseItem.select('text');
+    const label = responseItem.select('text');
     label.select('tspan.averageLabel').text((d: any) => {
       return d.average;
     }).attr('dx', 5);
     label.select('tspan.maxLabel').text((d: any) => {
       return d.max;
     }).attr('dx', 8);
-  };
-  
-  static overlay() {
-    let el = document.getElementById('overlay');
-    el.style.visibility = (el.style.visibility === 'visible') ? 'hidden' : 'visible';
-  };
-  
-  static syntaxHighlight(json: any) {
-    if (typeof json !== 'string') {
-      json = JSON.stringify(json, undefined, 2);
-    }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/('(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\'])*'(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match: any) => {
-      let cls = 'number';
-      if (/^'/.test(match)) {
-        if (/:$/.test(match)) {
-          cls = 'key';
-        } else {
-          cls = 'string';
-        }
-      } else if (/true|false/.test(match)) {
-        cls = 'boolean';
-      } else if (/null/.test(match)) {
-        cls = 'null';
-      }
-      return '<span class="' + cls + '">' + match + '</span>';
-    });
-  };
+  }
 }

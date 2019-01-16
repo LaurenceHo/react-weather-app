@@ -1,18 +1,18 @@
 import * as d3 from 'd3';
 
 export interface Config {
-  [ key: string ]: any
+  [ key: string ]: any;
 }
 
 export const gauge = (container: any, configuration: any) => {
-  let that = {
+  const that = {
     configure: {},
     isRendered: {},
     render: {},
     update: {}
   };
   
-  let config: Config = {
+  const config: Config = {
     size: 200,
     clipWidth: 200,
     clipHeight: 110,
@@ -38,23 +38,23 @@ export const gauge = (container: any, configuration: any) => {
     arcColorFn: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a'))
   };
   
-  let range: any = undefined;
-  let r: any = undefined;
-  let pointerHeadLength: any = undefined;
+  let range: any;
+  let r: any;
+  let pointerHeadLength: any;
   
-  let svg: any = undefined;
-  let arc: any = undefined;
-  let scale: any = undefined;
-  let ticks: any = undefined;
-  let tickData: any = undefined;
-  let pointer: any = undefined;
+  let svg: any;
+  let arc: any;
+  let scale: any;
+  let ticks: any;
+  let tickData: any;
+  let pointer: any;
   
   function deg2rad(deg: number) {
     return deg * Math.PI / 180;
   }
   
   function configure(configuration: any) {
-    let prop = undefined;
+    let prop;
     for (prop in configuration) {
       config[ prop ] = configuration[ prop ];
     }
@@ -77,11 +77,11 @@ export const gauge = (container: any, configuration: any) => {
       .innerRadius(r - config.ringWidth - config.ringInset)
       .outerRadius(r - config.ringInset)
       .startAngle((d: any, i: number) => {
-        let ratio = d * i;
+        const ratio = d * i;
         return deg2rad(config.minAngle + (ratio * range));
       })
       .endAngle((d: any, i: number) => {
-        let ratio = d * (i + 1);
+        const ratio = d * (i + 1);
         return deg2rad(config.minAngle + (ratio * range));
       });
   }
@@ -113,9 +113,9 @@ export const gauge = (container: any, configuration: any) => {
       .attr('dy', config.titleDy)
       .attr('class', config.class);
     
-    let centerTx = centerTranslation();
+    const centerTx = centerTranslation();
     
-    let arcs = svg.append('g')
+    const arcs = svg.append('g')
       .attr('class', 'arc')
       .attr('transform', centerTx);
     
@@ -127,26 +127,26 @@ export const gauge = (container: any, configuration: any) => {
       })
       .attr('d', arc);
     
-    let lg = svg.append('g')
+    const lg = svg.append('g')
       .attr('class', 'label')
       .attr('transform', centerTx);
     lg.selectAll('text')
       .data(ticks)
       .enter().append('text')
       .attr('transform', (d: any) => {
-        let ratio = scale(d);
-        let newAngle = config.minAngle + (ratio * range);
+        const ratio = scale(d);
+        const newAngle = config.minAngle + (ratio * range);
         return 'rotate(' + newAngle + ') translate(0,' + (config.labelInset - r) + ')';
       })
       .text(config.labelFormat);
     
-    let lineData = [ [ config.pointerWidth / 2, 0 ],
+    const lineData = [ [ config.pointerWidth / 2, 0 ],
       [ 0, -pointerHeadLength ],
       [ -(config.pointerWidth / 2), 0 ],
       [ 0, config.pointerTailLength ],
       [ config.pointerWidth / 2, 0 ] ];
-    let pointerLine = d3.line().curve(d3.curveLinear);
-    let pg = svg.append('g').data([ lineData ])
+    const pointerLine = d3.line().curve(d3.curveLinear);
+    const pg = svg.append('g').data([ lineData ])
       .attr('class', 'pointer')
       .attr('transform', centerTx);
     
@@ -163,8 +163,8 @@ export const gauge = (container: any, configuration: any) => {
     if (newConfiguration !== undefined) {
       configure(newConfiguration);
     }
-    let ratio = scale(newValue);
-    let newAngle = config.minAngle + (ratio * range);
+    const ratio = scale(newValue);
+    const newAngle = config.minAngle + (ratio * range);
     pointer.transition()
       .duration(config.transitionMs)
       .ease(d3.easeElastic)

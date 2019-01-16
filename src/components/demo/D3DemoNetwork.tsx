@@ -9,7 +9,7 @@ import { ToolTip } from './ToolTip';
 import { TrafficService } from './traffic';
 
 interface D3DemoNetworkState {
-  tooltip: any
+  tooltip: any;
 }
 
 export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
@@ -56,7 +56,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         type: 'network'
       }
     });
-  };
+  }
   
   hideToolTip = () => {
     this.setState({
@@ -69,7 +69,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         type: 'network'
       }
     });
-  };
+  }
   
   scaleFactor(): any {
     if (this.width > this.height) {
@@ -94,12 +94,13 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
           return d.id;
         })
         .strength((d: any) => {
-          if (d.linkType === 'nn')
+          if (d.linkType === 'nn') {
             return 0.1;
-          else if (d.linkType === 'azn')
+          } else if (d.linkType === 'azn') {
             return 3;
-          else
+          } else {
             return 1;
+          }
         })
       )
       .force('charge', d3.forceManyBody().strength((d: any) => {
@@ -182,19 +183,19 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         .on('mouseover', this.showToolTip)
         .on('mouseout', this.hideToolTip);
       
-      //for interaction
+      // for interaction
       nodeEnter.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended));
       
-      //append text to g
+      // append text to g
       nodeEnter.append('text')
         .attr('dx', this.scaleFactor() / 130 + 3)
         .attr('dy', '.25em')
         .attr('class', (d: any) => {
           if (d.type === 'az') {
-            return 'label az'
+            return 'label az';
           }
           return 'label';
         })
@@ -272,12 +273,12 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
       let addedSomething = false;
       // process nodes data
       for (let i = 0; i < networkTraffic.nodes.length; i++) {
-        let found = _.find(this.nodes, (node: any) => {
+        const found = _.find(this.nodes, (node: any) => {
           return node.name === networkTraffic.nodes[ i ].name;
         });
         
         if (!found) {
-          let node = networkTraffic.nodes[ i ];
+          const node = networkTraffic.nodes[ i ];
           node.index = i;
           
           this.nodes.push(networkTraffic.nodes[ i ]);
@@ -287,8 +288,9 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
       
       // process links data
       for (let i = 0; i < networkTraffic.links.length; i++) {
-        let found = _.find(this.links, (link: any) => {
-          return networkTraffic.links[ i ].source === link.source.name && networkTraffic.links[ i ].target === link.target.name;
+        const found = _.find(this.links, (link: any) => {
+          return networkTraffic.links[ i ].source === link.source.name &&
+            networkTraffic.links[ i ].target === link.target.name;
         });
         
         if (!found) {
@@ -317,9 +319,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
     
     processData();
     
-    this.intervalId = setInterval(function () {
-      processData();
-    }.bind(this), 5000);
+    this.intervalId = setInterval(() => processData(), 5000);
   }
   
   componentWillUnmount() {
@@ -334,8 +334,12 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         
         <div id='chart'>
           <div className='svg-container'>
-            <svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
-                 height={this.height}>
+            <svg
+              className='svg-content-responsive'
+              preserveAspectRatio='xMinYMin meet'
+              width={this.width}
+              height={this.height}
+            >
               <ToolTip tooltip={this.state.tooltip}/>
             </svg>
           </div>

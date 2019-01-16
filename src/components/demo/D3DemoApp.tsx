@@ -26,7 +26,7 @@ export class D3DemoApp extends React.Component<any, any> {
   getNode(name: string) {
     return this.nodes.find(node => {
       return name === node.name;
-    })
+    });
   }
   
   componentWillMount() {
@@ -39,24 +39,24 @@ export class D3DemoApp extends React.Component<any, any> {
           return d.id;
         })
         .distance((d: any) => {
-          let numlinks = this.links.filter((link: any) => {
+          const numlinks = this.links.filter((link: any) => {
             return link.source.name === d.source.name
               || link.source.name === d.target.name
               || link.target.name === d.target.name
-              || link.target.name === d.source.name
+              || link.target.name === d.source.name;
           });
           return ((numlinks.length * .6) * (this.height / 130)) + (this.width / 300);
         })
         .strength(0.1)
       )
       .force('charge', d3.forceManyBody().strength((d: any) => {
-        let numlinks = this.links.filter((link: any) => {
+        const numlinks = this.links.filter((link: any) => {
           return link.source.name === d.name
             || link.source.name === d.name
             || link.target.name === d.name
-            || link.target.name === d.name
+            || link.target.name === d.name;
         });
-        return (numlinks.length * -50) - 1000
+        return (numlinks.length * -50) - 1000;
       }))
       .force('center', d3.forceCenter(this.width / 2, this.height / 2));
   }
@@ -119,7 +119,7 @@ export class D3DemoApp extends React.Component<any, any> {
       this.link.exit().remove();
       this.link = this.link.enter()
         .insert('line', '.node').attr('class', (d: any) => {
-          return 'link ' + d.source.name + '-' + d.target.name
+          return 'link ' + d.source.name + '-' + d.target.name;
         }).merge(this.link);
       
       this.simulation
@@ -177,7 +177,7 @@ export class D3DemoApp extends React.Component<any, any> {
       // process nodes data
       let addedSomething = false;
       for (let i = 0; i < appTraffic.nodes.length; i++) {
-        let nodeIndex = this.nodes.findIndex((node: any) => {
+        const nodeIndex = this.nodes.findIndex((node: any) => {
           return node.name === appTraffic.nodes[ i ].name;
         });
         if (nodeIndex < 0) {
@@ -218,9 +218,7 @@ export class D3DemoApp extends React.Component<any, any> {
     
     processData();
     
-    this.intervalId = setInterval(function () {
-      processData();
-    }.bind(this), 5000);
+    this.intervalId = setInterval(() => processData(), 5000);
   }
   
   componentWillUnmount() {
@@ -232,24 +230,29 @@ export class D3DemoApp extends React.Component<any, any> {
     
     const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) =>
       <g className='nodeLegend' key={nodeLegendItem}>
-        <circle r={this.width / 200}
-                className={nodeLegendItem}
-                cx={this.width - 230}
-                cy={index * 25 + 440}>
-        </circle>
+        <circle
+          r={this.width / 200}
+          className={nodeLegendItem}
+          cx={this.width - 230}
+          cy={index * 25 + 440}
+        />
         <text dx={this.width - 210} dy={index * 25 + 444}>{nodeLegendItem}</text>
       </g>
     );
     
     return (
       <div>
-        <span className="is-active nav-link">Application Traffic</span>
-        &nbsp;|&nbsp;<Link to="/d3_demo_network">Network Traffic</Link>
+        <span className='is-active nav-link'>Application Traffic</span>
+        &nbsp;|&nbsp;<Link to='/d3_demo_network'>Network Traffic</Link>
         
         <div id='chart'>
           <div className='svg-container'>
-            <svg className='svg-content-responsive' preserveAspectRatio='xMinYMin meet' width={this.width}
-                 height={this.height}>
+            <svg
+              className='svg-content-responsive'
+              preserveAspectRatio='xMinYMin meet'
+              width={this.width}
+              height={this.height}
+            >
               {renderNodeLegend}
             </svg>
           </div>
