@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import Layout from 'antd/lib/layout';
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { About } from './About';
@@ -24,7 +24,7 @@ export class App extends React.Component<any, any> {
             </Switch>
           </Content>
           <Footer className='footer'>
-            ©2018 Developed by Laurence Ho, v1.0.3
+            ©2018 Developed by Laurence Ho, v1.0.4
           </Footer>
         </div>
       </Router>

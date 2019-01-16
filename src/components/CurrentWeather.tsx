@@ -1,4 +1,5 @@
-import { Col, Row } from 'antd';
+import Col from 'antd/lib/col';
+import Row from 'antd/lib/row';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Utils } from '../utils';
@@ -33,8 +34,8 @@ export class CurrentWeather extends React.Component<any, any> {
           {location}
         </Row>
         <Row type='flex' justify='center'>
-          <Col span={1}>
-            <WeatherIcon icon={weather.icon} size='3rem'/>
+          <Col span={2}>
+            <WeatherIcon icon={weather.icon} size='4rem'/>
           </Col>
           <Col span={3}>
             <div>{Utils.getLocalTime(weather.time, timezone.offset, 'YYYY-MM-DD HH:mm')}</div>

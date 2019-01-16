@@ -1,5 +1,9 @@
-import { Alert, Col, Row, Spin } from 'antd';
-import * as _ from 'lodash';
+import Alert from 'antd/lib/alert';
+import Col from 'antd/lib/col';
+import Row from 'antd/lib/row';
+import Spin from 'antd/lib/spin';
+
+import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -33,7 +37,7 @@ class WeatherMain extends React.Component<any, any> {
   }
   
   componentDidMount() {
-    if (this.props.location.length === 0 && _.isEmpty(this.props.weather) && _.isEmpty(this.props.forecast)) {
+    if (this.props.location.length === 0 && isEmpty(this.props.weather) && isEmpty(this.props.forecast)) {
       this.props.fetchingData('');
       // Get user's coordinates when user access the web app, it will ask user's location permission
       const options = {

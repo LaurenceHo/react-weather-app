@@ -1,6 +1,6 @@
 {
   "name": "react-weather-app",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
@@ -44,6 +44,7 @@
     "@types/react-redux": "^6.0.12",
     "@types/react-router-dom": "^4.3.1",
     "clean-webpack-plugin": "^0.1.19",
+    "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",

@@ -2,7 +2,8 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/tooltip';
-import * as _ from 'lodash';
+
+import { map } from 'lodash';
 import { Utils } from '../utils';
 import { Timezone } from './DataModel';
 
@@ -32,10 +33,10 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
      `;
   };
   
-  const roundTemperature = _.map(hourly.data, (n) => {
+  const roundTemperature = map(hourly.data, (n) => {
     return Math.round(n.temperature);
   }).slice(0, 23);
-  const roundIntensity = _.map(hourly.data, (n) => {
+  const roundIntensity = map(hourly.data, (n) => {
     if (units === 'us') {
       return n.precipIntensity.toFixed(3);
     } else if (units === 'si') {
@@ -52,7 +53,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
     },
     xAxis: {
       type: 'category',
-      data: _.map(hourly.data, 'time').slice(0, 23),
+      data: map(hourly.data, 'time').slice(0, 23),
       axisLabel: {
         formatter: formatterXAxisLabel
       }

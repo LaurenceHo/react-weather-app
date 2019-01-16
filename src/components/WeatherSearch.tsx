@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import Input from 'antd/lib/input';
 import * as React from 'react';
 
 const Search = Input.Search;

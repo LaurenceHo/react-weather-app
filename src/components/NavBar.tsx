@@ -1,5 +1,10 @@
-import { Button, Col, Dropdown, Icon, Layout, Menu, Row } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
+import Button from 'antd/lib/button';
+import Col from 'antd/lib/col';
+import Dropdown from 'antd/lib/dropdown';
+import Icon from 'antd/lib/icon';
+import Layout from 'antd/lib/layout';
+import Menu, { ClickParam } from 'antd/lib/menu';
+import Row from 'antd/lib/row';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -52,7 +57,8 @@ class NavBar extends React.Component<any, NavBarState> {
               theme='dark'
               mode='horizontal'
               defaultSelectedKeys={[ '1' ]}
-              className='nav-bar-menu'>
+              className='nav-bar-menu'
+            >
               <Menu.Item key='1'>
                 <NavLink exact={true} activeClassName='active' to='/'>
                   Weather
