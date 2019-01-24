@@ -4,8 +4,8 @@
   "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --open",
-    "build": "webpack --config config/webpack.prod.js --progress --profile --bail",
+    "start": "webpack-dev-server --config ./config/webpack.dev.js --progress --profile --watch --open",
+    "build": "webpack --config ./config/webpack.prod.js --progress --profile --bail",
     "firebase-deploy": "npm run build && firebase deploy",
     "firebase-init": "firebase login && firebase init",
     "firebase-add": "firebase use --add",
@@ -43,7 +43,6 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-redux": "^6.0.12",
     "@types/react-router-dom": "^4.3.1",
-    "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.11",
