@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { networkTraffic } from '../../../sample/networkTraffic';
 import './d3.css';
-import { gauge } from './gauge';
+import Gauge from './gauge';
 import { ToolTip } from './ToolTip';
 import { TrafficService } from './traffic';
 
@@ -121,7 +121,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
     this.trafficService = new TrafficService(this.svg, this.width);
     
     // Initial gauge
-    this.powerGauge = gauge('svg', {
+    this.powerGauge = new Gauge('svg', {
       size: 150,
       clipWidth: 300,
       clipHeight: 300,

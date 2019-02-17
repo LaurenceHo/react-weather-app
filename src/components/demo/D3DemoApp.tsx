@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { appTraffic } from '../../../sample/appTraffic';
 import './d3.css';
-import { gauge } from './gauge';
+import Gauge from './gauge';
 import { TrafficService } from './traffic';
 
 export class D3DemoApp extends React.Component<any, any> {
@@ -69,7 +69,7 @@ export class D3DemoApp extends React.Component<any, any> {
     this.trafficService = new TrafficService(this.svg, this.width);
     
     // Initial gauge
-    this.powerGauge = gauge('svg', {
+    this.powerGauge = new Gauge('svg', {
       size: 150,
       clipWidth: 300,
       clipHeight: 300,
