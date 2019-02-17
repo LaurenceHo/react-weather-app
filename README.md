@@ -45,9 +45,9 @@ Please visit: https://cloud.google.com/functions/ for more detail
 1. Run `npm run firebase-init`
 2. Visit https://console.firebase.google.com to create a new project
 3. Add the firebase project into your local configuration `npm run firebase-add`
-4. You may need to change the default project setting in the `./.firebaserc`
+4. You may need to change the default project setting in the `.firebaserc`
 5. If you want to deploy the whole project, run `npm run firebase-deploy`
-6. If you just want to deploy the cloud functions, run `npm run deploy-functions`
+6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
 ### Live demo
 https://react-beautiful-weather-app.firebaseapp.com/

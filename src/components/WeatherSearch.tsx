@@ -37,6 +37,7 @@ export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSe
         placeholder='Search weather by city'
         disabled={this.props.isDisabled}
         enterButton={true}
+        style={{verticalAlign: 'middle'}}
       />
     );
   }

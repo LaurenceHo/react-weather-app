@@ -34,14 +34,16 @@ export class CurrentWeather extends React.Component<any, any> {
           {location}
         </Row>
         <Row type='flex' justify='center'>
-          <Col span={2}>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1}>
             <WeatherIcon icon={weather.icon} size='4rem'/>
           </Col>
           <Col span={3}>
-            <div>{Utils.getLocalTime(weather.time, timezone.offset, 'YYYY-MM-DD HH:mm')}</div>
-            <div>{weather.summary} {Utils.getTemperature(weather.temperature, units)}</div>
-            <div className='current-weather-sub-content'>
-              Feels like {Utils.getTemperature(weather.apparentTemperature, units)}</div>
+            <div style={{paddingTop: '1rem'}}>
+              <div>{Utils.getLocalTime(weather.time, timezone.offset, 'YYYY-MM-DD HH:mm')}</div>
+              <div>{weather.summary} {Utils.getTemperature(weather.temperature, units)}</div>
+              <div className='current-weather-sub-content'>
+                Feels like {Utils.getTemperature(weather.apparentTemperature, units)}</div>
+            </div>
           </Col>
         </Row>
       </div>
