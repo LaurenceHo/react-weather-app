@@ -206,7 +206,7 @@ export class TrafficService {
     if (this.svg.selectAll('.legendHeading')._groups[ 0 ] &&
       this.svg.selectAll('.legendHeading')._groups[ 0 ].length === 0) {
       this.svg.append('text')
-        .attr('dx', this.width - 240)
+        .attr('dx', this.width - 280)
         .attr('dy', 20)
         .text('Unique Request id (last 20)')
         .attr('class', 'legendHeading');
@@ -225,7 +225,7 @@ export class TrafficService {
     circle
       .attr('r', 6)
       .attr('class', 'hit')
-      .attr('cx', this.width - 230)
+      .attr('cx', this.width - 272)
       .attr('cy', (d: any, i: any) => {
         return i * 20 + 30;
       })
@@ -238,7 +238,7 @@ export class TrafficService {
     
     g.append('text')
       .attr('class', 'legendRequestId')
-      .attr('dx', this.width - 220)
+      .attr('dx', this.width - 262)
       .attr('dy', (d: any, i: any) => {
         return i * 20 + 34;
       })
@@ -258,13 +258,13 @@ export class TrafficService {
     });
     items.select('circle')
       .transition()
-      .attr('cx', this.width - 230)
+      .attr('cx', this.width - 270)
       .attr('cy', (d: any, i: any) => {
         return i * 20 + 30;
       });
     items.select('text')
       .transition()
-      .attr('dx', this.width - 220)
+      .attr('dx', this.width - 260)
       .attr('dy', (d: any, i: any) => {
         return i * 20 + 34;
       });

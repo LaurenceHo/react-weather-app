@@ -21,14 +21,14 @@ export class D3DemoApp extends React.Component<any, any> {
   requests: any[] = [];
   isActive: boolean = true;
   intervalId: number = 0;
-  powerGauge: any = {};
-  
+  powerGauge: Gauge = null;
+
   getNode(name: string) {
     return this.nodes.find(node => {
       return name === node.name;
     });
   }
-  
+
   componentWillMount() {
     // Create force simulation
     this.simulation = d3.forceSimulation()
@@ -60,37 +60,37 @@ export class D3DemoApp extends React.Component<any, any> {
       }))
       .force('center', d3.forceCenter(this.width / 2, this.height / 2));
   }
-  
+
   componentDidMount() {
     this.svg = d3.select('svg.svg-content-responsive');
     this.g = this.svg.append('g');
     this.link = this.g.append('g').selectAll('.link');
     this.node = this.g.append('g').selectAll('.node');
     this.trafficService = new TrafficService(this.svg, this.width);
-    
+
     // Initial gauge
-    this.powerGauge = new Gauge('svg', {
+    this.powerGauge = new Gauge(this.svg, {
       size: 150,
       clipWidth: 300,
       clipHeight: 300,
       ringWidth: 60,
       maxValue: 1000,
       transitionMs: 5000,
-      x: this.width * .7,
-      y: 0,
+      x: 250,
+      y: 10,
       title: 'Logs per second',
       titleDx: 36,
       titleDy: 90
     });
-    this.powerGauge.render();
-    
+    this.powerGauge.render(undefined);
+
     const drawGraph = () => {
       // Apply the general update pattern to the nodes.
       this.node = this.node.data(this.nodes, (d: any) => {
         return d.name;
       });
       this.node.exit().remove();
-      
+
       const nodeEnter = this.node.enter()
         .append('g').attr('class', 'node');
       nodeEnter
@@ -111,7 +111,7 @@ export class D3DemoApp extends React.Component<any, any> {
           return d.shortName;
         });
       this.node = nodeEnter.merge(this.node);
-      
+
       // Apply the general update pattern to the links.
       this.link = this.link.data(this.links, (d: any) => {
         return d.source.name + '-' + d.target.name;
@@ -121,7 +121,7 @@ export class D3DemoApp extends React.Component<any, any> {
         .insert('line', '.node').attr('class', (d: any) => {
           return 'link ' + d.source.name + '-' + d.target.name;
         }).merge(this.link);
-      
+
       this.simulation
         .nodes(this.nodes)
         .on('tick', ticked);
@@ -130,7 +130,7 @@ export class D3DemoApp extends React.Component<any, any> {
         .links(this.links);
       this.simulation.alpha(0.1).restart();
     };
-    
+
     const ticked = () => {
       this.link
         .attr('x1', (d: any) => {
@@ -149,7 +149,7 @@ export class D3DemoApp extends React.Component<any, any> {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
     };
-    
+
     const dragstarted = () => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0.3).restart();
@@ -157,12 +157,12 @@ export class D3DemoApp extends React.Component<any, any> {
       d3.event.subject.fx = d3.event.subject.x;
       d3.event.subject.fy = d3.event.subject.y;
     };
-    
+
     const dragged = () => {
       d3.event.subject.fx = d3.event.x;
       d3.event.subject.fy = d3.event.y;
     };
-    
+
     const dragended = () => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0);
@@ -170,10 +170,10 @@ export class D3DemoApp extends React.Component<any, any> {
       d3.event.subject.fx = null;
       d3.event.subject.fy = null;
     };
-    
+
     const processData = () => {
-      this.powerGauge.update(Math.random() * 1000);
-      
+      this.powerGauge.update(Math.random() * 1000, undefined);
+
       // process nodes data
       let addedSomething = false;
       for (let i = 0; i < appTraffic.nodes.length; i++) {
@@ -196,7 +196,7 @@ export class D3DemoApp extends React.Component<any, any> {
             break;
           }
         }
-        
+
         if (!found) {
           this.links.push({
             source: this.getNode(appTraffic.nodes[ appTraffic.links[ i ].source ].name),
@@ -205,46 +205,46 @@ export class D3DemoApp extends React.Component<any, any> {
           addedSomething = true;
         }
       }
-      
+
       if (addedSomething) {
         drawGraph();
       }
-      
+
       this.requests = this.trafficService.viewHits(null, appTraffic.hits, this.isActive);
       this.trafficService.drawLegend(this.requests);
       this.trafficService.drawResponseTimes();
       this.trafficService.updateResponseTimes();
     };
-    
+
     processData();
-    
+
     this.intervalId = setInterval(() => processData(), 5000);
   }
-  
+
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
-  
+
   render() {
     const nodeLegendItems = [ 'DEBUG', 'INFO', 'WARN', 'ERROR', 'UNKNOWN' ];
-    
+
     const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) =>
       <g className='nodeLegend' key={nodeLegendItem}>
         <circle
           r={this.width / 200}
           className={nodeLegendItem}
-          cx={this.width - 230}
+          cx={this.width - 250}
           cy={index * 25 + 440}
         />
-        <text dx={this.width - 210} dy={index * 25 + 444}>{nodeLegendItem}</text>
+        <text dx={this.width - 230} dy={index * 25 + 444}>{nodeLegendItem}</text>
       </g>
     );
-    
+
     return (
       <div>
         <span className='is-active nav-link'>Application Traffic</span>
         &nbsp;|&nbsp;<Link to='/d3_demo_network'>Network Traffic</Link>
-        
+
         <div id='chart'>
           <div className='svg-container'>
             <svg

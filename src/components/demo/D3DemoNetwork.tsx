@@ -28,7 +28,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
   isActive: boolean = true;
   intervalId: number = 0;
   c10 = d3.scaleOrdinal(d3.schemeCategory10);
-  powerGauge: any = {};
+  powerGauge: Gauge = null;
   
   state = {
     tooltip: {
@@ -121,20 +121,20 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
     this.trafficService = new TrafficService(this.svg, this.width);
     
     // Initial gauge
-    this.powerGauge = new Gauge('svg', {
+    this.powerGauge = new Gauge(this.svg, {
       size: 150,
       clipWidth: 300,
       clipHeight: 300,
       ringWidth: 60,
       maxValue: 1000,
       transitionMs: 5000,
-      x: this.width * .7,
-      y: 0,
+      x: 250,
+      y: 10,
       title: 'Logs per second',
       titleDx: 36,
       titleDy: 90
     });
-    this.powerGauge.render();
+    this.powerGauge.render(undefined);
     
     const drawGraph = () => {
       this.node = this.node.data(this.nodes, (d: any) => {
@@ -267,7 +267,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
     };
     
     const processData = () => {
-      this.powerGauge.update(Math.random() * 1000);
+      this.powerGauge.update(Math.random() * 1000, undefined);
       
       // process nodes data
       let addedSomething = false;

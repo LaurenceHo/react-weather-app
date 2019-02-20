@@ -30,8 +30,7 @@ export default class Gauge {
     
     arcColorFn: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a'))
   };
-  
-  container: any = null;
+
   configuration: any = null;
   range: any;
   r: any;
@@ -44,7 +43,7 @@ export default class Gauge {
   pointer: any;
   
   constructor(container: any, configuration: any) {
-    this.container = container;
+    this.svg = container;
     this.configuration = configuration;
     this.configure(this.configuration);
   }
@@ -56,7 +55,7 @@ export default class Gauge {
   configure(configuration: any) {
     for (const prop in configuration) {
       if (configuration.hasOwnProperty(prop)) {
-        this.config.prop = configuration.prop;
+        this.config[ prop ] = configuration[ prop ];
       }
     }
     
@@ -92,15 +91,13 @@ export default class Gauge {
   }
   
   render(newValue: any) {
-    this.svg = d3.select(this.container)
-      .append('svg:svg')
+    const gauge = this.svg.append('g')
       .attr('class', 'gauge')
       .attr('width', this.config.clipWidth)
       .attr('height', this.config.clipHeight)
-      .attr('x', this.config.x)
-      .attr('y', this.config.y);
-    
-    this.svg.append('text')
+      .attr('transform', 'translate(' + this.config.x + ',' + this.config.y + ')');
+
+    gauge.append('text')
       .text(this.config.title)
       .attr('dx', this.config.titleDx)
       .attr('dy', this.config.titleDy)
@@ -108,7 +105,7 @@ export default class Gauge {
     
     const centerTx = this.centerTranslation();
     
-    const arcs = this.svg.append('g')
+    const arcs = gauge.append('g')
       .attr('class', 'arc')
       .attr('transform', centerTx);
     
@@ -120,7 +117,7 @@ export default class Gauge {
       })
       .attr('d', this.arc);
     
-    const lg = this.svg.append('g')
+    const lg = gauge.append('g')
       .attr('class', 'label')
       .attr('transform', centerTx);
     lg.selectAll('text')
@@ -139,7 +136,7 @@ export default class Gauge {
       [ 0, this.config.pointerTailLength ],
       [ this.config.pointerWidth / 2, 0 ] ];
     const pointerLine = d3.line().curve(d3.curveLinear);
-    const pg = this.svg.append('g').data([ lineData ])
+    const pg = gauge.append('g').data([ lineData ])
       .attr('class', 'pointer')
       .attr('transform', centerTx);
     
