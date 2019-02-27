@@ -9,10 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.4",
-    "firebase-admin": "^5.12.1",
-    "firebase-functions": "^1.0.4",
-    "lodash": "^4.17.10",
-    "request": "^2.87.0"
+    "cors": "^2.8.5",
+    "firebase-admin": "^5.13.1",
+    "firebase-functions": "^1.1.0",
+    "lodash": "^4.17.11",
+    "request": "^2.88.0"
+  },
+  "engines": {
+    "node": "8"
   }
 }
