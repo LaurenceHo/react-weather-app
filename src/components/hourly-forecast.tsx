@@ -3,7 +3,7 @@ import * as echarts from 'echarts/lib/echarts';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { chartConfig } from './chartConfig';
+import { chartConfig } from './chart-config';
 
 export class HourlyForecast extends React.Component<any, any> {
   componentDidMount() {

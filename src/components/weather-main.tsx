@@ -15,8 +15,8 @@ import {
   setAllWeatherDataIntoStore,
   setUnits
 } from '../redux/actions';
-import { Forecast, Timezone } from './DataModel';
-import WeatherForecast from './WeatherForecast';
+import { Forecast, Timezone } from './data-model';
+import WeatherForecast from './weather-forecast';
 
 class WeatherMain extends React.Component<any, any> {
   componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {

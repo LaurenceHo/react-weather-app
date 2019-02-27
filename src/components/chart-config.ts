@@ -5,7 +5,7 @@ import 'echarts/lib/component/tooltip';
 
 import { map } from 'lodash';
 import { Utils } from '../utils';
-import { Timezone } from './DataModel';
+import { Timezone } from './data-model';
 
 export const chartConfig: any = (units: string, timezone: Timezone, hourly: any) => {
   const formatterXAxisLabel = (value: number, index: number) => {

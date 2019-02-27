@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { fetchingData, setUnits } from '../redux/actions';
-import { WeatherSearch } from './WeatherSearch';
+import { WeatherSearch } from './weather-search';
 
 const {Header} = Layout;
 

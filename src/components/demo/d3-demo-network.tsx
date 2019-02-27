@@ -2,10 +2,10 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { networkTraffic } from '../../../sample/networkTraffic';
+import { networkTraffic } from '../../../sample/network-traffic';
 import './d3.css';
 import Gauge from './gauge';
-import { ToolTip } from './ToolTip';
+import { ToolTip } from './tool-tip';
 import { TrafficService } from './traffic';
 
 interface D3DemoNetworkState {

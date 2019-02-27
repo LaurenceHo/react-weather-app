@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { appTraffic } from '../../../sample/appTraffic';
+import { appTraffic } from '../../../sample/app-traffic';
 import './d3.css';
 import Gauge from './gauge';
 import { TrafficService } from './traffic';

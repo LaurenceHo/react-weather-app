@@ -3,8 +3,8 @@ import Row from 'antd/lib/row';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Utils } from '../utils';
-import { WeatherIcon } from './icon/WeatherIcon';
-import { WindIcon } from './icon/WindIcon';
+import { WeatherIcon } from './icon/weather-icon';
+import { WindIcon } from './icon/wind-icon';
 
 export class CurrentWeather extends React.Component<any, any> {
   render() {

@@ -4,9 +4,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Utils } from '../utils';
-import { Weather } from './DataModel';
-import { MoonIcon } from './icon/MoonIcon';
-import { WeatherIcon } from './icon/WeatherIcon';
+import { Weather } from './data-model';
+import { MoonIcon } from './icon/moon-icon';
+import { WeatherIcon } from './icon/weather-icon';
 
 export class DailyForecast extends React.Component<any, any> {
   render() {
