@@ -15,59 +15,59 @@ export const fetchingData = (location: string) => {
     type: FETCHING_DATA,
     location
   };
-}
+};
 
 export const fetchingDataSuccess = () => {
   return {
     type: FETCHING_DATA_SUCCESS,
   };
-}
+};
 
 export const fetchingDataFailure = (error: string) => {
   return {
     type: FETCHING_DATA_FAILURE,
     error
   };
-}
+};
 
 export const setUnits = (units: string) => {
   return {
     type: SET_UNITS,
     units
   };
-}
+};
 
 export const setTimestamp = (timestamp: number) => {
   return {
     type: SET_TIMESTAMP,
     timestamp
   };
-}
+};
 
 export const setTimezone = (timezone: any) => {
   return {
     type: SET_TIMEZONE,
     timezone
   };
-}
+};
 
 export const setWeather = (weather: any) => {
   return {
     type: SET_WEATHER,
     weather
   };
-}
+};
 
 export const setHourlyForecast = (hourlyForecast: any) => {
   return {
-    type: SET_TIMESTAMP,
+    type: SET_HOURLY_FORECAST,
     hourlyForecast
   };
-}
+};
 
 export const setDailyForecast = (dailyForecast: any) => {
   return {
-    type: SET_TIMESTAMP,
+    type: SET_DAILY_FORECAST,
     dailyForecast
   };
-}
+};

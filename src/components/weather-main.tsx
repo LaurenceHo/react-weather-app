@@ -20,7 +20,7 @@ import {
   setWeather
 } from '../redux/actions';
 import { Forecast, Timezone } from './data-model';
-import { WeatherForecast} from './weather-forecast';
+import { WeatherForecast } from './weather-forecast';
 
 class WeatherMain extends React.Component<any, any> {
   componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
@@ -28,7 +28,7 @@ class WeatherMain extends React.Component<any, any> {
     if (prevProps.location && (this.props.location !== prevProps.location)) {
       this.getWeatherData(0, 0, this.props.location);
     }
-
+    
     // When user change units
     if (this.props.units !== prevProps.units) {
       if (this.props.timezone.latitude && this.props.timezone.longitude) {
@@ -40,7 +40,7 @@ class WeatherMain extends React.Component<any, any> {
       }
     }
   }
-
+  
   componentDidMount() {
     if (this.props.location.length === 0 && isEmpty(this.props.weather) && isEmpty(this.props.forecast)) {
       this.props.fetchingData('');
@@ -50,7 +50,7 @@ class WeatherMain extends React.Component<any, any> {
         timeout: 5000,
         maximumAge: 0
       };
-
+      
       const handleLocation = (location: any) => {
         getGeocode(location.coords.latitude, location.coords.longitude, '').then((geocode: any) => {
           if (geocode.status === 'OK') {
@@ -61,18 +61,18 @@ class WeatherMain extends React.Component<any, any> {
           this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
         });
       };
-
+      
       const handleError = (error: any) => {
         this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
       };
-
+      
       navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
     }
   }
-
+  
   render() {
     const {weather, location, isLoading, error} = this.props;
-
+    
     const renderWeatherAndForecast = () => {
       if (error) {
         return (
@@ -93,7 +93,7 @@ class WeatherMain extends React.Component<any, any> {
         return (<WeatherForecast/>);
       }
     };
-
+    
     return (
       <div>
         {isLoading ?
@@ -105,7 +105,7 @@ class WeatherMain extends React.Component<any, any> {
       </div>
     );
   }
-
+  
   /**
    * Only be called when error occurs
    * @param {string} message
@@ -114,12 +114,12 @@ class WeatherMain extends React.Component<any, any> {
     this.props.fetchingDataFailure(message);
     setTimeout(this.delayFetchWeatherData.bind(this), 5000);
   }
-
+  
   private delayFetchWeatherData() {
     this.props.fetchingData('Auckland');
     this.getWeatherData(0, 0, 'Auckland');
   }
-
+  
   /**
    * If you set lat along with lon, then you must set city name as well, otherwise set (0, 0, city)
    * @param {number} lat
@@ -136,7 +136,7 @@ class WeatherMain extends React.Component<any, any> {
           latitude: results.latitude,
           longitude: results.longitude
         };
-
+        
         this.setDataToStore(city, timezone, results.currently, results.hourly, results.daily);
       }).catch(error => {
         this.props.fetchingDataFailure(error);
@@ -152,7 +152,7 @@ class WeatherMain extends React.Component<any, any> {
       });
     }
   }
-
+  
   /**
    * @param {string} city name
    * @param timezone, the timezone info from the fetched weather result
@@ -160,12 +160,12 @@ class WeatherMain extends React.Component<any, any> {
    * @param hourlyForecast, the hourly forecast info from the fetched weather result
    * @param dailyForecast, the daily forecast info from the fetched weather result
    */
-  private setDataToStore(city: string, timezone: any, weather: any,  hourlyForecast: any, dailyForecast: any) {
-    this.props.fetchingDataSuccess();
+  private setDataToStore(city: string, timezone: any, weather: any, hourlyForecast: any, dailyForecast: any) {
     this.props.setTimezone(timezone);
     this.props.setWeather(weather);
     this.props.setHourlyForecast(hourlyForecast);
     this.props.setDailyForecast(dailyForecast);
+    this.props.fetchingDataSuccess();
   }
 }
 
