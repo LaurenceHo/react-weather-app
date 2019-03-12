@@ -9,7 +9,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { fetchingData, setUnits } from '../redux/actions';
+import { fetchingData, setTimestamp, setUnits } from '../redux/actions';
 import { WeatherSearch } from './weather-search';
 
 const {Header} = Layout;
@@ -103,20 +103,17 @@ class NavBar extends React.Component<any, NavBarState> {
 
 const mapStateToProps = (state: any) => {
   return {
-    units: state.units,
-    filter: state.filter,
-    location: state.location,
-    weather: state.weather,
-    forecast: state.forecast,
-    timezone: state.timezone,
     isLoading: state.isLoading,
-    error: state.error
+    units: state.units,
+    location: state.location,
+    timestamp: state.timestamp
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators({
     setUnits,
+    setTimestamp,
     fetchingData
   }, dispatch);
 };

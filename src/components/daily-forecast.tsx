@@ -10,9 +10,9 @@ import { WeatherIcon } from './icon/weather-icon';
 
 export class DailyForecast extends React.Component<any, any> {
   render() {
-    const {timezone, forecast, units} = this.props;
+    const {timezone, dailyForecast, units} = this.props;
     
-    const renderDailyForecast = forecast.daily.data.map((f: Weather, i: number) =>
+    const renderDailyForecast = dailyForecast.data.map((f: Weather, i: number) =>
         <Row type='flex' justify='center' className='daily-forecast-item-wrapper' key={f.time}>
           <Col span={1}>
             <WeatherIcon icon={f.icon} size='1.6rem'/>
@@ -68,7 +68,7 @@ export class DailyForecast extends React.Component<any, any> {
           7 days forecast
         </Row>
         <Row type='flex' justify='center' className='forecast-summary'>
-          {forecast.daily.summary}
+          {dailyForecast.summary}
         </Row>
         <Row type='flex' justify='center' className='daily-forecast-item-wrapper'>
           <Col span={1}/>
@@ -101,13 +101,8 @@ export class DailyForecast extends React.Component<any, any> {
 const mapStateToProps = (state: any) => {
   return {
     units: state.units,
-    filter: state.filter,
-    location: state.location,
-    weather: state.weather,
-    forecast: state.forecast,
     timezone: state.timezone,
-    isLoading: state.isLoading,
-    error: state.error
+    dailyForecast: state.dailyForecast
   };
 };
 

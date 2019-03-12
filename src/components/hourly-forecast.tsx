@@ -11,7 +11,7 @@ export class HourlyForecast extends React.Component<any, any> {
   }
   
   componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
-    if (this.props.forecast.hourly !== prevProps.forecast.hourly) {
+    if (this.props.hourlyForecast !== prevProps.hourlyForecast) {
       this.renderChart();
     }
   }
@@ -36,16 +36,16 @@ export class HourlyForecast extends React.Component<any, any> {
     }
     
     chart.setOption(
-      chartConfig(this.props.units, this.props.timezone, this.props.forecast.hourly)
+      chartConfig(this.props.units, this.props.timezone, this.props.hourlyForecast)
     );
   }
   
   render() {
-    const {forecast} = this.props;
+    const {hourlyForecast} = this.props;
     return (
       <div>
         <Row type='flex' justify='center' className='forecast-summary'>
-          {forecast.hourly.summary}
+          {hourlyForecast.summary}
         </Row>
         <Row type='flex' justify='center' id='weather-chart-wrapper'/>
       </div>
@@ -55,14 +55,12 @@ export class HourlyForecast extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    units: state.units,
-    filter: state.filter,
-    location: state.location,
-    weather: state.weather,
-    forecast: state.forecast,
-    timezone: state.timezone,
     isLoading: state.isLoading,
-    error: state.error
+    units: state.units,
+    timestamp: state.timestamp,
+    timezone: state.timezone,
+    weather: state.weather,
+    hourlyForecast: state.hourlyForecast
   };
 };
 
