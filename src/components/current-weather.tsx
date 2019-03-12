@@ -13,22 +13,22 @@ export class CurrentWeather extends React.Component<any, any> {
     return (
       <div>
         <Row type='flex' justify='center' className='current-weather-top'>
-          <Col span={3}>
+          <Col xs={4} sm={4} md={4} lg={3} xl={3}>
             <span>
               Rain: {Utils.getRain(weather.precipIntensity, weather.precipProbability, units)}
               <i className='wi wi-humidity'/>
             </span>
           </Col>
-          <Col span={2}>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
             Wind: {Utils.getWindSpeed(weather.windSpeed, units)} <WindIcon degree={weather.windBearing}/>
           </Col>
-          <Col span={2}><span>Humidity: {Math.round(weather.humidity * 100)} <i
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}><span>Humidity: {Math.round(weather.humidity * 100)} <i
             className='wi wi-humidity'
           /></span></Col>
-          <Col span={3}>Pressure: {Utils.getPressure(weather.pressure, units)}</Col>
-          <Col span={2}>Dew Point: {Utils.getTemperature(weather.dewPoint, units)}</Col>
-          <Col span={2}>UV Index: {weather.uvIndex}</Col>
-          <Col span={2}>Visibility: {Utils.getDistance(weather.visibility, units)}</Col>
+          <Col xs={4} sm={4} md={4} lg={3} xl={3}>Pressure: {Utils.getPressure(weather.pressure, units)}</Col>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>Dew Point: {Utils.getTemperature(weather.dewPoint, units)}</Col>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>UV Index: {weather.uvIndex}</Col>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>Visibility: {Utils.getDistance(weather.visibility, units)}</Col>
         </Row>
         <Row type='flex' justify='center' className='current-weather-location'>
           {location}
@@ -41,8 +41,7 @@ export class CurrentWeather extends React.Component<any, any> {
             <div style={{paddingTop: '1rem'}}>
               <div>{Utils.getLocalTime(weather.time, timezone.offset, 'YYYY-MM-DD HH:mm')}</div>
               <div>{weather.summary} {Utils.getTemperature(weather.temperature, units)}</div>
-              <div className='current-weather-sub-content'>
-                Feels like {Utils.getTemperature(weather.apparentTemperature, units)}</div>
+              <div>Feels like {Utils.getTemperature(weather.apparentTemperature, units)}</div>
             </div>
           </Col>
         </Row>

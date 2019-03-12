@@ -58,12 +58,10 @@ body {
     font-weight: bolder;
 }
 
-.current-weather-sub-content {
-    font-size: 0.8rem;
-}
-
 .forecast-summary {
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .forecast-title {

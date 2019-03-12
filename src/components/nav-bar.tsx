@@ -49,10 +49,10 @@ class NavBar extends React.Component<any, NavBarState> {
     return (
       <Header className='nav-bar'>
         <Row>
-          <Col xs={1} sm={1} md={1} lg={1} xl={1}>
+          <Col span={1}>
             <img src='assets/favicon.ico' width='35' height='30' alt=''/>
           </Col>
-          <Col xs={14} sm={14} md={14} lg={14} xl={15}>
+          <Col xs={13} sm={13} md={13} lg={13} xl={14} xxl={16}>
             <Menu
               theme='dark'
               mode='horizontal'
@@ -76,17 +76,17 @@ class NavBar extends React.Component<any, NavBarState> {
               </Menu.Item>
             </Menu>
           </Col>
-          <Col xs={6} sm={6} md={6} lg={6} xl={5}>
+          <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={5}>
             <div>
               <WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
             </div>
           </Col>
-          <Col xs={2} sm={2} md={2} lg={2} xl={2}>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1}>
             <Dropdown overlay={menu} trigger={[ 'click' ]} disabled={this.props.isLoading}>
               <Button className='units-dropdown'>Units<Icon type='down'/></Button>
             </Dropdown>
           </Col>
-          <Col xs={1} sm={1} md={1} lg={1} xl={1} className='nav-bar-icon'>
+          <Col xs={2} sm={2} md={2} lg={2} xl={1} xxl={1} className='nav-bar-icon'>
             <Button
               type='primary'
               shape='circle'
