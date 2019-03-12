@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body {
     font-size: 1rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .content {
@@ -53,8 +53,9 @@ body {
 }
 
 .current-weather-location {
-    padding: 1rem 2rem;
-    font-size: 1.8rem;
+    padding: 1rem 2rem 0.5rem 1rem;
+    font-size: 2rem;
+    font-weight: bolder;
 }
 
 .current-weather-sub-content {
