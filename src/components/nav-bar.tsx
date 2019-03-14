@@ -1,10 +1,11 @@
 import Button from 'antd/lib/button';
 import Col from 'antd/lib/col';
-import Dropdown from 'antd/lib/dropdown';
-import Icon from 'antd/lib/icon';
+import DatePicker from 'antd/lib/date-picker';
 import Layout from 'antd/lib/layout';
-import Menu, { ClickParam } from 'antd/lib/menu';
+import Menu from 'antd/lib/menu';
 import Row from 'antd/lib/row';
+import Select from 'antd/lib/select';
+import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -12,6 +13,7 @@ import { bindActionCreators } from 'redux';
 import { fetchingData, setTimestamp, setUnits } from '../redux/actions';
 import { WeatherSearch } from './weather-search';
 
+const Option = Select.Option;
 const {Header} = Layout;
 
 interface NavBarState {
@@ -23,6 +25,10 @@ class NavBar extends React.Component<any, NavBarState> {
     previousLocation: ''
   };
   
+  datePickerOnChange = (date: moment.Moment) => {
+    this.props.setTimestamp(date.format('X'));
+  }
+  
   handleSearch = (location: string) => {
     if (this.state.previousLocation.toLowerCase() !== location.toLowerCase() && location) {
       this.setState({previousLocation: location});
@@ -30,29 +36,18 @@ class NavBar extends React.Component<any, NavBarState> {
     }
   }
   
-  handleMenuClick = (e: ClickParam) => {
-    this.props.setUnits(e.key);
+  handleUnitsChange = (value: any) => {
+    this.props.setUnits(value);
   }
   
   render() {
-    const menu = (
-      <Menu
-        onClick={this.handleMenuClick}
-        defaultSelectedKeys={[ this.props.units ]}
-        selectedKeys={[ this.props.units ]}
-      >
-        <Menu.Item key='us'>℉,mph</Menu.Item>
-        <Menu.Item key='si'>℃,kph</Menu.Item>
-      </Menu>
-    );
-    
     return (
       <Header className='nav-bar'>
         <Row>
           <Col span={1}>
             <img src='assets/favicon.ico' width='35' height='30' alt=''/>
           </Col>
-          <Col xs={13} sm={13} md={13} lg={13} xl={14} xxl={16}>
+          <Col xs={10} sm={10} md={10} lg={10} xl={11} xxl={14}>
             <Menu
               theme='dark'
               mode='horizontal'
@@ -76,15 +71,28 @@ class NavBar extends React.Component<any, NavBarState> {
               </Menu.Item>
             </Menu>
           </Col>
+          <Col xs={3} sm={3} md={3} lg={3} xl={3} xxl={2}>
+            <DatePicker
+              onChange={this.datePickerOnChange}
+              disabled={this.props.isLoading}
+              style={{verticalAlign: 'middle'}}
+            />
+          </Col>
           <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={5}>
-            <div>
+            <div style={{padding: '0 0.5rem'}}>
               <WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading}/>
             </div>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1}>
-            <Dropdown overlay={menu} trigger={[ 'click' ]} disabled={this.props.isLoading}>
-              <Button className='units-dropdown'>Units<Icon type='down'/></Button>
-            </Dropdown>
+            <Select
+              defaultValue='si'
+              onChange={this.handleUnitsChange}
+              disabled={this.props.isLoading}
+              style={{verticalAlign: 'middle'}}
+            >
+              <Option value='si'>℃, kph</Option>
+              <Option value='us'>℉, mph</Option>
+            </Select>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={1} xxl={1} className='nav-bar-icon'>
             <Button

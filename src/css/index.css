@@ -90,10 +90,6 @@ body {
     width: 50rem;
 }
 
-.units-dropdown {
-    margin-left: 0.8rem;
-}
-
 ::-webkit-scrollbar {
     height: 0.8rem;
     width: 0.8rem;
