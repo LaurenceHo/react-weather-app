@@ -1277,6 +1277,5 @@ export const weather_us = {
       apparentTemperatureMaxTime: 1532224800
     } ]
   },
-  flags: {'sources': [ 'cmc', 'gfs', 'icon', 'isd', 'madis' ], 'nearest-station': 10.665, 'units': 'us'},
   offset: 12
 };

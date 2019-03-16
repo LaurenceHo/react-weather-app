@@ -28,22 +28,25 @@ class NavBar extends React.Component<any, NavBarState> {
   };
   
   datePickerOnChange = (date: moment.Moment, dateString: string) => {
-    const timestamp = Number(moment(dateString, 'YYYY-MM-DD').format('X'));
+    let timestamp = Number(moment(dateString, 'YYYY-MM-DD').format('X'));
     if (this.state.timestamp !== timestamp) {
+      const today = moment().format('YYYY-MM-DD');
+      timestamp = dateString === today ? 0 : timestamp;
+      
       this.setState({timestamp});
-      this.props.setFilter(...this.props.filter, timestamp);
+      this.props.setFilter({...this.props.filter, timestamp});
     }
   }
   
   handleSearch = (location: string) => {
     if (this.state.location.toLowerCase() !== location.toLowerCase() && location) {
       this.setState({location});
-      this.props.setFilter(...this.props.filter, location);
+      this.props.setFilter({...this.props.filter, location});
     }
   }
   
   handleUnitsChange = (units: any) => {
-    this.props.setFilter(...this.props.filter, units);
+    this.props.setFilter({...this.props.filter, units});
   }
   
   render() {

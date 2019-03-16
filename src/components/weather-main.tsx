@@ -22,47 +22,39 @@ import {
 import { Forecast, Timezone, Weather } from './data-model';
 import { WeatherForecast } from './weather-forecast';
 
+const EXCLUDE = 'flags,minutely';
+
 class WeatherMain extends React.Component<any, any> {
   componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
     // When user search weather by city name
-    if (prevProps.filter.location && (this.props.filter.location !== prevProps.filter.location)) {
+    if (this.props.filter.location !== prevProps.filter.location) {
       this.props.fetchingData();
-      this.getWeatherData(0, 0, this.props.location);
+      this.fetchWeather(0, 0, this.props.filter.location);
     }
     
     // When user change units
     if (this.props.filter.units !== prevProps.filter.units) {
       if (this.props.timezone.latitude && this.props.timezone.longitude) {
         this.props.fetchingData();
-        this.getWeatherData(
+        this.fetchWeather(
           this.props.timezone.latitude,
           this.props.timezone.longitude,
           this.props.location
         );
       } else {
         this.props.fetchingData();
-        this.getWeatherData(0, 0, this.props.location);
+        this.fetchWeather(0, 0, this.props.location);
       }
     }
     
     // When user search weather by particular time
     if (this.props.filter.timestamp !== prevProps.filter.timestamp) {
       this.props.fetchingData();
-      getForecast(
+      this.fetchWeather(
         this.props.timezone.latitude,
         this.props.timezone.longitude,
-        this.props.filter.timestamp,
-        'flags,minutely',
-        this.props.filter.units
-      ).then((results: Forecast) =>
-        this.setDataToStore(
-          this.props.location,
-          this.props.timezone,
-          results.currently,
-          results.hourly,
-          results.daily
-        )
-      ).catch(error => this.props.fetchingDataFailure(error));
+        this.props.location
+      );
     }
   }
   
@@ -80,7 +72,7 @@ class WeatherMain extends React.Component<any, any> {
         getGeocode(location.coords.latitude, location.coords.longitude, '').then((geocode: any) => {
           if (geocode.status === 'OK') {
             this.props.fetchingData();
-            this.getWeatherData(geocode.latitude, geocode.longitude, geocode.address);
+            this.fetchWeather(geocode.latitude, geocode.longitude, geocode.address);
           }
         }).catch(error =>
           this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand')
@@ -138,7 +130,7 @@ class WeatherMain extends React.Component<any, any> {
     this.props.fetchingDataFailure(message);
     setTimeout(() => {
       this.props.fetchingData();
-      this.getWeatherData(0, 0, 'Auckland');
+      this.fetchWeather(0, 0, 'Auckland');
     }, 5000);
   }
   
@@ -148,24 +140,37 @@ class WeatherMain extends React.Component<any, any> {
    * @param {number} lon
    * @param {string} city
    */
-  private getWeatherData(lat: number, lon: number, city: string) {
+  private fetchWeather(lat: number, lon: number, city: string) {
     if (lat !== 0 && lon !== 0) {
       // get weather and forecast info by latitude and longitude
-      getWeather(lat, lon, 'flags,minutely', this.props.units).then((results: Forecast) => {
-        const timezone: Timezone = {
-          timezone: results.timezone,
-          offset: results.offset,
-          latitude: results.latitude,
-          longitude: results.longitude
-        };
-        
-        this.setDataToStore(city, timezone, results.currently, results.hourly, results.daily);
-      }).catch(error => this.props.fetchingDataFailure(error));
+      if (this.props.filter.timestamp !== 0) {
+        getForecast(lat, lon, this.props.filter.timestamp, EXCLUDE, this.props.filter.units
+        ).then((results: Forecast) =>
+          this.setDataToStore(
+            this.props.location,
+            this.props.timezone,
+            results.currently,
+            results.hourly,
+            results.daily
+          )
+        ).catch(error => this.props.fetchingDataFailure(error));
+      } else {
+        getWeather(lat, lon, EXCLUDE, this.props.filter.units).then((results: Forecast) => {
+          const timezone: Timezone = {
+            timezone: results.timezone,
+            offset: results.offset,
+            latitude: results.latitude,
+            longitude: results.longitude
+          };
+          
+          this.setDataToStore(city, timezone, results.currently, results.hourly, results.daily);
+        }).catch(error => this.props.fetchingDataFailure(error));
+      }
     } else {
       // Get coordinates by city at first, after that get the weather and forecast info by coordinates
       getGeocode(null, null, city).then((geocode: any) => {
         if (geocode.status === 'OK') {
-          this.getWeatherData(geocode.latitude, geocode.longitude, geocode.city);
+          this.fetchWeather(geocode.latitude, geocode.longitude, geocode.city);
         }
       }).catch(error =>
         this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand')
