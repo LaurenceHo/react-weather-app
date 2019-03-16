@@ -2,24 +2,23 @@ export const FETCHING_DATA = 'FETCHING_DATA';
 export const FETCHING_DATA_SUCCESS = 'FETCHING_DATA_SUCCESS';
 export const FETCHING_DATA_FAILURE = 'FETCHING_DATA_FAILURE';
 
-export const SET_UNITS = 'SET_UNITS';
-export const SET_TIMESTAMP = 'SET_TIMESTAMP';
+export const SET_FILTER = 'SET_FILTER';
+export const SET_LOCATION = 'SET_LOCATION';
 export const SET_TIMEZONE = 'SET_TIMEZONE';
 
 export const SET_WEATHER = 'SET_WEATHER';
 export const SET_HOURLY_FORECAST = 'SET_HOURLY_FORECAST';
 export const SET_DAILY_FORECAST = 'SET_DAILY_FORECAST';
 
-export const fetchingData = (location: string) => {
+export const fetchingData = () => {
   return {
-    type: FETCHING_DATA,
-    location
+    type: FETCHING_DATA
   };
 };
 
 export const fetchingDataSuccess = () => {
   return {
-    type: FETCHING_DATA_SUCCESS,
+    type: FETCHING_DATA_SUCCESS
   };
 };
 
@@ -30,17 +29,17 @@ export const fetchingDataFailure = (error: string) => {
   };
 };
 
-export const setUnits = (units: string) => {
+export const setFilter = (filter: any) => {
   return {
-    type: SET_UNITS,
-    units
+    type: SET_FILTER,
+    filter
   };
 };
 
-export const setTimestamp = (timestamp: number) => {
+export const setLocation = (location: string) => {
   return {
-    type: SET_TIMESTAMP,
-    timestamp
+    type: SET_LOCATION,
+    location
   };
 };
 

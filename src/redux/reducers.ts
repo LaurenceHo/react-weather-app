@@ -2,9 +2,12 @@ import * as ACTION from './actions';
 
 const initialState = {
   isLoading: false,
-  units: 'si',
+  filter: {
+    units: 'si',
+    location: '',
+    timestamp: 0,
+  },
   location: '',
-  timestamp: 0,
   timezone: {},
   weather: {},
   hourlyForecast: {},
@@ -17,7 +20,6 @@ export const reducers = (state: any = initialState, action: any) => {
     case ACTION.FETCHING_DATA:
       return {
         ...state,
-        location: action.location,
         isLoading: true,
         error: ''
       };
@@ -35,16 +37,16 @@ export const reducers = (state: any = initialState, action: any) => {
         error: action.error
       };
     
-    case ACTION.SET_UNITS:
+    case ACTION.SET_FILTER:
       return {
         ...state,
-        units: action.units
+        filter: action.filter
       };
     
-    case ACTION.SET_TIMESTAMP:
+    case ACTION.SET_LOCATION:
       return {
         ...state,
-        timestamp: action.timestamp
+        location: action.location
       };
     
     case ACTION.SET_TIMEZONE:

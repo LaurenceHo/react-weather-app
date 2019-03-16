@@ -8,27 +8,35 @@ import { WindIcon } from './icon/wind-icon';
 
 export class CurrentWeather extends React.Component<any, any> {
   render() {
-    const {weather, location, timezone, units} = this.props;
+    const {weather, location, timezone, filter} = this.props;
     
     return (
       <div>
         <Row type='flex' justify='center' className='current-weather-top'>
           <Col xs={4} sm={4} md={4} lg={3} xl={3}>
             <span>
-              Rain: {Utils.getRain(weather.precipIntensity, weather.precipProbability, units)}
+              Rain: {Utils.getRain(weather.precipIntensity, weather.precipProbability, filter.units)}
               <i className='wi wi-humidity'/>
             </span>
           </Col>
           <Col xs={3} sm={3} md={3} lg={2} xl={2}>
-            Wind: {Utils.getWindSpeed(weather.windSpeed, units)} <WindIcon degree={weather.windBearing}/>
+            Wind: {Utils.getWindSpeed(weather.windSpeed, filter.units)} <WindIcon degree={weather.windBearing}/>
           </Col>
           <Col xs={3} sm={3} md={3} lg={2} xl={2}><span>Humidity: {Math.round(weather.humidity * 100)} <i
             className='wi wi-humidity'
           /></span></Col>
-          <Col xs={4} sm={4} md={4} lg={3} xl={3}>Pressure: {Utils.getPressure(weather.pressure, units)}</Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>Dew Point: {Utils.getTemperature(weather.dewPoint, units)}</Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>UV Index: {weather.uvIndex}</Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>Visibility: {Utils.getDistance(weather.visibility, units)}</Col>
+          <Col xs={4} sm={4} md={4} lg={3} xl={3}>
+            Pressure: {Utils.getPressure(weather.pressure, filter.units)}
+          </Col>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
+            Dew Point: {Utils.getTemperature(weather.dewPoint, filter.units)}
+          </Col>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
+            UV Index: {weather.uvIndex}
+          </Col>
+          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
+            Visibility: {Utils.getDistance(weather.visibility, filter.units)}
+          </Col>
         </Row>
         <Row type='flex' justify='center' className='current-weather-location'>
           {location}
@@ -40,8 +48,8 @@ export class CurrentWeather extends React.Component<any, any> {
           <Col span={3}>
             <div style={{paddingTop: '1rem'}}>
               <div>{Utils.getLocalTime(weather.time, timezone.offset, 'YYYY-MM-DD HH:mm')}</div>
-              <div>{weather.summary} {Utils.getTemperature(weather.temperature, units)}</div>
-              <div>Feels like {Utils.getTemperature(weather.apparentTemperature, units)}</div>
+              <div>{weather.summary} {Utils.getTemperature(weather.temperature, filter.units)}</div>
+              <div>Feels like {Utils.getTemperature(weather.apparentTemperature, filter.units)}</div>
             </div>
           </Col>
         </Row>
@@ -52,7 +60,6 @@ export class CurrentWeather extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    units: state.units,
     filter: state.filter,
     location: state.location,
     weather: state.weather,

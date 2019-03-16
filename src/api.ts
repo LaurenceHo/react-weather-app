@@ -54,7 +54,11 @@ export const getWeather = (latitude: number, longitude: number, exclude: string,
 
 export const getForecast = (latitude: number, longitude: number, time: number, exclude: string, units: string) => {
   if (process.env.NODE_ENV === 'development') {
-    // TODO
+    if (units === 'us') {
+      return new Promise(resolve => setTimeout(resolve, 1000, weather_us));
+    } else {
+      return new Promise(resolve => setTimeout(resolve, 1000, weather_si));
+    }
   } else {
     const requestUrl = `${CLOUD_FUNCTION_URL}getForecast?lat=${latitude}&lon=${longitude}&time=${time}` +
       `&exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;

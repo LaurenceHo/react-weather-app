@@ -36,7 +36,7 @@ export class HourlyForecast extends React.Component<any, any> {
     }
     
     chart.setOption(
-      chartConfig(this.props.units, this.props.timezone, this.props.hourlyForecast)
+      chartConfig(this.props.filter.units, this.props.timezone, this.props.hourlyForecast)
     );
   }
   
@@ -56,8 +56,7 @@ export class HourlyForecast extends React.Component<any, any> {
 const mapStateToProps = (state: any) => {
   return {
     isLoading: state.isLoading,
-    units: state.units,
-    timestamp: state.timestamp,
+    filter: state.filter,
     timezone: state.timezone,
     weather: state.weather,
     hourlyForecast: state.hourlyForecast

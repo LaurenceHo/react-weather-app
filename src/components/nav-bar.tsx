@@ -10,34 +10,40 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { fetchingData, setTimestamp, setUnits } from '../redux/actions';
+import { fetchingData, setFilter } from '../redux/actions';
 import { WeatherSearch } from './weather-search';
 
 const Option = Select.Option;
 const {Header} = Layout;
 
 interface NavBarState {
-  previousLocation: string;
+  location: string;
+  timestamp: number;
 }
 
 class NavBar extends React.Component<any, NavBarState> {
   state = {
-    previousLocation: ''
+    location: '',
+    timestamp: 0
   };
   
-  datePickerOnChange = (date: moment.Moment) => {
-    this.props.setTimestamp(date.format('X'));
-  }
-  
-  handleSearch = (location: string) => {
-    if (this.state.previousLocation.toLowerCase() !== location.toLowerCase() && location) {
-      this.setState({previousLocation: location});
-      this.props.fetchingData(location);
+  datePickerOnChange = (date: moment.Moment, dateString: string) => {
+    const timestamp = Number(moment(dateString, 'YYYY-MM-DD').format('X'));
+    if (this.state.timestamp !== timestamp) {
+      this.setState({timestamp});
+      this.props.setFilter(...this.props.filter, timestamp);
     }
   }
   
-  handleUnitsChange = (value: any) => {
-    this.props.setUnits(value);
+  handleSearch = (location: string) => {
+    if (this.state.location.toLowerCase() !== location.toLowerCase() && location) {
+      this.setState({location});
+      this.props.setFilter(...this.props.filter, location);
+    }
+  }
+  
+  handleUnitsChange = (units: any) => {
+    this.props.setFilter(...this.props.filter, units);
   }
   
   render() {
@@ -73,6 +79,7 @@ class NavBar extends React.Component<any, NavBarState> {
           </Col>
           <Col xs={3} sm={3} md={3} lg={3} xl={3} xxl={2}>
             <DatePicker
+              defaultValue={moment()}
               onChange={this.datePickerOnChange}
               disabled={this.props.isLoading}
               style={{verticalAlign: 'middle'}}
@@ -112,16 +119,13 @@ class NavBar extends React.Component<any, NavBarState> {
 const mapStateToProps = (state: any) => {
   return {
     isLoading: state.isLoading,
-    units: state.units,
-    location: state.location,
-    timestamp: state.timestamp
+    filter: state.filter
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators({
-    setUnits,
-    setTimestamp,
+    setFilter,
     fetchingData
   }, dispatch);
 };
