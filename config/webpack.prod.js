@@ -1,25 +1,28 @@
-const CompressionPlugin = require('compression-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
   plugins: [
     new DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
+        NODE_ENV: JSON.stringify('production'),
+      },
     }),
-    new CompressionPlugin({
-      filename: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
-      minRatio: 0
-    })
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    }),
+    /*
+     * Plugin: CleanWebpackPlugin
+     * Description: A webpack plugin to remove/clean your build folder(s).
+     * See: https://github.com/johnagan/clean-webpack-plugin
+     */
+    new CleanWebpackPlugin(),
   ],
   optimization: {
     splitChunks: {
@@ -27,20 +30,32 @@ module.exports = merge(common, {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
-        }
-      }
+          chunks: 'all',
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
     },
     minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            warnings: false
+      /*
+       * Plugin: TerserWebpackPlugin
+       * Description: This plugin uses terser to minify your JavaScript.
+       * See: https://webpack.js.org/plugins/terser-webpack-plugin
+       */
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        terserOptions: {
+          output: {
+            comments: false,
           },
-          sourceMap: true
-        }
-      })
-    ]
-  }
+        },
+      }),
+    ],
+  },
 });

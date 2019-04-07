@@ -14,12 +14,12 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
     }
     return Utils.getLocalTime(value, timezone.offset, 'HH:mm');
   };
-  
+
   const formatterTooltip = (params: any) => {
-    const temperature = params[ 0 ];
-    const rain = params[ 1 ];
+    const temperature = params[0];
+    const rain = params[1];
     const time = Utils.getLocalTime(temperature.name, timezone.offset, 'YYYY-MM-DD HH:mm');
-    
+
     return `
       <div style="font-size:0.9rem; color:#949494; line-height:1.1rem;">${time}</div>
       </br>
@@ -32,11 +32,11 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
       </div>
      `;
   };
-  
-  const roundTemperature = map(hourly.data, (n) => {
+
+  const roundTemperature = map(hourly.data, n => {
     return Math.round(n.temperature);
   }).slice(0, 23);
-  const roundIntensity = map(hourly.data, (n) => {
+  const roundIntensity = map(hourly.data, n => {
     if (units === 'us') {
       return n.precipIntensity.toFixed(3);
     } else if (units === 'si') {
@@ -45,59 +45,59 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
   }).slice(0, 23);
   const temperatureMax = Math.round(Math.max.apply(null, roundTemperature) * 1.3);
   const rainMax = (Math.max.apply(null, roundIntensity) * 1.3).toFixed(1);
-  
+
   return {
     legend: {
-      data: [ 'Temperature', 'Rain' ],
-      right: '10%'
+      data: ['Temperature', 'Rain'],
+      right: '10%',
     },
     xAxis: {
       type: 'category',
       data: map(hourly.data, 'time').slice(0, 23),
       axisLabel: {
-        formatter: formatterXAxisLabel
-      }
+        formatter: formatterXAxisLabel,
+      },
     },
     yAxis: [
       {
         type: 'value',
         max: temperatureMax,
         axisLabel: {
-          formatter: units === 'us' ? '{value} ℉' : '{value} ℃'
+          formatter: units === 'us' ? '{value} ℉' : '{value} ℃',
         },
         splitLine: {
-          show: false
+          show: false,
         },
         splitArea: {
           show: true,
           areaStyle: {
-            color: [ 'rgba(255,255,255,0.3)', 'rgba(200,200,200,0.1)' ]
-          }
-        }
+            color: ['rgba(255,255,255,0.3)', 'rgba(200,200,200,0.1)'],
+          },
+        },
       },
       {
         type: 'value',
         min: 0,
         max: rainMax,
         axisLabel: {
-          formatter: units === 'us' ? '{value} in' : '{value} mm'
-        }
-      }
+          formatter: units === 'us' ? '{value} in' : '{value} mm',
+        },
+      },
     ],
     tooltip: {
       trigger: 'axis',
       backgroundColor: '#FFF',
       borderWidth: 1,
       borderColor: '#ccc',
-      padding: [ 8, 17 ],
+      padding: [8, 17],
       extraCssText: 'box-shadow: 0 2px 4px 0 #CDCDCD;',
       formatter: formatterTooltip,
       axisPointer: {
         lineStyle: {
           color: '#666666',
-          type: 'dashed'
-        }
-      }
+          type: 'dashed',
+        },
+      },
     },
     series: [
       {
@@ -107,11 +107,11 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
         smooth: true,
         lineStyle: {
           color: '#1869b7',
-          width: 2
+          width: 2,
         },
         itemStyle: {
-          color: '#1869b7'
-        }
+          color: '#1869b7',
+        },
       },
       {
         name: 'Rain',
@@ -119,9 +119,9 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
         data: roundIntensity,
         yAxisIndex: 1,
         itemStyle: {
-          color: '#A4A4A4'
-        }
-      }
-    ]
+          color: '#A4A4A4',
+        },
+      },
+    ],
   };
 };

@@ -14,18 +14,18 @@ interface WeatherSearchState {
 
 export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSearchState> {
   state = {
-    location: ''
+    location: '',
   };
-  
+
   handleChange = (event: any) => {
     const value = event.target.value;
-    this.setState({location: value});
-  }
-  
+    this.setState({ location: value });
+  };
+
   handleSubmit = () => {
     this.props.onSearch(this.state.location);
-  }
-  
+  };
+
   render() {
     return (
       <Search
@@ -37,7 +37,7 @@ export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSe
         placeholder='Search weather by city'
         disabled={this.props.isDisabled}
         enterButton={true}
-        style={{verticalAlign: 'middle'}}
+        style={{ verticalAlign: 'middle' }}
       />
     );
   }
