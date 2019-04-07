@@ -4,8 +4,8 @@ import { weather_us } from '../sample/weather_us';
 
 declare var process: {
   env: {
-    NODE_ENV: string
-  }
+    NODE_ENV: string;
+  };
 };
 
 const CLOUD_FUNCTION_URL = 'https://us-central1-react-beautiful-weather-app.cloudfunctions.net/';

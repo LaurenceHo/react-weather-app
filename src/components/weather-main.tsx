@@ -25,7 +25,7 @@ import { WeatherForecast } from './weather-forecast';
 const EXCLUDE = 'flags,minutely';
 
 class WeatherMain extends React.Component<any, any> {
-  componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
+  componentDidUpdate(prevProps: any) {
     // When user search weather by city name
     if (this.props.filter.location !== prevProps.filter.location) {
       this.props.fetchingData();

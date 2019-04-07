@@ -194,7 +194,7 @@ export class TrafficService {
         .duration(1000 + processingTime)
         .attr('cx', x2)
         .attr('cy', y2)
-        .on('end', (d: any) => item.remove());
+        .on('end', () => item.remove());
     }
   }
   

@@ -49,19 +49,19 @@ export interface Forecast {
   timezone: string;
   currently: Weather;
   minutely: {
-    summary: string,
-    icon: string,
-    data: Weather[],
+    summary: string;
+    icon: string;
+    data: Weather[];
   };
   hourly: {
-    summary: string,
-    icon: string,
-    data: Weather[]
+    summary: string;
+    icon: string;
+    data: Weather[];
   };
   daily: {
-    summary: string,
-    icon: string,
-    data: Weather[]
+    summary: string;
+    icon: string;
+    data: Weather[];
   };
   flags: any;
   offset: number;

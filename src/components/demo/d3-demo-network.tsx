@@ -57,7 +57,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
       }
     });
   }
-  
+
   hideToolTip = () => {
     this.setState({
       tooltip: {
@@ -77,8 +77,9 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
     }
     return this.width;
   }
-  
-  componentWillMount() {
+
+  constructor(props: any) {
+    super(props);
     // Create force simulation
     this.simulation = d3.forceSimulation()
     // apply collision with padding
@@ -135,6 +136,46 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
       titleDy: 90
     });
     this.powerGauge.render(undefined);
+  
+    const ticked = () => {
+      this.link
+        .attr('x1', (d: any) => {
+          return d.source.x;
+        })
+        .attr('y1', (d: any) => {
+          return d.source.y;
+        })
+        .attr('x2', (d: any) => {
+          return d.target.x;
+        })
+        .attr('y2', (d: any) => {
+          return d.target.y;
+        });
+      this.node.attr('transform', (d: any) => {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      });
+    };
+  
+    const dragstarted = () => {
+      if (!d3.event.active) {
+        this.simulation.alphaTarget(0.3).restart();
+      }
+      d3.event.subject.fx = d3.event.subject.x;
+      d3.event.subject.fy = d3.event.subject.y;
+    };
+  
+    const dragged = () => {
+      d3.event.subject.fx = d3.event.x;
+      d3.event.subject.fy = d3.event.y;
+    };
+  
+    const dragended = () => {
+      if (!d3.event.active) {
+        this.simulation.alphaTarget(0);
+      }
+      d3.event.subject.fx = null;
+      d3.event.subject.fy = null;
+    };
     
     const drawGraph = () => {
       this.node = this.node.data(this.nodes, (d: any) => {
@@ -225,47 +266,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         .links(this.links);
       this.simulation.alpha(0.1).restart();
     };
-    
-    const ticked = () => {
-      this.link
-        .attr('x1', (d: any) => {
-          return d.source.x;
-        })
-        .attr('y1', (d: any) => {
-          return d.source.y;
-        })
-        .attr('x2', (d: any) => {
-          return d.target.x;
-        })
-        .attr('y2', (d: any) => {
-          return d.target.y;
-        });
-      this.node.attr('transform', (d: any) => {
-        return 'translate(' + d.x + ',' + d.y + ')';
-      });
-    };
-    
-    const dragstarted = () => {
-      if (!d3.event.active) {
-        this.simulation.alphaTarget(0.3).restart();
-      }
-      d3.event.subject.fx = d3.event.subject.x;
-      d3.event.subject.fy = d3.event.subject.y;
-    };
-    
-    const dragged = () => {
-      d3.event.subject.fx = d3.event.x;
-      d3.event.subject.fy = d3.event.y;
-    };
-    
-    const dragended = () => {
-      if (!d3.event.active) {
-        this.simulation.alphaTarget(0);
-      }
-      d3.event.subject.fx = null;
-      d3.event.subject.fy = null;
-    };
-    
+
     const processData = () => {
       this.powerGauge.update(Math.random() * 1000, undefined);
       

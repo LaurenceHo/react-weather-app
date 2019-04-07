@@ -12,7 +12,7 @@ export const About = () =>
       </p>
       <p>
         Source code:
-        <a href='https://github.com/bluegray1015/reactjs-beautiful-weather'>GitHub</a> and
+        <a href='https://github.com/LaurenceHo/reactjs-beautiful-weather'>GitHub</a> and
         <a href='https://bitbucket.org/LaurenceHo/reactjs-beautiful-weather'>BitBucket</a>
       </p>
       <p>

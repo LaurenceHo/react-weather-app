@@ -29,7 +29,8 @@ export class D3DemoApp extends React.Component<any, any> {
     });
   }
 
-  componentWillMount() {
+  constructor(props: any) {
+    super(props);
     // Create force simulation
     this.simulation = d3.forceSimulation()
       .force('x', d3.forceX(this.width / 2).strength(.185))
@@ -83,7 +84,47 @@ export class D3DemoApp extends React.Component<any, any> {
       titleDy: 90
     });
     this.powerGauge.render(undefined);
-
+  
+    const ticked = () => {
+      this.link
+        .attr('x1', (d: any) => {
+          return d.source.x;
+        })
+        .attr('y1', (d: any) => {
+          return d.source.y;
+        })
+        .attr('x2', (d: any) => {
+          return d.target.x;
+        })
+        .attr('y2', (d: any) => {
+          return d.target.y;
+        });
+      this.node.attr('transform', (d: any) => {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      });
+    };
+  
+    const dragstarted = () => {
+      if (!d3.event.active) {
+        this.simulation.alphaTarget(0.3).restart();
+      }
+      d3.event.subject.fx = d3.event.subject.x;
+      d3.event.subject.fy = d3.event.subject.y;
+    };
+  
+    const dragged = () => {
+      d3.event.subject.fx = d3.event.x;
+      d3.event.subject.fy = d3.event.y;
+    };
+  
+    const dragended = () => {
+      if (!d3.event.active) {
+        this.simulation.alphaTarget(0);
+      }
+      d3.event.subject.fx = null;
+      d3.event.subject.fy = null;
+    };
+    
     const drawGraph = () => {
       // Apply the general update pattern to the nodes.
       this.node = this.node.data(this.nodes, (d: any) => {
@@ -129,46 +170,6 @@ export class D3DemoApp extends React.Component<any, any> {
         .force('link')
         .links(this.links);
       this.simulation.alpha(0.1).restart();
-    };
-
-    const ticked = () => {
-      this.link
-        .attr('x1', (d: any) => {
-          return d.source.x;
-        })
-        .attr('y1', (d: any) => {
-          return d.source.y;
-        })
-        .attr('x2', (d: any) => {
-          return d.target.x;
-        })
-        .attr('y2', (d: any) => {
-          return d.target.y;
-        });
-      this.node.attr('transform', (d: any) => {
-        return 'translate(' + d.x + ',' + d.y + ')';
-      });
-    };
-
-    const dragstarted = () => {
-      if (!d3.event.active) {
-        this.simulation.alphaTarget(0.3).restart();
-      }
-      d3.event.subject.fx = d3.event.subject.x;
-      d3.event.subject.fy = d3.event.subject.y;
-    };
-
-    const dragged = () => {
-      d3.event.subject.fx = d3.event.x;
-      d3.event.subject.fy = d3.event.y;
-    };
-
-    const dragended = () => {
-      if (!d3.event.active) {
-        this.simulation.alphaTarget(0);
-      }
-      d3.event.subject.fx = null;
-      d3.event.subject.fy = null;
     };
 
     const processData = () => {

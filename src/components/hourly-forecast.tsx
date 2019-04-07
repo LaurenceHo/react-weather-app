@@ -9,8 +9,8 @@ export class HourlyForecast extends React.Component<any, any> {
   componentDidMount() {
     this.renderChart();
   }
-  
-  componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
+
+  componentDidUpdate(prevProps: any) {
     if (this.props.hourlyForecast !== prevProps.hourlyForecast) {
       this.renderChart();
     }
