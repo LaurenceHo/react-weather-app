@@ -5,10 +5,12 @@
     "useJSXTextNode": true
   },
   "plugins": [
+    "prettier",
     "react",
     "@typescript-eslint"
   ],
   "extends": [
+    "plugin:prettier/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],

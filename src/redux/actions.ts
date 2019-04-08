@@ -12,61 +12,61 @@ export const SET_DAILY_FORECAST = 'SET_DAILY_FORECAST';
 
 export const fetchingData = () => {
   return {
-    type: FETCHING_DATA
+    type: FETCHING_DATA,
   };
 };
 
 export const fetchingDataSuccess = () => {
   return {
-    type: FETCHING_DATA_SUCCESS
+    type: FETCHING_DATA_SUCCESS,
   };
 };
 
 export const fetchingDataFailure = (error: string) => {
   return {
     type: FETCHING_DATA_FAILURE,
-    error
+    error,
   };
 };
 
 export const setFilter = (filter: any) => {
   return {
     type: SET_FILTER,
-    filter
+    filter,
   };
 };
 
 export const setLocation = (location: string) => {
   return {
     type: SET_LOCATION,
-    location
+    location,
   };
 };
 
 export const setTimezone = (timezone: any) => {
   return {
     type: SET_TIMEZONE,
-    timezone
+    timezone,
   };
 };
 
 export const setWeather = (weather: any) => {
   return {
     type: SET_WEATHER,
-    weather
+    weather,
   };
 };
 
 export const setHourlyForecast = (hourlyForecast: any) => {
   return {
     type: SET_HOURLY_FORECAST,
-    hourlyForecast
+    hourlyForecast,
   };
 };
 
 export const setDailyForecast = (dailyForecast: any) => {
   return {
     type: SET_DAILY_FORECAST,
-    dailyForecast
+    dailyForecast,
   };
 };

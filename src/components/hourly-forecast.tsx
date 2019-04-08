@@ -15,7 +15,7 @@ export class HourlyForecast extends React.Component<any, any> {
       this.renderChart();
     }
   }
-  
+
   renderChart = () => {
     try {
       const weatherChart = document.getElementById('weather-chart');
@@ -23,31 +23,29 @@ export class HourlyForecast extends React.Component<any, any> {
     } catch (err) {
       console.log('blahblah');
     }
-    
+
     // Generate div element dynamically for ECharts
     const divElement: HTMLDivElement = document.createElement('div');
     divElement.setAttribute('id', 'weather-chart');
     divElement.setAttribute('class', 'weather-chart');
     document.getElementById('weather-chart-wrapper').appendChild(divElement);
-    
+
     let chart = echarts.getInstanceByDom(divElement);
     if (!chart) {
-      chart = echarts.init(divElement, null, {renderer: 'canvas'});
+      chart = echarts.init(divElement, null, { renderer: 'canvas' });
     }
-    
-    chart.setOption(
-      chartConfig(this.props.filter.units, this.props.timezone, this.props.hourlyForecast)
-    );
-  }
-  
+
+    chart.setOption(chartConfig(this.props.filter.units, this.props.timezone, this.props.hourlyForecast));
+  };
+
   render() {
-    const {hourlyForecast} = this.props;
+    const { hourlyForecast } = this.props;
     return (
       <div>
         <Row type='flex' justify='center' className='forecast-summary'>
           {hourlyForecast.summary}
         </Row>
-        <Row type='flex' justify='center' id='weather-chart-wrapper'/>
+        <Row type='flex' justify='center' id='weather-chart-wrapper' />
       </div>
     );
   }
@@ -59,7 +57,7 @@ const mapStateToProps = (state: any) => {
     filter: state.filter,
     timezone: state.timezone,
     weather: state.weather,
-    hourlyForecast: state.hourlyForecast
+    hourlyForecast: state.hourlyForecast,
   };
 };
 

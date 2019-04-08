@@ -24,8 +24,8 @@ export const getGeocode = (latitude: number, longitude: number, address: string)
   if (process.env.NODE_ENV === 'development') {
     return new Promise(resolve => setTimeout(resolve, 1000, location));
   } else {
-    const requestUrl = `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` +
-      encodeURIComponent(address);
+    const requestUrl =
+      `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` + encodeURIComponent(address);
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)
@@ -42,7 +42,8 @@ export const getWeather = (latitude: number, longitude: number, exclude: string,
       return new Promise(resolve => setTimeout(resolve, 1000, weather_si));
     }
   } else {
-    const requestUrl = `${CLOUD_FUNCTION_URL}getWeather?lat=${latitude}&lon=${longitude}&` +
+    const requestUrl =
+      `${CLOUD_FUNCTION_URL}getWeather?lat=${latitude}&lon=${longitude}&` +
       `exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
     return fetch(requestUrl)
       .then(checkStatus)
@@ -60,7 +61,8 @@ export const getForecast = (latitude: number, longitude: number, time: number, e
       return new Promise(resolve => setTimeout(resolve, 1000, weather_si));
     }
   } else {
-    const requestUrl = `${CLOUD_FUNCTION_URL}getForecast?lat=${latitude}&lon=${longitude}&time=${time}` +
+    const requestUrl =
+      `${CLOUD_FUNCTION_URL}getForecast?lat=${latitude}&lon=${longitude}&time=${time}` +
       `&exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
     return fetch(requestUrl)
       .then(checkStatus)

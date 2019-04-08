@@ -7,9 +7,9 @@ export class WeatherForecast extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <CurrentWeather/>
-        <HourlyForecast/>
-        <DailyForecast/>
+        <CurrentWeather />
+        <HourlyForecast />
+        <DailyForecast />
       </div>
     );
   }

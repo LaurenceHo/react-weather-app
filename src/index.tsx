@@ -23,7 +23,7 @@ const store: any = createStore(reducers, devToolsEnhancer({}));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <App />
   </Provider>,
   document.getElementById('app')
 );

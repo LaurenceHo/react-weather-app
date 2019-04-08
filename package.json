@@ -10,7 +10,7 @@
     "firebase-init": "firebase login && firebase init",
     "firebase-add": "firebase use --add",
     "deploy-functions": "firebase deploy --only functions",
-    "lint": "./node_modules/.bin/eslint ./src --ext .ts,.tsx"
+    "lint": "eslint ./src --ext .ts,.tsx --fix"
   },
   "author": "Laurence Ho",
   "license": "MIT",
@@ -50,6 +50,8 @@
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "file-loader": "^1.1.11",
     "firebase-tools": "^6.5.3",

@@ -32,33 +32,44 @@ export class D3DemoApp extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     // Create force simulation
-    this.simulation = d3.forceSimulation()
-      .force('x', d3.forceX(this.width / 2).strength(.185))
-      .force('y', d3.forceY(this.height / 2).strength(.185))
-      .force('link', d3.forceLink()
-        .id((d: any) => {
-          return d.id;
-        })
-        .distance((d: any) => {
-          const numlinks = this.links.filter((link: any) => {
-            return link.source.name === d.source.name
-              || link.source.name === d.target.name
-              || link.target.name === d.target.name
-              || link.target.name === d.source.name;
-          });
-          return ((numlinks.length * .6) * (this.height / 130)) + (this.width / 300);
-        })
-        .strength(0.1)
+    this.simulation = d3
+      .forceSimulation()
+      .force('x', d3.forceX(this.width / 2).strength(0.185))
+      .force('y', d3.forceY(this.height / 2).strength(0.185))
+      .force(
+        'link',
+        d3
+          .forceLink()
+          .id((d: any) => {
+            return d.id;
+          })
+          .distance((d: any) => {
+            const numlinks = this.links.filter((link: any) => {
+              return (
+                link.source.name === d.source.name ||
+                link.source.name === d.target.name ||
+                link.target.name === d.target.name ||
+                link.target.name === d.source.name
+              );
+            });
+            return numlinks.length * 0.6 * (this.height / 130) + this.width / 300;
+          })
+          .strength(0.1)
       )
-      .force('charge', d3.forceManyBody().strength((d: any) => {
-        const numlinks = this.links.filter((link: any) => {
-          return link.source.name === d.name
-            || link.source.name === d.name
-            || link.target.name === d.name
-            || link.target.name === d.name;
-        });
-        return (numlinks.length * -50) - 1000;
-      }))
+      .force(
+        'charge',
+        d3.forceManyBody().strength((d: any) => {
+          const numlinks = this.links.filter((link: any) => {
+            return (
+              link.source.name === d.name ||
+              link.source.name === d.name ||
+              link.target.name === d.name ||
+              link.target.name === d.name
+            );
+          });
+          return numlinks.length * -50 - 1000;
+        })
+      )
       .force('center', d3.forceCenter(this.width / 2, this.height / 2));
   }
 
@@ -81,10 +92,10 @@ export class D3DemoApp extends React.Component<any, any> {
       y: 10,
       title: 'Logs per second',
       titleDx: 36,
-      titleDy: 90
+      titleDy: 90,
     });
     this.powerGauge.render(undefined);
-  
+
     const ticked = () => {
       this.link
         .attr('x1', (d: any) => {
@@ -103,7 +114,7 @@ export class D3DemoApp extends React.Component<any, any> {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
     };
-  
+
     const dragstarted = () => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0.3).restart();
@@ -111,12 +122,12 @@ export class D3DemoApp extends React.Component<any, any> {
       d3.event.subject.fx = d3.event.subject.x;
       d3.event.subject.fy = d3.event.subject.y;
     };
-  
+
     const dragged = () => {
       d3.event.subject.fx = d3.event.x;
       d3.event.subject.fy = d3.event.y;
     };
-  
+
     const dragended = () => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0);
@@ -124,7 +135,7 @@ export class D3DemoApp extends React.Component<any, any> {
       d3.event.subject.fx = null;
       d3.event.subject.fy = null;
     };
-    
+
     const drawGraph = () => {
       // Apply the general update pattern to the nodes.
       this.node = this.node.data(this.nodes, (d: any) => {
@@ -132,18 +143,23 @@ export class D3DemoApp extends React.Component<any, any> {
       });
       this.node.exit().remove();
 
-      const nodeEnter = this.node.enter()
-        .append('g').attr('class', 'node');
+      const nodeEnter = this.node
+        .enter()
+        .append('g')
+        .attr('class', 'node');
       nodeEnter
         .append('circle')
         .attr('class', (d: any) => {
           return d.name + ' ' + d.priority;
         })
         .attr('r', this.width / 200)
-        .call(d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended));
+        .call(
+          d3
+            .drag()
+            .on('start', dragstarted)
+            .on('drag', dragged)
+            .on('end', dragended)
+        );
       nodeEnter
         .append('text')
         .attr('dx', this.width / 130 + 3)
@@ -158,17 +174,16 @@ export class D3DemoApp extends React.Component<any, any> {
         return d.source.name + '-' + d.target.name;
       });
       this.link.exit().remove();
-      this.link = this.link.enter()
-        .insert('line', '.node').attr('class', (d: any) => {
+      this.link = this.link
+        .enter()
+        .insert('line', '.node')
+        .attr('class', (d: any) => {
           return 'link ' + d.source.name + '-' + d.target.name;
-        }).merge(this.link);
+        })
+        .merge(this.link);
 
-      this.simulation
-        .nodes(this.nodes)
-        .on('tick', ticked);
-      this.simulation
-        .force('link')
-        .links(this.links);
+      this.simulation.nodes(this.nodes).on('tick', ticked);
+      this.simulation.force('link').links(this.links);
       this.simulation.alpha(0.1).restart();
     };
 
@@ -179,10 +194,10 @@ export class D3DemoApp extends React.Component<any, any> {
       let addedSomething = false;
       for (let i = 0; i < appTraffic.nodes.length; i++) {
         const nodeIndex = this.nodes.findIndex((node: any) => {
-          return node.name === appTraffic.nodes[ i ].name;
+          return node.name === appTraffic.nodes[i].name;
         });
         if (nodeIndex < 0) {
-          this.nodes.push(appTraffic.nodes[ i ]);
+          this.nodes.push(appTraffic.nodes[i]);
           addedSomething = true;
         }
       }
@@ -190,8 +205,9 @@ export class D3DemoApp extends React.Component<any, any> {
       for (let i = 0; i < appTraffic.links.length; i++) {
         let found = false;
         for (let k = 0; k < this.links.length; k++) {
-          if (appTraffic.nodes[ appTraffic.links[ i ].source ].name === this.links[ k ].source.name &&
-            appTraffic.nodes[ appTraffic.links[ i ].target ].name === this.links[ k ].target.name
+          if (
+            appTraffic.nodes[appTraffic.links[i].source].name === this.links[k].source.name &&
+            appTraffic.nodes[appTraffic.links[i].target].name === this.links[k].target.name
           ) {
             found = true;
             break;
@@ -200,8 +216,8 @@ export class D3DemoApp extends React.Component<any, any> {
 
         if (!found) {
           this.links.push({
-            source: this.getNode(appTraffic.nodes[ appTraffic.links[ i ].source ].name),
-            target: this.getNode(appTraffic.nodes[ appTraffic.links[ i ].target ].name)
+            source: this.getNode(appTraffic.nodes[appTraffic.links[i].source].name),
+            target: this.getNode(appTraffic.nodes[appTraffic.links[i].target].name),
           });
           addedSomething = true;
         }
@@ -227,33 +243,28 @@ export class D3DemoApp extends React.Component<any, any> {
   }
 
   render() {
-    const nodeLegendItems = [ 'DEBUG', 'INFO', 'WARN', 'ERROR', 'UNKNOWN' ];
+    const nodeLegendItems = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'UNKNOWN'];
 
-    const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) =>
+    const renderNodeLegend = nodeLegendItems.map((nodeLegendItem: any, index: number) => (
       <g className='nodeLegend' key={nodeLegendItem}>
-        <circle
-          r={this.width / 200}
-          className={nodeLegendItem}
-          cx={this.width - 250}
-          cy={index * 25 + 440}
-        />
-        <text dx={this.width - 230} dy={index * 25 + 444}>{nodeLegendItem}</text>
+        <circle r={this.width / 200} className={nodeLegendItem} cx={this.width - 250} cy={index * 25 + 440} />
+        <text dx={this.width - 230} dy={index * 25 + 444}>
+          {nodeLegendItem}
+        </text>
       </g>
-    );
+    ));
 
     return (
       <div>
         <span className='is-active nav-link'>Application Traffic</span>
         &nbsp;|&nbsp;<Link to='/d3_demo_network'>Network Traffic</Link>
-
         <div id='chart'>
           <div className='svg-container'>
             <svg
               className='svg-content-responsive'
               preserveAspectRatio='xMinYMin meet'
               width={this.width}
-              height={this.height}
-            >
+              height={this.height}>
               {renderNodeLegend}
             </svg>
           </div>
