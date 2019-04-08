@@ -11,7 +11,8 @@
     "@typescript-eslint"
   ],
   "extends": [
-    "plugin:prettier/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
@@ -21,6 +22,7 @@
     }
   },
   "rules": {
+    "prettier/prettier": "error",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
