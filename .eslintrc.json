@@ -1,8 +1,9 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "jsx": true,
-    "useJSXTextNode": true
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "plugins": [
     "prettier",
@@ -14,6 +15,11 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
