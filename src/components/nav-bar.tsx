@@ -1,4 +1,4 @@
-// import Button from 'antd/lib/button';
+import Button from 'antd/lib/button';
 import Col from 'antd/lib/col';
 import DatePicker from 'antd/lib/date-picker';
 import Layout from 'antd/lib/layout';
@@ -98,15 +98,15 @@ class NavBar extends React.Component<any, NavBarState> {
               <Option value='us'>℉, mph</Option>
             </Select>
           </Col>
-          {/*<Col xs={2} sm={2} md={2} lg={2} xl={1} xxl={1} className='nav-bar-icon'>*/}
-          {/*  <Button*/}
-          {/*    type='primary'*/}
-          {/*    shape='circle'*/}
-          {/*    icon='github'*/}
-          {/*    size='large'*/}
-          {/*    href='https://github.com/LaurenceHo/reactjs-beautiful-weather'*/}
-          {/*  />*/}
-          {/*</Col>*/}
+          <Col xs={2} sm={2} md={2} lg={2} xl={1} xxl={1} className='nav-bar-icon'>
+            <Button
+              type='primary'
+              shape='circle'
+              icon='github'
+              size='large'
+              href='https://github.com/LaurenceHo/reactjs-beautiful-weather'
+            />
+          </Col>
         </Row>
       </Header>
     );
