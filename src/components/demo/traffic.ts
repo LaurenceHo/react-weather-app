@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import * as _ from 'lodash';
+import { find } from 'lodash';
 
 export class TrafficService {
   static overlay() {
@@ -144,10 +144,10 @@ export class TrafficService {
       if (isActive) {
         setTimeout(() => {
           if (nodes) {
-            const sourceNode = _.find(nodes, (node: any) => {
+            const sourceNode = find(nodes, (node: any) => {
               return node.name === hits[i].source;
             });
-            const targetNode = _.find(nodes, (node: any) => {
+            const targetNode = find(nodes, (node: any) => {
               return node.name === hits[i].target;
             });
             this.drawCircle(
