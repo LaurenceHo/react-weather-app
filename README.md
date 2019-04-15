@@ -40,7 +40,9 @@ Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` t
 ```
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"]
+    "plugins": [
+      "@typescript-eslint"
+    ],
 }
 ```
 Because we use Reactjs, we also need to set the `parserOptions` property:
@@ -58,7 +60,10 @@ Append `react` to the `plugins` section:
 ```
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react","@typescript-eslint"]
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
 }
 ```
 Indicate the reactjs version, add `settings` property:
@@ -71,22 +76,27 @@ Indicate the reactjs version, add `settings` property:
   }
 }
 ```
-### prettier integrate with eslint
+### prettier integrate with eslint using `eslint-plugin-prettier`
 Append `prettier` into `plugins` section:
 ```
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["prettier","react","@typescript-eslint"]
+  "plugins": [
+    "prettier",
+    "react",
+    "@typescript-eslint"
+  ]
 }
 ```
 Turn off the eslint formatting rule:
 ```
 {
   "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
     "prettier",
     "prettier/@typescript-eslint",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "prettier/react"
   ]
 }
 ```

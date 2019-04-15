@@ -11,11 +11,11 @@
     "@typescript-eslint"
   ],
   "extends": [
-    "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/react"
   ],
   "settings": {
     "react": {
@@ -28,7 +28,6 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/indent": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "indent": "off"
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

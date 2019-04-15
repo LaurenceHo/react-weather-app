@@ -1,6 +1,7 @@
 import { location } from '../sample/location';
 import { weather_si } from '../sample/weather_si';
 import { weather_us } from '../sample/weather_us';
+import { Forecast } from './components/data-model';
 
 declare var process: {
   env: {
@@ -10,7 +11,7 @@ declare var process: {
 
 const CLOUD_FUNCTION_URL = 'https://us-central1-react-beautiful-weather-app.cloudfunctions.net/';
 
-const checkStatus = (response: any) => {
+const checkStatus = (response: any): any => {
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
@@ -18,28 +19,28 @@ const checkStatus = (response: any) => {
   }
 };
 
-const parseJSON = (response: any) => response.json();
+const parseJSON = (response: any): any => response.json();
 
-export const getGeocode = (latitude: number, longitude: number, address: string) => {
+export const getGeocode = (latitude: number, longitude: number, address: string): Promise<any> => {
   if (process.env.NODE_ENV === 'development') {
-    return new Promise(resolve => setTimeout(resolve, 1000, location));
+    return new Promise((resolve: any) => setTimeout(resolve, 1000, location));
   } else {
     const requestUrl =
       `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` + encodeURIComponent(address);
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)
-      .then(data => data)
-      .catch(error => console.error('request failed', error));
+      .then((data: any) => data)
+      .catch((error: any) => console.error('request failed', error));
   }
 };
 
-export const getWeather = (latitude: number, longitude: number, exclude: string, units: string) => {
+export const getWeather = (latitude: number, longitude: number, exclude: string, units: string): Promise<Forecast> => {
   if (process.env.NODE_ENV === 'development') {
     if (units === 'us') {
-      return new Promise(resolve => setTimeout(resolve, 1000, weather_us));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_us));
     } else {
-      return new Promise(resolve => setTimeout(resolve, 1000, weather_si));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_si));
     }
   } else {
     const requestUrl =
@@ -48,17 +49,23 @@ export const getWeather = (latitude: number, longitude: number, exclude: string,
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)
-      .then(data => data)
-      .catch(error => console.error('request failed', error));
+      .then((data: any) => data)
+      .catch((error: any) => console.error('request failed', error));
   }
 };
 
-export const getForecast = (latitude: number, longitude: number, time: number, exclude: string, units: string) => {
+export const getForecast = (
+  latitude: number,
+  longitude: number,
+  time: number,
+  exclude: string,
+  units: string
+): Promise<Forecast> => {
   if (process.env.NODE_ENV === 'development') {
     if (units === 'us') {
-      return new Promise(resolve => setTimeout(resolve, 1000, weather_us));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_us));
     } else {
-      return new Promise(resolve => setTimeout(resolve, 1000, weather_si));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_si));
     }
   } else {
     const requestUrl =
@@ -67,7 +74,7 @@ export const getForecast = (latitude: number, longitude: number, time: number, e
     return fetch(requestUrl)
       .then(checkStatus)
       .then(parseJSON)
-      .then(data => data)
-      .catch(error => console.error('request failed', error));
+      .then((data: any) => data)
+      .catch((error: any) => console.error('request failed', error));
   }
 };
