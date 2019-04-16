@@ -4,64 +4,64 @@ export const appTraffic: any = {
       name: 'franceskatedixon',
       isShopper: true,
       shortName: 'franceskatedixon',
-      priority: 'DEBUG'
+      priority: 'DEBUG',
     },
     {
       name: 'iShopNW',
       shortName: 'iShopNW',
-      priority: 'DEBUG'
+      priority: 'DEBUG',
     },
     {
       name: 'order-orchestration-service',
       shortName: 'order-orchestration',
-      priority: 'XDOC'
+      priority: 'XDOC',
     },
     {
       name: 'edge',
       shortName: 'edge',
-      priority: 'XDOC'
+      priority: 'XDOC',
     },
     {
       name: 'list-service',
       shortName: 'list',
-      priority: 'REST'
+      priority: 'REST',
     },
     {
       name: 'priceability-service',
       shortName: 'priceability',
-      priority: 'DEBUG'
+      priority: 'DEBUG',
     },
     {
       name: 'comment-service',
       shortName: 'comment',
-      priority: 'REST'
-    }
+      priority: 'REST',
+    },
   ],
   links: [
     {
       source: 0,
-      target: 0
+      target: 0,
     },
     {
       source: 0,
-      target: 1
+      target: 1,
     },
     {
       source: 2,
-      target: 2
+      target: 2,
     },
     {
       source: 1,
-      target: 3
+      target: 3,
     },
     {
       source: 3,
-      target: 4
+      target: 4,
     },
     {
       source: 4,
-      target: 6
-    }
+      target: 6,
+    },
   ],
   hits: [
     {
@@ -70,7 +70,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737977549,
       priority: 'DEBUG',
-      id: 'AWFgO8ZKvm3giLAq6OXmshopper'
+      id: 'AWFgO8ZKvm3giLAq6OXmshopper',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -78,7 +78,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737978549,
       priority: 'DEBUG',
-      id: 'AWFgO8ZKvm3giLAq6OXmishop'
+      id: 'AWFgO8ZKvm3giLAq6OXmishop',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -86,7 +86,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737977551,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXnshopper'
+      id: 'AWFgO8ZKvm3giLAq6OXnshopper',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -94,7 +94,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737978551,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXnishop'
+      id: 'AWFgO8ZKvm3giLAq6OXnishop',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -102,7 +102,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737977551,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXoshopper'
+      id: 'AWFgO8ZKvm3giLAq6OXoshopper',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -110,7 +110,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737978551,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXoishop'
+      id: 'AWFgO8ZKvm3giLAq6OXoishop',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -118,7 +118,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737977642,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXpshopper'
+      id: 'AWFgO8ZKvm3giLAq6OXpshopper',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -126,7 +126,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737978642,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXpishop'
+      id: 'AWFgO8ZKvm3giLAq6OXpishop',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -134,7 +134,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737977642,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXqshopper'
+      id: 'AWFgO8ZKvm3giLAq6OXqshopper',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -142,7 +142,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737978642,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXqishop'
+      id: 'AWFgO8ZKvm3giLAq6OXqishop',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -152,7 +152,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'REST',
       id: 'AWFgO8ZKvm3giLAq6OXsshopper',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -162,7 +162,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'REST',
       id: 'AWFgO8ZKvm3giLAq6OXsishop',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -172,7 +172,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8ZKvm3giLAq6OXrshopper',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -182,7 +182,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8ZKvm3giLAq6OXrishop',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -192,7 +192,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO8ZKvm3giLAq6OXtshopper',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -202,7 +202,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO8ZKvm3giLAq6OXtishop',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -210,7 +210,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737978968,
       priority: 'DEBUG',
-      id: 'AWFgO8o1wIVliclHeYYyshopper'
+      id: 'AWFgO8o1wIVliclHeYYyshopper',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -218,7 +218,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737979968,
       priority: 'DEBUG',
-      id: 'AWFgO8o1wIVliclHeYYyishop'
+      id: 'AWFgO8o1wIVliclHeYYyishop',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -226,7 +226,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737978969,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYYzshopper'
+      id: 'AWFgO8o1wIVliclHeYYzshopper',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -234,7 +234,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737979969,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYYzishop'
+      id: 'AWFgO8o1wIVliclHeYYzishop',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -242,7 +242,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737978969,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYY0shopper'
+      id: 'AWFgO8o1wIVliclHeYY0shopper',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -250,7 +250,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737979969,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYY0ishop'
+      id: 'AWFgO8o1wIVliclHeYY0ishop',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -258,7 +258,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737979038,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYY1shopper'
+      id: 'AWFgO8o1wIVliclHeYY1shopper',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -266,7 +266,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737980038,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYY1ishop'
+      id: 'AWFgO8o1wIVliclHeYY1ishop',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -274,7 +274,7 @@ export const appTraffic: any = {
       target: 'franceskatedixon',
       timestamp: 1517737979039,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYY2shopper'
+      id: 'AWFgO8o1wIVliclHeYY2shopper',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -282,7 +282,7 @@ export const appTraffic: any = {
       target: 'iShopNW',
       timestamp: 1517737980039,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYY2ishop'
+      id: 'AWFgO8o1wIVliclHeYY2ishop',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -292,7 +292,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8o1wIVliclHeYY3shopper',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -302,7 +302,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8o1wIVliclHeYY3ishop',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -312,7 +312,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'REST',
       id: 'AWFgO8o1wIVliclHeYY4shopper',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -322,7 +322,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'REST',
       id: 'AWFgO8o1wIVliclHeYY4ishop',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -332,7 +332,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO8o1wIVliclHeYY5shopper',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -342,7 +342,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO8o1wIVliclHeYY5ishop',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: 'e6c70599-7d52-4cee-83c0-59c539fac9ea',
@@ -352,7 +352,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO7sLvm3giLAq6OXh',
-      processingTimeMs: 4
+      processingTimeMs: 4,
     },
     {
       requestId: 'e6c70599-7d52-4cee-83c0-59c539fac9ea',
@@ -361,7 +361,7 @@ export const appTraffic: any = {
       timestamp: 1517737976601,
       statusCode: 200,
       priority: 'REST',
-      id: 'AWFgO7sLvm3giLAq6OXg'
+      id: 'AWFgO7sLvm3giLAq6OXg',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -369,7 +369,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979548,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXk'
+      id: 'AWFgO8ZKvm3giLAq6OXk',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -377,7 +377,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979548,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXl'
+      id: 'AWFgO8ZKvm3giLAq6OXl',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -385,7 +385,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979549,
       priority: 'DEBUG',
-      id: 'AWFgO8ZKvm3giLAq6OXm'
+      id: 'AWFgO8ZKvm3giLAq6OXm',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -393,7 +393,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979551,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXn'
+      id: 'AWFgO8ZKvm3giLAq6OXn',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -401,7 +401,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979551,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXo'
+      id: 'AWFgO8ZKvm3giLAq6OXo',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -410,7 +410,7 @@ export const appTraffic: any = {
       timestamp: 1517737979556,
       statusCode: 200,
       priority: 'REST',
-      id: 'AWFgO8df1NeK2W5Snc2E'
+      id: 'AWFgO8df1NeK2W5Snc2E',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -419,7 +419,7 @@ export const appTraffic: any = {
       timestamp: 1517737979557,
       statusCode: 200,
       priority: 'XDOC',
-      id: 'AWFgO8df1NeK2W5Snc2F'
+      id: 'AWFgO8df1NeK2W5Snc2F',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -428,7 +428,7 @@ export const appTraffic: any = {
       timestamp: 1517737979562,
       statusCode: 200,
       priority: 'XDOC',
-      id: 'AWFgO8df1NeK2W5Snc2G'
+      id: 'AWFgO8df1NeK2W5Snc2G',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -437,7 +437,7 @@ export const appTraffic: any = {
       timestamp: 1517737979563,
       statusCode: 200,
       priority: 'REST',
-      id: 'AWFgO8df1NeK2W5Snc2H'
+      id: 'AWFgO8df1NeK2W5Snc2H',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -447,7 +447,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8df1NeK2W5Snc2I',
-      processingTimeMs: 7
+      processingTimeMs: 7,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -455,7 +455,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979642,
       priority: 'REST',
-      id: 'AWFgO8ZKvm3giLAq6OXp'
+      id: 'AWFgO8ZKvm3giLAq6OXp',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -463,7 +463,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737979642,
       priority: 'XDOC',
-      id: 'AWFgO8ZKvm3giLAq6OXq'
+      id: 'AWFgO8ZKvm3giLAq6OXq',
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -473,7 +473,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'REST',
       id: 'AWFgO8ZKvm3giLAq6OXs',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -483,7 +483,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8ZKvm3giLAq6OXr',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '8a606145-bc39-4565-9f93-2eb1d6054454',
@@ -493,7 +493,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO8ZKvm3giLAq6OXt',
-      processingTimeMs: 97
+      processingTimeMs: 97,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -501,7 +501,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737980966,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYYw'
+      id: 'AWFgO8o1wIVliclHeYYw',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -509,7 +509,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737980967,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYYx'
+      id: 'AWFgO8o1wIVliclHeYYx',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -517,7 +517,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737980968,
       priority: 'DEBUG',
-      id: 'AWFgO8o1wIVliclHeYYy'
+      id: 'AWFgO8o1wIVliclHeYYy',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -525,7 +525,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737980969,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYYz'
+      id: 'AWFgO8o1wIVliclHeYYz',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -533,7 +533,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737980969,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYY0'
+      id: 'AWFgO8o1wIVliclHeYY0',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -542,7 +542,7 @@ export const appTraffic: any = {
       timestamp: 1517737981031,
       statusCode: 200,
       priority: 'REST',
-      id: 'AWFgO8o2CZt7Jbc4bE9e'
+      id: 'AWFgO8o2CZt7Jbc4bE9e',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -551,7 +551,7 @@ export const appTraffic: any = {
       timestamp: 1517737981032,
       statusCode: 200,
       priority: 'REST',
-      id: 'AWFgO8o2CZt7Jbc4bE9h'
+      id: 'AWFgO8o2CZt7Jbc4bE9h',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -561,7 +561,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8o2CZt7Jbc4bE9i',
-      processingTimeMs: 1
+      processingTimeMs: 1,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -570,7 +570,7 @@ export const appTraffic: any = {
       timestamp: 1517737981032,
       statusCode: 200,
       priority: 'XDOC',
-      id: 'AWFgO8o2CZt7Jbc4bE9f'
+      id: 'AWFgO8o2CZt7Jbc4bE9f',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -579,7 +579,7 @@ export const appTraffic: any = {
       timestamp: 1517737981032,
       statusCode: 200,
       priority: 'XDOC',
-      id: 'AWFgO8o2CZt7Jbc4bE9g'
+      id: 'AWFgO8o2CZt7Jbc4bE9g',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -587,7 +587,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737981038,
       priority: 'REST',
-      id: 'AWFgO8o1wIVliclHeYY1'
+      id: 'AWFgO8o1wIVliclHeYY1',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -595,7 +595,7 @@ export const appTraffic: any = {
       target: 'edge',
       timestamp: 1517737981039,
       priority: 'XDOC',
-      id: 'AWFgO8o1wIVliclHeYY2'
+      id: 'AWFgO8o1wIVliclHeYY2',
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -605,7 +605,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'DEBUG',
       id: 'AWFgO8o1wIVliclHeYY3',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -615,7 +615,7 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'REST',
       id: 'AWFgO8o1wIVliclHeYY4',
-      processingTimeMs: 75
+      processingTimeMs: 75,
     },
     {
       requestId: '7652fdf0-d46f-4d5d-99ad-0dcfe1e358a3',
@@ -625,8 +625,8 @@ export const appTraffic: any = {
       statusCode: 200,
       priority: 'XDOC',
       id: 'AWFgO8o1wIVliclHeYY5',
-      processingTimeMs: 75
-    }
+      processingTimeMs: 75,
+    },
   ],
-  pipeline: false
+  pipeline: false,
 };

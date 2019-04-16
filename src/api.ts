@@ -1,6 +1,6 @@
 import { location } from '../sample/location';
-import { weather_si } from '../sample/weather_si';
-import { weather_us } from '../sample/weather_us';
+import { weatherSi } from '../sample/weather-si';
+import { weatherUs } from '../sample/weather-us';
 import { Forecast } from './components/data-model';
 
 declare var process: {
@@ -38,9 +38,9 @@ export const getGeocode = (latitude: number, longitude: number, address: string)
 export const getWeather = (latitude: number, longitude: number, exclude: string, units: string): Promise<Forecast> => {
   if (process.env.NODE_ENV === 'development') {
     if (units === 'us') {
-      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_us));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weatherUs));
     } else {
-      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_si));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weatherSi));
     }
   } else {
     const requestUrl =
@@ -63,9 +63,9 @@ export const getForecast = (
 ): Promise<Forecast> => {
   if (process.env.NODE_ENV === 'development') {
     if (units === 'us') {
-      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_us));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weatherUs));
     } else {
-      return new Promise((resolve: any) => setTimeout(resolve, 1000, weather_si));
+      return new Promise((resolve: any) => setTimeout(resolve, 1000, weatherSi));
     }
   } else {
     const requestUrl =

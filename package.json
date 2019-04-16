@@ -10,7 +10,7 @@
     "firebase-init": "firebase login && firebase init",
     "firebase-add": "firebase use --add",
     "deploy-functions": "firebase deploy --only functions",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix"
+    "lint": "eslint --ext .ts,.tsx src sample --fix"
   },
   "author": "Laurence Ho",
   "license": "MIT",
