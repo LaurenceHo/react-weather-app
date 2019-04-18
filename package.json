@@ -29,8 +29,8 @@
   },
   "lint-staged": {
     "linters": {
-      "src/**/*.{ts,tsx}": [
-        "npm run lint",
+      "*.{ts,tsx}": [
+        "eslint --fix",
         "git add"
       ]
     },
