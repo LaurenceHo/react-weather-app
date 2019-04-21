@@ -1,18 +1,8 @@
-import {
-  drag,
-  event,
-  forceCenter,
-  forceCollide,
-  forceLink,
-  forceManyBody,
-  forceSimulation,
-  forceX,
-  forceY,
-  rgb,
-  scaleOrdinal,
-  schemeCategory10,
-  select,
-} from 'd3';
+import { event, rgb, schemeCategory10 } from 'd3';
+import { drag } from 'd3-drag';
+import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY } from 'd3-force';
+import { scaleOrdinal } from 'd3-scale';
+import { select } from 'd3-selection';
 import { find } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';

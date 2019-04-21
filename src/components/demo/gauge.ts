@@ -1,4 +1,9 @@
-import * as d3 from 'd3';
+import { curveLinear, easeElastic, rgb } from 'd3';
+import { range } from 'd3-array';
+import { format } from 'd3-format';
+import { interpolateHsl } from 'd3-interpolate';
+import { scaleLinear } from 'd3-scale';
+import { arc, line } from 'd3-shape';
 
 export interface Config {
   [key: string]: any;
@@ -25,10 +30,10 @@ export default class Gauge {
     transitionMs: 750,
 
     majorTicks: 5,
-    labelFormat: d3.format('d'),
+    labelFormat: format('d'),
     labelInset: 10,
 
-    arcColorFn: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a')),
+    arcColorFn: interpolateHsl(rgb('#e8e2ca'), rgb('#3e6c0a')),
   };
 
   configuration: any = null;
@@ -64,18 +69,16 @@ export default class Gauge {
     this.pointerHeadLength = Math.round(this.r * this.config.pointerHeadLengthPercent);
 
     // a linear scale that maps domain values to a percent from 0..1
-    this.scale = d3
-      .scaleLinear()
+    this.scale = scaleLinear()
       .range([0, 1])
       .domain([this.config.minValue, this.config.maxValue]);
 
     this.ticks = this.scale.ticks(this.config.majorTicks);
-    this.tickData = d3.range(this.config.majorTicks).map(() => {
+    this.tickData = range(this.config.majorTicks).map(() => {
       return 1 / this.config.majorTicks;
     });
 
-    this.arc = d3
-      .arc()
+    this.arc = arc()
       .innerRadius(this.r - this.config.ringWidth - this.config.ringInset)
       .outerRadius(this.r - this.config.ringInset)
       .startAngle((d: any, i: number) => {
@@ -146,7 +149,7 @@ export default class Gauge {
       [0, this.config.pointerTailLength],
       [this.config.pointerWidth / 2, 0],
     ];
-    const pointerLine = d3.line().curve(d3.curveLinear);
+    const pointerLine = line().curve(curveLinear);
     const pg = gauge
       .append('g')
       .data([lineData])
@@ -170,7 +173,7 @@ export default class Gauge {
     this.pointer
       .transition()
       .duration(this.config.transitionMs)
-      .ease(d3.easeElastic)
+      .ease(easeElastic)
       .attr('transform', 'rotate(' + newAngle + ')');
   }
 }

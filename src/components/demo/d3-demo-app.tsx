@@ -1,4 +1,7 @@
-import { drag, event, forceCenter, forceLink, forceManyBody, forceSimulation, forceX, forceY, select } from 'd3';
+import { event } from 'd3';
+import { drag } from 'd3-drag';
+import { forceCenter, forceLink, forceManyBody, forceSimulation, forceX, forceY } from 'd3-force';
+import { select } from 'd3-selection';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { appTraffic } from '../../../sample/app-traffic';
