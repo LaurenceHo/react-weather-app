@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { drag, event, forceCenter, forceLink, forceManyBody, forceSimulation, forceX, forceY, select } from 'd3';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { appTraffic } from '../../../sample/app-traffic';
@@ -32,14 +32,12 @@ export class D3DemoApp extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     // Create force simulation
-    this.simulation = d3
-      .forceSimulation()
-      .force('x', d3.forceX(this.width / 2).strength(0.185))
-      .force('y', d3.forceY(this.height / 2).strength(0.185))
+    this.simulation = forceSimulation()
+      .force('x', forceX(this.width / 2).strength(0.185))
+      .force('y', forceY(this.height / 2).strength(0.185))
       .force(
         'link',
-        d3
-          .forceLink()
+        forceLink()
           .id((d: any) => {
             return d.id;
           })
@@ -58,7 +56,7 @@ export class D3DemoApp extends React.Component<any, any> {
       )
       .force(
         'charge',
-        d3.forceManyBody().strength((d: any) => {
+        forceManyBody().strength((d: any) => {
           const numlinks = this.links.filter((link: any) => {
             return (
               link.source.name === d.name ||
@@ -70,11 +68,11 @@ export class D3DemoApp extends React.Component<any, any> {
           return numlinks.length * -50 - 1000;
         })
       )
-      .force('center', d3.forceCenter(this.width / 2, this.height / 2));
+      .force('center', forceCenter(this.width / 2, this.height / 2));
   }
 
   componentDidMount() {
-    this.svg = d3.select('svg.svg-content-responsive');
+    this.svg = select('svg.svg-content-responsive');
     this.g = this.svg.append('g');
     this.link = this.g.append('g').selectAll('.link');
     this.node = this.g.append('g').selectAll('.node');
@@ -116,24 +114,24 @@ export class D3DemoApp extends React.Component<any, any> {
     };
 
     const dragstarted = () => {
-      if (!d3.event.active) {
+      if (!event.active) {
         this.simulation.alphaTarget(0.3).restart();
       }
-      d3.event.subject.fx = d3.event.subject.x;
-      d3.event.subject.fy = d3.event.subject.y;
+      event.subject.fx = event.subject.x;
+      event.subject.fy = event.subject.y;
     };
 
     const dragged = () => {
-      d3.event.subject.fx = d3.event.x;
-      d3.event.subject.fy = d3.event.y;
+      event.subject.fx = event.x;
+      event.subject.fy = event.y;
     };
 
     const dragended = () => {
-      if (!d3.event.active) {
+      if (!event.active) {
         this.simulation.alphaTarget(0);
       }
-      d3.event.subject.fx = null;
-      d3.event.subject.fy = null;
+      event.subject.fx = null;
+      event.subject.fy = null;
     };
 
     const drawGraph = () => {
@@ -154,8 +152,7 @@ export class D3DemoApp extends React.Component<any, any> {
         })
         .attr('r', this.width / 200)
         .call(
-          d3
-            .drag()
+          drag()
             .on('start', dragstarted)
             .on('drag', dragged)
             .on('end', dragended)
