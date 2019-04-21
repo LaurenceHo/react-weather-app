@@ -1,7 +1,7 @@
-# A weather web application using React, Redux, Typescript, Webpack4, Ant Design, D3v5, ECharts and firebase.
+# A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, D3v5, ECharts and firebase.
 
 ## Introduction
-This project demonstrates how to use React, Redux, Typescript, Webpack4, Ant Design, D3v5 and ECharts. 
+This project demonstrates how to use React, Redux, TypeScript, Webpack4, Ant Design, D3v5 and ECharts. 
 It is also including two kinds of D3 force simulation demonstrations along with gauge, which 
 is based on my personal interest and previous project. 
 
@@ -16,7 +16,7 @@ function serverless platform with React frontend app.
 ## Getting started
 * Clone the repo: `git clone https://github.com/LaurenceHo/reactjs-beautiful-weather.git`
 * Install npm package: `npm install`
-* Put your google & dark sky API key into `./functions/apiKey.js`
+* Put your google & [dark sky API key](https://darksky.net/dev) into `./functions/apiKey.js`
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 
@@ -31,7 +31,7 @@ Please visit: https://cloud.google.com/functions/ for more detail
 5. If you want to deploy the whole project, run `npm run firebase-deploy`
 6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
-## Webpack, Reactjs and Typescript
+## Webpack, Reactjs and TypeScript
 Although there is `create-react-app` toolkit to create react project very easily and quickly, I personally love to create 
 the react project by using webpack from the beginning, and configure the project a bit by bit manually. It helps me how these
 things work together.
@@ -39,7 +39,7 @@ things work together.
 When using webpack, you need a bunch of loaders to parse the specific file types. For example, `ts-loader` for Typescript,
 `css-loader` for css files, `file-loader` for pictures...etc.
 
-Before starting using webpack with typescript, you at least need to install the follows plugin:
+Before starting using webpack with TypeScript, you at least need to install the follows plugin:
 `npm i -D css-loader file-loader html-webpack-plugin source-map-loader style-loader ts-loader typescript url-loader webpack webpack-cli`
 
 In the [webpack.common.js](config/webpack.common.js) file, setup the entry point at first:
@@ -67,7 +67,6 @@ Then setup the loaders:
         test: /\.tsx?$/,
         loader: 'ts-loader'
       },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {
         enforce: 'pre',
         test: /\.js$/,
@@ -107,7 +106,7 @@ Then setup the plugins:
     ])
   ]
 ```
-When you do frontend development, you want the browser reload the content automatically when you make change. To achieve this, you need `HotModuleReplacementPlugin`
+When you do frontend development, you want the browser reloading the content automatically when you make change. To achieve this, you need `HotModuleReplacementPlugin`
 and `webpack-dev-server`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
 In the [webpack.dev.js](config/webpack.dev.js), since you want to merge the common setting, you need webpack-merge library, and use `HotModuleReplacementPlugin`
 for browser reloading:
@@ -194,7 +193,7 @@ module.exports = merge(common, {
 });
 ```
 
-## Typescript, eslint and prettier
+## TypeScript, eslint and prettier
 Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
 Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react prettier`
@@ -277,6 +276,39 @@ Setup the [.prettierrc](.prettierrc)
   "useTabs": false
 }
 ```
+
+## Ant design
+### Usage
+Ant design provides abundant UI components, which means the library size is quite large. I usually only import the 
+component I needed rather than import everything.
+In the `index.tsx`:
+```
+import 'antd/lib/col/style/css';
+import 'antd/lib/row/style/css';
+```
+In the `current-weather.tsx`:
+```
+import Col from 'antd/lib/col';
+import Row from 'antd/lib/row';
+
+export class CurrentWeather extends React.Component<any, any> {
+  render() {
+    const { weather, location, timezone, filter } = this.props;
+
+    return (
+      <div>
+        <Row type='flex' justify='center' className='current-weather-top'>
+          <Col xs={4} sm={4} md={4} lg={3} xl={3}>
+          ......
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+}          
+```
+### TypeScript
+* Don't use @types/antd, as antd provides a built-in ts definition already.
 
 ## Live demo
 https://react-beautiful-weather-app.firebaseapp.com/

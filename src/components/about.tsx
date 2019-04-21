@@ -26,8 +26,8 @@ export const About = () => (
           <a href='https://webpack.js.org/concepts/'>Webpack</a>- Webpack is a module bundler.
         </li>
         <li>
-          <a href='http://beta.ant.design/'>Ant Design of React</a>- A design system with values of Nature and
-          Determinacy for better user experience of enterprise applications.
+          <a href='https://ant.design/docs/react/introduce'>Ant Design of React</a>- A design system with values of
+          Nature and Determinacy for better user experience of enterprise applications.
         </li>
         <li>
           <a href='https://d3js.org/'>D3</a>- D3.js is a JavaScript library for manipulating documents based on data.
