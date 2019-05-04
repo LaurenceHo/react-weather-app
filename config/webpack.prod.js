@@ -1,4 +1,5 @@
-const CompressionPlugin = require('compression-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const merge = require('webpack-merge');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
@@ -10,16 +11,26 @@ module.exports = merge(common, {
   plugins: [
     new DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
+        NODE_ENV: JSON.stringify('production'),
+      },
     }),
-    new CompressionPlugin({
-      filename: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
-      minRatio: 0
-    })
+    /*
+     * Plugin: MiniCssExtractPlugin
+     * Description: This plugin extracts CSS into separate files.
+     * It creates a CSS file per JS file which contains CSS.
+     * It supports On-Demand-Loading of CSS and SourceMaps.
+     * See: https://github.com/webpack-contrib/mini-css-extract-plugin
+     */
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    }),
+    /*
+     * Plugin: CleanWebpackPlugin
+     * Description: A webpack plugin to remove/clean your build folder(s).
+     * See: https://github.com/johnagan/clean-webpack-plugin
+     */
+    new CleanWebpackPlugin(),
   ],
   optimization: {
     splitChunks: {
@@ -27,20 +38,32 @@ module.exports = merge(common, {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
-        }
-      }
+          chunks: 'all',
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
     },
     minimize: true,
     minimizer: [
+      /*
+       * Plugin: UglifyJS Webpack Plugin
+       * Description: This plugin uses uglify-js to minify your JavaScript.
+       * See: https://github.com/webpack-contrib/uglifyjs-webpack-plugin
+       */
       new UglifyJsPlugin({
         uglifyOptions: {
-          compress: {
-            warnings: false
+          output: {
+            comments: false,
           },
-          sourceMap: true
-        }
-      })
-    ]
-  }
+          sourceMap: true,
+          parallel: true,
+        },
+      }),
+    ],
+  },
 });

@@ -2,11 +2,11 @@
 
 ## Introduction
 This project demonstrates how to use React, Redux, TypeScript, Webpack4, Ant Design, D3v5 and ECharts. 
-It is also including two kinds of D3 force simulation demonstrations along with gauge, which 
-is based on my personal interest and previous project. 
+It is also including two kinds of D3 force simulation demonstrations along with gauge, which is based on 
+my personal interest and previous project. 
 
-Furthermore, this project also demonstrates how to deploy the web app to Google firebase, and use the cloud 
-function serverless platform with React frontend app.
+Furthermore, this project also demonstrates how to deploy the web app to Google firebase, and use Google 
+cloud function serverless platform with React frontend app.
 
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
@@ -32,35 +32,34 @@ Please visit: https://cloud.google.com/functions/ for more detail
 6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
 ## Webpack, Reactjs and TypeScript
-Although there is `create-react-app` toolkit to create react project very easily and quickly, I personally love to create 
-the react project by using webpack from the beginning, and configure the project a bit by bit manually. It helps me how these
-things work together.
+Although there is `create-react-app` toolkit to create react project very easily and quickly, I personally love creating 
+the react project by using webpack from the beginning. Also configure the project a bit by bit manually. It helps me to 
+understand how these things work together.
 
-When using webpack, you need a bunch of loaders to parse the specific file types. For example, `ts-loader` for Typescript,
+When using webpack, we need a bunch of loaders to parse the specific file types. For example, `ts-loader` for Typescript,
 `css-loader` for css files, `file-loader` for pictures...etc.
 
-Before starting using webpack with TypeScript, you at least need to install the follows plugin:
+Before starting using webpack with TypeScript, we at least need to install the following plugins:
 `npm i -D css-loader file-loader html-webpack-plugin source-map-loader style-loader ts-loader typescript url-loader webpack webpack-cli`
 
 In the [webpack.common.js](config/webpack.common.js) file, setup the entry point at first:
 ```
 module.exports = {
-  entry: [ './src/index.tsx'],
+  entry: ['./src/index.tsx', 'whatwg-fetch'],
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
   resolve: {
-    modules: [
-      path.join(__dirname, '../dist'),
-      'node_modules'
-    ],
-    extensions: [ '.ts', '.tsx', '.js', '.json' ]
-  }
+    modules: [path.join(__dirname, '../dist'), 'node_modules'],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+  },
 }
 ```
+
 Then setup the loaders:
 ```
+{
   module: {
     rules: [
       {
@@ -91,9 +90,28 @@ Then setup the loaders:
       }
     ]
   }
+}
 ```
+
+If we want extract CSS into separate files, you we install `mini-css-extract-plugin`, and replace style loader:
+```
+  {
+    test: /\.css$/,
+    use: [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          hmr: process.env.NODE_ENV === 'development',
+        },
+      },
+      'css-loader',
+    ],
+  },
+```
+
 Then setup the plugins:
 ```
+{
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html'
@@ -105,13 +123,16 @@ Then setup the plugins:
       }
     ])
   ]
+}
 ```
-When you do frontend development, you want the browser reloading the content automatically when you make change. To achieve this, you need `HotModuleReplacementPlugin`
-and `webpack-dev-server`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
-In the [webpack.dev.js](config/webpack.dev.js), since you want to merge the common setting, you need webpack-merge library, and use `HotModuleReplacementPlugin`
-for browser reloading:
+
+When we do frontend development, we want the browser reloading the content automatically when we make changes. To achieve this, 
+we need `HotModuleReplacementPlugin`and `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
+In the [webpack.dev.js](config/webpack.dev.js), since we want to merge the common setting, we need `webpack-merge` library along 
+with `HotModuleReplacementPlugin` for browser reloading:
 ```
 const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
 const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
@@ -123,29 +144,37 @@ module.exports = merge(common, {
     contentBase: '../dist',
     historyApiFallback: true,
     hot: true,
-    inline: true
+    inline: true,
   },
   plugins: [
     new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('development')
-      }
-    })
-  ]
+        NODE_ENV: JSON.stringify('development'),
+      },
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ],
 });
 ```
-And put the script in the package.json for starting the webpack dev server:
+
+And place `start` script in the package.json for starting the webpack dev server:
 ```
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack.dev.js --progress --profile --watch --open"
   }
 ```
-Finally, let's look into bundle code for production. Since we want to reduce the bundle file size for production. We need to install some plugins for helping us:
-`npm i -D compression-webpack-plugin uglifyjs-webpack-plugin`
-In the [webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
+
+Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production. 
+We need to install some plugins for helping us: `npm i -D uglifyjs-webpack-plugin`
+We also need `CleanWebpackPlugin` to clean the build folder before building code. We also need `MiniCssExtractPlugin` for extracting
+CSS files. Therefore, in the [webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
 ```
-const CompressionPlugin = require('compression-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const merge = require('webpack-merge');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
@@ -157,16 +186,14 @@ module.exports = merge(common, {
   plugins: [
     new DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
+        NODE_ENV: JSON.stringify('production'),
+      },
     }),
-    new CompressionPlugin({
-      filename: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
-      minRatio: 0
-    })
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    }),
+    new CleanWebpackPlugin(),
   ],
   optimization: {
     splitChunks: {
@@ -174,22 +201,29 @@ module.exports = merge(common, {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
-        }
-      }
+          chunks: 'all',
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
     },
     minimize: true,
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
-          compress: {
-            warnings: false
+          output: {
+            comments: false,
           },
-          sourceMap: true
-        }
-      })
-    ]
-  }
+          sourceMap: true,
+          parallel: true,
+        },
+      }),
+    ],
+  },
 });
 ```
 
@@ -197,6 +231,7 @@ module.exports = merge(common, {
 Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
 Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react prettier`
+
 ### TypeScript ESLint usage
 Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` to the `plugins` section of [.eslintrc.json](.eslintrc.json) configuration file:
 ```
@@ -207,6 +242,7 @@ Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` t
     ],
 }
 ```
+
 Because we use Reactjs, we also need to set the `parserOptions` property:
 ```
 {
@@ -217,6 +253,7 @@ Because we use Reactjs, we also need to set the `parserOptions` property:
   }
 }  
 ```
+
 ### eslint-plugin-react usage
 Append `react` to the `plugins` section:
 ```
@@ -228,6 +265,7 @@ Append `react` to the `plugins` section:
   ],
 }
 ```
+
 Indicate the reactjs version, add `settings` property:
 ```
 {
@@ -238,6 +276,7 @@ Indicate the reactjs version, add `settings` property:
   }
 }
 ```
+
 ### prettier integrate with eslint using `eslint-plugin-prettier`
 Append `prettier` into `plugins` section:
 ```
@@ -250,6 +289,7 @@ Append `prettier` into `plugins` section:
   ]
 }
 ```
+
 Turn off the eslint formatting rule:
 ```
 {
@@ -265,6 +305,7 @@ Turn off the eslint formatting rule:
   }  
 }
 ```
+
 Setup the [.prettierrc](.prettierrc)
 ```
 {
@@ -307,6 +348,7 @@ export class CurrentWeather extends React.Component<any, any> {
   }
 }          
 ```
+
 ### TypeScript
 * Don't use @types/antd, as antd provides a built-in ts definition already.
 
