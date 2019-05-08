@@ -15,7 +15,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 import 'whatwg-fetch';
-import { App } from './components/app';
+import { App } from './pages/app';
 import './css/index.css';
 import { reducers } from './redux/reducers';
 

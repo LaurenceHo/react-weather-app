@@ -1,7 +1,7 @@
 import * as React from 'react';
-import CurrentWeather from './current-weather';
-import DailyForecast from './daily-forecast';
-import HourlyForecast from './hourly-forecast';
+import CurrentWeather from '../components/current-weather';
+import DailyForecast from '../components/daily-forecast';
+import HourlyForecast from '../components/hourly-forecast';
 
 export class WeatherForecast extends React.Component<any, any> {
   render() {

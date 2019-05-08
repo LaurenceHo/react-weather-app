@@ -20,6 +20,13 @@ module.exports = merge(common, {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
+    /*
+     * Plugin: MiniCssExtractPlugin
+     * Description: This plugin extracts CSS into separate files.
+     * It creates a CSS file per JS file which contains CSS.
+     * It supports On-Demand-Loading of CSS and SourceMaps.
+     * See: https://github.com/webpack-contrib/mini-css-extract-plugin
+     */
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',

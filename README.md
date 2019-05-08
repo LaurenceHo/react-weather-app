@@ -1,7 +1,8 @@
 # A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, D3v5, ECharts and firebase.
 
 ## Introduction
-This project demonstrates how to use React, Redux, TypeScript, Webpack4, Ant Design, D3v5 and ECharts. 
+This project demonstrates how to use React, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
+D3v5 and [ECharts](https://echarts.apache.org/index.html). 
 It is also including two kinds of D3 force simulation demonstrations along with gauge, which is based on 
 my personal interest and previous project. 
 
@@ -169,20 +170,19 @@ And place `start` script in the package.json for starting the webpack dev server
 ```
 
 Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production. 
-We need to install some plugins for helping us: `npm i -D uglifyjs-webpack-plugin`
-We also need `CleanWebpackPlugin` to clean the build folder before building code. We also need `MiniCssExtractPlugin` for extracting
-CSS files. Therefore, in the [webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
+We need to install some plugins for helping us: `npm i -D terser-webpack-plugin`. We also need `CleanWebpackPlugin` to 
+clean the build folder before building code as well as `MiniCssExtractPlugin` for extracting CSS files. Therefore, in the 
+[webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
 ```
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
   plugins: [
     new DefinePlugin({
       'process.env': {
@@ -213,13 +213,13 @@ module.exports = merge(common, {
     },
     minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        terserOptions: {
           output: {
             comments: false,
           },
-          sourceMap: true,
-          parallel: true,
         },
       }),
     ],
@@ -353,7 +353,7 @@ export class CurrentWeather extends React.Component<any, any> {
 * Don't use @types/antd, as antd provides a built-in ts definition already.
 
 ## Live demo
-https://react-beautiful-weather-app.firebaseapp.com/
+[https://react-beautiful-weather-app.firebaseapp.com/](https://react-beautiful-weather-app.firebaseapp.com/)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

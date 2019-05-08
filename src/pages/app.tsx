@@ -2,9 +2,9 @@ import Layout from 'antd/lib/layout';
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { About } from './about';
-import { D3DemoApp } from './demo/d3-demo-app';
-import { D3DemoNetwork } from './demo/d3-demo-network';
-import NavBar from './nav-bar';
+import { D3DemoApp } from '../components/d3-demo/d3-demo-app';
+import { D3DemoNetwork } from '../components/d3-demo/d3-demo-network';
+import NavBar from '../components/nav-bar';
 import Weather from './weather-main';
 
 const { Footer, Content } = Layout;

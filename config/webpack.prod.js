@@ -1,26 +1,18 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
   plugins: [
     new DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    /*
-     * Plugin: MiniCssExtractPlugin
-     * Description: This plugin extracts CSS into separate files.
-     * It creates a CSS file per JS file which contains CSS.
-     * It supports On-Demand-Loading of CSS and SourceMaps.
-     * See: https://github.com/webpack-contrib/mini-css-extract-plugin
-     */
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
@@ -51,17 +43,17 @@ module.exports = merge(common, {
     minimize: true,
     minimizer: [
       /*
-       * Plugin: UglifyJS Webpack Plugin
-       * Description: This plugin uses uglify-js to minify your JavaScript.
-       * See: https://github.com/webpack-contrib/uglifyjs-webpack-plugin
+       * Plugin: TerserWebpackPlugin
+       * Description: This plugin uses terser to minify your JavaScript.
+       * See: https://webpack.js.org/plugins/terser-webpack-plugin
        */
-      new UglifyJsPlugin({
-        uglifyOptions: {
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        terserOptions: {
           output: {
             comments: false,
           },
-          sourceMap: true,
-          parallel: true,
         },
       }),
     ],

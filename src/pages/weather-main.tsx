@@ -19,7 +19,7 @@ import {
   setTimezone,
   setWeather,
 } from '../redux/actions';
-import { Forecast, Timezone, Weather } from './data-model';
+import { Forecast, Timezone, Weather } from '../components/data-model';
 import { WeatherForecast } from './weather-forecast';
 
 const EXCLUDE = 'flags,minutely';
