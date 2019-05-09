@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
 body {
     font-size: 1rem;
@@ -49,13 +49,13 @@ body {
 .current-weather-top {
     background: #FAFAFA;
     font-size: 0.8rem;
-    padding: 0.5rem 2rem;
+    padding: 3.5rem 2rem 0.5rem 2rem;
 }
 
 .current-weather-location {
     padding: 1rem 2rem 0.5rem 1rem;
     font-size: 2rem;
-    font-weight: bolder;
+    font-weight: 700;
 }
 
 .forecast-summary {
