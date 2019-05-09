@@ -8,14 +8,15 @@ import 'antd/lib/menu/style/css';
 import 'antd/lib/row/style/css';
 import 'antd/lib/select/style/css';
 import 'antd/lib/spin/style/css';
+import 'antd/lib/table/style/css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 import 'whatwg-fetch';
-import { App } from './pages/app';
 import './css/index.css';
+import { App } from './pages/app';
 import { reducers } from './redux/reducers';
 
 const store: any = createStore(reducers, devToolsEnhancer({}));

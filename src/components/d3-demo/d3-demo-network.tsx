@@ -30,7 +30,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
   trafficService: any = {};
   requests: any[] = [];
   isActive: boolean = true;
-  intervalId: NodeJS.Timer;
+  intervalId: number = 0;
   c10 = scaleOrdinal(schemeCategory10);
   powerGauge: Gauge = null;
 
