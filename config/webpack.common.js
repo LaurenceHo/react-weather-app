@@ -2,6 +2,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 
 module.exports = {
   entry: ['./src/index.tsx', 'whatwg-fetch'],
@@ -53,6 +54,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new IgnorePlugin(/^\.\/locale$/, /moment$/),
     /*
      * Plugin: HtmlWebpackPlugin
      * Description: Simplifies creation of HTML files to serve your webpack bundles.

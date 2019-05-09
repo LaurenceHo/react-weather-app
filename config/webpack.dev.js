@@ -1,8 +1,8 @@
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const common = require('./webpack.common.js');
 const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'development',

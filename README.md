@@ -169,6 +169,7 @@ And place `start` script in the package.json for starting the webpack dev server
   }
 ```
 
+### Optimising application bundle size
 Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production. 
 We need to install some plugins for helping us: `npm i -D terser-webpack-plugin`. We also need `CleanWebpackPlugin` to 
 clean the build folder before building code as well as `MiniCssExtractPlugin` for extracting CSS files. Therefore, in the 

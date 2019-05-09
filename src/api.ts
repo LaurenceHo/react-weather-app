@@ -1,6 +1,6 @@
-import { location } from '../sample/location';
-import { weatherSi } from '../sample/weather-si';
-import { weatherUs } from '../sample/weather-us';
+import location from '../sample/location.json';
+import weatherSi from '../sample/weather-si.json';
+import weatherUs from '../sample/weather-us.json';
 import { Forecast } from './components/data-model';
 
 declare var process: {
