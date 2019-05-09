@@ -13,11 +13,13 @@ cloud function serverless platform with React frontend app.
 1. The latest version of Nodejs and npm need to be installed.
 2. Google API Key
 3. Dark Sky weather API key
+4. Windy API key
 
 ## Getting Started
 * Clone the repo: `git clone https://github.com/LaurenceHo/reactjs-beautiful-weather.git`
 * Install npm package: `npm install`
-* Put your google & [dark sky API key](https://darksky.net/dev) into `./functions/apiKey.js`
+* Put your google & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
+* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](./src/pages/weather-map.tsx)
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 
@@ -413,6 +415,53 @@ import 'echarts/lib/component/toolbox';
 ### TypeScript
 * Don't use @types/antd, as antd provides a built-in ts definition already. Also only use TypeScript 2.9.2 this moment,
 because ant design doesn't support TypeScript 3+.
+
+## Windy API
+Since I put the protection for my Windy API, only the allowed domain name can use this API key. Windy API is free, 
+please feel free to apply for a new one for yourself.
+
+### Usage
+There is no npm package for installing Windy API so we have to import source in [index.html](./src/index.html)
+```
+<head>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://api4.windy.com/assets/libBoot.js"></script>
+</head> 
+```
+Windy API v4 was based on Leaflet 1.4, so import leaflet by this way is very important. 
+How to make these 2 JavaScript 3rd party libraries working in TypeScript? We need to declare the definition in [TypeScript
+Declaration File](./src/typings.d.ts).
+```
+declare var windyInit: any;
+declare var L: any;
+```
+After that, we can use `windyInit` and `L` these 2 parameters directly without importing module into TypeScript file.
+In [`weather-map.tsx`](./src/pages/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
+```
+const options = {
+    // Required: API key
+    key: 'PsLAtXpsPTZexBwUkO7Mx5I',
+
+    // Put additional console output
+    verbose: true,
+
+    // Optional: Initial state of the map
+    lat: 50.4,
+    lon: 14.3,
+    zoom: 5,
+}
+windyInit(options, (windyAPI: any) => {
+    const { map } = windyAPI;
+    L.popup()
+    .setLatLng([50.4, 14.3])
+    .setContent("Hello World")
+    .openOn( map );
+});
+
+render() {
+    return (<div id='windy' />);
+}
+```
 
 ## Live demo
 [https://react-beautiful-weather-app.firebaseapp.com/](https://react-beautiful-weather-app.firebaseapp.com/)

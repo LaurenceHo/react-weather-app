@@ -4,7 +4,7 @@ import { forceCenter, forceLink, forceManyBody, forceSimulation, forceX, forceY 
 import { select } from 'd3-selection';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import appTraffic from '../../../sample/app-traffic.json';
+import appTraffic from '../../sample/app-traffic.json';
 import './d3-force.css';
 import Gauge from './gauge';
 import { TrafficService } from './traffic';
@@ -255,7 +255,7 @@ export class D3DemoApp extends React.Component<any, any> {
     ));
 
     return (
-      <div>
+      <div className='d3-force-content'>
         <span className='is-active nav-link'>Application Traffic</span>
         &nbsp;|&nbsp;<Link to='/d3_demo_network'>Network Traffic</Link>
         <div id='chart'>

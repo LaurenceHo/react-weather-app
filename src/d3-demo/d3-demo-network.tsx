@@ -6,7 +6,7 @@ import { select } from 'd3-selection';
 import { find } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import networkTraffic from '../../../sample/network-traffic.json';
+import networkTraffic from '../../sample/network-traffic.json';
 import './d3-force.css';
 import Gauge from './gauge';
 import { ToolTip } from './tool-tip';
@@ -347,7 +347,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
   render() {
     return (
-      <div>
+      <div className='d3-force-content'>
         <Link to='/d3_demo_app' className='nav-link'>
           Application Traffic
         </Link>

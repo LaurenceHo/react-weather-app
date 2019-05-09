@@ -1,6 +1,6 @@
 {
   "name": "react-weather-app",
-  "version": "1.2.0",
+  "version": "3.3.1",
   "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "firebase-init": "firebase login && firebase init",
     "firebase-add": "firebase use --add",
     "deploy-functions": "firebase deploy --only functions",
-    "lint": "eslint --ext .ts,.tsx src sample --fix"
+    "lint": "eslint --ext .ts,.tsx src --fix"
   },
   "author": "Laurence Ho",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "Webpack",
     "Typescript",
     "D3",
-    "antd"
+    "antd",
+    "ECharts"
   ],
   "husky": {
     "hooks": {
@@ -43,6 +44,7 @@
   "dependencies": {
     "antd": "^3.16.6",
     "axios": "^0.18.0",
+    "connected-react-router": "^6.4.0",
     "d3": "^5.9.2",
     "echarts": "^4.2.1",
     "lodash": "^4.17.11",
@@ -78,7 +80,6 @@
     "lint-staged": "^8.1.6",
     "mini-css-extract-plugin": "^0.6.0",
     "prettier": "^1.17.0",
-    "redux-devtools-extension": "^2.13.8",
     "source-map-loader": "^0.2.4",
     "terser-webpack-plugin": "^1.2.3",
     "ts-loader": "^5.4.5",
