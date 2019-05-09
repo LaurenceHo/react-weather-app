@@ -14,17 +14,17 @@ cloud function serverless platform with React frontend app.
 2. Google API Key
 3. Dark Sky weather API key
 
-## Getting started
+## Getting Started
 * Clone the repo: `git clone https://github.com/LaurenceHo/reactjs-beautiful-weather.git`
 * Install npm package: `npm install`
 * Put your google & [dark sky API key](https://darksky.net/dev) into `./functions/apiKey.js`
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 
-## Write your own Google cloud functions:
+## Write Your Own Google Cloud Functions:
 Please visit: https://cloud.google.com/functions/ for more detail
 
-## Deploy to firebase
+## Deploy to Firebase
 1. Run `npm run firebase-init`
 2. Visit `https://console.firebase.google.com` to create a new project
 3. Add the firebase project into your local configuration `npm run firebase-add`
@@ -94,7 +94,7 @@ Then setup the loaders:
 }
 ```
 
-If we want extract CSS into separate files, you we install `mini-css-extract-plugin`, and replace style loader:
+If we want to extract CSS into separate files, we need to install `mini-css-extract-plugin`, and replace style loader:
 ```
   {
     test: /\.css$/,
@@ -127,6 +127,7 @@ Then setup the plugins:
 }
 ```
 
+### Webpack Dev Server and Hot Module Replacement Plugin
 When we do frontend development, we want the browser reloading the content automatically when we make changes. To achieve this, 
 we need `HotModuleReplacementPlugin`and `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
 In the [webpack.dev.js](config/webpack.dev.js), since we want to merge the common setting, we need `webpack-merge` library along 
@@ -169,11 +170,11 @@ And place `start` script in the package.json for starting the webpack dev server
   }
 ```
 
-### Optimising application bundle size
-Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production. 
-We need to install some plugins for helping us: `npm i -D terser-webpack-plugin`. We also need `CleanWebpackPlugin` to 
-clean the build folder before building code as well as `MiniCssExtractPlugin` for extracting CSS files. Therefore, in the 
-[webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
+### Optimising Application Bundle Size
+Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production
+as much as possible, we need to install some plugins for helping us: `npm i -D terser-webpack-plugin`. We also need 
+`CleanWebpackPlugin` to clean the build folder (dist) before building code, as well as `MiniCssExtractPlugin` for extracting 
+CSS files. Therefore, in the [webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
 ```
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -228,7 +229,7 @@ module.exports = merge(common, {
 });
 ```
 
-## TypeScript, eslint and prettier
+## TypeScript, Eslint and Prettier
 Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
 Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react prettier`
@@ -278,7 +279,7 @@ Indicate the reactjs version, add `settings` property:
 }
 ```
 
-### prettier integrate with eslint using `eslint-plugin-prettier`
+### Prettier Integrate with Eslint Using `eslint-plugin-prettier`
 Append `prettier` into `plugins` section:
 ```
 {
@@ -319,16 +320,21 @@ Setup the [.prettierrc](.prettierrc)
 }
 ```
 
-## Ant design
+## Ant Design
+### Getting Started
+Ant Design React is dedicated to providing a good development experience for programmers. Make sure that you have installed 
+Node.js(> 8.0.0) correctly. Then run `npm i antd`
+
 ### Usage
 Ant design provides abundant UI components, which means the library size is quite large. I usually only import the 
 component I needed rather than import everything.
-In the `index.tsx`:
+Import CSS files in the `index.tsx`:
 ```
 import 'antd/lib/col/style/css';
 import 'antd/lib/row/style/css';
 ```
-In the `current-weather.tsx`:
+
+Import necessary packages e.g in the `current-weather.tsx`:
 ```
 import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
@@ -350,8 +356,63 @@ export class CurrentWeather extends React.Component<any, any> {
 }          
 ```
 
+### Customise theme
+If we want customise ant design theme, make sure we install `less-loader` and `style-loader` at first. In the [webpack.common.js](config/webpack.common.js),
+add `less-loader` for parsing *.less files along with other loaders:
+```
+module.exports = {
+  rules: [
+    {
+      test: /\.less$/,
+      use: [
+        {
+          loader: 'style-loader',
+        }, 
+        {
+          loader: 'css-loader', // translates CSS into CommonJS
+        }, 
+        {
+          loader: 'less-loader', // compiles Less to CSS
+          options: {
+            modifyVars: {
+              'primary-color': '#1DA57A',
+              'link-color': '#1DA57A',
+              'border-radius-base': '2px',
+              // or
+              'ant-theme-file': "~'your-less-file-path.less'", // Override with less file
+            },
+            javascriptEnabled: true,
+          },
+        }
+      ],
+    },
+     // ...other rules
+  ],
+  // ...other config
+}
+```
+We can look at [here](https://ant.design/docs/react/customize-theme) for getting the further detail.
+
+## ECharts
+### Getting Started
+`npm i echarts -S` and `npm i -D @types/echarts`
+
+### Usage
+Keep in mind, we only import the packages on demand. So in our TypeScript files, we import ECharts components as below:
+```
+// Import the main module of echarts.
+import * as echarts from 'echarts/lib/echarts';
+// Import line chart.
+import 'echarts/lib/chart/line';
+// Import components of tooltip, title and toolbox.
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
+import 'echarts/lib/component/toolbox';
+```
+
 ### TypeScript
-* Don't use @types/antd, as antd provides a built-in ts definition already.
+* Don't use @types/antd, as antd provides a built-in ts definition already. Also only use TypeScript 2.9.2 this moment,
+because ant design doesn't support TypeScript 3+.
 
 ## Live demo
 [https://react-beautiful-weather-app.firebaseapp.com/](https://react-beautiful-weather-app.firebaseapp.com/)

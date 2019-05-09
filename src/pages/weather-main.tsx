@@ -20,7 +20,7 @@ import {
   setWeather,
 } from '../redux/actions';
 import { Forecast, Timezone, Weather } from '../components/data-model';
-import { WeatherForecast } from './weather-forecast';
+import { WeatherContainer } from './weather-container';
 
 const EXCLUDE = 'flags,minutely';
 
@@ -95,7 +95,7 @@ class WeatherMain extends React.Component<any, any> {
           </div>
         );
       } else if (weather && location) {
-        return <WeatherForecast />;
+        return <WeatherContainer />;
       }
     };
 

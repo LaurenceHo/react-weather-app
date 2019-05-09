@@ -23,7 +23,7 @@ export class App extends React.Component<any, any> {
               <Route path='/d3_demo_network' component={D3DemoNetwork as any} />
             </Switch>
           </Content>
-          <Footer className='footer'>©2019 Developed by Laurence Ho, v1.1.1</Footer>
+          <Footer className='footer'>©2019 Developed by Laurence Ho, v1.2.0</Footer>
         </div>
       </Router>
     );

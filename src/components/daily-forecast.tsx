@@ -16,10 +16,11 @@ export class DailyForecast extends React.Component<any, any> {
     const { timezone, dailyForecast, filter } = this.props;
 
     const renderDailyForecastTable = () => (
-      <Table dataSource={dailyForecast.data}>
+      <Table dataSource={dailyForecast.data} pagination={false}>
         <Column
           dataIndex='icon'
           key='icon'
+          align='center'
           render={icon => (
             <span>
               <WeatherIcon icon={icon} size='1.6rem' />
@@ -29,38 +30,40 @@ export class DailyForecast extends React.Component<any, any> {
         <Column
           dataIndex='time'
           key='time'
-          render={time => <span>{Utils.getLocalTime(time, timezone.offset, 'ddd')}</span>}
+          align='center'
+          render={(time, data, index) => (
+            <span>{index === 0 ? 'Today' : Utils.getLocalTime(time, timezone.offset, 'ddd')}</span>
+          )}
         />
-        <ColumnGroup title='Sun'>
-          <Column
-            dataIndex='sunriseTime'
-            key='sunriseTime'
-            render={sunriseTime => (
-              <span>
-                <i className='wi wi-sunrise' />
-                <div className='daily-forecast-item-font'>
-                  @{Utils.getLocalTime(sunriseTime, timezone.offset, 'HH:mm')}
-                </div>
-              </span>
-            )}
-          />
-          <Column
-            dataIndex='sunsetTime'
-            key='sunsetTime'
-            render={sunsetTime => (
-              <span>
-                <i className='wi wi-sunset' />
-                <div className='daily-forecast-item-font'>
-                  @{Utils.getLocalTime(sunsetTime, timezone.offset, 'HH:mm')}
-                </div>
-              </span>
-            )}
-          />
-        </ColumnGroup>
+        <Column
+          title='Sunrise'
+          dataIndex='sunriseTime'
+          key='sunriseTime'
+          align='center'
+          render={sunriseTime => (
+            <span>
+              <i className='wi wi-sunrise' />
+              <div className='daily-forecast-item'>@{Utils.getLocalTime(sunriseTime, timezone.offset, 'HH:mm')}</div>
+            </span>
+          )}
+        />
+        <Column
+          title='Sunset'
+          dataIndex='sunsetTime'
+          key='sunsetTime'
+          align='center'
+          render={sunsetTime => (
+            <span>
+              <i className='wi wi-sunset' />
+              <div className='daily-forecast-item'>@{Utils.getLocalTime(sunsetTime, timezone.offset, 'HH:mm')}</div>
+            </span>
+          )}
+        />
         <Column
           title='Moon'
           dataIndex='moonPhase'
           key='moonPhase'
+          align='center'
           render={moonPhase => (
             <span>
               <MoonIcon moonPhase={moonPhase} latitude={timezone.latitude} size='1.8rem' />
@@ -70,10 +73,11 @@ export class DailyForecast extends React.Component<any, any> {
         <Column
           title='Low'
           key='temperatureLow'
+          align='center'
           render={(text, data: any) => (
             <span>
               {Utils.getTemperature(data.temperatureLow, filter.units)}
-              <div className='daily-forecast-item-font'>
+              <div className='daily-forecast-item'>
                 @{Utils.getLocalTime(data.temperatureLowTime, timezone.offset, 'ha')}
               </div>
             </span>
@@ -82,10 +86,11 @@ export class DailyForecast extends React.Component<any, any> {
         <Column
           title='High'
           key='temperatureHigh'
+          align='center'
           render={(text, data: any) => (
             <span>
               {Utils.getTemperature(data.temperatureHigh, filter.units)}
-              <div className='daily-forecast-item-font'>
+              <div className='daily-forecast-item'>
                 @{Utils.getLocalTime(data.temperatureHighTime, timezone.offset, 'ha')}
               </div>
             </span>
@@ -94,6 +99,7 @@ export class DailyForecast extends React.Component<any, any> {
         <Column
           title='Rain'
           key='precipProbability'
+          align='center'
           render={(text, data: any) => (
             <span>
               {Utils.getRain(data.precipIntensity, data.precipProbability, filter.units)}{' '}
@@ -105,6 +111,7 @@ export class DailyForecast extends React.Component<any, any> {
           title='Humidity'
           dataIndex='humidity'
           key='humidity'
+          align='center'
           render={humidity => (
             <span>
               {Math.round(humidity * 100)} <i className='wi wi-humidity' />
@@ -114,50 +121,6 @@ export class DailyForecast extends React.Component<any, any> {
       </Table>
     );
 
-    const renderDailyForecast = dailyForecast.data.map((f: Weather, i: number) => (
-      <Row type='flex' justify='center' className='daily-forecast-item-wrapper' key={f.time}>
-        <Col span={1}>
-          <WeatherIcon icon={f.icon} size='1.6rem' />
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          {i === 0 ? 'Today' : Utils.getLocalTime(f.time, timezone.offset, 'ddd')}
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          <i className='wi wi-sunrise' />
-          <div className='daily-forecast-item-font'>@{Utils.getLocalTime(f.sunriseTime, timezone.offset, 'HH:mm')}</div>
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          <i className='wi wi-sunset' />
-          <div className='daily-forecast-item-font'>@{Utils.getLocalTime(f.sunsetTime, timezone.offset, 'HH:mm')}</div>
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          <MoonIcon moonPhase={f.moonPhase} latitude={timezone.latitude} size='1.8rem' />
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          {Utils.getTemperature(f.temperatureLow, filter.units)}
-          <div className='daily-forecast-item-font'>
-            @{Utils.getLocalTime(f.temperatureLowTime, timezone.offset, 'ha')}
-          </div>
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          {Utils.getTemperature(f.temperatureHigh, filter.units)}
-          <div className='daily-forecast-item-font'>
-            @{Utils.getLocalTime(f.temperatureHighTime, timezone.offset, 'ha')}
-          </div>
-        </Col>
-        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={3} className='daily-forecast-item-column'>
-          <span>
-            {Utils.getRain(f.precipIntensity, f.precipProbability, filter.units)} <i className='wi wi-humidity' />
-          </span>
-        </Col>
-        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} className='daily-forecast-item-column'>
-          <span>
-            {Math.round(f.humidity * 100)} <i className='wi wi-humidity' />
-          </span>
-        </Col>
-      </Row>
-    ));
-
     return (
       <div>
         <Row type='flex' justify='center' className='forecast-title'>
@@ -166,7 +129,11 @@ export class DailyForecast extends React.Component<any, any> {
         <Row type='flex' justify='center' className='forecast-summary'>
           {dailyForecast.summary}
         </Row>
-        {renderDailyForecast}
+        <Row type='flex' justify='center' className='daily-forecast-table-outer'>
+          <Col xs={24} sm={24} md={16} lg={16} xl={12} xxl={10}>
+            {renderDailyForecastTable()}
+          </Col>
+        </Row>
       </div>
     );
   }

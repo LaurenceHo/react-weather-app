@@ -54,7 +54,7 @@ class NavBar extends React.Component<any, NavBarState> {
       <Header className='nav-bar'>
         <Row>
           <Col span={1}>
-            <img src='assets/favicon.ico' width='35' height='30' alt='' />
+            <img src='../assets/favicon.ico' width='35' height='30' alt='' />
           </Col>
           <Col xs={10} sm={10} md={10} lg={10} xl={11} xxl={14}>
             <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']} className='nav-bar-menu'>

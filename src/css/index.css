@@ -69,16 +69,12 @@ body {
     font-weight: 500;
 }
 
-.daily-forecast-item-wrapper {
-    padding: 0.2rem 2rem;
+.daily-forecast-table-outer {
+    padding: 1rem 0;
 }
 
-.daily-forecast-item-font {
+.daily-forecast-item {
     font-size: 0.8rem;
-}
-
-.daily-forecast-item-column {
-    text-align: center;
 }
 
 #weather-chart-wrapper {

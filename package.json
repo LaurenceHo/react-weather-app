@@ -1,6 +1,6 @@
 {
   "name": "react-weather-app",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
@@ -80,7 +80,6 @@
     "prettier": "^1.17.0",
     "redux-devtools-extension": "^2.13.8",
     "source-map-loader": "^0.2.4",
-    "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.2.3",
     "ts-loader": "^5.4.5",
     "typescript": "^2.9.2",
@@ -91,6 +90,6 @@
     "webpack-merge": "^4.2.1"
   },
   "engines": {
-    "node": "8"
+    "node": ">= 8"
   }
 }
