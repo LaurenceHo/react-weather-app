@@ -139,9 +139,9 @@ export class DailyForecast extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    filter: state.filter,
-    timezone: state.timezone,
-    dailyForecast: state.dailyForecast,
+    filter: state.reducers.filter,
+    timezone: state.reducers.timezone,
+    dailyForecast: state.reducers.dailyForecast,
   };
 };
 

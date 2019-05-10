@@ -5,12 +5,14 @@ import Layout from 'antd/lib/layout';
 import Menu from 'antd/lib/menu';
 import Row from 'antd/lib/row';
 import Select from 'antd/lib/select';
+
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { fetchingData, setFilter } from '../redux/actions';
+
+import { fetchingData, setFilter } from '../store/actions';
 import { WeatherSearch } from './weather-search';
 
 const Option = Select.Option;
@@ -50,6 +52,8 @@ class NavBar extends React.Component<any, NavBarState> {
   };
 
   render() {
+    let path = this.props.path.substring(1) === '' ? 'weather' : this.props.path.substring(1);
+
     return (
       <Header className='nav-bar'>
         <Row>
@@ -57,21 +61,15 @@ class NavBar extends React.Component<any, NavBarState> {
             <img src='../assets/favicon.ico' width='35' height='30' alt='' />
           </Col>
           <Col xs={10} sm={10} md={10} lg={10} xl={11} xxl={14}>
-            <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']} className='nav-bar-menu'>
-              <Menu.Item key='1'>
-                <NavLink exact={true} activeClassName='active' to='/'>
-                  Weather
-                </NavLink>
+            <Menu theme='dark' mode='horizontal' defaultSelectedKeys={[`${path}`]} className='nav-bar-menu'>
+              <Menu.Item key='weather'>
+                <Link to='/'>Weather</Link>
               </Menu.Item>
-              <Menu.Item key='2'>
-                <NavLink activeClassName='active' to='/about'>
-                  About
-                </NavLink>
+              <Menu.Item key='about'>
+                <Link to='/about'>About</Link>
               </Menu.Item>
-              <Menu.Item key='3'>
-                <NavLink activeClassName='active' to='/d3_demo_app'>
-                  D3 Demo
-                </NavLink>
+              <Menu.Item key='d3_demo_app'>
+                <Link to='/d3_demo_app'>D3 Demo</Link>
               </Menu.Item>
             </Menu>
           </Col>
@@ -115,8 +113,9 @@ class NavBar extends React.Component<any, NavBarState> {
 
 const mapStateToProps = (state: any) => {
   return {
-    isLoading: state.isLoading,
-    filter: state.filter,
+    isLoading: state.reducers.isLoading,
+    filter: state.reducers.filter,
+    path: state.router.location.pathname,
   };
 };
 

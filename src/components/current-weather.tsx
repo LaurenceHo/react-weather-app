@@ -2,6 +2,7 @@ import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import { Utils } from '../utils';
 import { WeatherIcon } from './icon/weather-icon';
 import { WindIcon } from './icon/wind-icon';
@@ -64,13 +65,13 @@ export class CurrentWeather extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    filter: state.filter,
-    location: state.location,
-    weather: state.weather,
-    forecast: state.forecast,
-    timezone: state.timezone,
-    isLoading: state.isLoading,
-    error: state.error,
+    filter: state.reducers.filter,
+    location: state.reducers.location,
+    weather: state.reducers.weather,
+    forecast: state.reducers.forecast,
+    timezone: state.reducers.timezone,
+    isLoading: state.reducers.isLoading,
+    error: state.reducers.error,
   };
 };
 

@@ -7,7 +7,9 @@ import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { getForecast, getGeocode, getWeather } from '../api';
+import { Forecast, Timezone, Weather } from '../components/data-model';
 import {
   fetchingData,
   fetchingDataFailure,
@@ -18,8 +20,7 @@ import {
   setLocation,
   setTimezone,
   setWeather,
-} from '../redux/actions';
-import { Forecast, Timezone, Weather } from '../components/data-model';
+} from '../store/actions';
 import { WeatherContainer } from './weather-container';
 
 const EXCLUDE = 'flags,minutely';
@@ -191,14 +192,14 @@ class WeatherMain extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    isLoading: state.isLoading,
-    filter: state.filter,
-    location: state.location,
-    timezone: state.timezone,
-    weather: state.weather,
-    hourlyForecast: state.hourlyForecast,
-    dailyForecast: state.dailyForecast,
-    error: state.error,
+    isLoading: state.reducers.isLoading,
+    filter: state.reducers.filter,
+    location: state.reducers.location,
+    timezone: state.reducers.timezone,
+    weather: state.reducers.weather,
+    hourlyForecast: state.reducers.hourlyForecast,
+    dailyForecast: state.reducers.dailyForecast,
+    error: state.reducers.error,
   };
 };
 
