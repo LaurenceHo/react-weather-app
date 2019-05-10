@@ -1,98 +1,96 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
 body {
-    font-size: 1rem;
-    font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
 }
 
 .content {
-    min-height: 40rem;
-    padding: 4rem 0 0 0;
+  min-height: 100%;
 }
 
 .footer {
-    text-align: center;
-    background: #FFF;
+  text-align: center;
+  background: #fff;
 }
 
 .about-content {
-    padding-top: 2rem;
+  padding-top: 2rem;
 }
 
 .nav-bar {
-    padding: 0 1rem;
-    position: fixed;
-    z-index: 1;
-    width: 100%;
+  padding: 0 1rem;
+  z-index: 1;
+  width: 100%;
 }
 
 .nav-bar-menu {
-    line-height: 4rem;
+  line-height: 4rem;
 }
 
 .nav-bar-icon {
-    text-align: right;
+  text-align: right;
 }
 
 .error {
-    padding: 2rem 2rem;
+  padding: 2rem 2rem;
 }
 
 .fetching-weather-content {
-    padding: 4rem 2rem;
+  padding: 4rem 2rem;
 }
 
 .fetching-weather-spinner {
-    padding-left: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 .current-weather-top {
-    background: #FAFAFA;
-    font-size: 0.8rem;
-    padding: 3.5rem 2rem 0.5rem 2rem;
+  background: #fafafa;
+  font-size: 0.8rem;
+  padding: 0.5rem 2rem;
 }
 
 .current-weather-location {
-    padding: 1rem 2rem 0.5rem 1rem;
-    font-size: 2rem;
-    font-weight: 700;
+  padding: 1rem 2rem 0.5rem 1rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .forecast-summary {
-    padding: 1rem 2rem 0.5rem 1rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+  padding: 1rem 2rem 0.5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .forecast-title {
-    font-size: 1.8rem;
-    font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .daily-forecast-table-outer {
-    padding: 1rem 0;
+  padding: 1rem 0;
 }
 
 .daily-forecast-item {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 #weather-chart-wrapper {
-    padding: 0 2rem
+  padding: 0 2rem;
 }
 
 .weather-chart {
-    height: 20rem;
-    width: 50rem;
+  height: 20rem;
+  width: 50rem;
 }
 
 ::-webkit-scrollbar {
-    height: 0.8rem;
-    width: 0.8rem;
-    background-color: #FAFAFA;
+  height: 0.8rem;
+  width: 0.8rem;
+  background-color: #fafafa;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 1rem;
-    background-color: #A4A4A4;
+  border-radius: 1rem;
+  background-color: #a4a4a4;
 }

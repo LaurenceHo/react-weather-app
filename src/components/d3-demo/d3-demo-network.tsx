@@ -347,7 +347,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
   render() {
     return (
-      <div>
+      <div className='d3-force-content'>
         <Link to='/d3_demo_app' className='nav-link'>
           Application Traffic
         </Link>

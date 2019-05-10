@@ -1,89 +1,97 @@
-.content {
-    padding-top: 1rem;
+.d3-force-content {
+  padding-top: 1rem;
 }
-
 .nav-link {
-    padding-left: 2rem;
-    padding-top: 2rem;
+  padding-left: 2rem;
+  padding-top: 2rem;
 }
 
 .link {
-    stroke: #555;
+  stroke: #555;
 }
 
 .node text {
-    fill: #000;
-    cursor: pointer;
-    font-size: 0.8rem;
+  fill: #000;
+  cursor: pointer;
+  font-size: 0.8rem;
 }
 
 text {
-    fill: #000;
-    cursor: pointer;
-    font-size: 0.7rem;
+  fill: #000;
+  cursor: pointer;
+  font-size: 0.7rem;
 }
 
 text.axis-t {
-    fill: #7dc7f4;
+  fill: #7dc7f4;
 }
 
 text.axis-p {
-    fill: #A4A4A4;
+  fill: #a4a4a4;
 }
 
-text.legendHeading, .responseHeading {
-    font-size: 1.1rem;
+text.legendHeading,
+.responseHeading {
+  font-size: 1.1rem;
 }
 
-rect.responseTimesChart, tspan.averageLabel {
-    fill: #d75107;
+rect.responseTimesChart,
+tspan.averageLabel {
+  fill: #d75107;
 }
 
-rect.responseTimesChartMax, tspan.maxLabel {
-    fill: rgba(215, 81, 7, 0.38);
+rect.responseTimesChartMax,
+tspan.maxLabel {
+  fill: rgba(215, 81, 7, 0.38);
 }
 
-text.legendRequestId, text.responseTimesText tspan {
-    font-size: 0.7rem;
+text.legendRequestId,
+text.responseTimesText tspan {
+  font-size: 0.7rem;
 }
 
-.node circle, .nodeLegend circle {
-    stroke-width: 0.25rem;
-    fill: #fff;
-    stroke: #d16107
+.node circle,
+.nodeLegend circle {
+  stroke-width: 0.25rem;
+  fill: #fff;
+  stroke: #d16107;
 }
 
-.node circle.DEBUG, .nodeLegend circle.DEBUG {
-    stroke: #62679a
+.node circle.DEBUG,
+.nodeLegend circle.DEBUG {
+  stroke: #62679a;
 }
 
-.node circle.INFO, .nodeLegend circle.INFO {
-    stroke: #008376;
+.node circle.INFO,
+.nodeLegend circle.INFO {
+  stroke: #008376;
 }
 
-.node circle.WARN, .nodeLegend circle.WARN {
-    stroke: #d1b948;
+.node circle.WARN,
+.nodeLegend circle.WARN {
+  stroke: #d1b948;
 }
 
-.node circle.ERROR, .nodeLegend circle.ERROR {
-    stroke: #c10901;
+.node circle.ERROR,
+.nodeLegend circle.ERROR {
+  stroke: #c10901;
 }
 
 circle.az-center {
-    opacity: .0;
+  opacity: 0;
 }
 
 circle.az {
-    stroke-width: 0.4rem;
-    opacity: .2;
-    fill: #666;
-    stroke: #666
+  stroke-width: 0.4rem;
+  opacity: 0.2;
+  fill: #666;
+  stroke: #666;
 }
 
 .link.light {
-    opacity: .0;
+  opacity: 0;
 }
 
 text.label.az {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }

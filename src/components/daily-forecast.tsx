@@ -2,12 +2,10 @@ import { Table } from 'antd';
 import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
 import Column from 'antd/lib/table/Column';
-import ColumnGroup from 'antd/lib/table/ColumnGroup';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Utils } from '../utils';
-import { Weather } from './data-model';
 import { MoonIcon } from './icon/moon-icon';
 import { WeatherIcon } from './icon/weather-icon';
 
@@ -16,7 +14,7 @@ export class DailyForecast extends React.Component<any, any> {
     const { timezone, dailyForecast, filter } = this.props;
 
     const renderDailyForecastTable = () => (
-      <Table dataSource={dailyForecast.data} pagination={false}>
+      <Table dataSource={dailyForecast.data} pagination={false} rowKey={(data: any) => data.time}>
         <Column
           dataIndex='icon'
           key='icon'
