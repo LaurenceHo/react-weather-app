@@ -65,13 +65,13 @@ export class CurrentWeather extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    filter: state.reducers.filter,
-    location: state.reducers.location,
-    weather: state.reducers.weather,
-    forecast: state.reducers.forecast,
-    timezone: state.reducers.timezone,
-    isLoading: state.reducers.isLoading,
-    error: state.reducers.error,
+    filter: state.weather.filter,
+    location: state.weather.location,
+    weather: state.weather.weather,
+    forecast: state.weather.forecast,
+    timezone: state.weather.timezone,
+    isLoading: state.weather.isLoading,
+    error: state.weather.error,
   };
 };
 

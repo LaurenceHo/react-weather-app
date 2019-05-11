@@ -11,6 +11,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import { push } from 'connected-react-router';
+import store from '../store';
 
 import { fetchingData, setFilter } from '../store/actions';
 import { WeatherSearch } from './weather-search';
@@ -63,12 +65,28 @@ class NavBar extends React.Component<any, NavBarState> {
           <Col xs={10} sm={10} md={10} lg={10} xl={11} xxl={14}>
             <Menu theme='dark' mode='horizontal' defaultSelectedKeys={[`${path}`]} className='nav-bar-menu'>
               <Menu.Item key='weather'>
-                <Link to='/'>Weather</Link>
+                <Link
+                  to='/'
+                  onClick={() => {
+                    store.dispatch(push('/'));
+                  }}>
+                  Weather
+                </Link>
               </Menu.Item>
               <Menu.Item key='about'>
-                <Link to='/about'>About</Link>
+                <Link
+                  to='/about'
+                  onClick={() => {
+                    store.dispatch(push('/about'));
+                  }}>
+                  About
+                </Link>
               </Menu.Item>
-              <Menu.Item key='d3_demo_app'>
+              <Menu.Item
+                key='d3_demo_app'
+                onClick={() => {
+                  store.dispatch(push('/d3_demo_app'));
+                }}>
                 <Link to='/d3_demo_app'>D3 Demo</Link>
               </Menu.Item>
             </Menu>
@@ -77,20 +95,23 @@ class NavBar extends React.Component<any, NavBarState> {
             <DatePicker
               defaultValue={moment()}
               onChange={this.datePickerOnChange}
-              disabled={this.props.isLoading}
+              disabled={this.props.isLoading || this.props.path.substring(1) !== ''}
               style={{ verticalAlign: 'middle' }}
             />
           </Col>
           <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={5}>
             <div style={{ padding: '0 0.5rem' }}>
-              <WeatherSearch onSearch={this.handleSearch} isDisabled={this.props.isLoading} />
+              <WeatherSearch
+                onSearch={this.handleSearch}
+                isDisabled={this.props.isLoading || this.props.path.substring(1) !== ''}
+              />
             </div>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1}>
             <Select
               defaultValue='si'
               onChange={this.handleUnitsChange}
-              disabled={this.props.isLoading}
+              disabled={this.props.isLoading || this.props.path.substring(1) !== ''}
               style={{ verticalAlign: 'middle' }}>
               <Option value='si'>℃, kph</Option>
               <Option value='us'>℉, mph</Option>
@@ -113,8 +134,8 @@ class NavBar extends React.Component<any, NavBarState> {
 
 const mapStateToProps = (state: any) => {
   return {
-    isLoading: state.reducers.isLoading,
-    filter: state.reducers.filter,
+    isLoading: state.weather.isLoading,
+    filter: state.weather.filter,
     path: state.router.location.pathname,
   };
 };

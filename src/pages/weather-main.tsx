@@ -192,14 +192,14 @@ class WeatherMain extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    isLoading: state.reducers.isLoading,
-    filter: state.reducers.filter,
-    location: state.reducers.location,
-    timezone: state.reducers.timezone,
-    weather: state.reducers.weather,
-    hourlyForecast: state.reducers.hourlyForecast,
-    dailyForecast: state.reducers.dailyForecast,
-    error: state.reducers.error,
+    isLoading: state.weather.isLoading,
+    filter: state.weather.filter,
+    location: state.weather.location,
+    timezone: state.weather.timezone,
+    weather: state.weather.weather,
+    hourlyForecast: state.weather.hourlyForecast,
+    dailyForecast: state.weather.dailyForecast,
+    error: state.weather.error,
   };
 };
 

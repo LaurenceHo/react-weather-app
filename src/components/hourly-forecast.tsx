@@ -53,11 +53,11 @@ export class HourlyForecast extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
   return {
-    isLoading: state.reducers.isLoading,
-    filter: state.reducers.filter,
-    timezone: state.reducers.timezone,
-    weather: state.reducers.weather,
-    hourlyForecast: state.reducers.hourlyForecast,
+    isLoading: state.weather.isLoading,
+    filter: state.weather.filter,
+    timezone: state.weather.timezone,
+    weather: state.weather.weather,
+    hourlyForecast: state.weather.hourlyForecast,
   };
 };
 

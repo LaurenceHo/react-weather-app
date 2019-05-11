@@ -1,16 +1,16 @@
-import { connectRouter } from 'connected-react-router';
+import { routerMiddleware, connectRouter } from 'connected-react-router';
 import { createBrowserHistory, History } from 'history';
-import { combineReducers, createStore } from 'redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 
 import { reducers } from './reducers';
 
-export const history = createBrowserHistory();
+export const history: History<any> = createBrowserHistory();
 const rootReducer = (history: History<any>) =>
   combineReducers({
     router: connectRouter(history),
-    reducers,
+    weather: reducers,
   });
 
-const store = createStore(rootReducer(history), devToolsEnhancer({}));
+const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer(history), composeEnhancer(applyMiddleware(routerMiddleware(history))));
 export default store;

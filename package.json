@@ -1,6 +1,6 @@
 {
   "name": "react-weather-app",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "react-weather-app",
   "main": "index.js",
   "scripts": {
@@ -79,7 +79,6 @@
     "lint-staged": "^8.1.6",
     "mini-css-extract-plugin": "^0.6.0",
     "prettier": "^1.17.0",
-    "redux-devtools-extension": "^2.13.8",
     "source-map-loader": "^0.2.4",
     "terser-webpack-plugin": "^1.2.3",
     "ts-loader": "^5.4.5",
