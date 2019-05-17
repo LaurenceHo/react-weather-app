@@ -61,9 +61,9 @@ export class Utils {
    */
   static getRain = (intensity: number, chance: number, units: string): string => {
     if (units === 'us') {
-      return `${intensity.toFixed(3)} in / ${Math.round(chance * 100)} `;
+      return `${intensity.toFixed(3)} in / ${Math.round(chance * 100)} %`;
     } else if (units === 'si') {
-      return `${intensity.toFixed(2)} mm / ${Math.round(chance * 100)} `;
+      return `${intensity.toFixed(2)} mm / ${Math.round(chance * 100)} %`;
     }
   };
 
@@ -73,5 +73,9 @@ export class Utils {
     } else if (units === 'si') {
       return `${Math.round(value)} km`;
     }
+  };
+
+  static isMobile = (): boolean => {
+    return /Mobi|Android/i.test(navigator.userAgent);
   };
 }

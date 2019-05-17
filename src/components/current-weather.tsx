@@ -14,42 +14,49 @@ export class CurrentWeather extends React.Component<any, any> {
     return (
       <div>
         <Row type='flex' justify='center' className='current-weather-top'>
-          <Col xs={4} sm={4} md={4} lg={3} xl={3}>
-            <span>
+          <Col xs={8} sm={6} md={6} lg={4}>
+            <div className='current-weather-top-item'>
               Rain: {Utils.getRain(weather.precipIntensity, weather.precipProbability, filter.units)}
-              <i className='wi wi-humidity' />
-            </span>
+            </div>
           </Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
-            Wind: {Utils.getWindSpeed(weather.windSpeed, filter.units)} <WindIcon degree={weather.windBearing} />
+          <Col xs={8} sm={6} md={6} lg={3}>
+            <div className='current-weather-top-item'>
+              Wind: {Utils.getWindSpeed(weather.windSpeed, filter.units)} <WindIcon degree={weather.windBearing} />
+            </div>
           </Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
-            <span>
+          <Col xs={8} sm={6} md={6} lg={3}>
+            <div className='current-weather-top-item'>
               Humidity: {Math.round(weather.humidity * 100)} <i className='wi wi-humidity' />
-            </span>
+            </div>
           </Col>
-          <Col xs={4} sm={4} md={4} lg={3} xl={3}>
-            Pressure: {Utils.getPressure(weather.pressure, filter.units)}
+          <Col xs={8} sm={6} md={6} lg={4}>
+            <div className='current-weather-top-item'>
+              Pressure: {Utils.getPressure(weather.pressure, filter.units)}
+            </div>
           </Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
-            Dew Point: {Utils.getTemperature(weather.dewPoint, filter.units)}
+          <Col xs={8} sm={8} md={8} lg={3}>
+            <div className='current-weather-top-item'>
+              Dew Point: {Utils.getTemperature(weather.dewPoint, filter.units)}
+            </div>
           </Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
-            UV Index: {weather.uvIndex}
+          <Col xs={8} sm={8} md={8} lg={3}>
+            <div className='current-weather-top-item'>UV Index: {weather.uvIndex}</div>
           </Col>
-          <Col xs={3} sm={3} md={3} lg={2} xl={2}>
-            Visibility: {Utils.getDistance(weather.visibility, filter.units)}
+          <Col xs={6} sm={8} md={8} lg={3}>
+            <div className='current-weather-top-item'>
+              Visibility: {Utils.getDistance(weather.visibility, filter.units)}
+            </div>
           </Col>
         </Row>
         <Row type='flex' justify='center' className='current-weather-location'>
           {location}
         </Row>
         <Row type='flex' justify='center'>
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1}>
+          <Col xs={4} sm={3} md={2} lg={2} xl={1} className='current-weather-icon'>
             <WeatherIcon icon={weather.icon} size='4rem' />
           </Col>
-          <Col span={3}>
-            <div style={{ paddingTop: '1rem' }}>
+          <Col xs={12} sm={8} md={6} lg={4} xl={4}>
+            <div className='current-weather-summary'>
               <div>{Utils.getLocalTime(weather.time, timezone.offset, 'YYYY-MM-DD HH:mm')}</div>
               <div>
                 {weather.summary} {Utils.getTemperature(weather.temperature, filter.units)}

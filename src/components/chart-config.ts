@@ -8,6 +8,8 @@ import { Utils } from '../utils';
 import { Timezone } from './data-model';
 
 export const chartConfig: any = (units: string, timezone: Timezone, hourly: any) => {
+  const fontSize = 14;
+
   const formatterXAxisLabel = (value: number, index: number) => {
     if (index === 0) {
       return 'Now';
@@ -21,13 +23,13 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
     const time = Utils.getLocalTime(temperature.name, timezone.offset, 'YYYY-MM-DD HH:mm');
 
     return `
-      <div style="font-size:0.9rem; color:#949494; line-height:1.1rem;">${time}</div>
+      <div class="weather-chart-tooltip-time">${time}</div>
       </br>
-      <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">
+      <div class="weather-chart-tooltip-item">
         Temperature:${Utils.getTemperature(temperature.value, units)}
       </div>
       </br>
-      <div style="color:#2E2E2E; font-size:0.8rem; font-weight:500; line-height: 0.3rem;">
+      <div class="weather-chart-tooltip-item">
         Rain: ${rain.value} ${units === 'us' ? 'in' : 'mm'}
       </div>
      `;
@@ -50,12 +52,16 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
     legend: {
       data: ['Temperature', 'Rain'],
       right: '10%',
+      textStyle: {
+        fontSize,
+      },
     },
     xAxis: {
       type: 'category',
       data: map(hourly.data, 'time').slice(0, 23),
       axisLabel: {
         formatter: formatterXAxisLabel,
+        fontSize,
       },
     },
     yAxis: [
@@ -64,6 +70,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
         max: temperatureMax,
         axisLabel: {
           formatter: units === 'us' ? '{value} ℉' : '{value} ℃',
+          fontSize,
         },
         splitLine: {
           show: false,
@@ -81,6 +88,7 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
         max: rainMax,
         axisLabel: {
           formatter: units === 'us' ? '{value} in' : '{value} mm',
+          fontSize,
         },
       },
     ],

@@ -12,6 +12,7 @@ body {
 .footer {
   text-align: center;
   background: #fff;
+  font-size: 1rem;
 }
 
 .about-content {
@@ -24,12 +25,30 @@ body {
   width: 100%;
 }
 
+/* Mobile device nav bar */
+.nav-bar-mobile {
+  padding: 0 1.5rem;
+}
+
+.nav-bar-mobile-menu-icon {
+  color: white;
+}
+
+.ant-popover-inner-content {
+  padding: 0;
+}
+/* Mobile device nav bar */
+
 .nav-bar-menu {
   line-height: 4rem;
 }
 
 .nav-bar-icon {
   text-align: right;
+}
+
+.weather-search-outer {
+  padding: 0 0.5rem;
 }
 
 .error {
@@ -46,18 +65,31 @@ body {
 
 .current-weather-top {
   background: #fafafa;
-  font-size: 0.8rem;
   padding: 0.5rem 2rem;
 }
 
+.current-weather-top-item {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
 .current-weather-location {
-  padding: 1rem 2rem 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 2rem;
   font-weight: 700;
 }
 
+.current-weather-summary {
+  padding-top: 1rem;
+  font-size: 1rem;
+}
+
+.current-weather-icon {
+  margin-right: 1rem;
+}
+
 .forecast-summary {
-  padding: 1rem 2rem 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 1.2rem;
   font-weight: 700;
 }
@@ -84,6 +116,19 @@ body {
   width: 50rem;
 }
 
+.weather-chart-tooltip-time {
+  font-size: 0.9rem;
+  color: #949494;
+  line-height: 1.1rem;
+}
+
+.weather-chart-tooltip-item {
+  color: #2e2e2e;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 0.5rem;
+}
+
 ::-webkit-scrollbar {
   height: 0.8rem;
   width: 0.8rem;
@@ -93,4 +138,42 @@ body {
 ::-webkit-scrollbar-thumb {
   border-radius: 1rem;
   background-color: #a4a4a4;
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+}
+
+@media screen and (min-device-width: 577px) and (max-device-width: 768px) {
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 576px) {
+  .current-weather-top {
+    background: #fafafa;
+    padding: 0.5rem 1rem;
+  }
+
+  .current-weather-top-item {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .current-weather-location {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .forecast-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+
+  .forecast-summary {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+  }
 }
