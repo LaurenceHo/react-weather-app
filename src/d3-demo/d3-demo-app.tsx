@@ -4,7 +4,7 @@ import { forceCenter, forceLink, forceManyBody, forceSimulation, forceX, forceY 
 import { select } from 'd3-selection';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import appTraffic from '../../../sample/app-traffic.json';
+import appTraffic from '../../sample/app-traffic.json';
 import './d3-force.css';
 import Gauge from './gauge';
 import { TrafficService } from './traffic';

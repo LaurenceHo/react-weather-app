@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import store from '../store';
-import { fetchingData, setFilter } from '../store/actions';
+import { setFilter } from '../store/actions';
 import { Utils } from '../utils';
 import { WeatherSearch } from './weather-search';
 
@@ -79,11 +79,21 @@ class NavBar extends React.Component<any, NavBarState> {
       </Link>
     );
 
+    const weatherMapLink = (
+      <Link
+        to='/map'
+        onClick={() => {
+          store.dispatch(push('/map'));
+        }}>
+        Map
+      </Link>
+    );
+
     const datePicker = (
       <DatePicker
         defaultValue={moment()}
         onChange={this.datePickerOnChange}
-        disabled={this.props.isLoading || this.props.path.substring(1) !== ''}
+        disabled={this.props.isLoading || path !== 'weather'}
         style={{ verticalAlign: 'middle', width: '100%' }}
       />
     );
@@ -91,7 +101,7 @@ class NavBar extends React.Component<any, NavBarState> {
     const search = (
       <WeatherSearch
         onSearch={this.handleSearch}
-        isDisabled={this.props.isLoading || this.props.path.substring(1) !== ''}
+        isDisabled={this.props.isLoading || (path !== 'weather' && path !== 'map')}
       />
     );
 
@@ -99,7 +109,7 @@ class NavBar extends React.Component<any, NavBarState> {
       <Select
         defaultValue='si'
         onChange={this.handleUnitsChange}
-        disabled={this.props.isLoading || this.props.path.substring(1) !== ''}
+        disabled={this.props.isLoading || path !== 'weather'}
         style={{ verticalAlign: 'middle', width: '100%' }}>
         <Option value='si'>℃, kph</Option>
         <Option value='us'>℉, mph</Option>
@@ -115,6 +125,7 @@ class NavBar extends React.Component<any, NavBarState> {
           <Col xs={10} sm={10} md={10} lg={10} xl={11} xxl={13}>
             <Menu theme='dark' mode='horizontal' defaultSelectedKeys={[`${path}`]} className='nav-bar-menu'>
               <Menu.Item key='weather'>{weatherLink}</Menu.Item>
+              <Menu.Item key='map'>{weatherMapLink}</Menu.Item>
               <Menu.Item key='about'>{aboutLink}</Menu.Item>
               <Menu.Item
                 key='d3_demo_app'
@@ -151,6 +162,7 @@ class NavBar extends React.Component<any, NavBarState> {
       <Menu style={{ width: '18rem' }} defaultSelectedKeys={[`${path}`]} mode='inline'>
         <Menu.Item key='weather'>{weatherLink}</Menu.Item>
         <Menu.Item key='about'>{aboutLink}</Menu.Item>
+        <Menu.Item key='map'>{weatherMapLink}</Menu.Item>
         <Menu.Item key='datePicker'>{datePicker}</Menu.Item>
         <Menu.Item key='search'>{search}</Menu.Item>
         <Menu.Item key='units'>{units}</Menu.Item>
@@ -187,7 +199,6 @@ const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators(
     {
       setFilter,
-      fetchingData,
     },
     dispatch
   );

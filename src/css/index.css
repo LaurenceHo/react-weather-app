@@ -3,10 +3,12 @@
 body {
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
+  height: 100%;
 }
 
 .content {
   min-height: 100%;
+  width: 100%;
 }
 
 .footer {
@@ -19,25 +21,12 @@ body {
   padding-top: 2rem;
 }
 
+/* Navigation bar for desktop version */
 .nav-bar {
   padding: 0 1rem;
   z-index: 1;
   width: 100%;
 }
-
-/* Mobile device nav bar */
-.nav-bar-mobile {
-  padding: 0 1.5rem;
-}
-
-.nav-bar-mobile-menu-icon {
-  color: white;
-}
-
-.ant-popover-inner-content {
-  padding: 0;
-}
-/* Mobile device nav bar */
 
 .nav-bar-menu {
   line-height: 4rem;
@@ -50,6 +39,21 @@ body {
 .weather-search-outer {
   padding: 0 0.5rem;
 }
+/* Navigation bar for desktop version */
+
+/* Navigation bar for mobile device */
+.nav-bar-mobile {
+  padding: 0 1.5rem;
+}
+
+.nav-bar-mobile-menu-icon {
+  color: white;
+}
+
+.ant-popover-inner-content {
+  padding: 0;
+}
+/* Navigation bar for mobile device */
 
 .error {
   padding: 2rem 2rem;
@@ -63,6 +67,7 @@ body {
   padding-left: 0.5rem;
 }
 
+/* Current weather section */
 .current-weather-top {
   background: #fafafa;
   padding: 0.5rem 2rem;
@@ -87,6 +92,7 @@ body {
 .current-weather-icon {
   margin-right: 1rem;
 }
+/* Current weather section */
 
 .forecast-summary {
   padding: 0.5rem 1rem;
@@ -107,6 +113,7 @@ body {
   font-size: 0.8rem;
 }
 
+/* Weather chart section */
 #weather-chart-wrapper {
   padding: 0 2rem;
 }
@@ -127,6 +134,12 @@ body {
   font-size: 0.8rem;
   font-weight: 500;
   line-height: 0.5rem;
+}
+/* Weather chart section */
+
+#windy {
+  width: 100%;
+  min-height: 50rem;
 }
 
 ::-webkit-scrollbar {

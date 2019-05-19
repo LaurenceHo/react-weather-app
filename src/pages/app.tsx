@@ -4,12 +4,13 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { D3DemoApp } from '../components/d3-demo/d3-demo-app';
-import { D3DemoNetwork } from '../components/d3-demo/d3-demo-network';
+import { D3DemoApp } from '../d3-demo/d3-demo-app';
+import { D3DemoNetwork } from '../d3-demo/d3-demo-network';
 import NavBar from '../components/nav-bar';
 import store, { history } from '../store';
 import { About } from './about';
 import Weather from './weather-main';
+import WeatherMap from './weather-map';
 
 const { Footer, Content } = Layout;
 
@@ -24,6 +25,7 @@ export class App extends React.Component<any, any> {
               <Content className='content'>
                 <Switch>
                   <Route exact={true} path='/' component={Weather as any} />
+                  <Route path='/map' component={WeatherMap as any} />
                   <Route path='/about' component={About as any} />
                   <Route path='/d3_demo_app' component={D3DemoApp as any} />
                   <Route path='/d3_demo_network' component={D3DemoNetwork as any} />

@@ -15,13 +15,13 @@ import {
   fetchingDataFailure,
   fetchingDataSuccess,
   setDailyForecast,
-  setFilter,
   setHourlyForecast,
   setLocation,
   setTimezone,
   setWeather,
 } from '../store/actions';
 import { WeatherContainer } from './weather-container';
+import { USE_DEFAULT_LOCATION } from '../constants/message';
 
 const EXCLUDE = 'flags,minutely';
 
@@ -52,7 +52,7 @@ class WeatherMain extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    if (this.props.location.length === 0 && isEmpty(this.props.weather) && isEmpty(this.props.forecast)) {
+    if (isEmpty(this.props.location) && isEmpty(this.props.weather) && isEmpty(this.props.forecast)) {
       this.props.fetchingData();
       // Get user's coordinates when user access the web app, it will ask user's location permission
       const options = {
@@ -69,13 +69,10 @@ class WeatherMain extends React.Component<any, any> {
               this.fetchWeather(geocode.latitude, geocode.longitude, geocode.address);
             }
           })
-          .catch(error =>
-            this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand')
-          );
+          .catch(error => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));
       };
 
-      const handleError = (error: any) =>
-        this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand');
+      const handleError = (error: any) => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
 
       navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
     }
@@ -122,7 +119,7 @@ class WeatherMain extends React.Component<any, any> {
     this.props.fetchingDataFailure(message);
     setTimeout(() => {
       this.props.fetchingData();
-      this.fetchWeather(0, 0, 'Auckland');
+      this.fetchWeather(-36.8484597, 174.7633315, 'Auckland');
     }, 5000);
   }
 
@@ -169,7 +166,7 @@ class WeatherMain extends React.Component<any, any> {
             this.fetchWeather(geocode.latitude, geocode.longitude, geocode.city);
           }
         })
-        .catch(error => this.searchByDefaultLocation(error.message + '. Use default location: Auckland, New Zealand'));
+        .catch(error => this.props.fetchingDataFailure(error));
     }
   }
 
@@ -209,7 +206,6 @@ const mapDispatchToProps = (dispatch: any) => {
       fetchingData,
       fetchingDataSuccess,
       fetchingDataFailure,
-      setFilter,
       setLocation,
       setTimezone,
       setWeather,

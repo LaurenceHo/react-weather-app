@@ -6,7 +6,7 @@ import { select } from 'd3-selection';
 import { find } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import networkTraffic from '../../../sample/network-traffic.json';
+import networkTraffic from '../../sample/network-traffic.json';
 import './d3-force.css';
 import Gauge from './gauge';
 import { ToolTip } from './tool-tip';
