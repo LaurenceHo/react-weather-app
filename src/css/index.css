@@ -139,7 +139,8 @@ body {
 
 #windy {
   width: 100%;
-  min-height: 50rem;
+  min-height: 100%;
+  height: 85vh;
 }
 
 ::-webkit-scrollbar {

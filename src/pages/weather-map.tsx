@@ -1,7 +1,12 @@
-import { isUndefined } from 'lodash';
+import Alert from 'antd/lib/alert';
+import Col from 'antd/lib/col';
+import Row from 'antd/lib/row';
+import Spin from 'antd/lib/spin';
 
+import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 
@@ -51,6 +56,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
                 location: geocode.address,
                 isLoading: false,
               });
+              this.renderMap();
             }
           })
           .catch(error => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));
@@ -61,8 +67,8 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
       navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
     } else {
       this.setState({ latitude, longitude, location: this.props.location });
+      this.renderMap();
     }
-    this.renderMap();
   }
 
   renderMap = () => {
@@ -75,10 +81,6 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
 
     const options = {
       key: 'bynRmoQDuOR2i4CdtU3NqafiejxcTFbn',
-      verbose: false,
-      lat: this.state.latitude,
-      lon: this.state.longitude,
-      zoom: 5,
     };
 
     const divElement: HTMLDivElement = document.createElement('div');
@@ -88,6 +90,25 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
 
     windyInit(options, (windyAPI: any) => {
       const { map } = windyAPI;
+      map.options.minZoom = 4;
+      map.options.maxZoom = 18;
+
+      const topLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        minZoom: 12,
+        maxZoom: 17,
+      }).addTo(map);
+      topLayer.setOpacity('0');
+
+      map.on('zoomend', function() {
+        if (map.getZoom() >= 12) {
+          topLayer.setOpacity('1');
+        } else {
+          topLayer.setOpacity('0');
+        }
+      });
+      map.setZoom(10);
+
       L.popup()
         .setLatLng([this.state.latitude, this.state.longitude])
         .setContent(this.state.location)
@@ -104,6 +125,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
         isLoading: false,
         error: '',
       });
+      this.renderMap();
     } else {
       getGeocode(null, null, city)
         .then((geocode: any) => {
@@ -129,13 +151,31 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
   private searchByDefaultLocation(message: string) {
     this.setState({ error: message });
     setTimeout(() => {
-      this.setState({ isLoading: true });
       this.fetchLatitudeAndLongitude(-36.8484597, 174.7633315, 'Auckland');
     }, 5000);
   }
 
   render() {
-    return <div id='weather-map-wrapper' />;
+    return (
+      <div>
+        {this.state.isLoading ? (
+          <Row type='flex' justify='center' className='fetching-weather-content'>
+            <h2>Fetching location</h2>
+            <Spin className='fetching-weather-spinner' size='large' />
+          </Row>
+        ) : !isEmpty(this.state.error) ? (
+          <div>
+            <Row type='flex' justify='center' className='fetching-weather-content'>
+              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
+                <Alert message='Error' description={this.state.error} type='error' showIcon={true} />
+              </Col>
+            </Row>
+          </div>
+        ) : (
+          <div id='weather-map-wrapper' />
+        )}
+      </div>
+    );
   }
 }
 
