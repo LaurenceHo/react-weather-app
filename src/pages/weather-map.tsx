@@ -79,28 +79,30 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
       console.log('blahblah');
     }
 
-    const options = {
-      key: 'bynRmoQDuOR2i4CdtU3NqafiejxcTFbn',
-    };
-
     const divElement: HTMLDivElement = document.createElement('div');
     divElement.setAttribute('id', 'windy');
     divElement.setAttribute('class', 'windy');
     document.getElementById('weather-map-wrapper').appendChild(divElement);
+
+    const options = {
+      key: 'bynRmoQDuOR2i4CdtU3NqafiejxcTFbn',
+      lat: this.state.latitude,
+      lon: this.state.longitude,
+    };
 
     windyInit(options, (windyAPI: any) => {
       const { map } = windyAPI;
       map.options.minZoom = 4;
       map.options.maxZoom = 18;
 
-      const topLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      const topLayer = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         minZoom: 12,
         maxZoom: 17,
       }).addTo(map);
       topLayer.setOpacity('0');
 
-      map.on('zoomend', function() {
+      map.on('zoomend', () => {
         if (map.getZoom() >= 12) {
           topLayer.setOpacity('1');
         } else {
