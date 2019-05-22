@@ -49,6 +49,10 @@ export const About = () => (
           <a href='https://darksky.net/dev/docs'>Dark Sky</a>
         </li>
         <li>
+          <a href='https://api4.windy.com/'>Windy</a>- Windy API v4, also known as as Windy Leaflet Plugin, is simple to
+          use javascript API based on Leaflet and technology, that powers Windy.com.
+        </li>
+        <li>
           <a href='https://developers.google.com/maps/documentation/geocoding/start'>Google Maps Geocoding API</a>
         </li>
       </ul>

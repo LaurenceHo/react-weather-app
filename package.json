@@ -20,7 +20,8 @@
     "Webpack",
     "Typescript",
     "D3",
-    "antd"
+    "antd",
+    "ECharts"
   ],
   "husky": {
     "hooks": {
