@@ -1,6 +1,7 @@
+import { ForecastState } from '../constants/types';
 import * as ACTION from './actions';
 
-const initialState = {
+const initialState: ForecastState = {
   isLoading: false,
   filter: {
     units: 'si',
@@ -8,10 +9,10 @@ const initialState = {
     timestamp: 0,
   },
   location: '',
-  timezone: {},
-  weather: {},
-  hourlyForecast: {},
-  dailyForecast: {},
+  timezone: null,
+  currentWeather: null,
+  hourlyForecast: null,
+  dailyForecast: null,
   error: '',
 };
 
@@ -55,10 +56,10 @@ export const reducers = (state: any = initialState, action: any) => {
         timezone: action.timezone,
       };
 
-    case ACTION.SET_WEATHER:
+    case ACTION.SET_CURRENT_WEATHER:
       return {
         ...state,
-        weather: action.weather,
+        currentWeather: action.currentWeather,
       };
 
     case ACTION.SET_HOURLY_FORECAST:

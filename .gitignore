@@ -1,6 +1,6 @@
 .idea/*
 *.iml
 node_modules/*
+*/node_modules/*
 dist/*
-functions/node_modules/*
-package-lock.json
+.DS_Store

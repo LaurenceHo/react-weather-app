@@ -2,24 +2,15 @@ import Alert from 'antd/lib/alert';
 import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
 import Spin from 'antd/lib/spin';
-
 import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
-
-interface WeatherMapState {
-  latitude: number;
-  longitude: number;
-  location: string;
-  error: string;
-  isLoading: boolean;
-}
+import { RootState, WeatherMapState } from '../constants/types';
 
 class WeatherMap extends React.Component<any, WeatherMapState> {
-  state = {
+  state: WeatherMapState = {
     latitude: 0,
     longitude: 0,
     location: '',
@@ -35,7 +26,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
   }
 
   componentDidMount() {
-    const { latitude, longitude } = this.props.timezone;
+    const { latitude, longitude } = this.props.timezone || {};
 
     if (isUndefined(latitude) || isUndefined(longitude)) {
       this.setState({ isLoading: true });
@@ -64,7 +55,11 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
 
       const handleError = (error: any) => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
 
-      navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+      if (process.env.NODE_ENV === 'development') {
+        this.searchByDefaultLocation(USE_DEFAULT_LOCATION);
+      } else {
+        navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+      }
     } else {
       this.setState({ latitude, longitude, location: this.props.location });
       this.renderMap();
@@ -75,9 +70,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     try {
       const weatherMap = document.getElementById('windy');
       weatherMap.parentNode.removeChild(weatherMap);
-    } catch (err) {
-      console.log('blahblah');
-    }
+    } catch (err) {}
 
     const divElement: HTMLDivElement = document.createElement('div');
     divElement.setAttribute('id', 'windy');
@@ -85,7 +78,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     document.getElementById('weather-map-wrapper').appendChild(divElement);
 
     const options = {
-      key: 'aogrg1ghzDCKmHnhIi1zYnQgtZ6h1cUT',
+      key: 'bRpzkzPp38FdrEGhYHWBzBf8lT3mIPSw',
       lat: this.state.latitude,
       lon: this.state.longitude,
     };
@@ -93,9 +86,9 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     windyInit(options, (windyAPI: any) => {
       const { map } = windyAPI;
       map.options.minZoom = 4;
-      map.options.maxZoom = 18;
+      map.options.maxZoom = 17;
 
-      const topLayer = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      const topLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         minZoom: 12,
         maxZoom: 17,
@@ -117,6 +110,29 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
         .openOn(map);
     });
   };
+
+  render() {
+    return (
+      <div>
+        {this.state.isLoading ? (
+          <Row type='flex' justify='center' className='fetching-weather-content'>
+            <h2>Fetching location</h2>
+            <Spin className='fetching-weather-spinner' size='large' />
+          </Row>
+        ) : !isEmpty(this.state.error) ? (
+          <div>
+            <Row type='flex' justify='center' className='fetching-weather-content'>
+              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
+                <Alert message='Error' description={this.state.error} type='error' showIcon={true} />
+              </Col>
+            </Row>
+          </div>
+        ) : (
+          <div id='weather-map-wrapper' />
+        )}
+      </div>
+    );
+  }
 
   private fetchLatitudeAndLongitude(lat: number, lon: number, city: string) {
     if (lat !== 0 && lon !== 0) {
@@ -156,32 +172,9 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
       this.fetchLatitudeAndLongitude(-36.8484597, 174.7633315, 'Auckland');
     }, 5000);
   }
-
-  render() {
-    return (
-      <div>
-        {this.state.isLoading ? (
-          <Row type='flex' justify='center' className='fetching-weather-content'>
-            <h2>Fetching location</h2>
-            <Spin className='fetching-weather-spinner' size='large' />
-          </Row>
-        ) : !isEmpty(this.state.error) ? (
-          <div>
-            <Row type='flex' justify='center' className='fetching-weather-content'>
-              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
-                <Alert message='Error' description={this.state.error} type='error' showIcon={true} />
-              </Col>
-            </Row>
-          </div>
-        ) : (
-          <div id='weather-map-wrapper' />
-        )}
-      </div>
-    );
-  }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     filter: state.weather.filter,
     location: state.weather.location,

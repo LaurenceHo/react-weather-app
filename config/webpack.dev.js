@@ -1,7 +1,6 @@
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -14,7 +13,6 @@ module.exports = merge(common, {
     inline: true,
   },
   plugins: [
-    new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),

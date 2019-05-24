@@ -1,3 +1,11 @@
+import { RouterState } from 'connected-react-router';
+
+export interface Filter {
+  units: 'si' | 'us';
+  location: string;
+  timestamp: number;
+}
+
 export interface Timezone {
   timezone: string;
   offset: number;
@@ -65,4 +73,55 @@ export interface Forecast {
   };
   flags: any;
   offset: number;
+}
+
+export interface NavBarState {
+  location: string;
+  timestamp: number;
+}
+
+export interface WeatherMapState {
+  latitude: number;
+  longitude: number;
+  location: string;
+  error: string;
+  isLoading: boolean;
+}
+
+export interface ForecastState {
+  isLoading: boolean;
+  filter: Filter;
+  location: string;
+  timezone: Timezone;
+  currentWeather: Weather;
+  hourlyForecast: {
+    summary: string;
+    icon: string;
+    data: Weather[];
+  };
+  dailyForecast: {
+    summary: string;
+    icon: string;
+    data: Weather[];
+  };
+  error: string;
+}
+
+export interface RootState {
+  router?: RouterState;
+  weather: ForecastState;
+}
+
+export interface ToolTipType {
+  display: boolean;
+  data: {
+    key: string;
+    group: string;
+    description?: string;
+  };
+  type: 'network' | 'app';
+  pos?: {
+    x: number;
+    y: number;
+  };
 }

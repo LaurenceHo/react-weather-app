@@ -5,14 +5,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 
 module.exports = {
-  entry: ['./src/index.tsx', 'whatwg-fetch'],
+  entry: ['./src/index.tsx'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
   },
   resolve: {
     modules: [path.join(__dirname, '../dist'), 'node_modules'],
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -44,12 +44,8 @@ module.exports = {
         use: ['file-loader'],
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: ['url-loader?limit=10000&mimetype=application/font-woff'],
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: ['file-loader'],
+        test: /\.(ttf|eot|svg|woff|woff2)(\?.+)?$/,
+        loader: 'file-loader?name=[hash:12].[ext]',
       },
     ],
   },

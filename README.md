@@ -1,7 +1,19 @@
-# A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, D3v5, ECharts and firebase.
+# ☀️🌤⛈❄️ A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, ECharts and firebase.
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Write Your Own Google Cloud Functions](#google-cloud-function)
+- [Deploy to Firebase](#firebase)
+- [Webpack, Reactjs and TypeScript](#webpack-reactjs-and-typescript)
+- [TypeScript, Eslint and Prettier](#typescript-eslint-and-prettier)
+- [Ant Design](#ant-design)
+- [ECharts](#echarts)
+- [Windy API](#windy-api)
 
 ## Introduction
-This project demonstrates how to use React, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
+This project demonstrates how to use ReactJS, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
 D3v5 and [ECharts](https://echarts.apache.org/index.html). 
 It is also including two kinds of D3 force simulation demonstrations along with gauge, which is based on 
 my personal interest and previous project. 
@@ -9,22 +21,28 @@ my personal interest and previous project.
 Furthermore, this project also demonstrates how to deploy the web app to Google firebase, and use Google 
 cloud function serverless platform with React frontend app.
 
+## Live demo
+[React Weather App](https://reactjs-weather.web.app/)
+
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
-2. Google API Key
-3. Dark Sky weather API key
-4. Windy API key
+2. Google Geocoding API Key
+3. Google Firebase project
+4. Dark Sky weather API key
+5. Windy API key
 
 ## Getting Started
-* Clone the repo: `git clone https://github.com/LaurenceHo/reactjs-beautiful-weather.git`
+* Clone the repo: `git clone https://github.com/LaurenceHo/react-weather-app.git`
 * Install npm package: `npm install`
-* Put your google & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
-* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](./src/pages/weather-map.tsx)
+* Put your Google Geocoding API Key & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
+* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
+* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
+* Run dev-mock-server: `cd dev-server` and `npm i` then `npm start`
 
 ## Write Your Own Google Cloud Functions:
-Please visit: https://cloud.google.com/functions/ for more detail
+Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
 
 ## Deploy to Firebase
 1. Run `npm run firebase-init`
@@ -35,20 +53,20 @@ Please visit: https://cloud.google.com/functions/ for more detail
 6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
 ## Webpack, Reactjs and TypeScript
-Although there is `create-react-app` toolkit to create react project very easily and quickly, I personally love creating 
-the react project by using webpack from the beginning. Also configure the project a bit by bit manually. It helps me to 
+Although there is `create-react-app` toolkit to create ReactJS project very easily and quickly, I personally love creating 
+the ReactJS project by using webpack from the beginning. Also configure the project a bit by bit manually. It helps me to 
 understand how these things work together.
 
 When using webpack, we need a bunch of loaders to parse the specific file types. For example, `ts-loader` for Typescript,
 `css-loader` for css files, `file-loader` for pictures...etc.
 
 Before starting using webpack with TypeScript, we at least need to install the following plugins:
-`npm i -D css-loader file-loader html-webpack-plugin source-map-loader style-loader ts-loader typescript url-loader webpack webpack-cli`
+`npm i -D css-loader file-loader html-webpack-plugin source-map-loader style-loader ts-loader typescript webpack webpack-cli`
 
 In the [webpack.common.js](config/webpack.common.js) file, setup the entry point at first:
 ```
 module.exports = {
-  entry: ['./src/index.tsx', 'whatwg-fetch'],
+  entry: ['./src/index.tsx'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
@@ -84,13 +102,9 @@ Then setup the loaders:
         use: [ 'file-loader' ]
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [ 'url-loader?limit=10000&mimetype=application/font-woff' ]
+        test: /\.(ttf|eot|svg|woff|woff2)(\?.+)?$/,
+        loader: 'file-loader?name=[hash:12].[ext]',
       },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [ 'file-loader' ]
-      }
     ]
   }
 }
@@ -129,17 +143,16 @@ Then setup the plugins:
 }
 ```
 
-### Webpack Dev Server and Hot Module Replacement Plugin
+### Webpack Dev Server and Hot Module Replacement
 When we do frontend development, we want the browser reloading the content automatically when we make changes. To achieve this, 
-we need `HotModuleReplacementPlugin`and `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
+we need `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
 In the [webpack.dev.js](config/webpack.dev.js), since we want to merge the common setting, we need `webpack-merge` library along 
-with `HotModuleReplacementPlugin` for browser reloading:
+with `WebpackDevServer` for browser reloading:
 ```
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -151,7 +164,6 @@ module.exports = merge(common, {
     inline: true,
   },
   plugins: [
-    new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
@@ -178,7 +190,7 @@ as much as possible, we need to install some plugins for helping us: `npm i -D t
 `CleanWebpackPlugin` to clean the build folder (dist) before building code, as well as `MiniCssExtractPlugin` for extracting 
 CSS files. Therefore, in the [webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
 ```
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
@@ -247,7 +259,7 @@ Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` t
 }
 ```
 
-Because we use Reactjs, we also need to set the `parserOptions` property:
+Because we use ReactJS, we also need to set the `parserOptions` property:
 ```
 {
   "parserOptions": {
@@ -270,7 +282,7 @@ Append `react` to the `plugins` section:
 }
 ```
 
-Indicate the reactjs version, add `settings` property:
+Indicate the ReactJS version, add `settings` property:
 ```
 {
   "settings": {
@@ -395,6 +407,9 @@ module.exports = {
 ```
 We can look at [here](https://ant.design/docs/react/customize-theme) for getting the further detail.
 
+### TypeScript
+* Don't use @types/antd, as antd provides a built-in ts definition already.
+
 ## ECharts
 ### Getting Started
 `npm i echarts -S` and `npm i -D @types/echarts`
@@ -411,10 +426,6 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/toolbox';
 ```
-
-### TypeScript
-* Don't use @types/antd, as antd provides a built-in ts definition already. Also only use TypeScript 2.9.2 this moment,
-because ant design doesn't support TypeScript 3+.
 
 ## Windy API
 Since I put the protection for my Windy API, only the allowed domain name can use this API key. Windy API is free, 
@@ -436,7 +447,7 @@ declare var windyInit: any;
 declare var L: any;
 ```
 After that, we can use `windyInit` and `L` these 2 parameters directly without importing module into TypeScript file.
-In [`weather-map.tsx`](./src/pages/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
+In [`weather-map.tsx`](src/views/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
 ```
 const options = {
     // Required: API key
@@ -462,9 +473,6 @@ render() {
     return (<div id='windy' />);
 }
 ```
-
-## Live demo
-[https://react-beautiful-weather-app.firebaseapp.com/](https://react-beautiful-weather-app.firebaseapp.com/)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

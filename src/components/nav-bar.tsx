@@ -7,14 +7,13 @@ import Menu from 'antd/lib/menu';
 import Popover from 'antd/lib/popover';
 import Row from 'antd/lib/row';
 import Select from 'antd/lib/select';
-
 import { push } from 'connected-react-router';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-
+import { NavBarState, RootState } from '../constants/types';
 import store from '../store';
 import { setFilter } from '../store/actions';
 import { Utils } from '../utils';
@@ -23,13 +22,8 @@ import { WeatherSearch } from './weather-search';
 const Option = Select.Option;
 const { Header } = Layout;
 
-interface NavBarState {
-  location: string;
-  timestamp: number;
-}
-
 class NavBar extends React.Component<any, NavBarState> {
-  state = {
+  state: NavBarState = {
     location: '',
     timestamp: 0,
   };
@@ -57,7 +51,7 @@ class NavBar extends React.Component<any, NavBarState> {
   };
 
   render() {
-    let path = this.props.path.substring(1) === '' ? 'weather' : this.props.path.substring(1);
+    const path = this.props.path.substring(1) === '' ? 'weather' : this.props.path.substring(1);
 
     const weatherLink = (
       <Link
@@ -127,12 +121,14 @@ class NavBar extends React.Component<any, NavBarState> {
               <Menu.Item key='weather'>{weatherLink}</Menu.Item>
               <Menu.Item key='map'>{weatherMapLink}</Menu.Item>
               <Menu.Item key='about'>{aboutLink}</Menu.Item>
-              <Menu.Item
-                key='d3_demo_app'
-                onClick={() => {
-                  store.dispatch(push('/d3_demo_app'));
-                }}>
-                <Link to='/d3_demo_app'>D3 Demo</Link>
+              <Menu.Item key='d3_demo_app'>
+                <Link
+                  to='/d3_demo_app'
+                  onClick={() => {
+                    store.dispatch(push('/d3_demo_app'));
+                  }}>
+                  D3 Demo
+                </Link>
               </Menu.Item>
             </Menu>
           </Col>
@@ -151,7 +147,7 @@ class NavBar extends React.Component<any, NavBarState> {
               shape='circle'
               icon='github'
               size='large'
-              href='https://github.com/LaurenceHo/reactjs-beautiful-weather'
+              href='https://github.com/LaurenceHo/react-weather-app'
             />
           </Col>
         </Row>
@@ -161,8 +157,8 @@ class NavBar extends React.Component<any, NavBarState> {
     const content = (
       <Menu style={{ width: '18rem' }} defaultSelectedKeys={[`${path}`]} mode='inline'>
         <Menu.Item key='weather'>{weatherLink}</Menu.Item>
-        <Menu.Item key='about'>{aboutLink}</Menu.Item>
         <Menu.Item key='map'>{weatherMapLink}</Menu.Item>
+        <Menu.Item key='about'>{aboutLink}</Menu.Item>
         <Menu.Item key='datePicker'>{datePicker}</Menu.Item>
         <Menu.Item key='search'>{search}</Menu.Item>
         <Menu.Item key='units'>{units}</Menu.Item>
@@ -187,7 +183,7 @@ class NavBar extends React.Component<any, NavBarState> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     isLoading: state.weather.isLoading,
     filter: state.weather.filter,

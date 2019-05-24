@@ -6,14 +6,15 @@ import { select } from 'd3-selection';
 import { find } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import networkTraffic from '../../sample/network-traffic.json';
+import { ToolTipType } from '../constants/types';
 import './d3-force.css';
 import Gauge from './gauge';
+import networkTraffic from './mock/network-traffic.json';
 import { ToolTip } from './tool-tip';
 import { TrafficService } from './traffic';
 
 interface D3DemoNetworkState {
-  tooltip: any;
+  tooltip: ToolTipType;
 }
 
 export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
@@ -29,20 +30,22 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
   node: any = {};
   trafficService: any = {};
   requests: any[] = [];
-  isActive: boolean = true;
-  intervalId: number = 0;
+  isActive = true;
+  intervalId = 0;
   c10 = scaleOrdinal(schemeCategory10);
   powerGauge: Gauge = null;
 
-  state = {
-    tooltip: {
-      display: false,
-      data: {
-        key: '',
-        group: '',
-      },
-      type: 'network',
+  tooltip: ToolTipType = {
+    display: false,
+    data: {
+      key: '',
+      group: '',
     },
+    type: 'network',
+  };
+
+  state = {
+    tooltip: this.tooltip,
   };
 
   showToolTip = (e: any) => {
@@ -338,7 +341,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
 
     processData();
 
-    this.intervalId = setInterval(() => processData(), 5000);
+    this.intervalId = window.setInterval(() => processData(), 5000);
   }
 
   componentWillUnmount() {

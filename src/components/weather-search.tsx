@@ -1,5 +1,6 @@
 import Input from 'antd/lib/input';
 import * as React from 'react';
+import { ChangeEvent } from 'react';
 
 const Search = Input.Search;
 
@@ -12,33 +13,29 @@ interface WeatherSearchState {
   location: string;
 }
 
-export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSearchState> {
-  state = {
-    location: '',
-  };
+export const WeatherSearch: React.FC<WeatherSearchProps> = (props: WeatherSearchProps) => {
+  const [location, setLocation] = React.useState<WeatherSearchState | null>({ location: '' });
 
-  handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = event.target.value;
-    this.setState({ location: value });
+    setLocation({ location: value });
   };
 
-  handleSubmit = () => {
-    this.props.onSearch(this.state.location);
+  const handleSubmit = () => {
+    props.onSearch(location.location);
   };
 
-  render() {
-    return (
-      <Search
-        type='text'
-        value={this.state.location}
-        onChange={this.handleChange}
-        onSearch={this.handleSubmit}
-        onPressEnter={this.handleSubmit}
-        placeholder='Search weather by city'
-        disabled={this.props.isDisabled}
-        enterButton={true}
-        style={{ verticalAlign: 'middle', width: '100%' }}
-      />
-    );
-  }
-}
+  return (
+    <Search
+      type='text'
+      value={location.location}
+      onChange={handleChange}
+      onSearch={handleSubmit}
+      onPressEnter={handleSubmit}
+      placeholder='Search weather by city'
+      disabled={props.isDisabled}
+      enterButton={true}
+      style={{ verticalAlign: 'middle', width: '100%' }}
+    />
+  );
+};

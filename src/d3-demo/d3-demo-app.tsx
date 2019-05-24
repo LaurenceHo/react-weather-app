@@ -4,9 +4,9 @@ import { forceCenter, forceLink, forceManyBody, forceSimulation, forceX, forceY 
 import { select } from 'd3-selection';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import appTraffic from '../../sample/app-traffic.json';
 import './d3-force.css';
 import Gauge from './gauge';
+import appTraffic from './mock/app-traffic.json';
 import { TrafficService } from './traffic';
 
 export class D3DemoApp extends React.Component<any, any> {
@@ -22,15 +22,9 @@ export class D3DemoApp extends React.Component<any, any> {
   node: any = {};
   trafficService: any = {};
   requests: any[] = [];
-  isActive: boolean = true;
-  intervalId: number = 0;
+  isActive = true;
+  intervalId = 0;
   powerGauge: Gauge = null;
-
-  getNode(name: string) {
-    return this.nodes.find(node => {
-      return name === node.name;
-    });
-  }
 
   constructor(props: any) {
     super(props);
@@ -72,6 +66,12 @@ export class D3DemoApp extends React.Component<any, any> {
         })
       )
       .force('center', forceCenter(this.width / 2, this.height / 2));
+  }
+
+  getNode(name: string) {
+    return this.nodes.find(node => {
+      return name === node.name;
+    });
   }
 
   componentDidMount() {
@@ -235,7 +235,7 @@ export class D3DemoApp extends React.Component<any, any> {
 
     processData();
 
-    this.intervalId = setInterval(() => processData(), 5000);
+    this.intervalId = window.setInterval(() => processData(), 5000);
   }
 
   componentWillUnmount() {

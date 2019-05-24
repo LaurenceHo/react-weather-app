@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>React Weather App</title>
-    <meta charset="UTF-8" name="viewport" content="width=device-width"/>
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="assets/weather-icons/css/weather-icons.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/weather-icons/css/weather-icons-wind.css">
+    <meta charset="UTF-8" name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="assets/weather-icons/css/weather-icons.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/weather-icons/css/weather-icons-wind.css" />
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script src="https://api4.windy.com/assets/libBoot.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+
     <script>
       // Initialize Firebase
       firebase.initializeApp({
-        apiKey: 'AIzaSyBL49bOPlSTELWb0wc0f0T25qzBDqJpdAw',
-        authDomain: 'react-beautiful-weather-app.firebaseapp.com',
-        databaseURL: 'https://react-beautiful-weather-app.firebaseio.com',
-        projectId: 'react-beautiful-weather-app',
-        storageBucket: 'react-beautiful-weather-app.appspot.com',
-        messagingSenderId: '93042476113'
+        apiKey: 'AIzaSyCH2qBgaPuAfb5wfbtx0u3F5LtTvFgFDG0',
+        authDomain: 'reactjs-weather.firebaseapp.com',
+        databaseURL: 'https://reactjs-weather.firebaseio.com',
+        projectId: 'reactjs-weather',
+        storageBucket: 'reactjs-weather.appspot.com',
+        messagingSenderId: '120664202212',
+        appId: '1:120664202212:web:b733e66714cd0fde',
       });
     </script>
-</head>
+  </head>
 
-<body>
-<div id="app"></div>
-</body>
+  <body>
+    <div id="app"></div>
+  </body>
 </html>
