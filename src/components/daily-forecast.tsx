@@ -1,11 +1,12 @@
-import { Table } from 'antd';
 import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
+import Table from 'antd/lib/table';
 import Column from 'antd/lib/table/Column';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Utils } from '../utils';
+import { Weather } from './data-model';
 import { MoonIcon } from './icon/moon-icon';
 import { WeatherIcon } from './icon/weather-icon';
 
@@ -13,10 +14,73 @@ export class DailyForecast extends React.Component<any, any> {
   render() {
     const { timezone, dailyForecast, filter } = this.props;
     const isMobile = Utils.isMobile();
-    const scroll = isMobile ? { x: '130%', y: '100%' } : {};
+
+    const expandedRowRender = (data: Weather) => (
+      <div>
+        <Row>
+          <div className='daily-forecast-sub-item-summary'>{data.summary}</div>
+        </Row>
+        <Row type='flex' justify='center'>
+          <Col span={8} lg={4} xl={4} xxl={4}>
+            <div className='daily-forecast-sub-item-summary'>Sunrise</div>
+            <div className='daily-forecast-item'>
+              <i className='wi wi-sunrise' />
+              <div>@{Utils.getLocalTime(data.sunriseTime, timezone.offset, 'HH:mm')}</div>
+            </div>
+          </Col>
+          <Col span={8} lg={4} xl={4} xxl={4}>
+            <div className='daily-forecast-sub-item-summary'>Sunset</div>
+            <div className='daily-forecast-item'>
+              <i className='wi wi-sunset' />
+              <div>@{Utils.getLocalTime(data.sunsetTime, timezone.offset, 'HH:mm')}</div>
+            </div>
+          </Col>
+          <Col span={8} lg={4} xl={4} xxl={4}>
+            <div className='daily-forecast-sub-item-summary'>Moon</div>
+            <MoonIcon moonPhase={data.moonPhase} latitude={timezone.latitude} size='1.8rem' />
+          </Col>
+          {!isMobile ? (
+            <Col span={6}>
+              <div className='daily-forecast-sub-item-summary'>Rain</div>
+              <div className='daily-forecast-item'>
+                {Utils.getRain(data.precipIntensity, data.precipProbability, filter.units)}
+              </div>
+            </Col>
+          ) : null}
+          {!isMobile ? (
+            <Col span={6}>
+              <div className='daily-forecast-sub-item-summary'>Humidity</div>
+              <div className='daily-forecast-item'>
+                {Math.round(data.humidity * 100)} <i className='wi wi-humidity' />
+              </div>
+            </Col>
+          ) : null}
+        </Row>
+        {isMobile ? (
+          <Row type='flex' justify='center'>
+            <Col span={12}>
+              <div className='daily-forecast-sub-item-summary'>Rain</div>
+              <div className='daily-forecast-item'>
+                {Utils.getRain(data.precipIntensity, data.precipProbability, filter.units)}
+              </div>
+            </Col>
+            <Col span={12}>
+              <div className='daily-forecast-sub-item-summary'>Humidity</div>
+              <div className='daily-forecast-item'>
+                {Math.round(data.humidity * 100)} <i className='wi wi-humidity' />
+              </div>
+            </Col>
+          </Row>
+        ) : null}
+      </div>
+    );
 
     const renderDailyForecastTable = () => (
-      <Table dataSource={dailyForecast.data} pagination={false} rowKey={(data: any) => data.time} scroll={scroll}>
+      <Table
+        dataSource={dailyForecast.data}
+        pagination={false}
+        rowKey={(data: Weather) => String(data.time)}
+        expandedRowRender={expandedRowRender}>
         <Column
           dataIndex='icon'
           key='icon'
@@ -39,40 +103,6 @@ export class DailyForecast extends React.Component<any, any> {
               {index === 0 ? 'Today' : Utils.getLocalTime(time, timezone.offset, 'ddd')}
             </div>
           )}
-        />
-        <Column
-          title='Sunrise'
-          dataIndex='sunriseTime'
-          key='sunriseTime'
-          align='center'
-          width='9rem'
-          render={sunriseTime => (
-            <div className='daily-forecast-item'>
-              <i className='wi wi-sunrise' />
-              <div>@{Utils.getLocalTime(sunriseTime, timezone.offset, 'HH:mm')}</div>
-            </div>
-          )}
-        />
-        <Column
-          title='Sunset'
-          dataIndex='sunsetTime'
-          key='sunsetTime'
-          align='center'
-          width='9rem'
-          render={sunsetTime => (
-            <div className='daily-forecast-item'>
-              <i className='wi wi-sunset' />
-              <div>@{Utils.getLocalTime(sunsetTime, timezone.offset, 'HH:mm')}</div>
-            </div>
-          )}
-        />
-        <Column
-          title='Moon'
-          dataIndex='moonPhase'
-          key='moonPhase'
-          align='center'
-          width='5.5rem'
-          render={moonPhase => <MoonIcon moonPhase={moonPhase} latitude={timezone.latitude} size='1.8rem' />}
         />
         <Column
           title='Low'
@@ -98,29 +128,6 @@ export class DailyForecast extends React.Component<any, any> {
             </div>
           )}
         />
-        <Column
-          title='Rain'
-          key='precipProbability'
-          align='center'
-          width='13rem'
-          render={(text, data: any) => (
-            <div className='daily-forecast-item'>
-              {Utils.getRain(data.precipIntensity, data.precipProbability, filter.units)}
-            </div>
-          )}
-        />
-        <Column
-          title='Humidity'
-          dataIndex='humidity'
-          key='humidity'
-          align='center'
-          width='9rem'
-          render={humidity => (
-            <div className='daily-forecast-item'>
-              {Math.round(humidity * 100)} <i className='wi wi-humidity' />
-            </div>
-          )}
-        />
       </Table>
     );
 
@@ -133,7 +140,7 @@ export class DailyForecast extends React.Component<any, any> {
           {dailyForecast.summary}
         </Row>
         <Row type='flex' justify='center' className='daily-forecast-table-outer'>
-          <Col xs={24} sm={24} md={22} lg={22} xl={16} xxl={12}>
+          <Col xs={24} sm={20} md={16} lg={12} xl={10} xxl={8}>
             {renderDailyForecastTable()}
           </Col>
         </Row>

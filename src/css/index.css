@@ -113,6 +113,11 @@ body {
   font-size: 0.8rem;
 }
 
+.daily-forecast-sub-item-summary {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 /* Weather chart section */
 #weather-chart-wrapper {
   padding: 0 2rem;

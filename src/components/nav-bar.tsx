@@ -161,8 +161,8 @@ class NavBar extends React.Component<any, NavBarState> {
     const content = (
       <Menu style={{ width: '18rem' }} defaultSelectedKeys={[`${path}`]} mode='inline'>
         <Menu.Item key='weather'>{weatherLink}</Menu.Item>
-        <Menu.Item key='about'>{aboutLink}</Menu.Item>
         <Menu.Item key='map'>{weatherMapLink}</Menu.Item>
+        <Menu.Item key='about'>{aboutLink}</Menu.Item>
         <Menu.Item key='datePicker'>{datePicker}</Menu.Item>
         <Menu.Item key='search'>{search}</Menu.Item>
         <Menu.Item key='units'>{units}</Menu.Item>

@@ -93,9 +93,9 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     windyInit(options, (windyAPI: any) => {
       const { map } = windyAPI;
       map.options.minZoom = 4;
-      map.options.maxZoom = 18;
+      map.options.maxZoom = 17;
 
-      const topLayer = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      const topLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         minZoom: 12,
         maxZoom: 17,
