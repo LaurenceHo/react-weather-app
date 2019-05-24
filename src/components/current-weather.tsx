@@ -52,8 +52,8 @@ export class CurrentWeather extends React.Component<any, any> {
           {location}
         </Row>
         <Row type='flex' justify='center'>
-          <Col xs={4} sm={3} md={2} lg={2} xl={1} className='current-weather-icon'>
-            <WeatherIcon icon={weather.icon} size='4rem' />
+          <Col xs={3} sm={3} md={2} lg={2} xl={1} className='current-weather-icon'>
+            <WeatherIcon icon={weather.icon} size={!Utils.isMobile() ? '4rem' : '3rem'} />
           </Col>
           <Col xs={12} sm={8} md={6} lg={4} xl={4}>
             <div className='current-weather-summary'>

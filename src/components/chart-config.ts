@@ -8,7 +8,7 @@ import { Utils } from '../utils';
 import { Timezone } from './data-model';
 
 export const chartConfig: any = (units: string, timezone: Timezone, hourly: any) => {
-  const fontSize = 14;
+  const fontSize = Utils.isMobile() ? 10 : 14;
 
   const formatterXAxisLabel = (value: number, index: number) => {
     if (index === 0) {

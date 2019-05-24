@@ -113,6 +113,10 @@ body {
   font-size: 0.8rem;
 }
 
+.daily-forecast-sub-item-wrapper {
+  text-align: center;
+}
+
 .daily-forecast-sub-item-summary {
   font-size: 0.8rem;
   font-weight: 700;
@@ -185,6 +189,10 @@ body {
     font-weight: 700;
   }
 
+  .current-weather-icon {
+    margin: 0.5rem 1rem 0 0;
+  }
+
   .forecast-title {
     font-size: 1.4rem;
     font-weight: 500;
@@ -194,5 +202,14 @@ body {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     font-weight: 700;
+  }
+
+  #weather-chart-wrapper {
+    padding: 0 0.5rem;
+  }
+
+  .weather-chart {
+    height: 18rem;
+    width: 25rem;
   }
 }

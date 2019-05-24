@@ -32,7 +32,7 @@ export class HourlyForecast extends React.Component<any, any> {
 
     let chart = echarts.getInstanceByDom(divElement);
     if (!chart) {
-      chart = echarts.init(divElement, null, { renderer: 'canvas' });
+      chart = echarts.init(divElement);
     }
 
     chart.setOption(chartConfig(this.props.filter.units, this.props.timezone, this.props.hourlyForecast));

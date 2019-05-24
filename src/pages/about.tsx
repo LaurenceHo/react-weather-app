@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export const About = () => (
   <Row type='flex' justify='center' className='about-content'>
-    <Col span={14}>
+    <Col xs={23} sm={20} md={16} lg={14} xl={14} xxl={14}>
       <h1 className='text-center'>About</h1>
       <p>
         This is an open source weather web application using React, Redux, Typescript, Webpack4, Ant Design and D3v5.

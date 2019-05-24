@@ -18,29 +18,31 @@ export class DailyForecast extends React.Component<any, any> {
     const expandedRowRender = (data: Weather) => (
       <div>
         <Row>
-          <div className='daily-forecast-sub-item-summary'>{data.summary}</div>
+          <div className='daily-forecast-sub-item-wrapper'>
+            <div className='daily-forecast-sub-item-summary'>{data.summary}</div>
+          </div>
         </Row>
         <Row type='flex' justify='center'>
-          <Col span={8} lg={4} xl={4} xxl={4}>
+          <Col span={8} lg={4} xl={4} xxl={4} className='daily-forecast-sub-item-wrapper'>
             <div className='daily-forecast-sub-item-summary'>Sunrise</div>
             <div className='daily-forecast-item'>
               <i className='wi wi-sunrise' />
               <div>@{Utils.getLocalTime(data.sunriseTime, timezone.offset, 'HH:mm')}</div>
             </div>
           </Col>
-          <Col span={8} lg={4} xl={4} xxl={4}>
+          <Col span={8} lg={4} xl={4} xxl={4} className='daily-forecast-sub-item-wrapper'>
             <div className='daily-forecast-sub-item-summary'>Sunset</div>
             <div className='daily-forecast-item'>
               <i className='wi wi-sunset' />
               <div>@{Utils.getLocalTime(data.sunsetTime, timezone.offset, 'HH:mm')}</div>
             </div>
           </Col>
-          <Col span={8} lg={4} xl={4} xxl={4}>
+          <Col span={8} lg={4} xl={4} xxl={4} className='daily-forecast-sub-item-wrapper'>
             <div className='daily-forecast-sub-item-summary'>Moon</div>
             <MoonIcon moonPhase={data.moonPhase} latitude={timezone.latitude} size='1.8rem' />
           </Col>
           {!isMobile ? (
-            <Col span={6}>
+            <Col span={6} className='daily-forecast-sub-item-wrapper'>
               <div className='daily-forecast-sub-item-summary'>Rain</div>
               <div className='daily-forecast-item'>
                 {Utils.getRain(data.precipIntensity, data.precipProbability, filter.units)}
@@ -48,7 +50,7 @@ export class DailyForecast extends React.Component<any, any> {
             </Col>
           ) : null}
           {!isMobile ? (
-            <Col span={6}>
+            <Col span={6} className='daily-forecast-sub-item-wrapper'>
               <div className='daily-forecast-sub-item-summary'>Humidity</div>
               <div className='daily-forecast-item'>
                 {Math.round(data.humidity * 100)} <i className='wi wi-humidity' />
@@ -58,13 +60,13 @@ export class DailyForecast extends React.Component<any, any> {
         </Row>
         {isMobile ? (
           <Row type='flex' justify='center'>
-            <Col span={12}>
+            <Col span={12} className='daily-forecast-sub-item-wrapper'>
               <div className='daily-forecast-sub-item-summary'>Rain</div>
               <div className='daily-forecast-item'>
                 {Utils.getRain(data.precipIntensity, data.precipProbability, filter.units)}
               </div>
             </Col>
-            <Col span={12}>
+            <Col span={12} className='daily-forecast-sub-item-wrapper'>
               <div className='daily-forecast-sub-item-summary'>Humidity</div>
               <div className='daily-forecast-item'>
                 {Math.round(data.humidity * 100)} <i className='wi wi-humidity' />
