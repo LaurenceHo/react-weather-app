@@ -8,7 +8,7 @@ const GEOCODE_API_URL = GOOGLE_MAPS_API_URL + 'geocode/json?';
 const DARK_SKY_API_URL = 'https://api.darksky.net/forecast/' + apiKey.darkSky;
 
 const corsOptions = {
-  origin: 'https://react-beautiful-weather-app.firebaseapp.com',
+  origin: 'https://reactjs-weather.firebaseapp.com',
   optionsSuccessStatus: 200
   //origin: true
 };

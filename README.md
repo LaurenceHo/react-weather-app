@@ -1,4 +1,16 @@
-# A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, D3v5, ECharts and firebase.
+# ☀️🌤⛈❄️ A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, D3v5, ECharts and firebase.
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Write Your Own Google Cloud Functions](#google-cloud-function)
+- [Deploy to Firebase](#firebase)
+- [Webpack, Reactjs and TypeScript](#webpack-reactjs-and-typescript)
+- [TypeScript, Eslint and Prettier](#typescript-eslint-and-prettier)
+- [Ant Design](#ant-design)
+- [ECharts](#echarts)
+- [Windy API](#windy-api)
 
 ## Introduction
 This project demonstrates how to use React, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
@@ -9,16 +21,21 @@ my personal interest and previous project.
 Furthermore, this project also demonstrates how to deploy the web app to Google firebase, and use Google 
 cloud function serverless platform with React frontend app.
 
+## Live demo
+[React Weather App](https://reactjs-weather.firebaseapp.com)
+
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
 2. Google API Key
-3. Dark Sky weather API key
-4. Windy API key
+3. Google Firebase project
+4. Dark Sky weather API key
+5. Windy API key
 
 ## Getting Started
-* Clone the repo: `git clone https://github.com/LaurenceHo/reactjs-beautiful-weather.git`
+* Clone the repo: `git clone https://github.com/LaurenceHo/react-weather-app.git`
 * Install npm package: `npm install`
 * Put your google & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
+* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts)
 * Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](./src/pages/weather-map.tsx)
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
@@ -462,9 +479,6 @@ render() {
     return (<div id='windy' />);
 }
 ```
-
-## Live demo
-[https://react-beautiful-weather-app.firebaseapp.com/](https://react-beautiful-weather-app.firebaseapp.com/)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

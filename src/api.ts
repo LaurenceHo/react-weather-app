@@ -9,7 +9,7 @@ declare var process: {
   };
 };
 
-const CLOUD_FUNCTION_URL = 'https://us-central1-react-beautiful-weather-app.cloudfunctions.net/';
+const CLOUD_FUNCTION_URL = 'https://us-central1-reactjs-weather.cloudfunctions.net/';
 
 const checkStatus = (response: any): any => {
   if (response.status >= 200 && response.status < 300) {
