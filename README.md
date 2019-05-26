@@ -22,7 +22,7 @@ Furthermore, this project also demonstrates how to deploy the web app to Google 
 cloud function serverless platform with React frontend app.
 
 ## Live demo
-[React Weather App](https://reactjs-weather.firebaseapp.com)
+[React Weather App](https://reactjs-weather.web.app/)
 
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
