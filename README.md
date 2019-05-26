@@ -1,4 +1,4 @@
-# ☀️🌤⛈❄️ A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, D3v5, ECharts and firebase.
+# ☀️🌤⛈❄️ A weather web application using React, Redux, TypeScript, Webpack4, Ant Design, ECharts and firebase.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -26,7 +26,7 @@ cloud function serverless platform with React frontend app.
 
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
-2. Google API Key
+2. Google Geocoding API Key
 3. Google Firebase project
 4. Dark Sky weather API key
 5. Windy API key
@@ -34,14 +34,14 @@ cloud function serverless platform with React frontend app.
 ## Getting Started
 * Clone the repo: `git clone https://github.com/LaurenceHo/react-weather-app.git`
 * Install npm package: `npm install`
-* Put your google & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
-* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts)
+* Put your Google Geocoding API Key & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
+* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
 * Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](./src/pages/weather-map.tsx)
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 
 ## Write Your Own Google Cloud Functions:
-Please visit: https://cloud.google.com/functions/ for more detail
+Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
 
 ## Deploy to Firebase
 1. Run `npm run firebase-init`
