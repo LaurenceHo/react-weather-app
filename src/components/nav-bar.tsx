@@ -151,7 +151,7 @@ class NavBar extends React.Component<any, NavBarState> {
               shape='circle'
               icon='github'
               size='large'
-              href='https://github.com/LaurenceHo/reactjs-beautiful-weather'
+              href='https://github.com/LaurenceHo/react-weather-app'
             />
           </Col>
         </Row>

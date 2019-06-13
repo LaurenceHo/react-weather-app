@@ -85,7 +85,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     document.getElementById('weather-map-wrapper').appendChild(divElement);
 
     const options = {
-      key: 'aogrg1ghzDCKmHnhIi1zYnQgtZ6h1cUT',
+      key: 'bRpzkzPp38FdrEGhYHWBzBf8lT3mIPSw',
       lat: this.state.latitude,
       lon: this.state.longitude,
     };

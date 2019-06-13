@@ -412,6 +412,9 @@ module.exports = {
 ```
 We can look at [here](https://ant.design/docs/react/customize-theme) for getting the further detail.
 
+### TypeScript
+* Don't use @types/antd, as antd provides a built-in ts definition already.
+
 ## ECharts
 ### Getting Started
 `npm i echarts -S` and `npm i -D @types/echarts`
@@ -428,10 +431,6 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/toolbox';
 ```
-
-### TypeScript
-* Don't use @types/antd, as antd provides a built-in ts definition already. Also only use TypeScript 2.9.2 this moment,
-because ant design doesn't support TypeScript 3+.
 
 ## Windy API
 Since I put the protection for my Windy API, only the allowed domain name can use this API key. Windy API is free, 

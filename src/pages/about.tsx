@@ -11,8 +11,8 @@ export const About = () => (
       </p>
       <p>
         Source code:
-        <a href='https://github.com/LaurenceHo/reactjs-beautiful-weather'>GitHub</a> and
-        <a href='https://bitbucket.org/LaurenceHo/reactjs-beautiful-weather'>BitBucket</a>
+        <a href='https://github.com/LaurenceHo/react-weather-app'>GitHub</a> and
+        <a href='https://bitbucket.org/LaurenceHo/react-weather-app'>BitBucket</a>
       </p>
       <p>Here are most important libraries (dependencies) I used:</p>
       <ul>
