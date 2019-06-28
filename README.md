@@ -60,7 +60,7 @@ When using webpack, we need a bunch of loaders to parse the specific file types.
 `css-loader` for css files, `file-loader` for pictures...etc.
 
 Before starting using webpack with TypeScript, we at least need to install the following plugins:
-`npm i -D css-loader file-loader html-webpack-plugin source-map-loader style-loader ts-loader typescript url-loader webpack webpack-cli`
+`npm i -D css-loader file-loader html-webpack-plugin source-map-loader style-loader ts-loader typescript webpack webpack-cli`
 
 In the [webpack.common.js](config/webpack.common.js) file, setup the entry point at first:
 ```
@@ -101,13 +101,9 @@ Then setup the loaders:
         use: [ 'file-loader' ]
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [ 'url-loader?limit=10000&mimetype=application/font-woff' ]
+        test: /\.(ttf|eot|svg|woff|woff2)(\?.+)?$/,
+        loader: 'file-loader?name=[hash:12].[ext]',
       },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [ 'file-loader' ]
-      }
     ]
   }
 }
