@@ -127,12 +127,14 @@ class NavBar extends React.Component<any, NavBarState> {
               <Menu.Item key='weather'>{weatherLink}</Menu.Item>
               <Menu.Item key='map'>{weatherMapLink}</Menu.Item>
               <Menu.Item key='about'>{aboutLink}</Menu.Item>
-              <Menu.Item
-                key='d3_demo_app'
-                onClick={() => {
-                  store.dispatch(push('/d3_demo_app'));
-                }}>
-                <Link to='/d3_demo_app'>D3 Demo</Link>
+              <Menu.Item key='d3_demo_app'>
+                <Link
+                  to='/d3_demo_app'
+                  onClick={() => {
+                    store.dispatch(push('/d3_demo_app'));
+                  }}>
+                  D3 Demo
+                </Link>
               </Menu.Item>
             </Menu>
           </Col>

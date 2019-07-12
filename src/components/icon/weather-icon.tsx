@@ -3,12 +3,13 @@ import * as Condition from '../../constants/weather-condition';
 
 interface WeatherIconProps {
   icon: string;
-  size: string;
+  size?: string;
 }
 
 export class WeatherIcon extends React.Component<WeatherIconProps, any> {
   render() {
     const { icon, size } = this.props;
+    let defaultSize = !size ? '1rem' : size;
 
     const renderIcon = () => {
       if (icon === Condition.CLEAR_DAY) {
@@ -36,6 +37,6 @@ export class WeatherIcon extends React.Component<WeatherIconProps, any> {
       }
     };
 
-    return <div style={{ fontSize: size }}>{renderIcon()}</div>;
+    return <span style={{ fontSize: defaultSize }}>{renderIcon()}</span>;
   }
 }

@@ -9,6 +9,7 @@ import { Utils } from '../utils';
 import { Weather } from './data-model';
 import { MoonIcon } from './icon/moon-icon';
 import { WeatherIcon } from './icon/weather-icon';
+import { WindIcon } from './icon/wind-icon';
 
 export class DailyForecast extends React.Component<any, any> {
   render() {
@@ -110,7 +111,7 @@ export class DailyForecast extends React.Component<any, any> {
           title='Low'
           key='temperatureLow'
           align='center'
-          width='8rem'
+          width='7rem'
           render={(text, data: any) => (
             <div className='daily-forecast-item'>
               {Utils.getTemperature(data.temperatureLow, filter.units)}
@@ -122,11 +123,22 @@ export class DailyForecast extends React.Component<any, any> {
           title='High'
           key='temperatureHigh'
           align='center'
-          width='8rem'
+          width='7rem'
           render={(text, data: any) => (
             <div className='daily-forecast-item'>
               {Utils.getTemperature(data.temperatureHigh, filter.units)}
               <div>@{Utils.getLocalTime(data.temperatureHighTime, timezone.offset, 'ha')}</div>
+            </div>
+          )}
+        />
+        <Column
+          title='Wind'
+          key='windSpeed'
+          align='center'
+          width='7rem'
+          render={(text, data: any) => (
+            <div className='daily-forecast-item'>
+              {Utils.getWindSpeed(data.windSpeed, filter.units)} <WindIcon size='1.2rem' degree={data.windBearing} />
             </div>
           )}
         />

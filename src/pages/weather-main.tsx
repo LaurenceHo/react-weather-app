@@ -101,8 +101,8 @@ class WeatherMain extends React.Component<any, any> {
       <div>
         {isLoading ? (
           <Row type='flex' justify='center' className='fetching-weather-content'>
-            <h2>Fetching weather</h2>
             <Spin className='fetching-weather-spinner' size='large' />
+            <h2>Loading...</h2>
           </Row>
         ) : (
           renderWeatherAndForecast()
