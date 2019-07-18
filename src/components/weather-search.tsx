@@ -1,4 +1,5 @@
 import Input from 'antd/lib/input';
+import { ChangeEvent } from 'react';
 import * as React from 'react';
 
 const Search = Input.Search;
@@ -17,7 +18,7 @@ export class WeatherSearch extends React.Component<WeatherSearchProps, WeatherSe
     location: '',
   };
 
-  handleChange = (event: any) => {
+  handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = event.target.value;
     this.setState({ location: value });
   };

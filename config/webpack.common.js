@@ -12,7 +12,7 @@ module.exports = {
   },
   resolve: {
     modules: [path.join(__dirname, '../dist'), 'node_modules'],
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
