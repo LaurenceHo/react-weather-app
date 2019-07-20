@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 
 module.exports = {
-  entry: ['./src/index.tsx', 'whatwg-fetch'],
+  entry: ['./src/index.tsx'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',

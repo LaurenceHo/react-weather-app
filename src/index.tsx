@@ -13,7 +13,6 @@ import 'antd/lib/spin/style/css';
 import 'antd/lib/table/style/css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import 'whatwg-fetch';
 import './css/index.css';
 import { App } from './pages/app';
 

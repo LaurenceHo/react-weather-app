@@ -13,7 +13,7 @@
 - [Windy API](#windy-api)
 
 ## Introduction
-This project demonstrates how to use React, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
+This project demonstrates how to use ReactJS, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
 D3v5 and [ECharts](https://echarts.apache.org/index.html). 
 It is also including two kinds of D3 force simulation demonstrations along with gauge, which is based on 
 my personal interest and previous project. 
@@ -52,8 +52,8 @@ Please visit: [Google Cloud Functions](https://firebase.google.com/docs/function
 6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
 ## Webpack, Reactjs and TypeScript
-Although there is `create-react-app` toolkit to create react project very easily and quickly, I personally love creating 
-the react project by using webpack from the beginning. Also configure the project a bit by bit manually. It helps me to 
+Although there is `create-react-app` toolkit to create ReactJS project very easily and quickly, I personally love creating 
+the ReactJS project by using webpack from the beginning. Also configure the project a bit by bit manually. It helps me to 
 understand how these things work together.
 
 When using webpack, we need a bunch of loaders to parse the specific file types. For example, `ts-loader` for Typescript,
@@ -65,7 +65,7 @@ Before starting using webpack with TypeScript, we at least need to install the f
 In the [webpack.common.js](config/webpack.common.js) file, setup the entry point at first:
 ```
 module.exports = {
-  entry: ['./src/index.tsx', 'whatwg-fetch'],
+  entry: ['./src/index.tsx'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
@@ -142,17 +142,16 @@ Then setup the plugins:
 }
 ```
 
-### Webpack Dev Server and Hot Module Replacement Plugin
+### Webpack Dev Server and Hot Module Replacement
 When we do frontend development, we want the browser reloading the content automatically when we make changes. To achieve this, 
-we need `HotModuleReplacementPlugin`and `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
+we need `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
 In the [webpack.dev.js](config/webpack.dev.js), since we want to merge the common setting, we need `webpack-merge` library along 
-with `HotModuleReplacementPlugin` for browser reloading:
+with `WebpackDevServer` for browser reloading:
 ```
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -164,7 +163,6 @@ module.exports = merge(common, {
     inline: true,
   },
   plugins: [
-    new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
@@ -191,7 +189,7 @@ as much as possible, we need to install some plugins for helping us: `npm i -D t
 `CleanWebpackPlugin` to clean the build folder (dist) before building code, as well as `MiniCssExtractPlugin` for extracting 
 CSS files. Therefore, in the [webpack.prod.js](config/webpack.prod.js), we use above plugins to bundle code:
 ```
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
@@ -260,7 +258,7 @@ Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` t
 }
 ```
 
-Because we use Reactjs, we also need to set the `parserOptions` property:
+Because we use ReactJS, we also need to set the `parserOptions` property:
 ```
 {
   "parserOptions": {
@@ -283,7 +281,7 @@ Append `react` to the `plugins` section:
 }
 ```
 
-Indicate the reactjs version, add `settings` property:
+Indicate the ReactJS version, add `settings` property:
 ```
 {
   "settings": {
