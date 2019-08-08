@@ -36,7 +36,7 @@ cloud function serverless platform with React frontend app.
 * Install npm package: `npm install`
 * Put your Google Geocoding API Key & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
 * Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
-* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](./src/pages/weather-map.tsx)
+* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 
@@ -446,7 +446,7 @@ declare var windyInit: any;
 declare var L: any;
 ```
 After that, we can use `windyInit` and `L` these 2 parameters directly without importing module into TypeScript file.
-In [`weather-map.tsx`](./src/pages/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
+In [`weather-map.tsx`](src/views/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
 ```
 const options = {
     // Required: API key
