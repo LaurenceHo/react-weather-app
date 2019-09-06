@@ -2,10 +2,9 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/tooltip';
-
 import { map } from 'lodash';
+import { Timezone } from '../constants/types';
 import { Utils } from '../utils';
-import { Timezone } from './data-model';
 
 export const chartConfig: any = (units: string, timezone: Timezone, hourly: any) => {
   const fontSize = Utils.isMobile() ? 10 : 14;

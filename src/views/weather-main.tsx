@@ -2,14 +2,13 @@ import Alert from 'antd/lib/alert';
 import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
 import Spin from 'antd/lib/spin';
-
 import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { getForecast, getGeocode, getWeather } from '../api';
-import { Forecast, Timezone, Weather } from '../components/data-model';
+import { USE_DEFAULT_LOCATION } from '../constants/message';
+import { Forecast, Timezone, Weather } from '../constants/types';
 import {
   fetchingData,
   fetchingDataFailure,
@@ -21,7 +20,6 @@ import {
   setWeather,
 } from '../store/actions';
 import { WeatherContainer } from './weather-container';
-import { USE_DEFAULT_LOCATION } from '../constants/message';
 
 const EXCLUDE = 'flags,minutely';
 

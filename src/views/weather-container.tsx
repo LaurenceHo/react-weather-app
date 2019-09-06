@@ -3,14 +3,12 @@ import CurrentWeather from '../components/current-weather';
 import DailyForecast from '../components/daily-forecast';
 import HourlyForecast from '../components/hourly-forecast';
 
-export class WeatherContainer extends React.Component<any, any> {
-  render() {
-    return (
-      <div>
-        <CurrentWeather />
-        <HourlyForecast />
-        <DailyForecast />
-      </div>
-    );
-  }
-}
+export const WeatherContainer: React.FC = () => {
+  return (
+    <div>
+      <CurrentWeather />
+      <HourlyForecast />
+      <DailyForecast />
+    </div>
+  );
+};

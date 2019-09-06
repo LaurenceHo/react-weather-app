@@ -1,6 +1,6 @@
 import Input from 'antd/lib/input';
-import { ChangeEvent } from 'react';
 import * as React from 'react';
+import { ChangeEvent } from 'react';
 
 const Search = Input.Search;
 

@@ -4,9 +4,8 @@ import Table from 'antd/lib/table';
 import Column from 'antd/lib/table/Column';
 import * as React from 'react';
 import { connect } from 'react-redux';
-
+import { Weather } from '../constants/types';
 import { Utils } from '../utils';
-import { Weather } from './data-model';
 import { MoonIcon } from './icon/moon-icon';
 import { WeatherIcon } from './icon/weather-icon';
 import { WindIcon } from './icon/wind-icon';

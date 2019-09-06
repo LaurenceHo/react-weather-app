@@ -2,11 +2,9 @@ import Alert from 'antd/lib/alert';
 import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
 import Spin from 'antd/lib/spin';
-
 import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 
@@ -118,6 +116,29 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     });
   };
 
+  render() {
+    return (
+      <div>
+        {this.state.isLoading ? (
+          <Row type='flex' justify='center' className='fetching-weather-content'>
+            <h2>Fetching location</h2>
+            <Spin className='fetching-weather-spinner' size='large' />
+          </Row>
+        ) : !isEmpty(this.state.error) ? (
+          <div>
+            <Row type='flex' justify='center' className='fetching-weather-content'>
+              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
+                <Alert message='Error' description={this.state.error} type='error' showIcon={true} />
+              </Col>
+            </Row>
+          </div>
+        ) : (
+          <div id='weather-map-wrapper' />
+        )}
+      </div>
+    );
+  }
+
   private fetchLatitudeAndLongitude(lat: number, lon: number, city: string) {
     if (lat !== 0 && lon !== 0) {
       this.setState({
@@ -155,29 +176,6 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     setTimeout(() => {
       this.fetchLatitudeAndLongitude(-36.8484597, 174.7633315, 'Auckland');
     }, 5000);
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.isLoading ? (
-          <Row type='flex' justify='center' className='fetching-weather-content'>
-            <h2>Fetching location</h2>
-            <Spin className='fetching-weather-spinner' size='large' />
-          </Row>
-        ) : !isEmpty(this.state.error) ? (
-          <div>
-            <Row type='flex' justify='center' className='fetching-weather-content'>
-              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
-                <Alert message='Error' description={this.state.error} type='error' showIcon={true} />
-              </Col>
-            </Row>
-          </div>
-        ) : (
-          <div id='weather-map-wrapper' />
-        )}
-      </div>
-    );
   }
 }
 

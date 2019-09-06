@@ -2,7 +2,7 @@ import Col from 'antd/lib/col';
 import Row from 'antd/lib/row';
 import * as React from 'react';
 
-export const About = () => (
+export const About: React.FC = () => (
   <Row type='flex' justify='center' className='about-content'>
     <Col xs={23} sm={20} md={16} lg={14} xl={14} xxl={14}>
       <h1 className='text-center'>About</h1>

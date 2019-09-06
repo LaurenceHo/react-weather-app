@@ -1,9 +1,9 @@
+import { Forecast } from './constants/types';
 import location from '../sample/location.json';
 import weatherSi from '../sample/weather-si.json';
 import weatherUs from '../sample/weather-us.json';
-import { Forecast } from './components/data-model';
 
-declare var process: {
+declare let process: {
   env: {
     NODE_ENV: string;
   };

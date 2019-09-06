@@ -7,14 +7,12 @@ import Menu from 'antd/lib/menu';
 import Popover from 'antd/lib/popover';
 import Row from 'antd/lib/row';
 import Select from 'antd/lib/select';
-
 import { push } from 'connected-react-router';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-
 import store from '../store';
 import { setFilter } from '../store/actions';
 import { Utils } from '../utils';
@@ -57,7 +55,7 @@ class NavBar extends React.Component<any, NavBarState> {
   };
 
   render() {
-    let path = this.props.path.substring(1) === '' ? 'weather' : this.props.path.substring(1);
+    const path = this.props.path.substring(1) === '' ? 'weather' : this.props.path.substring(1);
 
     const weatherLink = (
       <Link
