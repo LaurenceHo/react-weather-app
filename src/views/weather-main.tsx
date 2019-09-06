@@ -71,8 +71,11 @@ class WeatherMain extends React.Component<any, any> {
       };
 
       const handleError = (error: any) => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
-
-      navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+      if (process.env.NODE_ENV === 'development') {
+        this.searchByDefaultLocation(USE_DEFAULT_LOCATION);
+      } else {
+        navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+      }
     }
   }
 

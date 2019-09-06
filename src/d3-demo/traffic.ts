@@ -42,8 +42,8 @@ export class TrafficService {
   responseTimes: any[] = [];
   requests: any[] = [];
   svg: any = {};
-  width: number = 0;
-  lastUpdate: string = '';
+  width = 0;
+  lastUpdate = '';
 
   constructor(svg: any, width: number) {
     this.svg = svg;

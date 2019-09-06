@@ -22,7 +22,7 @@ export class D3DemoApp extends React.Component<any, any> {
   node: any = {};
   trafficService: any = {};
   requests: any[] = [];
-  isActive: boolean = true;
+  isActive = true;
   intervalId: NodeJS.Timer;
   powerGauge: Gauge = null;
 

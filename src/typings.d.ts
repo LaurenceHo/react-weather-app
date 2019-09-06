@@ -3,5 +3,5 @@ declare module '*.json' {
   export default value;
 }
 
-declare var windyInit: any;
-declare var L: any;
+declare let windyInit: any;
+declare let L: any;

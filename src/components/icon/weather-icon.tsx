@@ -9,7 +9,7 @@ interface WeatherIconProps {
 export class WeatherIcon extends React.Component<WeatherIconProps, any> {
   render() {
     const { icon, size } = this.props;
-    let defaultSize = !size ? '1rem' : size;
+    const defaultSize = !size ? '1rem' : size;
 
     const renderIcon = () => {
       if (icon === Condition.CLEAR_DAY) {

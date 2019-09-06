@@ -9,7 +9,7 @@ interface WindIconProps {
 export class WindIcon extends React.Component<WindIconProps, any> {
   render() {
     const { degree, size } = this.props;
-    let defaultSize = !size ? '1rem' : size;
+    const defaultSize = !size ? '1rem' : size;
 
     const windCode = Math.round(degree / 22.5);
 
