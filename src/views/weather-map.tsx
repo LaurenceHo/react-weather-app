@@ -7,17 +7,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
-
-interface WeatherMapState {
-  latitude: number;
-  longitude: number;
-  location: string;
-  error: string;
-  isLoading: boolean;
-}
+import { RootState, WeatherMapState } from '../constants/types';
 
 class WeatherMap extends React.Component<any, WeatherMapState> {
-  state = {
+  state: WeatherMapState = {
     latitude: 0,
     longitude: 0,
     location: '',
@@ -179,7 +172,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     filter: state.weather.filter,
     location: state.weather.location,

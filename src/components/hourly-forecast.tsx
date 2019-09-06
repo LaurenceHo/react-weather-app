@@ -2,7 +2,7 @@ import Row from 'antd/lib/row';
 import * as echarts from 'echarts/lib/echarts';
 import * as React from 'react';
 import { connect } from 'react-redux';
-
+import { RootState } from '../constants/types';
 import { chartConfig } from './chart-config';
 
 export class HourlyForecast extends React.Component<any, any> {
@@ -51,7 +51,7 @@ export class HourlyForecast extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     isLoading: state.weather.isLoading,
     filter: state.weather.filter,

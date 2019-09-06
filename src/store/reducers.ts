@@ -1,6 +1,7 @@
+import { ForecastState } from '../constants/types';
 import * as ACTION from './actions';
 
-const initialState = {
+const initialState: ForecastState = {
   isLoading: false,
   filter: {
     units: 'si',
@@ -8,10 +9,10 @@ const initialState = {
     timestamp: 0,
   },
   location: '',
-  timezone: {},
-  weather: {},
-  hourlyForecast: {},
-  dailyForecast: {},
+  timezone: null,
+  weather: null,
+  hourlyForecast: null,
+  dailyForecast: null,
   error: '',
 };
 

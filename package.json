@@ -1,8 +1,7 @@
 {
   "name": "react-weather-app",
-  "version": "3.3.3",
-  "description": "react-weather-app",
-  "main": "index.js",
+  "version": "3.3.4",
+  "description": "React Weather App",
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack.dev.js --progress --profile --watch --open",
     "build": "npm run lint && webpack --config ./config/webpack.prod.js --progress --profile --bail",
@@ -45,7 +44,8 @@
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/d3": "^5.7.2",

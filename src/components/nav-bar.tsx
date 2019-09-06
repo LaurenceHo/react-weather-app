@@ -13,6 +13,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import { NavBarState, RootState } from '../constants/types';
 import store from '../store';
 import { setFilter } from '../store/actions';
 import { Utils } from '../utils';
@@ -21,13 +22,8 @@ import { WeatherSearch } from './weather-search';
 const Option = Select.Option;
 const { Header } = Layout;
 
-interface NavBarState {
-  location: string;
-  timestamp: number;
-}
-
 class NavBar extends React.Component<any, NavBarState> {
-  state = {
+  state: NavBarState = {
     location: '',
     timestamp: 0,
   };
@@ -187,7 +183,7 @@ class NavBar extends React.Component<any, NavBarState> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     isLoading: state.weather.isLoading,
     filter: state.weather.filter,

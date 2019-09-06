@@ -4,7 +4,7 @@ import Table from 'antd/lib/table';
 import Column from 'antd/lib/table/Column';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Weather } from '../constants/types';
+import { RootState, Weather } from '../constants/types';
 import { Utils } from '../utils';
 import { MoonIcon } from './icon/moon-icon';
 import { WeatherIcon } from './icon/weather-icon';
@@ -162,7 +162,7 @@ export class DailyForecast extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     filter: state.weather.filter,
     timezone: state.weather.timezone,

@@ -32,7 +32,7 @@ export class App extends React.Component<any, any> {
                   <Route render={() => <div>Page not found!</div>} />
                 </Switch>
               </Content>
-              <Footer className='footer'>©2019 Developed by Laurence Ho, v3.3.3</Footer>
+              <Footer className='footer'>©2019 Developed by Laurence Ho, v3.3.4</Footer>
             </div>
           </Router>
         </ConnectedRouter>
