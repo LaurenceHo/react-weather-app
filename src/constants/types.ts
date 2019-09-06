@@ -66,3 +66,17 @@ export interface Forecast {
   flags: any;
   offset: number;
 }
+
+export interface ToolTipType {
+  display: boolean;
+  data: {
+    key: string;
+    group: string;
+    description?: string;
+  };
+  type: 'network' | 'app';
+  pos?: {
+    x: number;
+    y: number;
+  };
+}

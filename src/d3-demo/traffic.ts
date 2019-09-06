@@ -2,6 +2,25 @@ import * as d3 from 'd3';
 import { find } from 'lodash';
 
 export class TrafficService {
+  c10 = d3.scaleOrdinal(d3.schemeCategory10);
+  slowest = 0;
+  slowestMax = 0;
+  scaleMax = d3
+    .scaleLinear()
+    .domain([0, 0])
+    .range([2, 175]);
+  statusCodes: any[] = [];
+  responseTimes: any[] = [];
+  requests: any[] = [];
+  svg: any = {};
+  width = 0;
+  lastUpdate = '';
+
+  constructor(svg: any, width: number) {
+    this.svg = svg;
+    this.width = width;
+  }
+
   static overlay() {
     const el = document.getElementById('overlay');
     el.style.visibility = el.style.visibility === 'visible' ? 'hidden' : 'visible';
@@ -29,25 +48,6 @@ export class TrafficService {
         return '<span class="' + cls + '">' + match + '</span>';
       }
     );
-  }
-
-  c10 = d3.scaleOrdinal(d3.schemeCategory10);
-  slowest = 0;
-  slowestMax = 0;
-  scaleMax = d3
-    .scaleLinear()
-    .domain([0, 0])
-    .range([2, 175]);
-  statusCodes: any[] = [];
-  responseTimes: any[] = [];
-  requests: any[] = [];
-  svg: any = {};
-  width = 0;
-  lastUpdate = '';
-
-  constructor(svg: any, width: number) {
-    this.svg = svg;
-    this.width = width;
   }
 
   viewHits(nodes: any[], hits: any[], isActive: boolean) {

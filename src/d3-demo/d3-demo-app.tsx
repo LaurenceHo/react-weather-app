@@ -23,14 +23,8 @@ export class D3DemoApp extends React.Component<any, any> {
   trafficService: any = {};
   requests: any[] = [];
   isActive = true;
-  intervalId: NodeJS.Timer;
+  intervalId = 0;
   powerGauge: Gauge = null;
-
-  getNode(name: string) {
-    return this.nodes.find(node => {
-      return name === node.name;
-    });
-  }
 
   constructor(props: any) {
     super(props);
@@ -72,6 +66,12 @@ export class D3DemoApp extends React.Component<any, any> {
         })
       )
       .force('center', forceCenter(this.width / 2, this.height / 2));
+  }
+
+  getNode(name: string) {
+    return this.nodes.find(node => {
+      return name === node.name;
+    });
   }
 
   componentDidMount() {
@@ -235,7 +235,7 @@ export class D3DemoApp extends React.Component<any, any> {
 
     processData();
 
-    this.intervalId = setInterval(() => processData(), 5000);
+    this.intervalId = window.setInterval(() => processData(), 5000);
   }
 
   componentWillUnmount() {
