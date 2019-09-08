@@ -10,7 +10,7 @@ const initialState: ForecastState = {
   },
   location: '',
   timezone: null,
-  weather: null,
+  currentWeather: null,
   hourlyForecast: null,
   dailyForecast: null,
   error: '',
@@ -56,10 +56,10 @@ export const reducers = (state: any = initialState, action: any) => {
         timezone: action.timezone,
       };
 
-    case ACTION.SET_WEATHER:
+    case ACTION.SET_CURRENT_WEATHER:
       return {
         ...state,
-        weather: action.weather,
+        currentWeather: action.currentWeather,
       };
 
     case ACTION.SET_HOURLY_FORECAST:

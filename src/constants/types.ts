@@ -1,5 +1,11 @@
 import { RouterState } from 'connected-react-router';
 
+export interface Filter {
+  units: 'si' | 'us';
+  location: string;
+  timestamp: number;
+}
+
 export interface Timezone {
   timezone: string;
   offset: number;
@@ -84,16 +90,20 @@ export interface WeatherMapState {
 
 export interface ForecastState {
   isLoading: boolean;
-  filter: {
-    units: 'si' | 'us';
-    location: string;
-    timestamp: number;
-  };
+  filter: Filter;
   location: string;
   timezone: Timezone;
-  weather: Weather;
-  hourlyForecast: Weather;
-  dailyForecast: Weather;
+  currentWeather: Weather;
+  hourlyForecast: {
+    summary: string;
+    icon: string;
+    data: Weather[];
+  };
+  dailyForecast: {
+    summary: string;
+    icon: string;
+    data: Weather[];
+  };
   error: string;
 }
 

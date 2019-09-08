@@ -7,10 +7,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getGeocode } from '../api';
+import { CurrentWeather } from '../components/current-weather';
+import { DailyForecast } from '../components/daily-forecast';
+import { HourlyForecast } from '../components/hourly-forecast';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 import { RootState } from '../constants/types';
 import { fetchingDataFailure, getWeatherData } from '../store/actions';
-import { WeatherContainer } from './weather-container';
 
 class WeatherMain extends React.Component<any, any> {
   componentDidUpdate(prevProps: any) {
@@ -35,7 +37,7 @@ class WeatherMain extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    if (isEmpty(this.props.location) && isEmpty(this.props.weather) && isEmpty(this.props.forecast)) {
+    if (isEmpty(this.props.location) && isEmpty(this.props.currentWeather) && isEmpty(this.props.forecast)) {
       // Get user's coordinates when user access the web app, it will ask user's location permission
       const options = {
         enableHighAccuracy: true,
@@ -63,7 +65,7 @@ class WeatherMain extends React.Component<any, any> {
   }
 
   render() {
-    const { weather, location, isLoading, error } = this.props;
+    const { currentWeather, location, isLoading, error } = this.props;
 
     const renderWeatherAndForecast = () => {
       if (error) {
@@ -76,8 +78,27 @@ class WeatherMain extends React.Component<any, any> {
             </Row>
           </div>
         );
-      } else if (weather && location) {
-        return <WeatherContainer />;
+      } else if (currentWeather && location) {
+        return (
+          <div>
+            <CurrentWeather
+              location={this.props.location}
+              filter={this.props.filter}
+              timezone={this.props.timezone}
+              currentWeather={this.props.currentWeather}
+            />
+            <HourlyForecast
+              filter={this.props.filter}
+              timezone={this.props.timezone}
+              hourlyForecast={this.props.hourlyForecast}
+            />
+            <DailyForecast
+              filter={this.props.filter}
+              timezone={this.props.timezone}
+              dailyForecast={this.props.dailyForecast}
+            />
+          </div>
+        );
       }
     };
 
@@ -113,7 +134,7 @@ const mapStateToProps = (state: RootState) => {
     filter: state.weather.filter,
     location: state.weather.location,
     timezone: state.weather.timezone,
-    weather: state.weather.weather,
+    currentWeather: state.weather.currentWeather,
     hourlyForecast: state.weather.hourlyForecast,
     dailyForecast: state.weather.dailyForecast,
     error: state.weather.error,

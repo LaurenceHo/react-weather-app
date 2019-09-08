@@ -11,7 +11,7 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_LOCATION = 'SET_LOCATION';
 export const SET_TIMEZONE = 'SET_TIMEZONE';
 
-export const SET_WEATHER = 'SET_WEATHER';
+export const SET_CURRENT_WEATHER = 'SET_CURRENT_WEATHER';
 export const SET_HOURLY_FORECAST = 'SET_HOURLY_FORECAST';
 export const SET_DAILY_FORECAST = 'SET_DAILY_FORECAST';
 
@@ -36,10 +36,10 @@ const setTimezone = (timezone: any) => {
   };
 };
 
-const setWeather = (weather: any) => {
+const setCurrentWeather = (currentWeather: any) => {
   return {
-    type: SET_WEATHER,
-    weather,
+    type: SET_CURRENT_WEATHER,
+    currentWeather,
   };
 };
 
@@ -92,7 +92,7 @@ export const getWeatherData = (lat: number, lon: number, city: string) => {
         getForecast(lat, lon, getState().weather.filter.timestamp, EXCLUDE, getState().weather.filter.units)
           .then((results: Forecast) => {
             dispatch(setLocation(city));
-            dispatch(setWeather(results.currently));
+            dispatch(setCurrentWeather(results.currently));
             dispatch(setHourlyForecast(results.hourly));
             dispatch(setDailyForecast(results.daily));
             dispatch(fetchingDataSuccess());
@@ -109,7 +109,7 @@ export const getWeatherData = (lat: number, lon: number, city: string) => {
             };
             dispatch(setLocation(city));
             dispatch(setTimezone(timezone));
-            dispatch(setWeather(results.currently));
+            dispatch(setCurrentWeather(results.currently));
             dispatch(setHourlyForecast(results.hourly));
             dispatch(setDailyForecast(results.daily));
             dispatch(fetchingDataSuccess());
