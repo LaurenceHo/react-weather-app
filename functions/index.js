@@ -71,7 +71,7 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
 
 exports.getWeather = functions.https.onRequest((req, res) => {
   let params = `${req.query.lat},${req.query.lon}`;
-  if (req.query.time) {
+  if (req.query.time && req.query.time > 0) {
     params = `${params},${req.query.time}`;
   }
   let requestUrl = `${DARK_SKY_API_URL}/${params}`;

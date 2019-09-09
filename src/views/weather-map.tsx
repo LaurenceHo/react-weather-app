@@ -26,7 +26,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
   }
 
   componentDidMount() {
-    const { latitude, longitude } = this.props.timezone;
+    const { latitude, longitude } = this.props.timezone || {};
 
     if (isUndefined(latitude) || isUndefined(longitude)) {
       this.setState({ isLoading: true });
@@ -55,7 +55,11 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
 
       const handleError = (error: any) => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
 
-      navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+      if (process.env.NODE_ENV === 'development') {
+        this.searchByDefaultLocation(USE_DEFAULT_LOCATION);
+      } else {
+        navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
+      }
     } else {
       this.setState({ latitude, longitude, location: this.props.location });
       this.renderMap();
@@ -66,9 +70,7 @@ class WeatherMap extends React.Component<any, WeatherMapState> {
     try {
       const weatherMap = document.getElementById('windy');
       weatherMap.parentNode.removeChild(weatherMap);
-    } catch (err) {
-      console.log('blahblah');
-    }
+    } catch (err) {}
 
     const divElement: HTMLDivElement = document.createElement('div');
     divElement.setAttribute('id', 'windy');

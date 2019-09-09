@@ -31,17 +31,6 @@ export const getGeocode = (latitude: number, longitude: number, address: string)
     .catch((error: any) => console.error('request failed', error));
 };
 
-export const getWeather = (latitude: number, longitude: number, exclude: string, units: string): Promise<Forecast> => {
-  const requestUrl =
-    `${CLOUD_FUNCTION_URL}getWeather?lat=${latitude}&lon=${longitude}&` +
-    `exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
-  return fetch(requestUrl)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((data: any) => data)
-    .catch((error: any) => console.error('request failed', error));
-};
-
 export const getWeatherByTime = (
   latitude: number,
   longitude: number,

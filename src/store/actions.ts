@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { getWeatherByTime, getGeocode, getWeather } from '../api';
+import { getWeatherByTime, getGeocode } from '../api';
 import { Forecast, RootState, Timezone } from '../constants/types';
 
 export const FETCHING_DATA = 'FETCHING_DATA';
@@ -88,34 +88,22 @@ export const getWeatherData = (lat: number, lon: number, city: string) => {
   return (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: any) => {
     dispatch(fetchingData());
     if (lat !== 0 && lon !== 0) {
-      if (getState().weather.filter.timestamp !== 0) {
-        getWeatherByTime(lat, lon, getState().weather.filter.timestamp, EXCLUDE, getState().weather.filter.units)
-          .then((results: Forecast) => {
-            dispatch(setLocation(city));
-            dispatch(setCurrentWeather(results.currently));
-            dispatch(setHourlyForecast(results.hourly));
-            dispatch(setDailyForecast(results.daily));
-            dispatch(fetchingDataSuccess());
-          })
-          .catch(error => dispatch(fetchingDataFailure(error)));
-      } else {
-        getWeather(lat, lon, EXCLUDE, getState().weather.filter.units)
-          .then((results: Forecast) => {
-            const timezone: Timezone = {
-              timezone: results.timezone,
-              offset: results.offset,
-              latitude: results.latitude,
-              longitude: results.longitude,
-            };
-            dispatch(setLocation(city));
-            dispatch(setTimezone(timezone));
-            dispatch(setCurrentWeather(results.currently));
-            dispatch(setHourlyForecast(results.hourly));
-            dispatch(setDailyForecast(results.daily));
-            dispatch(fetchingDataSuccess());
-          })
-          .catch(error => dispatch(fetchingDataFailure(error)));
-      }
+      getWeatherByTime(lat, lon, getState().weather.filter.timestamp, EXCLUDE, getState().weather.filter.units)
+        .then((results: Forecast) => {
+          const timezone: Timezone = {
+            timezone: results.timezone,
+            offset: results.offset,
+            latitude: results.latitude,
+            longitude: results.longitude,
+          };
+          dispatch(setLocation(city));
+          dispatch(setTimezone(timezone));
+          dispatch(setCurrentWeather(results.currently));
+          dispatch(setHourlyForecast(results.hourly));
+          dispatch(setDailyForecast(results.daily));
+          dispatch(fetchingDataSuccess());
+        })
+        .catch(error => dispatch(fetchingDataFailure(error)));
     } else {
       // Get coordinates by city at first, after that get the weather and forecast info by coordinates
       getGeocode(null, null, city)
