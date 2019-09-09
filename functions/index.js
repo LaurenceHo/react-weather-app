@@ -70,44 +70,23 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
 });
 
 exports.getWeather = functions.https.onRequest((req, res) => {
-  const params = req.query.lat + ',' + req.query.lon;
+  let params = `${req.query.lat},${req.query.lon}`;
+  if (req.query.time) {
+    params = `${params},${req.query.time}`;
+  }
   let requestUrl = `${DARK_SKY_API_URL}/${params}`;
 
   if (req.query.exclude) {
-    requestUrl = requestUrl + `?exclude=${req.query.exclude}`;
+    requestUrl = `${requestUrl}?exclude=${req.query.exclude}`;
   }
   if (req.query.units) {
-    requestUrl = requestUrl + `&units=${req.query.units}`;
+    requestUrl = `${requestUrl}&units=${req.query.units}`;
   }
-  console.log(requestUrl);
   cors(req, res, () => {
     return request.get(requestUrl, (error, response, body) => {
       if (error) {
         return res.status(response.statusCode).send(body);
       }
-      console.log(body);
-      return res.status(200).send(JSON.parse(body));
-    });
-  });
-});
-
-exports.getForecast = functions.https.onRequest((req, res) => {
-  const params = req.query.lat + ',' + req.query.lon + ',' + req.query.time;
-  let requestUrl = `${DARK_SKY_API_URL}/${params}`;
-
-  if (req.query.exclude) {
-    requestUrl = requestUrl + `?exclude=${req.query.exclude}`;
-  }
-  if (req.query.units) {
-    requestUrl = requestUrl + `&units=${req.query.units}`;
-  }
-  console.log(requestUrl);
-  cors(req, res, () => {
-    return request.get(requestUrl, (error, response, body) => {
-      if (error) {
-        return res.status(response.statusCode).send(body);
-      }
-      console.log(body);
       return res.status(200).send(JSON.parse(body));
     });
   });

@@ -1,6 +1,5 @@
 .idea/*
 *.iml
-node_modules/*
+*/node_modules/*
 dist/*
-functions/node_modules/*
 .DS_Store

@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { getForecast, getGeocode, getWeather } from '../api';
+import { getWeatherByTime, getGeocode, getWeather } from '../api';
 import { Forecast, RootState, Timezone } from '../constants/types';
 
 export const FETCHING_DATA = 'FETCHING_DATA';
@@ -57,7 +57,7 @@ const setDailyForecast = (dailyForecast: any) => {
   };
 };
 
-const fetchingData = () => {
+export const fetchingData = () => {
   return {
     type: FETCHING_DATA,
   };
@@ -89,7 +89,7 @@ export const getWeatherData = (lat: number, lon: number, city: string) => {
     dispatch(fetchingData());
     if (lat !== 0 && lon !== 0) {
       if (getState().weather.filter.timestamp !== 0) {
-        getForecast(lat, lon, getState().weather.filter.timestamp, EXCLUDE, getState().weather.filter.units)
+        getWeatherByTime(lat, lon, getState().weather.filter.timestamp, EXCLUDE, getState().weather.filter.units)
           .then((results: Forecast) => {
             dispatch(setLocation(city));
             dispatch(setCurrentWeather(results.currently));

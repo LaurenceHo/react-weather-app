@@ -39,6 +39,7 @@ cloud function serverless platform with React frontend app.
 * Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
 * Bundle frontend code: `npm run build`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
+* Run dev-mock-server: `cd dev-server` and `npm i` then `npm start`
 
 ## Write Your Own Google Cloud Functions:
 Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail

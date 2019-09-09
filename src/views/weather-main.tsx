@@ -12,7 +12,7 @@ import { DailyForecast } from '../components/daily-forecast';
 import { HourlyForecast } from '../components/hourly-forecast';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 import { RootState } from '../constants/types';
-import { fetchingDataFailure, getWeatherData } from '../store/actions';
+import { fetchingData, fetchingDataFailure, getWeatherData } from '../store/actions';
 
 class WeatherMain extends React.Component<any, any> {
   componentDidUpdate(prevProps: any) {
@@ -38,6 +38,7 @@ class WeatherMain extends React.Component<any, any> {
 
   componentDidMount() {
     if (isEmpty(this.props.location) && isEmpty(this.props.currentWeather) && isEmpty(this.props.forecast)) {
+      this.props.fetchingData();
       // Get user's coordinates when user access the web app, it will ask user's location permission
       const options = {
         enableHighAccuracy: true,
@@ -145,6 +146,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators(
     {
       getWeatherData,
+      fetchingData,
       fetchingDataFailure,
     },
     dispatch

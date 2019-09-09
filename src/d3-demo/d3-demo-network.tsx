@@ -6,10 +6,10 @@ import { select } from 'd3-selection';
 import { find } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import networkTraffic from '../../sample/network-traffic.json';
 import { ToolTipType } from '../constants/types';
 import './d3-force.css';
 import Gauge from './gauge';
+import networkTraffic from './mock/network-traffic.json';
 import { ToolTip } from './tool-tip';
 import { TrafficService } from './traffic';
 
