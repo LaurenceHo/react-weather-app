@@ -1,4 +1,4 @@
-import Row from 'antd/lib/row';
+import Row from 'antd/es/row';
 import * as echarts from 'echarts/lib/echarts';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -8,7 +8,11 @@ import { chartConfig } from './chart-config';
 interface HourlyForecastProps {
   filter: Filter;
   timezone: Timezone;
-  hourlyForecast: Weather;
+  hourlyForecast: {
+    summary: string;
+    icon: string;
+    data: Weather[];
+  };
 }
 
 export const HourlyForecast: React.FC<HourlyForecastProps> = ({
@@ -17,7 +21,7 @@ export const HourlyForecast: React.FC<HourlyForecastProps> = ({
   hourlyForecast,
 }: HourlyForecastProps) => {
   useEffect(() => {
-    function renderChart() {
+    const renderChart = () => {
       try {
         const weatherChart = document.getElementById('weather-chart');
         weatherChart.parentNode.removeChild(weatherChart);
@@ -32,11 +36,9 @@ export const HourlyForecast: React.FC<HourlyForecastProps> = ({
       let chart = echarts.getInstanceByDom(divElement);
       if (!chart) {
         chart = echarts.init(divElement);
+        chart.setOption(chartConfig(filter.units, timezone, hourlyForecast));
       }
-
-      chart.setOption(chartConfig(filter.units, timezone, hourlyForecast));
-    }
-
+    };
     renderChart();
   });
 

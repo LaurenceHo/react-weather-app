@@ -1,8 +1,13 @@
-import { RouterState } from 'connected-react-router';
+export interface GeoCode {
+  status: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+}
 
 export interface Filter {
   units: 'si' | 'us';
-  location: string;
+  searchedLocation: string;
   timestamp: number;
 }
 
@@ -108,7 +113,6 @@ export interface ForecastState {
 }
 
 export interface RootState {
-  router?: RouterState;
   weather: ForecastState;
 }
 

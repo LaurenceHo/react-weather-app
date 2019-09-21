@@ -5,7 +5,7 @@ const initialState: ForecastState = {
   isLoading: false,
   filter: {
     units: 'si',
-    location: '',
+    searchedLocation: '',
     timestamp: 0,
   },
   location: '',

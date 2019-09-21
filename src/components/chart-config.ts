@@ -34,17 +34,14 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
      `;
   };
 
-  const roundTemperature = map(hourly.data, n => {
-    return Math.round(n.temperature);
-  }).slice(0, 23);
-  const roundIntensity = map(hourly.data, n => {
-    if (units === 'us') {
-      return n.precipIntensity.toFixed(3);
-    } else if (units === 'si') {
-      return n.precipIntensity.toFixed(2);
-    }
-  }).slice(0, 23);
+  const roundTemperature = map(hourly.data, (n) => Math.round(n.temperature)).slice(0, 23);
+
+  const roundIntensity = map(hourly.data, (n) =>
+    units === 'us' ? n.precipIntensity.toFixed(3) : n.precipIntensity.toFixed(2)
+  ).slice(0, 23);
+
   const temperatureMax = Math.round(Math.max.apply(null, roundTemperature) * 1.3);
+
   const rainMax = (Math.max.apply(null, roundIntensity) * 1.3).toFixed(1);
 
   return {
@@ -55,14 +52,16 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
         fontSize,
       },
     },
-    xAxis: {
-      type: 'category',
-      data: map(hourly.data, 'time').slice(0, 23),
-      axisLabel: {
-        formatter: formatterXAxisLabel,
-        fontSize,
+    xAxis: [
+      {
+        type: 'category',
+        data: map(hourly.data, 'time').slice(0, 23),
+        axisLabel: {
+          formatter: formatterXAxisLabel,
+          fontSize,
+        },
       },
-    },
+    ],
     yAxis: [
       {
         type: 'value',

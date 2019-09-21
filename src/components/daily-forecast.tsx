@@ -1,7 +1,7 @@
-import Col from 'antd/lib/col';
-import Row from 'antd/lib/row';
-import Table from 'antd/lib/table';
-import Column from 'antd/lib/table/Column';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Table from 'antd/es/table';
+import Column from 'antd/es/table/Column';
 import * as React from 'react';
 import { Filter, Timezone, Weather } from '../constants/types';
 import { Utils } from '../utils';
@@ -99,7 +99,7 @@ export const DailyForecast: React.FC<DailyForecastProps> = ({
         key='icon'
         align='center'
         width='5rem'
-        render={icon => (
+        render={(icon) => (
           <div>
             <WeatherIcon icon={icon} size='1.6rem' />
           </div>

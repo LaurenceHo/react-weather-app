@@ -39,6 +39,7 @@ body {
 .weather-search-outer {
   padding: 0 0.5rem;
 }
+
 /* Navigation bar for desktop version */
 
 /* Navigation bar for mobile device */
@@ -53,6 +54,7 @@ body {
 .ant-popover-inner-content {
   padding: 0;
 }
+
 /* Navigation bar for mobile device */
 
 .error {
@@ -64,7 +66,7 @@ body {
 }
 
 .fetching-weather-spinner {
-  padding-left: 0.5rem;
+  padding: 0 0.5rem;
 }
 
 /* Current weather section */
@@ -92,6 +94,7 @@ body {
 .current-weather-icon {
   margin: 0.7rem 1rem 0 0;
 }
+
 /* Current weather section */
 
 .forecast-summary {
@@ -144,7 +147,59 @@ body {
   font-weight: 500;
   line-height: 0.5rem;
 }
+
 /* Weather chart section */
+
+/* Covid-19 section */
+#covid-chart-wrapper {
+  padding: 0.5rem 2rem;
+}
+
+#covid-pie-wrapper {
+  padding: 0.5rem 2rem;
+}
+
+#new-zealand-map {
+  height: 50rem;
+  width: 40rem;
+}
+
+.covid-daily-chart {
+  height: 30rem;
+  width: 55rem;
+}
+
+.covid-pie-chart {
+  height: 40rem;
+  width: 70rem;
+}
+
+.covid-title {
+  padding: 2rem 1rem 1rem 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.covid-cases-card {
+  text-align: center;
+}
+
+.covid-cases-card-content {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.covid-recovered-cases-content {
+  color: #8aca2b;
+}
+
+.covid-death-cases-content {
+  color: red;
+}
+
+.last-updated {
+  font-size: 0.8rem;
+}
 
 #windy {
   width: 100%;

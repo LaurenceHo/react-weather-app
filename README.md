@@ -3,14 +3,15 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Write Your Own Google Cloud Functions](#google-cloud-function)
-- [Deploy to Firebase](#firebase)
+- [Local development](#local-development)
+- [Write Your Own Google Cloud Functions](#write-your-own-google-cloud-functions)
+- [Deploy to Firebase](#deploy-to-firebase)
 - [Webpack, Reactjs and TypeScript](#webpack-reactjs-and-typescript)
 - [TypeScript, Eslint and Prettier](#typescript-eslint-and-prettier)
 - [Ant Design](#ant-design)
 - [ECharts](#echarts)
 - [Windy API](#windy-api)
+- [Mapbox](#mapbox)
 
 ## Introduction
 This project demonstrates how to use ReactJS, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
@@ -26,31 +27,40 @@ cloud function serverless platform with React frontend app.
 
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
-2. Google Geocoding API Key
+2. Google Geocoding API Key * 2. One for retrieving location for weather, and another one for Google GeoChart
 3. Google Firebase project
 4. Dark Sky weather API key
 5. Windy API key
 
-## Getting Started
+[NOTE] Since I already placed protection to all keys, you cannot use my own key. You have to apply for your own API key.
+
+## Local development
 * Clone the repo: `git clone https://github.com/LaurenceHo/react-weather-app.git`
-* Install npm package: `npm install`
-* Put your Google Geocoding API Key & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
-* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
-* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
-* Bundle frontend code: `npm run build`
+* Install npm package: `npm i`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
-* Run dev-mock-server: `cd dev-server` and `npm i` then `npm start`
+* Because we don't want to use Google Cloud Function when we do local development, we write simple NodeJs Express server for
+returning mock JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
+After that, run `npm start` to start NodeJs Express Server and we can move forward to frontend development.
+* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
+* For bundling frontend code run `npm run build`
+
+[Back to the top↑](#table-of-contents)
 
 ## Write Your Own Google Cloud Functions:
 Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
 
 ## Deploy to Firebase
-1. Run `npm run firebase-init`
-2. Visit `https://console.firebase.google.com` to create a new project
-3. Add the firebase project into your local configuration `npm run firebase-add`
-4. You may need to change the default project setting in the `.firebaserc`
-5. If you want to deploy the whole project, run `npm run firebase-deploy`
-6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
+* Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js) 
+as well as [`./src/constants/api-key.ts`](./src/constants/api-key.ts). 
+* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
+* Run `npm run firebase-init`
+* Visit `https://console.firebase.google.com` to create a new project
+* Add the firebase project into your local configuration `npm run firebase-add`
+* You may need to change the default project setting in the `.firebaserc`
+* If you want to deploy the whole project, run `npm run firebase-deploy`
+* If you want to deploy the cloud functions only, run `npm run deploy-functions`
+
+[Back to the top↑](#table-of-contents)
 
 ## Webpack, Reactjs and TypeScript
 Although there is `create-react-app` toolkit to create ReactJS project very easily and quickly, I personally love creating 
@@ -143,6 +153,8 @@ Then setup the plugins:
 }
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ### Webpack Dev Server and Hot Module Replacement
 When we do frontend development, we want the browser reloading the content automatically when we make changes. To achieve this, 
 we need `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
@@ -183,6 +195,8 @@ And place `start` script in the package.json for starting the webpack dev server
     "start": "webpack-dev-server --config ./config/webpack.dev.js --progress --profile --watch --open"
   }
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ### Optimising Application Bundle Size
 Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production
@@ -243,6 +257,8 @@ module.exports = merge(common, {
 });
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ## TypeScript, Eslint and Prettier
 Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
@@ -270,6 +286,8 @@ Because we use ReactJS, we also need to set the `parserOptions` property:
 }  
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ### eslint-plugin-react usage
 Append `react` to the `plugins` section:
 ```
@@ -292,6 +310,8 @@ Indicate the ReactJS version, add `settings` property:
   }
 }
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ### Prettier Integrate with Eslint Using `eslint-plugin-prettier`
 Append `prettier` into `plugins` section:
@@ -334,6 +354,8 @@ Setup the [.prettierrc](.prettierrc)
 }
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ## Ant Design
 ### Getting Started
 Ant Design React is dedicated to providing a good development experience for programmers. Make sure that you have installed 
@@ -344,14 +366,14 @@ Ant design provides abundant UI components, which means the library size is quit
 component I needed rather than import everything.
 Import CSS files in the `index.tsx`:
 ```
-import 'antd/lib/col/style/css';
-import 'antd/lib/row/style/css';
+import 'antd/es/col/style/css';
+import 'antd/es/row/style/css';
 ```
 
 Import necessary packages e.g in the `current-weather.tsx`:
 ```
-import Col from 'antd/lib/col';
-import Row from 'antd/lib/row';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
 
 export class CurrentWeather extends React.Component<any, any> {
   render() {
@@ -369,6 +391,8 @@ export class CurrentWeather extends React.Component<any, any> {
   }
 }          
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ### Customise theme
 If we want customise ant design theme, make sure we install `less-loader` and `style-loader` at first. In the [webpack.common.js](config/webpack.common.js),
@@ -407,8 +431,10 @@ module.exports = {
 ```
 We can look at [here](https://ant.design/docs/react/customize-theme) for getting the further detail.
 
+[Back to the top↑](#table-of-contents)
+
 ### TypeScript
-* Don't use @types/antd, as antd provides a built-in ts definition already.
+* Don't use `@types/antd`, as antd provides a built-in ts definition already.
 
 ## ECharts
 ### Getting Started
@@ -427,6 +453,8 @@ import 'echarts/lib/component/title';
 import 'echarts/lib/component/toolbox';
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ## Windy API
 Since I put the protection for my Windy API, only the allowed domain name can use this API key. Windy API is free, 
 please feel free to apply for a new one for yourself.
@@ -443,36 +471,93 @@ Windy API v4 was based on Leaflet 1.4, so import leaflet by this way is very imp
 How to make these 2 JavaScript 3rd party libraries working in TypeScript? We need to declare the definition in [TypeScript
 Declaration File](./src/typings.d.ts).
 ```
-declare var windyInit: any;
-declare var L: any;
+declare const windyInit: any;
+declare const L: any;
 ```
 After that, we can use `windyInit` and `L` these 2 parameters directly without importing module into TypeScript file.
 In [`weather-map.tsx`](src/views/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
 ```
-const options = {
-    // Required: API key
-    key: 'PsLAtXpsPTZexBwUkO7Mx5I',
+export const WeatherMap: React.FC<any> = () => {
+    const renderMap = () => {
+        const options = {
+            // Required: API key
+            key: 'PsLAtXpsPTZexBwUkO7Mx5I',
+            // Put additional console output
+            verbose: true,
+            // Optional: Initial state of the map
+            lat: 50.4,
+            lon: 14.3,
+            zoom: 5,
+        }
+        windyInit(options, (windyAPI: any) => {
+            const { map } = windyAPI;
+            L.popup()
+            .setLatLng([50.4, 14.3])
+            .setContent("Hello World")
+            .openOn( map );
+        });
+    }
 
-    // Put additional console output
-    verbose: true,
+    useEffect(() => {
+        renderMap();
+    }, []);
 
-    // Optional: Initial state of the map
-    lat: 50.4,
-    lon: 14.3,
-    zoom: 5,
-}
-windyInit(options, (windyAPI: any) => {
-    const { map } = windyAPI;
-    L.popup()
-    .setLatLng([50.4, 14.3])
-    .setContent("Hello World")
-    .openOn( map );
-});
-
-render() {
-    return (<div id='windy' />);
+    render() {
+        return (<div id='windy' />);
+    }
 }
 ```
+[Back to the top↑](#table-of-contents)
+
+## Mapbox
+Before starting using Mapbox, get an API for your project. Please go to 
+[Mapbox](https://www.mapbox.com/maps/) for further detail.
+### Usage
+Import source in [index.html](./src/index.html):
+```
+<head>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
+</head> 
+```
+
+Don't forget to declare Mapboxx the definition in [TypeScript Declaration File](./src/typings.d.ts):
+```
+declare const mapboxgl: any;
+```
+
+After declare `mapboxgl` definition, we can now start using mapbox:
+```
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4ZmdqdGRvMDQ0ZDNkcWpnbno1MGVzcyJ9.fnjAFHv0etBrY1LeIksTnA';
+const map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+});
+```
+
+Then we can start using Mapbox very easily:
+```
+export const Mapbox: React.FC = () => {
+    useEffect(() => {
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4ZmdqdGRvMDQ0ZDNkcWpnbno1MGVzcyJ9.fnjAFHv0etBrY1LeIksTnA';
+        const map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+            center: [-74.5, 40], // starting position [lng, lat]
+            zoom: 9 // starting zoom
+        });
+    }, []);
+
+    render() {
+        return (<div id='map' style={{width: 900, height: 500}}/>);
+    }
+}
+```
+You can find more examples from [here](https://docs.mapbox.com/mapbox-gl-js/examples/)
+
+[Back to the top↑](#table-of-contents)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

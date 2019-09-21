@@ -1,5 +1,5 @@
-import Col from 'antd/lib/col';
-import Row from 'antd/lib/row';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
 import * as React from 'react';
 
 export const About: React.FC = () => (
@@ -52,11 +52,17 @@ export const About: React.FC = () => (
           - D3.js is a JavaScript library for manipulating documents based on data.
         </li>
         <li>
-          <a href='https://ecomfe.github.io/echarts-doc/public/en/index.html' target='_blank' rel='noopener noreferrer'>
+          <a href='https://www.echartsjs.com/en/index.html' target='_blank' rel='noopener noreferrer'>
             ECharts
           </a>
           - ECharts is a free, powerful charting and visualization Javascript library offering an easy way of adding
           intuitive, interactive, and highly customizable charts to your products.
+        </li>
+        <li>
+          <a href='https://www.mapbox.com/' target='_blank' rel='noopener noreferrer'>
+            Mapbox
+          </a>
+          - Mapbox is the location data platform for mobile and web applications.
         </li>
         <li>
           <a href='https://erikflowers.github.io/weather-icons/' target='_blank' rel='noopener noreferrer'>

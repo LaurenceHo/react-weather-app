@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { getWeatherByTime, getGeocode } from '../api';
-import { Forecast, RootState, Timezone } from '../constants/types';
+import { getGeocode, getWeatherByTime } from '../api';
+import { Filter, Forecast, GeoCode, RootState, Timezone, Weather } from '../constants/types';
 
 export const FETCHING_DATA = 'FETCHING_DATA';
 export const FETCHING_DATA_SUCCESS = 'FETCHING_DATA_SUCCESS';
@@ -15,7 +15,7 @@ export const SET_CURRENT_WEATHER = 'SET_CURRENT_WEATHER';
 export const SET_HOURLY_FORECAST = 'SET_HOURLY_FORECAST';
 export const SET_DAILY_FORECAST = 'SET_DAILY_FORECAST';
 
-export const setFilter = (filter: any) => {
+export const setFilter = (filter: Filter) => {
   return {
     type: SET_FILTER,
     filter,
@@ -29,28 +29,28 @@ const setLocation = (location: string) => {
   };
 };
 
-const setTimezone = (timezone: any) => {
+const setTimezone = (timezone: Timezone) => {
   return {
     type: SET_TIMEZONE,
     timezone,
   };
 };
 
-const setCurrentWeather = (currentWeather: any) => {
+const setCurrentWeather = (currentWeather: Weather) => {
   return {
     type: SET_CURRENT_WEATHER,
     currentWeather,
   };
 };
 
-const setHourlyForecast = (hourlyForecast: any) => {
+const setHourlyForecast = (hourlyForecast: { summary: string; icon: string; data: Weather[] }) => {
   return {
     type: SET_HOURLY_FORECAST,
     hourlyForecast,
   };
 };
 
-const setDailyForecast = (dailyForecast: any) => {
+const setDailyForecast = (dailyForecast: { summary: string; icon: string; data: Weather[] }) => {
   return {
     type: SET_DAILY_FORECAST,
     dailyForecast,
@@ -79,40 +79,46 @@ export const fetchingDataFailure = (error: string) => {
 const EXCLUDE = 'flags,minutely';
 
 /**
- * If you set lat along with lon, then you must set city name as well, otherwise set (0, 0, city)
+ * If you set lat along with lon, you must set city name as well, otherwise set (0, 0, city)
  * @param {number} lat
  * @param {number} lon
  * @param {string} city
  */
 export const getWeatherData = (lat: number, lon: number, city: string) => {
-  return (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: any) => {
+  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: any) => {
     dispatch(fetchingData());
-    if (lat !== 0 && lon !== 0) {
-      getWeatherByTime(lat, lon, getState().weather.filter.timestamp, EXCLUDE, getState().weather.filter.units)
-        .then((results: Forecast) => {
-          const timezone: Timezone = {
-            timezone: results.timezone,
-            offset: results.offset,
-            latitude: results.latitude,
-            longitude: results.longitude,
-          };
-          dispatch(setLocation(city));
-          dispatch(setTimezone(timezone));
-          dispatch(setCurrentWeather(results.currently));
-          dispatch(setHourlyForecast(results.hourly));
-          dispatch(setDailyForecast(results.daily));
-          dispatch(fetchingDataSuccess());
-        })
-        .catch(error => dispatch(fetchingDataFailure(error)));
-    } else {
-      // Get coordinates by city at first, after that get the weather and forecast info by coordinates
-      getGeocode(null, null, city)
-        .then((geocode: any) => {
-          if (geocode.status === 'OK') {
-            dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.city));
-          }
-        })
-        .catch(error => dispatch(fetchingDataFailure(error)));
+    try {
+      if (lat !== 0 && lon !== 0) {
+        const results: Forecast = await getWeatherByTime(
+          lat,
+          lon,
+          getState().weather.filter.timestamp,
+          EXCLUDE,
+          getState().weather.filter.units
+        );
+        const timezone: Timezone = {
+          timezone: results.timezone,
+          offset: results.offset,
+          latitude: results.latitude,
+          longitude: results.longitude,
+        };
+        dispatch(setLocation(city));
+        dispatch(setTimezone(timezone));
+        dispatch(setCurrentWeather(results.currently));
+        dispatch(setHourlyForecast(results.hourly));
+        dispatch(setDailyForecast(results.daily));
+        dispatch(fetchingDataSuccess());
+      } else {
+        // Get coordinates by city at first, after that get the weather and forecast info by coordinates
+        const geocode: GeoCode = await getGeocode(null, null, city);
+        if (geocode.status === 'OK') {
+          await dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
+        } else {
+          dispatch(fetchingDataFailure('ERROR!'));
+        }
+      }
+    } catch (error) {
+      dispatch(fetchingDataFailure(error.message));
     }
   };
 };

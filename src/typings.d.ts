@@ -3,5 +3,6 @@ declare module '*.json' {
   export default value;
 }
 
-declare let windyInit: any;
-declare let L: any;
+declare const windyInit: any;
+declare const L: any;
+declare const mapboxgl: any;
