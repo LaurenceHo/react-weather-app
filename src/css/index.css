@@ -39,6 +39,7 @@ body {
 .weather-search-outer {
   padding: 0 0.5rem;
 }
+
 /* Navigation bar for desktop version */
 
 /* Navigation bar for mobile device */
@@ -53,6 +54,7 @@ body {
 .ant-popover-inner-content {
   padding: 0;
 }
+
 /* Navigation bar for mobile device */
 
 .error {
@@ -92,6 +94,7 @@ body {
 .current-weather-icon {
   margin: 0.7rem 1rem 0 0;
 }
+
 /* Current weather section */
 
 .forecast-summary {
@@ -144,6 +147,7 @@ body {
   font-weight: 500;
   line-height: 0.5rem;
 }
+
 /* Weather chart section */
 
 #windy {

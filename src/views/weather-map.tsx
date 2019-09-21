@@ -1,7 +1,4 @@
-import Alert from 'antd/lib/alert';
-import Col from 'antd/lib/col';
-import Row from 'antd/lib/row';
-import Spin from 'antd/lib/spin';
+import { Alert, Col, Row, Spin } from 'antd/lib';
 import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';

@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { getWeatherByTime, getGeocode } from '../api';
+import { getGeocode, getWeatherByTime } from '../api';
 import { Forecast, RootState, Timezone } from '../constants/types';
 
 export const FETCHING_DATA = 'FETCHING_DATA';

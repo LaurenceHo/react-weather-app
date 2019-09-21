@@ -9,26 +9,22 @@ interface WeatherSearchProps {
   isDisabled: boolean;
 }
 
-interface WeatherSearchState {
-  location: string;
-}
-
 export const WeatherSearch: React.FC<WeatherSearchProps> = (props: WeatherSearchProps) => {
-  const [location, setLocation] = React.useState<WeatherSearchState | null>({ location: '' });
+  const [location, setLocation] = React.useState<string>('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = event.target.value;
-    setLocation({ location: value });
+    setLocation(value);
   };
 
   const handleSubmit = () => {
-    props.onSearch(location.location);
+    props.onSearch(location);
   };
 
   return (
     <Search
       type='text'
-      value={location.location}
+      value={location}
       onChange={handleChange}
       onSearch={handleSubmit}
       onPressEnter={handleSubmit}

@@ -48,43 +48,6 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
     tooltip: this.tooltip,
   };
 
-  showToolTip = (e: any) => {
-    this.setState({
-      tooltip: {
-        display: true,
-        data: {
-          key: e.name,
-          group: e.group,
-        },
-        pos: {
-          x: e.x,
-          y: e.y,
-        },
-        type: 'network',
-      },
-    });
-  };
-
-  hideToolTip = () => {
-    this.setState({
-      tooltip: {
-        display: false,
-        data: {
-          key: '',
-          group: '',
-        },
-        type: 'network',
-      },
-    });
-  };
-
-  scaleFactor(): any {
-    if (this.width > this.height) {
-      return this.height;
-    }
-    return this.width;
-  }
-
   constructor(props: any) {
     super(props);
     // Create force simulation
@@ -127,6 +90,43 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         })
       )
       .force('center', forceCenter(this.width / 2, this.height / 2));
+  }
+
+  showToolTip = (e: any) => {
+    this.setState({
+      tooltip: {
+        display: true,
+        data: {
+          key: e.name,
+          group: e.group,
+        },
+        pos: {
+          x: e.x,
+          y: e.y,
+        },
+        type: 'network',
+      },
+    });
+  };
+
+  hideToolTip = () => {
+    this.setState({
+      tooltip: {
+        display: false,
+        data: {
+          key: '',
+          group: '',
+        },
+        type: 'network',
+      },
+    });
+  };
+
+  scaleFactor(): any {
+    if (this.width > this.height) {
+      return this.height;
+    }
+    return this.width;
   }
 
   componentDidMount() {

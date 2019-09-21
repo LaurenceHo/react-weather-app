@@ -23,7 +23,7 @@ app.use(corsHeader);
 
 app.get('/getGeocode', (req, res) => setTimeout(() => res.send(location), 1000));
 app.get('/getWeather', (req, res) => {
-  if (req.query.time) {
+  if (req.query.time && req.query.time > 0) {
     if (req.query.units.toLocaleLowerCase() === 'us') {
       setTimeout(() => res.send(weatherUsByDate), 1000);
     } else {
