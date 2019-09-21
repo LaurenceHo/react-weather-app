@@ -1,11 +1,19 @@
 import { Alert, Col, Row, Spin } from 'antd/lib';
 import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 import { RootState, WeatherMapState } from '../constants/types';
+
+const usePrevious = (value: any) => {
+  const ref = useRef<any>();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 
 export const WeatherMap: React.FC<any> = () => {
   const filter = useSelector((state: RootState) => state.weather.filter);
@@ -20,18 +28,20 @@ export const WeatherMap: React.FC<any> = () => {
     isLoading: false,
     error: '',
   });
+  const prevState = usePrevious(weatherMapState);
 
   const renderMap = () => {
     try {
       const weatherMap = document.getElementById('windy');
       weatherMap.parentNode.removeChild(weatherMap);
-    } catch (err) {}
+    } catch (err) {
+      console.log('map does not exist');
+    }
 
     const divElement: HTMLDivElement = document.createElement('div');
     divElement.setAttribute('id', 'windy');
     divElement.setAttribute('class', 'windy');
     document.getElementById('weather-map-wrapper').appendChild(divElement);
-
     const options = {
       key: 'bRpzkzPp38FdrEGhYHWBzBf8lT3mIPSw',
       lat: weatherMapState.latitude,
@@ -75,7 +85,6 @@ export const WeatherMap: React.FC<any> = () => {
         isLoading: false,
         error: '',
       });
-      renderMap();
     } else {
       getGeocode(null, null, city)
         .then((geocode: any) => {
@@ -83,11 +92,10 @@ export const WeatherMap: React.FC<any> = () => {
             setWeatherMapState({
               latitude: geocode.latitude,
               longitude: geocode.longitude,
-              location: city,
+              location: geocode.city,
               isLoading: false,
               error: '',
             });
-            renderMap();
           }
         })
         .catch(error => setWeatherMapState({ ...weatherMapState, error }));
@@ -105,6 +113,7 @@ export const WeatherMap: React.FC<any> = () => {
     }, 5000);
   };
 
+  // Do initialise data, get user's location at first
   useEffect(() => {
     const { latitude, longitude } = timezone || {};
     if (isUndefined(latitude) || isUndefined(longitude)) {
@@ -142,11 +151,18 @@ export const WeatherMap: React.FC<any> = () => {
       }
     } else {
       setWeatherMapState({ ...weatherMapState, latitude, longitude, location });
-      renderMap();
     }
   }, []);
 
   useEffect(() => {
+    if (
+      weatherMapState.latitude !== 0 &&
+      weatherMapState.longitude !== 0 &&
+      (weatherMapState.latitude !== prevState.latitude || weatherMapState.longitude !== prevState.longitude)
+    ) {
+      renderMap();
+    }
+
     if (filter.searchedLocation !== searchedLocation) {
       setWeatherMapState({ ...weatherMapState, isLoading: true });
       fetchLatitudeAndLongitude(0, 0, filter.searchedLocation);
