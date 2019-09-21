@@ -9,7 +9,7 @@ import { D3DemoNetwork } from '../d3-demo/d3-demo-network';
 import store, { history } from '../store';
 import { About } from './about';
 import { WeatherMain } from './weather-main';
-import WeatherMap from './weather-map';
+import { WeatherMap } from './weather-map';
 
 const { Footer, Content } = Layout;
 
