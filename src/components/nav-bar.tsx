@@ -33,9 +33,9 @@ export const NavBar: React.FC<any> = () => {
   };
 
   const handleSearch = (location: string) => {
-    if (navBarState.location.toLowerCase() !== location.toLowerCase() && location) {
+    if (location && navBarState.location.toLowerCase() !== location.toLowerCase()) {
       setNavBarState({ ...navBarState, location });
-      dispatch(setFilter({ ...filter, location }));
+      dispatch(setFilter({ ...filter, searchedLocation: location }));
     }
   };
 

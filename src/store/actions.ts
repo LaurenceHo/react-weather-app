@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { getGeocode, getWeatherByTime } from '../api';
-import { Forecast, RootState, Timezone } from '../constants/types';
+import { Filter, Forecast, RootState, Timezone, Weather } from '../constants/types';
 
 export const FETCHING_DATA = 'FETCHING_DATA';
 export const FETCHING_DATA_SUCCESS = 'FETCHING_DATA_SUCCESS';
@@ -15,7 +15,7 @@ export const SET_CURRENT_WEATHER = 'SET_CURRENT_WEATHER';
 export const SET_HOURLY_FORECAST = 'SET_HOURLY_FORECAST';
 export const SET_DAILY_FORECAST = 'SET_DAILY_FORECAST';
 
-export const setFilter = (filter: any) => {
+export const setFilter = (filter: Filter) => {
   return {
     type: SET_FILTER,
     filter,
@@ -29,28 +29,28 @@ const setLocation = (location: string) => {
   };
 };
 
-const setTimezone = (timezone: any) => {
+const setTimezone = (timezone: Timezone) => {
   return {
     type: SET_TIMEZONE,
     timezone,
   };
 };
 
-const setCurrentWeather = (currentWeather: any) => {
+const setCurrentWeather = (currentWeather: Weather) => {
   return {
     type: SET_CURRENT_WEATHER,
     currentWeather,
   };
 };
 
-const setHourlyForecast = (hourlyForecast: any) => {
+const setHourlyForecast = (hourlyForecast: { summary: string; icon: string; data: Weather[] }) => {
   return {
     type: SET_HOURLY_FORECAST,
     hourlyForecast,
   };
 };
 
-const setDailyForecast = (dailyForecast: any) => {
+const setDailyForecast = (dailyForecast: { summary: string; icon: string; data: Weather[] }) => {
   return {
     type: SET_DAILY_FORECAST,
     dailyForecast,

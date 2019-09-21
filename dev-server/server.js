@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const location = require('./location');
-const weatherSi = require('./weather-si');
-const weatherUs = require('./weather-us');
-const weatherSiByDate = require('./weather-si-by-date');
-const weatherUsByDate = require('./weather-us-by-date');
+const location = require('./mock/location');
+const weatherSi = require('./mock/weather-si');
+const weatherUs = require('./mock/weather-us');
+const weatherSiByDate = require('./mock/weather-si-by-date');
+const weatherUsByDate = require('./mock/weather-us-by-date');
+const nyWeatherSi = require('./mock/ny-weather-si');
+const nyWeatherUs = require('./mock/ny-weather-us');
 
 const corsHeader = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -23,17 +25,25 @@ app.use(corsHeader);
 
 app.get('/getGeocode', (req, res) => setTimeout(() => res.send(location), 1000));
 app.get('/getWeather', (req, res) => {
-  if (req.query.time && req.query.time > 0) {
+  if (req.query.lat === '40.7127753' && req.query.lon === '-74.0059728') {
     if (req.query.units.toLocaleLowerCase() === 'us') {
-      setTimeout(() => res.send(weatherUsByDate), 1000);
+      setTimeout(() => res.send(nyWeatherUs), 1000);
     } else {
-      setTimeout(() => res.send(weatherSiByDate), 1000);
+      setTimeout(() => res.send(nyWeatherSi), 1000);
     }
   } else {
-    if (req.query.units.toLocaleLowerCase() === 'us') {
-      setTimeout(() => res.send(weatherUs), 1000);
+    if (req.query.time && req.query.time !== '0') {
+      if (req.query.units.toLocaleLowerCase() === 'us') {
+        setTimeout(() => res.send(weatherUsByDate), 1000);
+      } else {
+        setTimeout(() => res.send(weatherSiByDate), 1000);
+      }
     } else {
-      setTimeout(() => res.send(weatherSi), 1000);
+      if (req.query.units.toLocaleLowerCase() === 'us') {
+        setTimeout(() => res.send(weatherUs), 1000);
+      } else {
+        setTimeout(() => res.send(weatherSi), 1000);
+      }
     }
   }
 });

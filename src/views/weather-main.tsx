@@ -1,41 +1,40 @@
 import { Alert, Col, Row, Spin } from 'antd/lib';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getGeocode } from '../api';
 import { CurrentWeather } from '../components/current-weather';
 import { DailyForecast } from '../components/daily-forecast';
 import { HourlyForecast } from '../components/hourly-forecast';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
-import { RootState } from '../constants/types';
+import { Filter, RootState } from '../constants/types';
 import { fetchingData, fetchingDataFailure, getWeatherData } from '../store/actions';
 
-class WeatherMain extends React.Component<any, any> {
-  componentDidUpdate(prevProps: any) {
-    // When user search weather by city name
-    if (this.props.filter.location !== prevProps.filter.location) {
-      this.props.getWeatherData(0, 0, this.props.filter.location);
-    }
+export const WeatherMain: React.FC<any> = () => {
+  const dispatch = useDispatch();
 
-    // When user change units
-    if (this.props.filter.units !== prevProps.filter.units) {
-      if (this.props.timezone.latitude && this.props.timezone.longitude) {
-        this.props.getWeatherData(this.props.timezone.latitude, this.props.timezone.longitude, this.props.location);
-      } else {
-        this.props.getWeatherData(0, 0, this.props.location);
-      }
-    }
+  const isLoading = useSelector((state: RootState) => state.weather.isLoading);
+  const filter = useSelector((state: RootState) => state.weather.filter);
+  const location = useSelector((state: RootState) => state.weather.location);
+  const timezone = useSelector((state: RootState) => state.weather.timezone);
+  const currentWeather = useSelector((state: RootState) => state.weather.currentWeather);
+  const hourlyForecast = useSelector((state: RootState) => state.weather.hourlyForecast);
+  const dailyForecast = useSelector((state: RootState) => state.weather.dailyForecast);
+  const error = useSelector((state: RootState) => state.weather.error);
 
-    // When user search weather by particular time
-    if (this.props.filter.timestamp !== prevProps.filter.timestamp) {
-      this.props.getWeatherData(this.props.timezone.latitude, this.props.timezone.longitude, this.props.location);
-    }
-  }
+  const [filterState, setFilterState] = React.useState<Filter>(filter);
 
-  componentDidMount() {
-    if (isEmpty(this.props.location) && isEmpty(this.props.currentWeather) && isEmpty(this.props.forecast)) {
-      this.props.fetchingData();
+  const searchByDefaultLocation = (message: string) => {
+    dispatch(fetchingDataFailure(message));
+    setTimeout(() => {
+      dispatch(getWeatherData(-36.8484597, 174.7633315, 'Auckland'));
+    }, 5000);
+  };
+
+  useEffect(() => {
+    if (isEmpty(location) && isEmpty(currentWeather) && isEmpty(hourlyForecast) && isEmpty(dailyForecast)) {
+      dispatch(fetchingData());
       // Get user's coordinates when user access the web app, it will ask user's location permission
       const options = {
         enableHighAccuracy: true,
@@ -47,110 +46,76 @@ class WeatherMain extends React.Component<any, any> {
         getGeocode(location.coords.latitude, location.coords.longitude, '')
           .then((geocode: any) => {
             if (geocode.status === 'OK') {
-              this.props.getWeatherData(geocode.latitude, geocode.longitude, geocode.address);
+              dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
             }
           })
-          .catch(error => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));
+          .catch(error => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));
       };
 
-      const handleError = (error: any) => this.searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
+      const handleError = (error: any) => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
       if (process.env.NODE_ENV === 'development') {
-        this.searchByDefaultLocation(USE_DEFAULT_LOCATION);
+        searchByDefaultLocation(USE_DEFAULT_LOCATION);
       } else {
         navigator.geolocation.getCurrentPosition(handleLocation, handleError, options);
       }
     }
-  }
+  }, []);
 
-  render() {
-    const { currentWeather, location, isLoading, error } = this.props;
-
-    const renderWeatherAndForecast = () => {
-      if (error) {
-        return (
-          <div>
-            <Row type='flex' justify='center' className='fetching-weather-content'>
-              <Col xs={24} sm={24} md={18} lg={16} xl={16}>
-                <Alert message='Error' description={error} type='error' showIcon={true} />
-              </Col>
-            </Row>
-          </div>
-        );
-      } else if (currentWeather && location) {
-        return (
-          <div>
-            <CurrentWeather
-              location={this.props.location}
-              filter={this.props.filter}
-              timezone={this.props.timezone}
-              currentWeather={this.props.currentWeather}
-            />
-            <HourlyForecast
-              filter={this.props.filter}
-              timezone={this.props.timezone}
-              hourlyForecast={this.props.hourlyForecast}
-            />
-            <DailyForecast
-              filter={this.props.filter}
-              timezone={this.props.timezone}
-              dailyForecast={this.props.dailyForecast}
-            />
-          </div>
-        );
+  useEffect(() => {
+    // When user search weather by city name
+    if (filter.searchedLocation !== filterState.searchedLocation) {
+      dispatch(getWeatherData(0, 0, filter.searchedLocation));
+      setFilterState({ ...filterState, searchedLocation: filter.searchedLocation });
+    }
+    // When user change units
+    if (filter.units !== filterState.units) {
+      if (timezone.latitude && timezone.longitude) {
+        dispatch(getWeatherData(timezone.latitude, timezone.longitude, location));
+      } else {
+        dispatch(getWeatherData(0, 0, location));
       }
-    };
+      setFilterState({ ...filterState, units: filter.units });
+    }
 
-    return (
-      <div>
-        {isLoading ? (
+    // When user search weather by particular time
+    if (filter.timestamp !== filterState.timestamp) {
+      dispatch(getWeatherData(timezone.latitude, timezone.longitude, location));
+      setFilterState({ ...filterState, timestamp: filter.timestamp });
+    }
+  });
+
+  const renderWeatherAndForecast = () => {
+    if (error) {
+      return (
+        <div>
           <Row type='flex' justify='center' className='fetching-weather-content'>
-            <Spin className='fetching-weather-spinner' size='large' />
-            <h2>Loading...</h2>
+            <Col xs={24} sm={24} md={18} lg={16} xl={16}>
+              <Alert message='Error' description={error} type='error' showIcon={true} />
+            </Col>
           </Row>
-        ) : (
-          renderWeatherAndForecast()
-        )}
-      </div>
-    );
-  }
-
-  /**
-   * Only be called when error occurs
-   * @param {string} message
-   */
-  private searchByDefaultLocation(message: string) {
-    this.props.fetchingDataFailure(message);
-    setTimeout(() => {
-      this.props.getWeatherData(-36.8484597, 174.7633315, 'Auckland');
-    }, 5000);
-  }
-}
-
-const mapStateToProps = (state: RootState) => {
-  return {
-    isLoading: state.weather.isLoading,
-    filter: state.weather.filter,
-    location: state.weather.location,
-    timezone: state.weather.timezone,
-    currentWeather: state.weather.currentWeather,
-    hourlyForecast: state.weather.hourlyForecast,
-    dailyForecast: state.weather.dailyForecast,
-    error: state.weather.error,
+        </div>
+      );
+    } else if (currentWeather && location) {
+      return (
+        <div>
+          <CurrentWeather location={location} filter={filter} timezone={timezone} currentWeather={currentWeather} />
+          <HourlyForecast filter={filter} timezone={timezone} hourlyForecast={hourlyForecast} />
+          <DailyForecast filter={filter} timezone={timezone} dailyForecast={dailyForecast} />
+        </div>
+      );
+    }
   };
-};
 
-const mapDispatchToProps = (dispatch: any) => {
-  return bindActionCreators(
-    {
-      getWeatherData,
-      fetchingData,
-      fetchingDataFailure,
-    },
-    dispatch
+  return (
+    <div>
+      {isLoading ? (
+        <Row type='flex' justify='center' className='fetching-weather-content'>
+          <Spin className='fetching-weather-spinner' size='large' />
+          <h2>Loading...</h2>
+        </Row>
+      ) : (
+        renderWeatherAndForecast()
+      )}
+    </div>
   );
 };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WeatherMain);

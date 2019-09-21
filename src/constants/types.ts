@@ -2,7 +2,7 @@ import { RouterState } from 'connected-react-router';
 
 export interface Filter {
   units: 'si' | 'us';
-  location: string;
+  searchedLocation: string;
   timestamp: number;
 }
 

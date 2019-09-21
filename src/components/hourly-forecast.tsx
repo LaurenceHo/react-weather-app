@@ -8,7 +8,11 @@ import { chartConfig } from './chart-config';
 interface HourlyForecastProps {
   filter: Filter;
   timezone: Timezone;
-  hourlyForecast: Weather;
+  hourlyForecast: {
+    summary: string;
+    icon: string;
+    data: Weather[];
+  };
 }
 
 export const HourlyForecast: React.FC<HourlyForecastProps> = ({
