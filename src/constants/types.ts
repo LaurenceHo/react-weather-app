@@ -1,5 +1,3 @@
-import { RouterState } from 'connected-react-router';
-
 export interface Filter {
   units: 'si' | 'us';
   searchedLocation: string;
@@ -108,7 +106,6 @@ export interface ForecastState {
 }
 
 export interface RootState {
-  router?: RouterState;
   weather: ForecastState;
 }
 
