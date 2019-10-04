@@ -4,8 +4,8 @@
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Local development](#local-development)
-- [Write Your Own Google Cloud Functions](#google-cloud-function)
-- [Deploy to Firebase](#firebase)
+- [Write Your Own Google Cloud Functions](#write-your-own-google-cloud-functions)
+- [Deploy to Firebase](#deploy-to-firebase)
 - [Webpack, Reactjs and TypeScript](#webpack-reactjs-and-typescript)
 - [TypeScript, Eslint and Prettier](#typescript-eslint-and-prettier)
 - [Ant Design](#ant-design)
@@ -41,8 +41,12 @@ After that, run `npm start` to start NodeJs Express Server and we can move forwa
 * Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
 * For bundling frontend code run `npm run build`
 
+[Back to the top↑](#table-of-contents)
+
 ## Write Your Own Google Cloud Functions:
 Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
+
+[Back to the top↑](#table-of-contents)
 
 ## Deploy to Firebase
 * Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
@@ -53,6 +57,8 @@ Please visit: [Google Cloud Functions](https://firebase.google.com/docs/function
 * You may need to change the default project setting in the `.firebaserc`
 * If you want to deploy the whole project, run `npm run firebase-deploy`
 * If you want to deploy the cloud functions only, run `npm run deploy-functions`
+
+[Back to the top↑](#table-of-contents)
 
 ## Webpack, Reactjs and TypeScript
 Although there is `create-react-app` toolkit to create ReactJS project very easily and quickly, I personally love creating 
@@ -145,6 +151,8 @@ Then setup the plugins:
 }
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ### Webpack Dev Server and Hot Module Replacement
 When we do frontend development, we want the browser reloading the content automatically when we make changes. To achieve this, 
 we need `WebpackDevServer`. So let's install something: `npm i -D webpack-dev-server webpack-merge`.
@@ -185,6 +193,8 @@ And place `start` script in the package.json for starting the webpack dev server
     "start": "webpack-dev-server --config ./config/webpack.dev.js --progress --profile --watch --open"
   }
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ### Optimising Application Bundle Size
 Finally, let's look into bundling code for production deployment. Since we want to reduce the bundle file size for production
@@ -245,10 +255,14 @@ module.exports = merge(common, {
 });
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ## TypeScript, Eslint and Prettier
 Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
 Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react prettier`
+
+[Back to the top↑](#table-of-contents)
 
 ### TypeScript ESLint usage
 Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` to the `plugins` section of [.eslintrc.json](.eslintrc.json) configuration file:
@@ -272,6 +286,8 @@ Because we use ReactJS, we also need to set the `parserOptions` property:
 }  
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ### eslint-plugin-react usage
 Append `react` to the `plugins` section:
 ```
@@ -294,6 +310,8 @@ Indicate the ReactJS version, add `settings` property:
   }
 }
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ### Prettier Integrate with Eslint Using `eslint-plugin-prettier`
 Append `prettier` into `plugins` section:
@@ -336,6 +354,8 @@ Setup the [.prettierrc](.prettierrc)
 }
 ```
 
+[Back to the top↑](#table-of-contents)
+
 ## Ant Design
 ### Getting Started
 Ant Design React is dedicated to providing a good development experience for programmers. Make sure that you have installed 
@@ -371,6 +391,8 @@ export class CurrentWeather extends React.Component<any, any> {
   }
 }          
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ### Customise theme
 If we want customise ant design theme, make sure we install `less-loader` and `style-loader` at first. In the [webpack.common.js](config/webpack.common.js),
@@ -409,6 +431,8 @@ module.exports = {
 ```
 We can look at [here](https://ant.design/docs/react/customize-theme) for getting the further detail.
 
+[Back to the top↑](#table-of-contents)
+
 ### TypeScript
 * Don't use @types/antd, as antd provides a built-in ts definition already.
 
@@ -428,6 +452,8 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/toolbox';
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ## Windy API
 Since I put the protection for my Windy API, only the allowed domain name can use this API key. Windy API is free, 
@@ -475,6 +501,8 @@ render() {
     return (<div id='windy' />);
 }
 ```
+
+[Back to the top↑](#table-of-contents)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
