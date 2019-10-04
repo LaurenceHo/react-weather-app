@@ -2,10 +2,11 @@ import { Alert, Col, Row, Spin } from 'antd/lib';
 import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 import { RootState, WeatherMapState } from '../constants/types';
+import { getWeatherData } from '../store/actions';
 
 const usePrevious = (value: any) => {
   const ref = useRef<any>();
@@ -16,6 +17,8 @@ const usePrevious = (value: any) => {
 };
 
 export const WeatherMap: React.FC<any> = () => {
+  const dispatch = useDispatch();
+
   const filter = useSelector((state: RootState) => state.weather.filter);
   const location = useSelector((state: RootState) => state.weather.location);
   const timezone = useSelector((state: RootState) => state.weather.timezone);
@@ -92,10 +95,11 @@ export const WeatherMap: React.FC<any> = () => {
             setWeatherMapState({
               latitude: geocode.latitude,
               longitude: geocode.longitude,
-              location: geocode.city,
+              location: geocode.address,
               isLoading: false,
               error: '',
             });
+            dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.city));
           }
         })
         .catch(error => setWeatherMapState({ ...weatherMapState, error }));
@@ -137,6 +141,7 @@ export const WeatherMap: React.FC<any> = () => {
                 error: '',
               });
               renderMap();
+              dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
             }
           })
           .catch(error => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));

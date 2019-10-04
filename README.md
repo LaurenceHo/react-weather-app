@@ -3,7 +3,7 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
+- [Local development](#local-development)
 - [Write Your Own Google Cloud Functions](#google-cloud-function)
 - [Deploy to Firebase](#firebase)
 - [Webpack, Reactjs and TypeScript](#webpack-reactjs-and-typescript)
@@ -31,26 +31,28 @@ cloud function serverless platform with React frontend app.
 4. Dark Sky weather API key
 5. Windy API key
 
-## Getting Started
+## Local development
 * Clone the repo: `git clone https://github.com/LaurenceHo/react-weather-app.git`
-* Install npm package: `npm install`
-* Put your Google Geocoding API Key & [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
-* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
-* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
-* Bundle frontend code: `npm run build`
+* Install npm package: `npm i`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
-* Run dev-mock-server: `cd dev-server` and `npm i` then `npm start`
+* Because we don't want to use Google Cloud Function when we do local development, we write simple NodeJs Express server for
+returning JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
+After that, run `npm start` to start NodeJs Express Server and we can move forward to frontend development.
+* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
+* For bundling frontend code run `npm run build`
 
 ## Write Your Own Google Cloud Functions:
 Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
 
 ## Deploy to Firebase
-1. Run `npm run firebase-init`
-2. Visit `https://console.firebase.google.com` to create a new project
-3. Add the firebase project into your local configuration `npm run firebase-add`
-4. You may need to change the default project setting in the `.firebaserc`
-5. If you want to deploy the whole project, run `npm run firebase-deploy`
-6. If you want to deploy the cloud functions only, run `npm run deploy-functions`
+* Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
+* Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
+* Run `npm run firebase-init`
+* Visit `https://console.firebase.google.com` to create a new project
+* Add the firebase project into your local configuration `npm run firebase-add`
+* You may need to change the default project setting in the `.firebaserc`
+* If you want to deploy the whole project, run `npm run firebase-deploy`
+* If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
 ## Webpack, Reactjs and TypeScript
 Although there is `create-react-app` toolkit to create ReactJS project very easily and quickly, I personally love creating 
