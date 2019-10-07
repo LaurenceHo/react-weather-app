@@ -99,7 +99,7 @@ export const WeatherMap: React.FC<any> = () => {
             isLoading: false,
             error: '',
           });
-          dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.city));
+          dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
         }
       } catch (error) {
         setWeatherMapState({ ...weatherMapState, error: error.message });

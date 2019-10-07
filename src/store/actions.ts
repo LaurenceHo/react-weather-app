@@ -112,7 +112,7 @@ export const getWeatherData = (lat: number, lon: number, city: string) => {
         // Get coordinates by city at first, after that get the weather and forecast info by coordinates
         const geocode: GeoCode = await getGeocode(null, null, city);
         if (geocode.status === 'OK') {
-          await dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.city));
+          await dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
         } else {
           dispatch(fetchingDataFailure('ERROR!'));
         }

@@ -40,25 +40,11 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
       if (geocode.status === 'OK') {
         const results = geocode.results;
 
-        let locality = _.findLast(results, { types: ['locality', 'political'] });
-        let administrative_area = _.findLast(results, { types: ['administrative_area_level_1', 'political'] });
-        let country = _.findLast(results, { types: ['country', 'political'] });
-
-        let city;
-        if (locality) {
-          city = locality.formatted_address;
-        } else if (administrative_area) {
-          city = administrative_area.formatted_address;
-        } else if (country) {
-          city = country.formatted_address;
-        }
-
         let geocodeResponse = {
           status: 'OK',
           address: results[0].formatted_address,
           latitude: results[0].geometry.location.lat,
           longitude: results[0].geometry.location.lng,
-          city: city,
         };
         return res.status(200).send(geocodeResponse);
       } else if (geocode.status === 'ZERO_RESULTS') {

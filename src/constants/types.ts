@@ -3,7 +3,6 @@ export interface GeoCode {
   address: string;
   latitude: number;
   longitude: number;
-  city: string;
 }
 
 export interface Filter {
