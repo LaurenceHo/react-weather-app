@@ -1,4 +1,4 @@
-import { Forecast } from './constants/types';
+import { Forecast, GeoCode } from './constants/types';
 
 declare let process: {
   env: {
@@ -21,14 +21,13 @@ const checkStatus = (response: any): any => {
 
 const parseJSON = (response: any): any => response.json();
 
-export const getGeocode = (latitude: number, longitude: number, address: string): Promise<any> => {
+export const getGeocode = (latitude: number, longitude: number, address: string): Promise<GeoCode> => {
   const requestUrl =
     `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` + encodeURIComponent(address);
   return fetch(requestUrl)
     .then(checkStatus)
     .then(parseJSON)
-    .then((data: any) => data)
-    .catch((error: any) => console.error('request failed', error));
+    .then((data: GeoCode) => data);
 };
 
 export const getWeatherByTime = (
@@ -44,6 +43,5 @@ export const getWeatherByTime = (
   return fetch(requestUrl)
     .then(checkStatus)
     .then(parseJSON)
-    .then((data: any) => data)
-    .catch((error: any) => console.error('request failed', error));
+    .then((data: any) => data);
 };

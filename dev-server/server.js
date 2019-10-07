@@ -24,6 +24,15 @@ const corsHeader = (req, res, next) => {
 app.use(corsHeader);
 
 app.get('/getGeocode', (req, res) => setTimeout(() => res.send(location), 1000));
+// app.get('/getGeocode', (req, res) =>
+//   setTimeout(
+//     () =>
+//       res.status(404).json({
+//         status: 'ERROR',
+//       }),
+//     1000
+//   )
+// );
 app.get('/getWeather', (req, res) => {
   if (req.query.lat === '40.7127753' && req.query.lon === '-74.0059728') {
     if (req.query.units.toLocaleLowerCase() === 'us') {

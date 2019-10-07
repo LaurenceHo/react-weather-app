@@ -1,3 +1,11 @@
+export interface GeoCode {
+  status: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+}
+
 export interface Filter {
   units: 'si' | 'us';
   searchedLocation: string;

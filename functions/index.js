@@ -27,7 +27,8 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
   } else {
     params = `address=${req.query.address}`;
   }
-  const requestUrl = `${GEOCODE_API_URL}${params}&key=${apiKey.googleGeocoding}`;
+  let requestUrl = `${GEOCODE_API_URL}${params}&key=${apiKey.googleGeocoding}`;
+  requestUrl = encodeURI(requestUrl);
   console.log(requestUrl);
   cors(req, res, () => {
     return request.get(requestUrl, (error, response, body) => {
@@ -39,19 +40,17 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
       if (geocode.status === 'OK') {
         const results = geocode.results;
 
-        let sublocality = _.findLast(results, { types: ['political', 'sublocality', 'sublocality_level_1'] });
-        let administrative_area = _.findLast(results, { types: ['administrative_area_level_1', 'political'] });
         let locality = _.findLast(results, { types: ['locality', 'political'] });
+        let administrative_area = _.findLast(results, { types: ['administrative_area_level_1', 'political'] });
+        let country = _.findLast(results, { types: ['country', 'political'] });
 
         let city;
-        if (sublocality) {
-          city = sublocality.formatted_address;
-        } else {
-          if (administrative_area) {
-            city = administrative_area.formatted_address;
-          } else {
-            city = locality.formatted_address;
-          }
+        if (locality) {
+          city = locality.formatted_address;
+        } else if (administrative_area) {
+          city = administrative_area.formatted_address;
+        } else if (country) {
+          city = country.formatted_address;
         }
 
         let geocodeResponse = {
@@ -62,8 +61,10 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
           city: city,
         };
         return res.status(200).send(geocodeResponse);
+      } else if (geocode.status === 'ZERO_RESULTS') {
+        return res.status(404).send({ status: 'ERROR' });
       } else {
-        return res.status(response.statusCode).send(body);
+        return res.status(500).send({ status: 'ERROR' });
       }
     });
   });

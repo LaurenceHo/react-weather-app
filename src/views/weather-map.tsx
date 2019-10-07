@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGeocode } from '../api';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
-import { RootState, WeatherMapState } from '../constants/types';
+import { GeoCode, RootState, WeatherMapState } from '../constants/types';
 import { getWeatherData } from '../store/actions';
 
 const usePrevious = (value: any) => {
@@ -79,7 +79,7 @@ export const WeatherMap: React.FC<any> = () => {
     });
   };
 
-  const fetchLatitudeAndLongitude = (lat: number, lon: number, city: string) => {
+  const fetchLatitudeAndLongitude = async (lat: number, lon: number, city: string) => {
     if (lat !== 0 && lon !== 0) {
       setWeatherMapState({
         latitude: lat,
@@ -89,20 +89,21 @@ export const WeatherMap: React.FC<any> = () => {
         error: '',
       });
     } else {
-      getGeocode(null, null, city)
-        .then((geocode: any) => {
-          if (geocode.status === 'OK') {
-            setWeatherMapState({
-              latitude: geocode.latitude,
-              longitude: geocode.longitude,
-              location: geocode.address,
-              isLoading: false,
-              error: '',
-            });
-            dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.city));
-          }
-        })
-        .catch(error => setWeatherMapState({ ...weatherMapState, error }));
+      try {
+        const geocode: GeoCode = await getGeocode(null, null, city);
+        if (geocode.status === 'OK') {
+          setWeatherMapState({
+            latitude: geocode.latitude,
+            longitude: geocode.longitude,
+            location: geocode.address,
+            isLoading: false,
+            error: '',
+          });
+          dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.city));
+        }
+      } catch (error) {
+        setWeatherMapState({ ...weatherMapState, error: error.message });
+      }
     }
   };
 
@@ -112,8 +113,8 @@ export const WeatherMap: React.FC<any> = () => {
    */
   const searchByDefaultLocation = (message: string) => {
     setWeatherMapState({ ...weatherMapState, error: message });
-    setTimeout(() => {
-      fetchLatitudeAndLongitude(-36.8484597, 174.7633315, 'Auckland');
+    setTimeout(async () => {
+      await fetchLatitudeAndLongitude(-36.8484597, 174.7633315, 'Auckland');
     }, 5000);
   };
 
@@ -129,22 +130,23 @@ export const WeatherMap: React.FC<any> = () => {
         maximumAge: 0,
       };
 
-      const handleLocation = (location: any) => {
-        getGeocode(location.coords.latitude, location.coords.longitude, '')
-          .then((geocode: any) => {
-            if (geocode.status === 'OK') {
-              setWeatherMapState({
-                latitude: geocode.latitude,
-                longitude: geocode.longitude,
-                location: geocode.address,
-                isLoading: false,
-                error: '',
-              });
-              renderMap();
-              dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
-            }
-          })
-          .catch(error => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));
+      const handleLocation = async (location: any) => {
+        try {
+          const geocode: GeoCode = await getGeocode(location.coords.latitude, location.coords.longitude, '');
+          if (geocode.status === 'OK') {
+            setWeatherMapState({
+              latitude: geocode.latitude,
+              longitude: geocode.longitude,
+              location: geocode.address,
+              isLoading: false,
+              error: '',
+            });
+            renderMap();
+            dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
+          }
+        } catch (error) {
+          searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
+        }
       };
 
       const handleError = (error: any) => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);

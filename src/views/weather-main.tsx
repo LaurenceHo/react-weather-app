@@ -8,7 +8,7 @@ import { CurrentWeather } from '../components/current-weather';
 import { DailyForecast } from '../components/daily-forecast';
 import { HourlyForecast } from '../components/hourly-forecast';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
-import { Filter, RootState } from '../constants/types';
+import { Filter, GeoCode, RootState } from '../constants/types';
 import { fetchingData, fetchingDataFailure, getWeatherData } from '../store/actions';
 
 export const WeatherMain: React.FC<any> = () => {
@@ -42,14 +42,15 @@ export const WeatherMain: React.FC<any> = () => {
         maximumAge: 0,
       };
 
-      const handleLocation = (location: any) => {
-        getGeocode(location.coords.latitude, location.coords.longitude, '')
-          .then((geocode: any) => {
-            if (geocode.status === 'OK') {
-              dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
-            }
-          })
-          .catch(error => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`));
+      const handleLocation = async (location: any) => {
+        try {
+          const geocode: GeoCode = await getGeocode(location.coords.latitude, location.coords.longitude, '');
+          if (geocode.status === 'OK') {
+            dispatch(getWeatherData(geocode.latitude, geocode.longitude, geocode.address));
+          }
+        } catch (error) {
+          searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
+        }
       };
 
       const handleError = (error: any) => searchByDefaultLocation(`${error.message}.${USE_DEFAULT_LOCATION}`);
