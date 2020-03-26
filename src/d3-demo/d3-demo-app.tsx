@@ -69,7 +69,7 @@ export class D3DemoApp extends React.Component<any, any> {
   }
 
   getNode(name: string) {
-    return this.nodes.find(node => {
+    return this.nodes.find((node) => {
       return name === node.name;
     });
   }
@@ -144,22 +144,14 @@ export class D3DemoApp extends React.Component<any, any> {
       });
       this.node.exit().remove();
 
-      const nodeEnter = this.node
-        .enter()
-        .append('g')
-        .attr('class', 'node');
+      const nodeEnter = this.node.enter().append('g').attr('class', 'node');
       nodeEnter
         .append('circle')
         .attr('class', (d: any) => {
           return d.name + ' ' + d.priority;
         })
         .attr('r', this.width / 200)
-        .call(
-          drag()
-            .on('start', dragstarted)
-            .on('drag', dragged)
-            .on('end', dragended)
-        );
+        .call(drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
       nodeEnter
         .append('text')
         .attr('dx', this.width / 130 + 3)

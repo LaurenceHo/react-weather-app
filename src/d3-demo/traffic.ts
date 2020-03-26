@@ -5,10 +5,7 @@ export class TrafficService {
   c10 = d3.scaleOrdinal(d3.schemeCategory10);
   slowest = 0;
   slowestMax = 0;
-  scaleMax = d3
-    .scaleLinear()
-    .domain([0, 0])
-    .range([2, 175]);
+  scaleMax = d3.scaleLinear().domain([0, 0]).range([2, 175]);
   statusCodes: any[] = [];
   responseTimes: any[] = [];
   requests: any[] = [];
@@ -30,10 +27,7 @@ export class TrafficService {
     if (typeof json !== 'string') {
       json = JSON.stringify(json, undefined, 2);
     }
-    json = json
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return json.replace(
       /('(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\'])*'(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
       (match: any) => {
@@ -121,10 +115,7 @@ export class TrafficService {
         }
         if (this.responseTimes[responseTimesIndex].max > this.slowestMax) {
           this.slowestMax = this.responseTimes[responseTimesIndex].max;
-          this.scaleMax = d3
-            .scaleLinear()
-            .domain([0, this.slowestMax])
-            .range([2, 175]);
+          this.scaleMax = d3.scaleLinear().domain([0, this.slowestMax]).range([2, 175]);
           this.updateResponseTimes();
         }
         this.responseTimes[responseTimesIndex].count++;
@@ -321,12 +312,7 @@ export class TrafficService {
         .attr('width', 8)
         .attr('height', 4)
         .attr('class', 'responseTimesChart');
-      this.svg
-        .append('text')
-        .text('average')
-        .attr('dx', 30)
-        .attr('dy', 36)
-        .attr('class', 'heading');
+      this.svg.append('text').text('average').attr('dx', 30).attr('dy', 36).attr('class', 'heading');
       this.svg
         .append('rect')
         .attr('x', 120)
@@ -334,12 +320,7 @@ export class TrafficService {
         .attr('width', 8)
         .attr('height', 4)
         .attr('class', 'responseTimesChartMax');
-      this.svg
-        .append('text')
-        .text('maximum')
-        .attr('dx', 130)
-        .attr('dy', 36)
-        .attr('class', 'heading');
+      this.svg.append('text').text('maximum').attr('dx', 130).attr('dy', 36).attr('class', 'heading');
     }
 
     let responseItem = this.svg.selectAll('.responseTime');
@@ -420,15 +401,8 @@ export class TrafficService {
       .on('click', (d: any) => {
         const content = d3.select('#overlayContent');
         content.selectAll('*').remove();
-        content
-          .append('b')
-          .text('Details maximum log entry: ')
-          .append('br');
-        content
-          .append('pre')
-          .html(TrafficService.syntaxHighlight(d.maxHit))
-          .append('br')
-          .append('br');
+        content.append('b').text('Details maximum log entry: ').append('br');
+        content.append('pre').html(TrafficService.syntaxHighlight(d.maxHit)).append('br').append('br');
 
         TrafficService.overlay();
       });

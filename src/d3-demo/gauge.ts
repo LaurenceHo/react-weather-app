@@ -69,9 +69,7 @@ export default class Gauge {
     this.pointerHeadLength = Math.round(this.r * this.config.pointerHeadLengthPercent);
 
     // a linear scale that maps domain values to a percent from 0..1
-    this.scale = scaleLinear()
-      .range([0, 1])
-      .domain([this.config.minValue, this.config.maxValue]);
+    this.scale = scaleLinear().range([0, 1]).domain([this.config.minValue, this.config.maxValue]);
 
     this.ticks = this.scale.ticks(this.config.majorTicks);
     this.tickData = range(this.config.majorTicks).map(() => {
@@ -112,10 +110,7 @@ export default class Gauge {
 
     const centerTx = this.centerTranslation();
 
-    const arcs = gauge
-      .append('g')
-      .attr('class', 'arc')
-      .attr('transform', centerTx);
+    const arcs = gauge.append('g').attr('class', 'arc').attr('transform', centerTx);
 
     arcs
       .selectAll('path')
@@ -127,10 +122,7 @@ export default class Gauge {
       })
       .attr('d', this.arc);
 
-    const lg = gauge
-      .append('g')
-      .attr('class', 'label')
-      .attr('transform', centerTx);
+    const lg = gauge.append('g').attr('class', 'label').attr('transform', centerTx);
     lg.selectAll('text')
       .data(this.ticks)
       .enter()
@@ -150,11 +142,7 @@ export default class Gauge {
       [this.config.pointerWidth / 2, 0],
     ];
     const pointerLine = line().curve(curveLinear);
-    const pg = gauge
-      .append('g')
-      .data([lineData])
-      .attr('class', 'pointer')
-      .attr('transform', centerTx);
+    const pg = gauge.append('g').data([lineData]).attr('class', 'pointer').attr('transform', centerTx);
 
     this.pointer = pg
       .append('path')

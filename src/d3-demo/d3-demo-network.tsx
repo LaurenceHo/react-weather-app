@@ -244,12 +244,7 @@ export class D3DemoNetwork extends React.Component<any, D3DemoNetworkState> {
         .on('mouseout', this.hideToolTip);
 
       // for interaction
-      nodeEnter.call(
-        drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended)
-      );
+      nodeEnter.call(drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
 
       // append text to g
       nodeEnter

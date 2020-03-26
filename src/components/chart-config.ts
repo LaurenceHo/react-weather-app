@@ -34,10 +34,10 @@ export const chartConfig: any = (units: string, timezone: Timezone, hourly: any)
      `;
   };
 
-  const roundTemperature = map(hourly.data, n => {
+  const roundTemperature = map(hourly.data, (n) => {
     return Math.round(n.temperature);
   }).slice(0, 23);
-  const roundIntensity = map(hourly.data, n => {
+  const roundIntensity = map(hourly.data, (n) => {
     if (units === 'us') {
       return n.precipIntensity.toFixed(3);
     } else if (units === 'si') {

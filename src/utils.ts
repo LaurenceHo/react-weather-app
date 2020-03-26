@@ -8,10 +8,7 @@ export class Utils {
    * @returns {string}
    */
   static getLocalTime = (timestamp: number, offset: number, format: string): string => {
-    return `${moment
-      .unix(timestamp)
-      .utcOffset(offset)
-      .format(format)}`;
+    return `${moment.unix(timestamp).utcOffset(offset).format(format)}`;
   };
 
   /**

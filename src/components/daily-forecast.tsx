@@ -97,7 +97,7 @@ export const DailyForecast: React.FC<DailyForecastProps> = ({
         key='icon'
         align='center'
         width='5rem'
-        render={icon => (
+        render={(icon) => (
           <div>
             <WeatherIcon icon={icon} size='1.6rem' />
           </div>
