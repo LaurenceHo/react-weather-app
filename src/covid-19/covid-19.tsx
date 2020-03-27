@@ -12,12 +12,13 @@ export const Covid19: React.FC = () => {
 
   useEffect(() => {
     setIsloadingState(true);
-    fetch('https://covid19nz.s3.amazonaws.com/covid-19-daily.json')
+    fetch('https://covid19nz.s3.amazonaws.com/covid-19.json')
       .then((response: any): any => response.json())
       .then((data: any) => {
         setCovidDailyState(data);
         setIsloadingState(false);
-      });
+      })
+      .catch((error) => setIsloadingState(false));
   }, []);
 
   useEffect(() => {

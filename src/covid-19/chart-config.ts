@@ -1,5 +1,6 @@
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/toolbox';
 import 'echarts/lib/component/tooltip';
@@ -12,7 +13,12 @@ export const chartConfig: any = (covid19Data: any) => {
       {
         text: 'Probable and confirmed cases in New Zealand',
         left: 'center',
-        bottom: 10,
+        top: -5,
+      },
+      {
+        text: 'Age group',
+        left: 'center',
+        top: '50%',
       },
     ],
     toolbox: {
@@ -22,8 +28,10 @@ export const chartConfig: any = (covid19Data: any) => {
         saveAsImage: { show: true, title: 'Save as image' },
       },
     },
+    grid: { bottom: '55%' },
     legend: {
       data: ['Total confirmed cases', 'New confirmed cases', 'New probable cases'],
+      top: 20,
     },
     tooltip: {
       trigger: 'axis',
@@ -37,7 +45,7 @@ export const chartConfig: any = (covid19Data: any) => {
     xAxis: [
       {
         type: 'category',
-        data: map(covid19Data, 'date'),
+        data: map(covid19Data.daily, 'date'),
       },
     ],
     yAxis: [
@@ -56,22 +64,39 @@ export const chartConfig: any = (covid19Data: any) => {
       {
         name: 'Total confirmed cases',
         type: 'line',
-        data: map(covid19Data, 'totalConfirmedCase'),
+        data: map(covid19Data.daily, 'totalConfirmedCase'),
+        smooth: true,
+      },
+      {
+        name: 'Total recovery cases',
+        type: 'line',
+        data: map(covid19Data.daily, 'totalRecovery'),
         smooth: true,
       },
       {
         name: 'New confirmed cases',
         type: 'bar',
         stack: 'New cases',
-        data: map(covid19Data, 'newConfirmedCase'),
+        data: map(covid19Data.daily, 'newConfirmedCase'),
         yAxisIndex: 1,
       },
       {
         name: 'New probable cases',
         type: 'bar',
         stack: 'New cases',
-        data: map(covid19Data, 'newProbableCase'),
+        data: map(covid19Data.daily, 'newProbableCase'),
         yAxisIndex: 1,
+      },
+      {
+        type: 'pie',
+        radius: '30%',
+        center: ['50%', '75%'],
+        data: Object.keys(covid19Data['ages']).map((key) => {
+          return {
+            name: key,
+            value: covid19Data['ages'][key]['female'] + covid19Data['ages'][key]['male'],
+          };
+        }),
       },
     ],
   };
