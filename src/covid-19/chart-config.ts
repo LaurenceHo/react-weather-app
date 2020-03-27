@@ -24,7 +24,7 @@ export const dailyChartConfig: any = (covid19Data: any) => {
       },
     },
     legend: {
-      data: ['Total confirmed cases', 'New confirmed cases', 'New probable cases'],
+      data: ['Total confirmed cases', 'Total recovery cases', 'New confirmed cases', 'New probable cases'],
       top: 20,
     },
     tooltip: {
@@ -45,7 +45,7 @@ export const dailyChartConfig: any = (covid19Data: any) => {
     yAxis: [
       {
         type: 'value',
-        name: 'Total confirmed cases',
+        name: 'Total cases',
         position: 'right',
       },
       {
@@ -95,7 +95,7 @@ export const pieChartConfig: any = (covid19Data: any) => {
   return {
     title: [
       {
-        text: 'Age Groups and Gender Groups',
+        text: 'Age and Gender Groups',
         left: 'center',
         top: -5,
       },
@@ -127,8 +127,8 @@ export const pieChartConfig: any = (covid19Data: any) => {
           show: false,
         },
         data: [
-          { name: 'male', value: maleNumber },
-          { name: 'female', value: femaleNumber },
+          { name: 'Female', value: femaleNumber },
+          { name: 'Male', value: maleNumber },
         ],
       },
       {
