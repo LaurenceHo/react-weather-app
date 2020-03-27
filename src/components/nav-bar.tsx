@@ -42,31 +42,19 @@ export const NavBar: React.FC<any> = () => {
   };
 
   const WeatherLink = withRouter(({ history }) => (
-    <Link
-      to='/'
-      onClick={() => {
-        history.push('/');
-      }}>
+    <Link to='/' onClick={() => history.push('/')}>
       Weather
     </Link>
   ));
 
   const AboutLink = withRouter(({ history }) => (
-    <Link
-      to='/about'
-      onClick={() => {
-        history.push('/about');
-      }}>
+    <Link to='/about' onClick={() => history.push('/about')}>
       About
     </Link>
   ));
 
   const WeatherMapLink = withRouter(({ history }) => (
-    <Link
-      to='/map'
-      onClick={() => {
-        history.push('/map');
-      }}>
+    <Link to='/map' onClick={() => history.push('/map')}>
       Map
     </Link>
   ));
@@ -132,12 +120,13 @@ export const NavBar: React.FC<any> = () => {
                 <AboutLink />
               </Menu.Item>
               <Menu.Item key='d3_demo_app'>
-                <Link
-                  to='/d3_demo_app'
-                  onClick={() => {
-                    history.push('/d3_demo_app');
-                  }}>
+                <Link to='/d3_demo_app' onClick={() => history.push('/d3_demo_app')}>
                   D3 Demo
+                </Link>
+              </Menu.Item>
+              <Menu.Item key='covid-19'>
+                <Link to='/covid-19' onClick={() => history.push('/covid-19')}>
+                  Covid-19
                 </Link>
               </Menu.Item>
             </Menu>
