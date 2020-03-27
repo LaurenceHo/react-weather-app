@@ -1,0 +1,277 @@
+{
+  "daily": [
+    {
+      "date": "2020-02-28",
+      "newConfirmedCase": 1,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 1,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-02-29",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 1,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-01",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 1,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-02",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 1,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-03",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 1,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-04",
+      "newConfirmedCase": 1,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 2,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-05",
+      "newConfirmedCase": 1,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 3,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-06",
+      "newConfirmedCase": 1,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 4,
+      "totalProbableCase": 0,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-07",
+      "newConfirmedCase": 1,
+      "newProbableCase": 2,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-08",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-09",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-10",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-11",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-12",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-13",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 5,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-14",
+      "newConfirmedCase": 1,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 6,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-15",
+      "newConfirmedCase": 2,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 8,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-16",
+      "newConfirmedCase": 0,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 8,
+      "totalProbableCase": 2
+    },
+    {
+      "date": "2020-03-17",
+      "newConfirmedCase": 4,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 12,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-18",
+      "newConfirmedCase": 8,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 20,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-19",
+      "newConfirmedCase": 8,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 28,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-20",
+      "newConfirmedCase": 11,
+      "newProbableCase": 0,
+      "totalConfirmedCase": 39,
+      "totalProbableCase": 2,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-21",
+      "newConfirmedCase": 13,
+      "newProbableCase": 2,
+      "totalConfirmedCase": 52,
+      "totalProbableCase": 4,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-22",
+      "newConfirmedCase": 14,
+      "newProbableCase": 3,
+      "totalConfirmedCase": 66,
+      "totalProbableCase": 7,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-23",
+      "newConfirmedCase": 36,
+      "newProbableCase": 3,
+      "totalConfirmedCase": 102,
+      "totalProbableCase": 10,
+      "totalRecovery": 0
+    },
+    {
+      "date": "2020-03-24",
+      "newConfirmedCase": 40,
+      "newProbableCase": 3,
+      "totalConfirmedCase": 142,
+      "totalProbableCase": 13,
+      "totalRecovery": 12
+    },
+    {
+      "date": "2020-03-25",
+      "newConfirmedCase": 47,
+      "newProbableCase": 3,
+      "totalConfirmedCase": 189,
+      "totalProbableCase": 16,
+      "totalRecovery": 22
+    },
+    {
+      "date": "2020-03-26",
+      "newConfirmedCase": 73,
+      "newProbableCase": 5,
+      "totalConfirmedCase": 262,
+      "totalProbableCase": 21,
+      "totalRecovery": 27
+    },
+    {
+      "date": "2020-03-27",
+      "newConfirmedCase": 76,
+      "newProbableCase": 9,
+      "totalConfirmedCase": 338,
+      "totalProbableCase": 30,
+      "totalRecovery": 37
+    }
+  ],
+  "ages": {
+    "child": {
+      "female": 0,
+      "male": 3
+    },
+    "10s": {
+      "female": 6,
+      "male": 4
+    },
+    "20s": {
+      "female": 30,
+      "male": 24
+    },
+    "30s": {
+      "female": 20,
+      "male": 19
+    },
+    "40s": {
+      "female": 18,
+      "male": 22
+    },
+    "50s": {
+      "female": 21,
+      "male": 27
+    },
+    "60s": {
+      "female": 20,
+      "male": 28
+    },
+    "70s": {
+      "female": 5,
+      "male": 12
+    },
+    "80s": {
+      "female": 1,
+      "male": 1
+    },
+    "unknown": {
+      "female": 1,
+      "male": 0
+    }
+  }
+}

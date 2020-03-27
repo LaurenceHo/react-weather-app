@@ -3,8 +3,19 @@ import Row from 'antd/lib/row';
 import * as echarts from 'echarts/lib/echarts';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { chartConfig } from './chart-config';
+import { dailyChartConfig, pieChartConfig } from './chart-config';
 import { isEmpty } from 'lodash';
+
+declare let process: {
+  env: {
+    NODE_ENV: string;
+  };
+};
+
+const CLOUD_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/covidData'
+    : 'https://covid19nz.s3.amazonaws.com/covid-19.json';
 
 export const Covid19: React.FC = () => {
   const [isLoadingState, setIsloadingState] = React.useState(false);
@@ -12,7 +23,7 @@ export const Covid19: React.FC = () => {
 
   useEffect(() => {
     setIsloadingState(true);
-    fetch('https://covid19nz.s3.amazonaws.com/covid-19.json')
+    fetch(CLOUD_URL)
       .then((response: any): any => response.json())
       .then((data: any) => {
         setCovidDailyState(data);
@@ -30,15 +41,24 @@ export const Covid19: React.FC = () => {
         } catch (err) {}
 
         // Generate div element dynamically for ECharts
-        const divElement: HTMLDivElement = document.createElement('div');
-        divElement.setAttribute('id', 'covid-daily-chart');
-        divElement.setAttribute('class', 'covid-daily-chart');
-        document.getElementById('covid-daily-chart-wrapper').appendChild(divElement);
+        const covidDailyDivElement: HTMLDivElement = document.createElement('div');
+        covidDailyDivElement.setAttribute('id', 'covid-daily-chart');
+        covidDailyDivElement.setAttribute('class', 'covid-daily-chart');
+        document.getElementById('covid-chart-wrapper').appendChild(covidDailyDivElement);
 
-        let chart = echarts.getInstanceByDom(divElement);
-        if (!chart) {
-          chart = echarts.init(divElement);
-          chart.setOption(chartConfig(covidDailyState));
+        const covidPieDivElement: HTMLDivElement = document.createElement('div');
+        covidPieDivElement.setAttribute('id', 'covid-pie-chart');
+        covidPieDivElement.setAttribute('class', 'covid-pie-chart');
+        document.getElementById('covid-pie-wrapper').appendChild(covidPieDivElement);
+
+        let dailyChart = echarts.getInstanceByDom(covidDailyDivElement);
+        let pieChart = echarts.getInstanceByDom(covidPieDivElement);
+        if (!dailyChart && !pieChart) {
+          dailyChart = echarts.init(covidDailyDivElement);
+          dailyChart.setOption(dailyChartConfig(covidDailyState.daily));
+
+          pieChart = echarts.init(covidPieDivElement);
+          pieChart.setOption(pieChartConfig(covidDailyState.ages));
         }
       };
       renderChart();
@@ -56,7 +76,10 @@ export const Covid19: React.FC = () => {
           <h2>Loading...</h2>
         </Row>
       ) : (
-        <Row type='flex' justify='center' id='covid-daily-chart-wrapper' />
+        <>
+          <Row type='flex' justify='center' id='covid-chart-wrapper' />
+          <Row type='flex' justify='center' id='covid-pie-wrapper' />
+        </>
       )}
     </div>
   );

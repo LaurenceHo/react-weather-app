@@ -8,6 +8,7 @@ const weatherSiByDate = require('./mock/weather-si-by-date');
 const weatherUsByDate = require('./mock/weather-us-by-date');
 const nyWeatherSi = require('./mock/ny-weather-si');
 const nyWeatherUs = require('./mock/ny-weather-us');
+const covidData = require('./mock/covid-19');
 
 const corsHeader = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -55,6 +56,10 @@ app.get('/getWeather', (req, res) => {
       }
     }
   }
+});
+
+app.get('/covidData', (req, res) => {
+  setTimeout(() => res.send(covidData), 1000);
 });
 
 app.listen(port, () => console.log(`Mock server listening on port ${port}!`));

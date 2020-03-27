@@ -151,13 +151,22 @@ body {
 /* Weather chart section */
 
 /* Covid-19 section */
-#covid-daily-chart-wrapper {
-  padding: 0 2rem;
+#covid-chart-wrapper {
+  padding: 0.5rem 2rem;
+}
+
+#covid-pie-wrapper {
+  padding: 0.5rem 2rem;
 }
 
 .covid-daily-chart {
-  height: 60rem;
-  width: 60rem;
+  height: 30rem;
+  width: 55rem;
+}
+
+.covid-pie-chart {
+  height: 40rem;
+  width: 50rem;
 }
 
 .covid-title {
