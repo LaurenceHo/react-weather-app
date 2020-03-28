@@ -230,6 +230,14 @@
       "totalConfirmedCase": 338,
       "totalProbableCase": 30,
       "totalRecovery": 37
+    },
+    {
+      "date": "2020-03-28",
+      "newConfirmedCase": 78,
+      "newProbableCase": 5,
+      "totalConfirmedCase": 416,
+      "totalProbableCase": 35,
+      "totalRecovery": 50
     }
   ],
   "ages": {
@@ -273,5 +281,27 @@
       "female": 1,
       "male": 0
     }
+  },
+  "location": {
+    "Auckland": 64,
+    "Bay of Plenty": 10,
+    "Canterbury": 40,
+    "Capital and Coast": 45,
+    "Counties Manukau": 33,
+    "Hawke's Bay": 11,
+    "Hutt Valley": 13,
+    "Lakes": 8,
+    "MidCentral": 10,
+    "Nelson Marlborough": 18,
+    "Northland": 6,
+    "South Canterbury": 3,
+    "Southern": 59,
+    "Tairāwhiti": 1,
+    "Taranaki": 8,
+    "Waikato": 58,
+    "Wairarapa": 5,
+    "Waitemata": 54,
+    "West Coast": 2,
+    "Whanganui": 3
   }
 }

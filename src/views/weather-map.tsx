@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGeocode } from '../api';
+import { ApiKey } from '../constants/api-key';
 import { USE_DEFAULT_LOCATION } from '../constants/message';
 import { GeoCode, RootState, WeatherMapState } from '../constants/types';
 import { getWeatherData } from '../store/actions';
@@ -46,7 +47,7 @@ export const WeatherMap: React.FC<any> = () => {
     divElement.setAttribute('class', 'windy');
     document.getElementById('weather-map-wrapper').appendChild(divElement);
     const options = {
-      key: 'bRpzkzPp38FdrEGhYHWBzBf8lT3mIPSw',
+      key: ApiKey.windy,
       lat: weatherMapState.latitude,
       lon: weatherMapState.longitude,
     };
