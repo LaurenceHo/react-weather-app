@@ -1,6 +1,6 @@
 {
   "name": "react-weather-app",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "React Weather App",
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack.dev.js --progress --profile --watch --open",
@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "antd": "^3.26.14",
+    "clsx": "^1.1.0",
     "d3": "^5.15.0",
     "echarts": "^4.7.0",
     "firebase": "^7.13.0",

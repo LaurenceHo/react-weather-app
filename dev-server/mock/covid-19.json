@@ -242,65 +242,57 @@
   ],
   "ages": {
     "child": {
-      "female": 0,
-      "male": 3
-    },
-    "10s": {
-      "female": 6,
-      "male": 4
-    },
-    "20s": {
-      "female": 30,
-      "male": 24
-    },
-    "30s": {
-      "female": 20,
-      "male": 19
-    },
-    "40s": {
-      "female": 18,
-      "male": 22
-    },
-    "50s": {
-      "female": 21,
-      "male": 27
-    },
-    "60s": {
-      "female": 20,
-      "male": 28
-    },
-    "70s": {
-      "female": 5,
-      "male": 12
-    },
-    "80s": {
-      "female": 1,
+      "female": 2,
       "male": 1
     },
-    "unknown": {
-      "female": 1,
-      "male": 0
+    "10s": {
+      "female": 14,
+      "male": 7
+    },
+    "20s": {
+      "female": 59,
+      "male": 40
+    },
+    "30s": {
+      "female": 40,
+      "male": 26
+    },
+    "40s": {
+      "female": 25,
+      "male": 31
+    },
+    "50s": {
+      "female": 29,
+      "male": 47
+    },
+    "60s": {
+      "female": 29,
+      "male": 37
+    },
+    "Over 70s": {
+      "female": 9,
+      "male": 19
     }
   },
   "location": {
-    "Auckland": 64,
-    "Bay of Plenty": 10,
-    "Canterbury": 40,
-    "Capital and Coast": 45,
-    "Counties Manukau": 33,
+    "Auckland": 59,
+    "Bay of Plenty": 8,
+    "Canterbury": 36,
+    "Capital and Coast": 41,
+    "Counties Manukau": 31,
     "Hawke's Bay": 11,
-    "Hutt Valley": 13,
+    "Hutt Valley": 12,
     "Lakes": 8,
-    "MidCentral": 10,
-    "Nelson Marlborough": 18,
+    "MidCentral": 8,
+    "Nelson Marlborough": 17,
     "Northland": 6,
     "South Canterbury": 3,
-    "Southern": 59,
+    "Southern": 58,
     "Tairāwhiti": 1,
-    "Taranaki": 8,
-    "Waikato": 58,
+    "Taranaki": 7,
+    "Waikato": 55,
     "Wairarapa": 5,
-    "Waitemata": 54,
+    "Waitemata": 44,
     "West Coast": 2,
     "Whanganui": 3
   }

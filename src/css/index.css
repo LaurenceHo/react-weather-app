@@ -175,6 +175,23 @@ body {
   font-weight: 700;
 }
 
+.covid-cases-card {
+  text-align: center;
+}
+
+.covid-cases-card-content {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.covid-recovered-cases-content {
+  color: #8aca2b;
+}
+
+.last-updated {
+  font-size: 0.8rem;
+}
+
 #windy {
   width: 100%;
   min-height: 100%;
