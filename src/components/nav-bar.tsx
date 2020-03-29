@@ -116,9 +116,6 @@ export const NavBar: React.FC<any> = () => {
               <Menu.Item key='map'>
                 <WeatherMapLink />
               </Menu.Item>
-              <Menu.Item key='about'>
-                <AboutLink />
-              </Menu.Item>
               <Menu.Item key='d3_demo_app'>
                 <Link to='/d3_demo_app' onClick={() => history.push('/d3_demo_app')}>
                   D3 Demo
@@ -128,6 +125,9 @@ export const NavBar: React.FC<any> = () => {
                 <Link to='/covid-19' onClick={() => history.push('/covid-19')}>
                   Covid-19
                 </Link>
+              </Menu.Item>
+              <Menu.Item key='about'>
+                <AboutLink />
               </Menu.Item>
             </Menu>
           </Col>

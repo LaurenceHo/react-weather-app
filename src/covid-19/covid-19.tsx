@@ -152,25 +152,25 @@ export const Covid19: React.FC = () => {
           <Row type='flex' justify='center' gutter={16}>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Confirmed'>
-                <div className='covid-cases-card-content'>{last(covidState.daily)['totalConfirmedCase']}</div>
+                <div className='covid-cases-card-content'>{last(covidState.daily)['totalConfirmed']}</div>
               </Card>
             </Col>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Cases'>
                 <div className='covid-cases-card-content'>
-                  {last(covidState.daily)['totalConfirmedCase'] + last(covidState.daily)['totalProbableCase']}
+                  {last(covidState.daily)['totalConfirmed'] + last(covidState.daily)['totalProbable']}
                 </div>
               </Card>
             </Col>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Recovered'>
                 <div className={clsx('covid-recovered-cases-content', 'covid-cases-card-content')}>
-                  {last(covidState.daily)['totalRecovery']}
+                  {last(covidState.daily)['totalRecovered']}
                 </div>
               </Card>
             </Col>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
-              <Card title='Death'>
+              <Card title='Total Death'>
                 <div className={clsx('covid-death-cases-content', 'covid-cases-card-content')}>
                   {last(covidState.daily)['totalDeath']}
                 </div>
