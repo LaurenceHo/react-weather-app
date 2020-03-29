@@ -150,22 +150,29 @@ export const Covid19: React.FC = () => {
       ) : (
         <>
           <Row type='flex' justify='center' gutter={16}>
-            <Col sm={8} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
+            <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Confirmed'>
                 <div className='covid-cases-card-content'>{last(covidState.daily)['totalConfirmedCase']}</div>
               </Card>
             </Col>
-            <Col sm={8} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
+            <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Cases'>
                 <div className='covid-cases-card-content'>
                   {last(covidState.daily)['totalConfirmedCase'] + last(covidState.daily)['totalProbableCase']}
                 </div>
               </Card>
             </Col>
-            <Col sm={8} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
+            <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Recovered'>
                 <div className={clsx('covid-recovered-cases-content', 'covid-cases-card-content')}>
                   {last(covidState.daily)['totalRecovery']}
+                </div>
+              </Card>
+            </Col>
+            <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
+              <Card title='Death'>
+                <div className={clsx('covid-death-cases-content', 'covid-cases-card-content')}>
+                  {last(covidState.daily)['totalDeath']}
                 </div>
               </Card>
             </Col>
@@ -176,13 +183,13 @@ export const Covid19: React.FC = () => {
           <Row type='flex' justify='center' id='covid-chart-wrapper' />
           <Row type='flex' justify='center' id='covid-pie-wrapper' />
           <Row type='flex' justify='center' id='new-zealand-map' />
+          <Row type='flex' justify='center'>
+            <Col span={24} className={clsx('covid-cases-card', 'last-updated')}>
+              Last updated: {covidState.lastUpdated}
+            </Col>
+          </Row>
         </>
       )}
-      <Row type='flex' justify='center'>
-        <Col span={24} className={clsx('covid-cases-card', 'last-updated')}>
-          Last updated: 20:05 Saturday, 28 March 2020 (UTC)
-        </Col>
-      </Row>
       <BackTop />
     </div>
   );

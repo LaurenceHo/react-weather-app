@@ -188,6 +188,10 @@ body {
   color: #8aca2b;
 }
 
+.covid-death-cases-content {
+  color: red;
+}
+
 .last-updated {
   font-size: 0.8rem;
 }

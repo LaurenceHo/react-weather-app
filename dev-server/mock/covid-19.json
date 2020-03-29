@@ -6,7 +6,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 1,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-02-29",
@@ -14,7 +15,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 1,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-01",
@@ -22,7 +24,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 1,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-02",
@@ -30,7 +33,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 1,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-03",
@@ -38,7 +42,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 1,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-04",
@@ -46,7 +51,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 2,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-05",
@@ -54,7 +60,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 3,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-06",
@@ -62,7 +69,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 4,
       "totalProbableCase": 0,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-07",
@@ -70,7 +78,8 @@
       "newProbableCase": 2,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-08",
@@ -78,7 +87,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-09",
@@ -86,7 +96,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-10",
@@ -94,7 +105,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-11",
@@ -102,7 +114,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-12",
@@ -110,7 +123,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-13",
@@ -118,7 +132,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 5,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-14",
@@ -126,7 +141,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 6,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-15",
@@ -134,14 +150,17 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 8,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-16",
       "newConfirmedCase": 0,
       "newProbableCase": 0,
       "totalConfirmedCase": 8,
-      "totalProbableCase": 2
+      "totalProbableCase": 2,
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-17",
@@ -149,7 +168,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 12,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-18",
@@ -157,7 +177,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 20,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-19",
@@ -165,7 +186,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 28,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-20",
@@ -173,7 +195,8 @@
       "newProbableCase": 0,
       "totalConfirmedCase": 39,
       "totalProbableCase": 2,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-21",
@@ -181,7 +204,8 @@
       "newProbableCase": 2,
       "totalConfirmedCase": 52,
       "totalProbableCase": 4,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-22",
@@ -189,7 +213,8 @@
       "newProbableCase": 3,
       "totalConfirmedCase": 66,
       "totalProbableCase": 7,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-23",
@@ -197,7 +222,8 @@
       "newProbableCase": 3,
       "totalConfirmedCase": 102,
       "totalProbableCase": 10,
-      "totalRecovery": 0
+      "totalRecovery": 0,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-24",
@@ -205,7 +231,8 @@
       "newProbableCase": 3,
       "totalConfirmedCase": 142,
       "totalProbableCase": 13,
-      "totalRecovery": 12
+      "totalRecovery": 12,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-25",
@@ -213,7 +240,8 @@
       "newProbableCase": 3,
       "totalConfirmedCase": 189,
       "totalProbableCase": 16,
-      "totalRecovery": 22
+      "totalRecovery": 22,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-26",
@@ -221,7 +249,8 @@
       "newProbableCase": 5,
       "totalConfirmedCase": 262,
       "totalProbableCase": 21,
-      "totalRecovery": 27
+      "totalRecovery": 27,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-27",
@@ -229,7 +258,8 @@
       "newProbableCase": 9,
       "totalConfirmedCase": 338,
       "totalProbableCase": 30,
-      "totalRecovery": 37
+      "totalRecovery": 37,
+      "totalDeath":  0
     },
     {
       "date": "2020-03-28",
@@ -237,7 +267,17 @@
       "newProbableCase": 5,
       "totalConfirmedCase": 416,
       "totalProbableCase": 35,
-      "totalRecovery": 50
+      "totalRecovery": 50,
+      "totalDeath":  0
+    },
+    {
+      "date": "2020-03-29",
+      "newConfirmedCase": 60,
+      "newProbableCase": 3,
+      "totalConfirmedCase": 476,
+      "totalProbableCase": 38,
+      "totalRecovery": 56,
+      "totalDeath":  1
     }
   ],
   "ages": {
@@ -295,5 +335,6 @@
     "Waitemata": 44,
     "West Coast": 2,
     "Whanganui": 3
-  }
+  },
+  "lastUpdated": " 00:33 Sunday, 29 March 2020 (UTC) "
 }
