@@ -122,7 +122,7 @@ export const Covid19: React.FC = () => {
           dailyChart.setOption(dailyChartConfig(covidState.daily));
 
           pieChart = echarts.init(covidPieDivElement);
-          pieChart.setOption(pieChartConfig(covidState.ages));
+          pieChart.setOption(pieChartConfig(covidState.ages, covidState.ethnicity));
         }
       };
       renderChart();
@@ -178,7 +178,7 @@ export const Covid19: React.FC = () => {
             </Col>
           </Row>
           <Row type='flex' justify='center' style={{ padding: '1rem 0' }}>
-            [<a href='#covid-pie-wrapper'>Age and Gender Groups</a>] [<a href='#new-zealand-map'>Map</a>]
+            [<a href='#covid-pie-wrapper'>Age, Gender and Ethnicity Groups</a>] [<a href='#new-zealand-map'>Map</a>]
           </Row>
           <Row type='flex' justify='center' id='covid-chart-wrapper' />
           <Row type='flex' justify='center' id='covid-pie-wrapper' />

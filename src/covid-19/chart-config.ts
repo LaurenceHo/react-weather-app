@@ -5,7 +5,7 @@ import 'echarts/lib/component/legend';
 import 'echarts/lib/component/toolbox';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
-import { map } from 'lodash';
+import { get, map } from 'lodash';
 
 export const dailyChartConfig: any = (covid19Data: any) => {
   return {
@@ -85,17 +85,29 @@ export const dailyChartConfig: any = (covid19Data: any) => {
   };
 };
 
-export const pieChartConfig: any = (covid19Data: any) => {
-  let maleNumber = 0;
-  Object.keys(covid19Data).forEach((key) => (maleNumber += covid19Data[key]['male']));
-
+export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
   let femaleNumber = 0;
-  Object.keys(covid19Data).forEach((key) => (femaleNumber += covid19Data[key]['female']));
+  Object.keys(agesGroup).forEach((key) => {
+    const female = get(agesGroup[key], 'female', 0);
+    femaleNumber += female;
+  });
+
+  let maleNumber = 0;
+  Object.keys(agesGroup).forEach((key) => {
+    const male = get(agesGroup[key], 'male', 0);
+    maleNumber += male;
+  });
+
+  let unknownNumber = 0;
+  Object.keys(agesGroup).forEach((key) => {
+    const unknown = get(agesGroup[key], 'unknown', 0);
+    unknownNumber += unknown;
+  });
 
   return {
     title: [
       {
-        text: 'Age and Gender Groups',
+        text: 'Age, Gender and Ethnicity Groups',
         left: 'center',
         top: -5,
       },
@@ -120,6 +132,7 @@ export const pieChartConfig: any = (covid19Data: any) => {
         type: 'pie',
         selectedMode: 'single',
         radius: [0, '30%'],
+        center: ['30%', '50%'],
         label: {
           position: 'inner',
         },
@@ -129,36 +142,26 @@ export const pieChartConfig: any = (covid19Data: any) => {
         data: [
           { name: 'Female', value: femaleNumber },
           { name: 'Male', value: maleNumber },
+          { name: 'Unknown', value: unknownNumber },
         ],
       },
       {
         name: 'Age Groups',
         type: 'pie',
-        radius: ['40%', '55%'],
+        radius: ['35%', '50%'],
+        center: ['30%', '50%'],
         label: {
           formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
           backgroundColor: '#eee',
           borderColor: '#aaa',
           borderWidth: 1,
           borderRadius: 4,
-          // shadowBlur:3,
-          // shadowOffsetX: 2,
-          // shadowOffsetY: 2,
-          // shadowColor: '#999',
-          // padding: [0, 7],
           rich: {
             a: {
               color: '#999',
               lineHeight: 22,
               align: 'center',
             },
-            // abg: {
-            //     backgroundColor: '#333',
-            //     width: '100%',
-            //     align: 'right',
-            //     height: 22,
-            //     borderRadius: [4, 4, 0, 0]
-            // },
             hr: {
               borderColor: '#aaa',
               width: '100%',
@@ -177,12 +180,32 @@ export const pieChartConfig: any = (covid19Data: any) => {
             },
           },
         },
-        data: Object.keys(covid19Data).map((key) => {
+        data: Object.keys(agesGroup).map((key) => {
+          const female = get(agesGroup[key], 'female', 0);
+          const male = get(agesGroup[key], 'male', 0);
+          const unknown = get(agesGroup[key], 'unknown', 0);
           return {
             name: key,
-            value: covid19Data[key]['female'] + covid19Data[key]['male'],
+            value: female + male + unknown,
           };
         }),
+      },
+      {
+        name: 'Ethnicity Groups',
+        type: 'pie',
+        radius: '45%',
+        center: ['80%', '50%'],
+        data: [
+          { name: 'Asian', value: ethnicityGroup['Asian'] },
+          { name: 'European or Other', value: ethnicityGroup['European or Other'] },
+          { name: 'Māori', value: ethnicityGroup['Māori'] },
+          {
+            name: 'Middle Eastern / Latin American / African',
+            value: ethnicityGroup['Middle Eastern / Latin American / African'],
+          },
+          { name: 'Pacific People', value: ethnicityGroup['Pacific People'] },
+          { name: 'Unknown', value: ethnicityGroup['Unknown'] },
+        ],
       },
     ],
   };
