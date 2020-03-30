@@ -1,4 +1,4 @@
-import Row from 'antd/lib/row';
+import Row from 'antd/es/row';
 import * as echarts from 'echarts/lib/echarts';
 import * as React from 'react';
 import { useEffect } from 'react';

@@ -1,4 +1,7 @@
-import { Alert, Col, Row, Spin } from 'antd/lib';
+import Alert from 'antd/es/alert';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Spin from 'antd/es/spin';
 import { isEmpty, isUndefined } from 'lodash';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';

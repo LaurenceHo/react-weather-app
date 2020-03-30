@@ -1,4 +1,4 @@
-import Input from 'antd/lib/input';
+import Input from 'antd/es/input';
 import * as React from 'react';
 import { ChangeEvent } from 'react';
 

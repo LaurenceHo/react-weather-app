@@ -1,4 +1,4 @@
-import Layout from 'antd/lib/layout';
+import Layout from 'antd/es/layout';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

@@ -11,6 +11,7 @@
 - [Ant Design](#ant-design)
 - [ECharts](#echarts)
 - [Windy API](#windy-api)
+- [Google GeoChart](#google-geochart)
 
 ## Introduction
 This project demonstrates how to use ReactJS, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
@@ -26,17 +27,19 @@ cloud function serverless platform with React frontend app.
 
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed.
-2. Google Geocoding API Key
+2. Google Geocoding API Key * 2. One for retrieving location for weather, and another one for Google GeoChart
 3. Google Firebase project
 4. Dark Sky weather API key
 5. Windy API key
+
+[NOTE] Since I already placed protection to all keys, you cannot use my own key. You have to apply for your own API key.
 
 ## Local development
 * Clone the repo: `git clone https://github.com/LaurenceHo/react-weather-app.git`
 * Install npm package: `npm i`
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 * Because we don't want to use Google Cloud Function when we do local development, we write simple NodeJs Express server for
-returning JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
+returning mock JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
 After that, run `npm start` to start NodeJs Express Server and we can move forward to frontend development.
 * Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
 * For bundling frontend code run `npm run build`
@@ -46,10 +49,9 @@ After that, run `npm start` to start NodeJs Express Server and we can move forwa
 ## Write Your Own Google Cloud Functions:
 Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
 
-[Back to the top↑](#table-of-contents)
-
 ## Deploy to Firebase
-* Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js)
+* Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js) 
+as well as [`./src/constants/api-key.ts`](./src/constants/api-key.ts). 
 * Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
 * Run `npm run firebase-init`
 * Visit `https://console.firebase.google.com` to create a new project
@@ -262,8 +264,6 @@ Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
 Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react prettier`
 
-[Back to the top↑](#table-of-contents)
-
 ### TypeScript ESLint usage
 Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` to the `plugins` section of [.eslintrc.json](.eslintrc.json) configuration file:
 ```
@@ -366,14 +366,14 @@ Ant design provides abundant UI components, which means the library size is quit
 component I needed rather than import everything.
 Import CSS files in the `index.tsx`:
 ```
-import 'antd/lib/col/style/css';
-import 'antd/lib/row/style/css';
+import 'antd/es/col/style/css';
+import 'antd/es/row/style/css';
 ```
 
 Import necessary packages e.g in the `current-weather.tsx`:
 ```
-import Col from 'antd/lib/col';
-import Row from 'antd/lib/row';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
 
 export class CurrentWeather extends React.Component<any, any> {
   render() {
@@ -434,7 +434,7 @@ We can look at [here](https://ant.design/docs/react/customize-theme) for getting
 [Back to the top↑](#table-of-contents)
 
 ### TypeScript
-* Don't use @types/antd, as antd provides a built-in ts definition already.
+* Don't use `@types/antd`, as antd provides a built-in ts definition already.
 
 ## ECharts
 ### Getting Started
@@ -471,37 +471,97 @@ Windy API v4 was based on Leaflet 1.4, so import leaflet by this way is very imp
 How to make these 2 JavaScript 3rd party libraries working in TypeScript? We need to declare the definition in [TypeScript
 Declaration File](./src/typings.d.ts).
 ```
-declare var windyInit: any;
-declare var L: any;
+declare const windyInit: any;
+declare const L: any;
 ```
 After that, we can use `windyInit` and `L` these 2 parameters directly without importing module into TypeScript file.
 In [`weather-map.tsx`](src/views/weather-map.tsx), when we init Windy API, the basic usage it's very simple:
 ```
-const options = {
-    // Required: API key
-    key: 'PsLAtXpsPTZexBwUkO7Mx5I',
+export const WeatherMap: React.FC<any> = () => {
+    const renderMap = () => {
+        const options = {
+            // Required: API key
+            key: 'PsLAtXpsPTZexBwUkO7Mx5I',
+            // Put additional console output
+            verbose: true,
+            // Optional: Initial state of the map
+            lat: 50.4,
+            lon: 14.3,
+            zoom: 5,
+        }
+        windyInit(options, (windyAPI: any) => {
+            const { map } = windyAPI;
+            L.popup()
+            .setLatLng([50.4, 14.3])
+            .setContent("Hello World")
+            .openOn( map );
+        });
+    }
 
-    // Put additional console output
-    verbose: true,
+    useEffect(() => {
+        renderMap();
+    }, []);
 
-    // Optional: Initial state of the map
-    lat: 50.4,
-    lon: 14.3,
-    zoom: 5,
-}
-windyInit(options, (windyAPI: any) => {
-    const { map } = windyAPI;
-    L.popup()
-    .setLatLng([50.4, 14.3])
-    .setContent("Hello World")
-    .openOn( map );
-});
-
-render() {
-    return (<div id='windy' />);
+    render() {
+        return (<div id='windy' />);
+    }
 }
 ```
+[Back to the top↑](#table-of-contents)
 
+## Google GeoChart
+Before starting using Google GeoChart, get a mapsApiKey for your project. Please go to 
+[Google Developer](https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings) for further detail.
+### Usage
+Import source in [index.html](./src/index.html)
+```
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head> 
+```
+
+Don't forget to declare Google the definition in [TypeScript Declaration File](./src/typings.d.ts).
+```
+declare const google: any;
+```
+
+After declare `google` definition, we can initial Google GeoChart in [index.tsx](./src/index.tsx). [NOTE] Only initial once
+```
+google.charts.load('current', {
+  packages: ['geochart'],
+  // Note: you will need to get a mapsApiKey for your project.
+  // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+  'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+});
+```
+
+Then we can start using Google GeoChart very easily:
+```
+export const GeoChart: React.FC = () => {
+    useEffect(() => {
+        const drawRegionsMap = () => {
+            const data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['Germany', 200],
+                ['United States', 300],
+                ['Brazil', 400],
+                ['Canada', 500],
+                ['France', 600],
+                ['RU', 700]
+            ]);
+            
+            const options = {};
+            const chart = new google.visualization.GeoChart(document.getElementById('geochart'));
+            chart.draw(data, options);
+        };
+            google.charts.setOnLoadCallback(drawRegionsMap);
+    }, []);
+
+    render() {
+        return (<div id='geochart' style={{width: 900, height: 500}}/>);
+    }
+}
+```
 [Back to the top↑](#table-of-contents)
 
 ## License

@@ -2,9 +2,9 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/legend';
+import 'echarts/lib/component/title';
 import 'echarts/lib/component/toolbox';
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
 import { get, map } from 'lodash';
 
 export const dailyChartConfig: any = (covid19Data: any) => {
@@ -104,12 +104,19 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
     unknownNumber += unknown;
   });
 
+  const ethnicity: { name: string; value: number }[] = [];
+  Object.keys(ethnicityGroup).forEach((key) => {
+    ethnicity.push({
+      name: key,
+      value: ethnicityGroup[key],
+    });
+  });
+
   return {
     title: [
       {
         text: 'Age, Gender and Ethnicity Groups',
         left: 'center',
-        top: -5,
       },
     ],
     toolbox: {
@@ -118,9 +125,6 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
         restore: { show: true, title: 'Restore' },
         saveAsImage: { show: true, title: 'Save as image' },
       },
-    },
-    legend: {
-      top: 30,
     },
     tooltip: {
       trigger: 'item',
@@ -131,8 +135,8 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
         name: 'Gender Groups',
         type: 'pie',
         selectedMode: 'single',
-        radius: [0, '30%'],
-        center: ['30%', '50%'],
+        radius: [0, '35%'],
+        center: ['30%', '45%'],
         label: {
           position: 'inner',
         },
@@ -148,8 +152,8 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         name: 'Age Groups',
         type: 'pie',
-        radius: ['35%', '50%'],
-        center: ['30%', '50%'],
+        radius: ['40%', '55%'],
+        center: ['30%', '45%'],
         label: {
           formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
           backgroundColor: '#eee',
@@ -193,19 +197,9 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         name: 'Ethnicity Groups',
         type: 'pie',
-        radius: '45%',
-        center: ['80%', '50%'],
-        data: [
-          { name: 'Asian', value: ethnicityGroup['Asian'] },
-          { name: 'European or Other', value: ethnicityGroup['European or Other'] },
-          { name: 'Māori', value: ethnicityGroup['Māori'] },
-          {
-            name: 'Middle Eastern / Latin American / African',
-            value: ethnicityGroup['Middle Eastern / Latin American / African'],
-          },
-          { name: 'Pacific People', value: ethnicityGroup['Pacific People'] },
-          { name: 'Unknown', value: ethnicityGroup['Unknown'] },
-        ],
+        radius: '50%',
+        center: ['80%', '45%'],
+        data: ethnicity,
       },
     ],
   };

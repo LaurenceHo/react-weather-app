@@ -1,4 +1,5 @@
-import { Col, Row } from 'antd/lib';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
 import * as React from 'react';
 import { Filter, Timezone, Weather } from '../constants/types';
 import { Utils } from '../utils';

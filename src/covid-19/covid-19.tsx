@@ -1,10 +1,15 @@
-import { Alert, BackTop, Card, Col, Row, Spin } from 'antd';
+import Alert from 'antd/es/alert';
+import BackTop from 'antd/es/back-top';
+import Card from 'antd/es/card';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Spin from 'antd/es/spin';
+import clsx from 'clsx';
 import * as echarts from 'echarts/lib/echarts';
-import { last, isEmpty } from 'lodash';
+import { isEmpty, last } from 'lodash';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { dailyChartConfig, pieChartConfig } from './chart-config';
-import clsx from 'clsx';
 
 declare let process: {
   env: {
