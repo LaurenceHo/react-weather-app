@@ -287,76 +287,87 @@
       "totalProbable": 37,
       "totalRecovered": 63,
       "totalDeath": 1
+    },
+    {
+      "date": "2020-03-31",
+      "newConfirmed": 48,
+      "newProbable": 10,
+      "totalConfirmed": 600,
+      "totalProbable": 47,
+      "totalRecovered": 74,
+      "totalDeath": 1
     }
   ],
   "ages": {
     "child": {
-      "female": 5,
+      "female": 6,
       "male": 1
     },
     "10s": {
-      "female": 28,
-      "male": 9
+      "female": 32,
+      "male": 11,
+      "unknown": 1
     },
     "20s": {
-      "female": 91,
-      "male": 57,
-      "unknown": 2
+      "female": 104,
+      "male": 62,
+      "unknown": 3
     },
     "30s": {
-      "female": 52,
-      "male": 32
+      "female": 55,
+      "male": 35
     },
     "40s": {
-      "female": 45,
-      "male": 47
+      "female": 51,
+      "male": 51,
+      "unknown": 1
     },
     "50s": {
-      "female": 43,
-      "male": 51,
+      "female": 44,
+      "male": 54,
       "unknown": 2
     },
     "60s": {
-      "female": 38,
-      "male": 44
+      "female": 41,
+      "male": 48
     },
     "Over 70s": {
-      "female": 14,
-      "male": 25
+      "female": 17,
+      "male": 27
     },
     "Unknown": {
       "unknown": 1
     }
   },
   "location": {
-    "Auckland": 91,
-    "Bay of Plenty": 11,
-    "Canterbury": 49,
-    "Capital and Coast": 57,
-    "Counties Manukau": 40,
-    "Hawke's Bay": 12,
+    "Auckland": 97,
+    "Bay of Plenty": 15,
+    "Canterbury": 52,
+    "Capital and Coast": 58,
+    "Counties Manukau": 47,
+    "Hawke's Bay": 15,
     "Hutt Valley": 13,
-    "Lakes": 9,
+    "Lakes": 11,
     "MidCentral": 11,
-    "Nelson Marlborough": 20,
+    "Nelson Marlborough": 22,
     "Northland": 9,
     "South Canterbury": 7,
-    "Southern": 83,
+    "Southern": 98,
     "Tairāwhiti": 1,
-    "Taranaki": 11,
-    "Waikato": 76,
+    "Taranaki": 13,
+    "Waikato": 81,
     "Wairarapa": 5,
-    "Waitemata": 78,
+    "Waitemata": 86,
     "West Coast": 3,
     "Whanganui": 3
   },
   "ethnicity": {
-    "Asian": 47,
-    "European or Other": 430,
-    "Māori": 27,
+    "Asian": 49,
+    "European or Other": 467,
+    "Māori": 38,
     "Middle Eastern / Latin American / African": 17,
-    "Pacific People": 14,
-    "Unknown": 54
+    "Pacific People": 18,
+    "Unknown": 58
   },
-  "lastUpdated": "09:06 Monday, 30 March 2020 (UTC)"
+  "lastUpdated": "05:11 Tuesday, 31 March 2020 (UTC)"
 }

@@ -159,6 +159,11 @@ body {
   padding: 0.5rem 2rem;
 }
 
+#new-zealand-map {
+  height: 50rem;
+  width: 40rem;
+}
+
 .covid-daily-chart {
   height: 30rem;
   width: 55rem;

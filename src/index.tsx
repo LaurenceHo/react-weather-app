@@ -31,10 +31,4 @@ firebase.initializeApp({
   appId: '1:120664202212:web:b733e66714cd0fde',
 });
 
-// Initialise Google charts
-google.charts.load('current', {
-  packages: ['geochart'],
-  mapsApiKey: ApiKey.maps,
-});
-
 ReactDOM.render(<App />, document.getElementById('app'));
