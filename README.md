@@ -11,7 +11,7 @@
 - [Ant Design](#ant-design)
 - [ECharts](#echarts)
 - [Windy API](#windy-api)
-- [Google GeoChart](#google-geochart)
+- [Mapbox](#mapbox)
 
 ## Introduction
 This project demonstrates how to use ReactJS, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
@@ -509,59 +509,54 @@ export const WeatherMap: React.FC<any> = () => {
 ```
 [Back to the top↑](#table-of-contents)
 
-## Google GeoChart
-Before starting using Google GeoChart, get a mapsApiKey for your project. Please go to 
-[Google Developer](https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings) for further detail.
+## Mapbox
+Before starting using Mapbox, get an API for your project. Please go to 
+[Mapbox](https://www.mapbox.com/maps/) for further detail.
 ### Usage
-Import source in [index.html](./src/index.html)
+Import source in [index.html](./src/index.html):
 ```
 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
 </head> 
 ```
 
-Don't forget to declare Google the definition in [TypeScript Declaration File](./src/typings.d.ts).
+Don't forget to declare Mapboxx the definition in [TypeScript Declaration File](./src/typings.d.ts):
 ```
-declare const google: any;
+declare const mapboxgl: any;
 ```
 
-After declare `google` definition, we can initial Google GeoChart in [index.tsx](./src/index.tsx). [NOTE] Only initial once
+After declare `mapboxgl` definition, we can now start using mapbox:
 ```
-google.charts.load('current', {
-  packages: ['geochart'],
-  // Note: you will need to get a mapsApiKey for your project.
-  // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-  'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4ZmdqdGRvMDQ0ZDNkcWpnbno1MGVzcyJ9.fnjAFHv0etBrY1LeIksTnA';
+const map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 9 // starting zoom
 });
 ```
 
-Then we can start using Google GeoChart very easily:
+Then we can start using Mapbox very easily:
 ```
-export const GeoChart: React.FC = () => {
+export const Mapbox: React.FC = () => {
     useEffect(() => {
-        const drawRegionsMap = () => {
-            const data = google.visualization.arrayToDataTable([
-                ['Country', 'Popularity'],
-                ['Germany', 200],
-                ['United States', 300],
-                ['Brazil', 400],
-                ['Canada', 500],
-                ['France', 600],
-                ['RU', 700]
-            ]);
-            
-            const options = {};
-            const chart = new google.visualization.GeoChart(document.getElementById('geochart'));
-            chart.draw(data, options);
-        };
-            google.charts.setOnLoadCallback(drawRegionsMap);
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4ZmdqdGRvMDQ0ZDNkcWpnbno1MGVzcyJ9.fnjAFHv0etBrY1LeIksTnA';
+        const map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+            center: [-74.5, 40], // starting position [lng, lat]
+            zoom: 9 // starting zoom
+        });
     }, []);
 
     render() {
-        return (<div id='geochart' style={{width: 900, height: 500}}/>);
+        return (<div id='map' style={{width: 900, height: 500}}/>);
     }
 }
 ```
+You can find more examples from [here](https://docs.mapbox.com/mapbox-gl-js/examples/)
+
 [Back to the top↑](#table-of-contents)
 
 ## License

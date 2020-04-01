@@ -296,78 +296,84 @@
       "totalProbable": 47,
       "totalRecovered": 74,
       "totalDeath": 1
+    },
+    {
+      "date": "2020-04-01",
+      "newConfirmed": 47,
+      "newProbable": 14,
+      "totalConfirmed": 647,
+      "totalProbable": 61,
+      "totalRecovered": 82,
+      "totalDeath": 1
     }
   ],
   "ages": {
     "child": {
-      "female": 6,
+      "female": 7,
       "male": 1
     },
     "10s": {
-      "female": 32,
-      "male": 11,
+      "female": 36,
+      "male": 14,
       "unknown": 1
     },
     "20s": {
-      "female": 104,
-      "male": 62,
-      "unknown": 3
+      "female": 111,
+      "male": 70,
+      "unknown": 2
     },
     "30s": {
-      "female": 55,
-      "male": 35
+      "female": 64,
+      "male": 39
     },
     "40s": {
-      "female": 51,
-      "male": 51,
+      "female": 57,
+      "male": 56,
       "unknown": 1
     },
     "50s": {
-      "female": 44,
-      "male": 54,
+      "female": 48,
+      "male": 57,
       "unknown": 2
     },
     "60s": {
-      "female": 41,
-      "male": 48
+      "female": 44,
+      "male": 50
     },
     "Over 70s": {
-      "female": 17,
-      "male": 27
-    },
-    "Unknown": {
-      "unknown": 1
+      "female": 19,
+      "male": 29
     }
   },
   "location": {
-    "Auckland": 97,
-    "Bay of Plenty": 15,
+    "Auckland": 104,
+    "Bay of Plenty": 18,
     "Canterbury": 52,
-    "Capital and Coast": 58,
-    "Counties Manukau": 47,
-    "Hawke's Bay": 15,
-    "Hutt Valley": 13,
+    "Capital and Coast": 60,
+    "Counties Manukau": 53,
+    "Hawke's Bay": 16,
+    "Hutt Valley": 14,
     "Lakes": 11,
-    "MidCentral": 11,
+    "MidCentral": 13,
     "Nelson Marlborough": 22,
-    "Northland": 9,
-    "South Canterbury": 7,
-    "Southern": 98,
+    "Northland": 11,
+    "South Canterbury": 10,
+    "Southern": 108,
     "Tairāwhiti": 1,
-    "Taranaki": 13,
-    "Waikato": 81,
-    "Wairarapa": 5,
-    "Waitemata": 86,
+    "Taranaki": 14,
+    "Waikato": 91,
+    "Wairarapa": 6,
+    "Waitemata": 98,
     "West Coast": 3,
     "Whanganui": 3
   },
   "ethnicity": {
-    "Asian": 49,
-    "European or Other": 467,
-    "Māori": 38,
-    "Middle Eastern / Latin American / African": 17,
-    "Pacific People": 18,
-    "Unknown": 58
+    "Asian": 53,
+    "European or Other": 510,
+    "Māori": 46,
+    "Middle Eastern / Latin American / African": 19,
+    "Pacific People": 19,
+    "Unknown": 61
   },
-  "lastUpdated": "05:11 Tuesday, 31 March 2020 (UTC)"
+  "lastUpdated": "20:25 Wednesday, 1 April 2020 (UTC)"
 }

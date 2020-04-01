@@ -59,13 +59,10 @@ export const About: React.FC = () => (
           intuitive, interactive, and highly customizable charts to your products.
         </li>
         <li>
-          <a
-            href='https://developers.google.com/chart/interactive/docs/gallery/geochart'
-            target='_blank'
-            rel='noopener noreferrer'>
-            Google GeoChart
+          <a href='https://www.mapbox.com/' target='_blank' rel='noopener noreferrer'>
+            Mapbox
           </a>
-          - A geochart is a map of a country, a continent, or a region with areas identified.
+          - Mapbox is the location data platform for mobile and web applications.
         </li>
         <li>
           <a href='https://erikflowers.github.io/weather-icons/' target='_blank' rel='noopener noreferrer'>

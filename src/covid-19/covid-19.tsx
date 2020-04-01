@@ -10,6 +10,7 @@ import { find, isEmpty, last } from 'lodash';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { ApiKey } from '../constants/api-key';
+import { coordinates } from '../constants/coordinates';
 import { dailyChartConfig, pieChartConfig } from './chart-config';
 
 declare let process: {
@@ -59,24 +60,6 @@ export const Covid19: React.FC = () => {
     }
   };
 
-  const coordinates: { region: string; coordinates: number[] }[] = [
-    // North Island
-    { region: 'Auckland', coordinates: [174.762301, -36.848779] },
-    { region: 'Bay of Plenty', coordinates: [176.731423, -38.044809] },
-    { region: 'Gisborne', coordinates: [177.916522, -38.544078] },
-    { region: "Hawke's Bay", coordinates: [176.7416374, -39.1089867] },
-    { region: 'Manawatu-Whanganui', coordinates: [175.4375574, -39.7273356] },
-    { region: 'Northland', coordinates: [173.7624053, -35.5795461] },
-    { region: 'Taranaki', coordinates: [174.4382721, -39.3538149] },
-    { region: 'Waikato', coordinates: [175.250159, -37.777292] },
-    { region: 'Wellington', coordinates: [175.377054, -41.193314] },
-    // South Island
-    { region: 'Canterbury', coordinates: [171.1637245, -43.7542275] },
-    { region: 'Nelson Marlborough', coordinates: [173.4216613, -41.57269] },
-    { region: 'Otago Southland', coordinates: [169.177806, -45.362409] },
-    { region: 'West Coast', coordinates: [171.3399414, -42.6919232] },
-  ];
-
   const renderMapbox = () => {
     const features: {
       type: 'Feature';
@@ -85,96 +68,76 @@ export const Covid19: React.FC = () => {
         coordinates: number[];
       };
       properties: {
-        id: string;
+        region: string;
         case: number;
+        percentage: number;
       };
     }[] = [];
 
-    let aucklandCases = 0;
-    let wellingtonCases = 0;
-    let waikatoCases = 0;
-    let whanganuiCases = 0;
-    let canterburyCases = 0;
+    let totalCases = 0;
+    Object.keys(covidState.location).forEach((key) => {
+      totalCases += covidState.location[key];
+    });
+
+    const caseByRegion = {
+      Auckland: 0,
+      Wellington: 0,
+      Waikato: 0,
+      'Manawatu-Whanganui': 0,
+      Canterbury: 0,
+    };
 
     Object.keys(covidState.location).forEach((key) => {
       if (key === 'Auckland' || key === 'Counties Manukau' || key === 'Waitemata') {
         // Auckland region
-        aucklandCases += covidState.location[key];
+        caseByRegion['Auckland'] += covidState.location[key];
       } else if (key === 'Capital and Coast' || key === 'Hutt Valley' || key === 'Wairarapa') {
         // Wellington region
-        wellingtonCases += covidState.location[key];
+        caseByRegion['Wellington'] += covidState.location[key];
       } else if (key === 'Waikato' || key === 'Lakes') {
         // Waikato region
-        waikatoCases += covidState.location[key];
+        caseByRegion['Waikato'] += covidState.location[key];
       } else if (key === 'Whanganui' || key === 'MidCentral') {
         // Manawatu-Whanganui region
-        whanganuiCases += covidState.location[key];
+        caseByRegion['Manawatu-Whanganui'] += covidState.location[key];
       } else if (key === 'Canterbury' || key === 'South Canterbury') {
         // Canterbury region
-        canterburyCases += covidState.location[key];
-      } else if (key === 'Tairāwhiti' || key === 'Southern') {
-        // Gisborne region and Otago Southland region
+        caseByRegion['Canterbury'] += covidState.location[key];
+      } else {
         features.push({
           type: 'Feature',
           geometry: {
             type: 'Point',
             coordinates: find(coordinates, (coordinate) =>
-              key === 'Tairāwhiti' ? coordinate.region === 'Gisborne' : coordinate.region === 'Otago Southland'
+              key === 'Tairāwhiti'
+                ? coordinate.region === 'Gisborne'
+                : key === 'Southern'
+                ? coordinate.region === 'Otago Southland'
+                : coordinate.region === key
             ).coordinates,
           },
-          properties: { id: key === 'Tairāwhiti' ? 'Gisborne' : 'Otago Southland', case: covidState.location[key] },
-        });
-      } else {
-        // features.push([key, covidState.location[key]]);
-        features.push({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: find(coordinates, (coordinate) => coordinate.region === key).coordinates,
+          properties: {
+            region: key === 'Tairāwhiti' ? 'Gisborne' : key === 'Southern' ? 'Otago Southland' : key,
+            case: covidState.location[key],
+            percentage: Math.ceil((covidState.location[key] / totalCases) * 100),
           },
-          properties: { id: key, case: covidState.location[key] },
         });
       }
     });
-    features.push({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: find(coordinates, (coordinate) => coordinate.region === 'Auckland').coordinates,
-      },
-      properties: { id: 'Auckland', case: aucklandCases },
-    });
-    features.push({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: find(coordinates, (coordinate) => coordinate.region === 'Waikato').coordinates,
-      },
-      properties: { id: 'Waikato', case: waikatoCases },
-    });
-    features.push({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: find(coordinates, (coordinate) => coordinate.region === 'Manawatu-Whanganui').coordinates,
-      },
-      properties: { id: 'Manawatu-Whanganui', case: whanganuiCases },
-    });
-    features.push({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: find(coordinates, (coordinate) => coordinate.region === 'Wellington').coordinates,
-      },
-      properties: { id: 'Wellington', case: wellingtonCases },
-    });
-    features.push({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: find(coordinates, (coordinate) => coordinate.region === 'Canterbury').coordinates,
-      },
-      properties: { id: 'Canterbury', case: canterburyCases },
+
+    Object.keys(caseByRegion).forEach((region) => {
+      features.push({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: find(coordinates, (coordinate) => coordinate.region === region).coordinates,
+        },
+        properties: {
+          region: region,
+          case: caseByRegion[region],
+          percentage: Math.ceil((caseByRegion[region] / totalCases) * 100),
+        },
+      });
     });
 
     mapboxgl.accessToken = ApiKey.mapbox;
@@ -184,6 +147,11 @@ export const Covid19: React.FC = () => {
       center: [173.295319, -41.288483], // [lng, lat], Nelson
       zoom: 5,
     });
+    // disable map rotation using right click + drag
+    map.dragRotate.disable();
+
+    // disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
 
     map.on('load', () => {
       map.addSource('covidCases', {
@@ -194,6 +162,7 @@ export const Covid19: React.FC = () => {
         },
       });
 
+      // Add a layer showing the places.
       map.addLayer({
         id: 'regions',
         type: 'circle',
@@ -205,6 +174,7 @@ export const Covid19: React.FC = () => {
         },
       });
 
+      // Add a layer showing the number of cases.
       map.addLayer({
         id: 'cases-count',
         type: 'symbol',
@@ -217,6 +187,35 @@ export const Covid19: React.FC = () => {
         paint: {
           'text-color': 'rgba(0,0,0,0.5)',
         },
+      });
+
+      // Create a popup, but don't add it to the map yet.
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
+
+      map.on('mouseenter', 'covidCases', (event: any) => {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        const coordinates = event.features[0].geometry.coordinates.slice();
+        const description = `<strong>${event.features[0].properties.region}</strong>: ${event.features[0].properties.case} cases, ${event.features[0].properties.percentage}%`;
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+      });
+
+      map.on('mouseleave', 'covidCases', () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
       });
     });
   };

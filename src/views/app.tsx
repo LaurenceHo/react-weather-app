@@ -30,7 +30,7 @@ export const App: React.FC<any> = () => {
               <Route render={() => <div>Page not found!</div>} />
             </Switch>
           </Content>
-          <Footer className='footer'>©2020 Developed by Laurence Ho, v3.5.2</Footer>
+          <Footer className='footer'>©2020 Developed by Laurence Ho, v3.6.0</Footer>
         </div>
       </Router>
     </Provider>

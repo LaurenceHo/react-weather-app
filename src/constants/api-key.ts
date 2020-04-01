@@ -1,5 +1,5 @@
 export const ApiKey = {
-  maps: 'AIzaSyBGx3gTu9kXyExiywxdKRm4X_09j9r0GF8',
+  mapbox: 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4Z2NsNmdtMDA3NTNwcnk1NTdmNHZudCJ9.UyzNvdQsuXmueW0gKWe-WA', // PROD
   firebase: 'AIzaSyCH2qBgaPuAfb5wfbtx0u3F5LtTvFgFDG0',
   windy: 'bRpzkzPp38FdrEGhYHWBzBf8lT3mIPSw',
 };
