@@ -15,7 +15,7 @@
 
 ## Introduction
 This project demonstrates how to use ReactJS, Redux, TypeScript, Webpack4, [Ant Design](https://ant.design/docs/react/introduce), 
-D3v5 and [ECharts](https://echarts.apache.org/index.html). 
+D3v5, [ECharts](https://echarts.apache.org/index.html) and [Mapbox](https://www.mapbox.com). 
 It is also including two kinds of D3 force simulation demonstrations along with gauge, which is based on 
 my personal interest and previous project. 
 
@@ -26,11 +26,12 @@ cloud function serverless platform with React frontend app.
 [React Weather App](https://reactjs-weather.web.app/)
 
 ## Prerequisites
-1. The latest version of Nodejs and npm need to be installed.
-2. Google Geocoding API Key * 2. One for retrieving location for weather, and another one for Google GeoChart
+1. The latest version of Nodejs and npm need to be installed
+2. Google Geocoding API Key
 3. Google Firebase project
 4. Dark Sky weather API key
 5. Windy API key
+6. Mapbox API key
 
 [NOTE] Since I already placed protection to all keys, you cannot use my own key. You have to apply for your own API key.
 
@@ -41,7 +42,7 @@ cloud function serverless platform with React frontend app.
 * Because we don't want to use Google Cloud Function when we do local development, we write simple NodeJs Express server for
 returning mock JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
 After that, run `npm start` to start NodeJs Express Server and we can move forward to frontend development.
-* Put your [Windy API key](https://api4.windy.com/) into [`./src/pages/weather-map.tsx`](src/views/weather-map.tsx)
+* Put your [Windy API key](https://api4.windy.com/) and Mapbox API key into [`./src/constants/api-key.ts`](src/constants/api-key.ts)
 * For bundling frontend code run `npm run build`
 
 [Back to the top↑](#table-of-contents)
@@ -50,8 +51,7 @@ After that, run `npm start` to start NodeJs Express Server and we can move forwa
 Please visit: [Google Cloud Functions](https://firebase.google.com/docs/functions) for more detail
 
 ## Deploy to Firebase
-* Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js) 
-as well as [`./src/constants/api-key.ts`](./src/constants/api-key.ts). 
+* Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js).
 * Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
 * Run `npm run firebase-init`
 * Visit `https://console.firebase.google.com` to create a new project

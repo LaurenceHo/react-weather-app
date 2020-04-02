@@ -6,7 +6,7 @@ import Row from 'antd/es/row';
 import Spin from 'antd/es/spin';
 import clsx from 'clsx';
 import * as echarts from 'echarts/lib/echarts';
-import { find, isEmpty, last } from 'lodash';
+import { find, isEmpty, last, map } from 'lodash';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { ApiKey } from '../constants/api-key';
@@ -28,6 +28,7 @@ export const Covid19: React.FC = () => {
   const [isLoadingState, setIsloadingState] = React.useState(true);
   const [errorState, setErrorState] = React.useState(null);
   const [covidState, setCovidState] = React.useState(null);
+  const [largestState, setLargestState] = React.useState(0);
 
   const renderChart = () => {
     try {
@@ -87,6 +88,7 @@ export const Covid19: React.FC = () => {
       Canterbury: 0,
     };
 
+    // Prepare GeoJson data
     Object.keys(covidState.location).forEach((key) => {
       if (key === 'Auckland' || key === 'Counties Manukau' || key === 'Waitemata') {
         // Auckland region
@@ -140,21 +142,25 @@ export const Covid19: React.FC = () => {
       });
     });
 
+    // Find the largest number in the regions
+    const largest = Math.max.apply(Math, map(features, 'properties.case'));
+    setLargestState(largest);
+
+    // Initial Mapbox
     mapboxgl.accessToken = ApiKey.mapbox;
-    const map = new mapboxgl.Map({
+    const mapBox = new mapboxgl.Map({
       container: 'new-zealand-map',
       style: 'mapbox://styles/mapbox/light-v10',
       center: [173.295319, -41.288483], // [lng, lat], Nelson
       zoom: 5,
     });
     // disable map rotation using right click + drag
-    map.dragRotate.disable();
-
+    mapBox.dragRotate.disable();
     // disable map rotation using touch rotation gesture
-    map.touchZoomRotate.disableRotation();
+    mapBox.touchZoomRotate.disableRotation();
 
-    map.on('load', () => {
-      map.addSource('covidCases', {
+    mapBox.on('load', () => {
+      mapBox.addSource('covidCases', {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
@@ -163,19 +169,20 @@ export const Covid19: React.FC = () => {
       });
 
       // Add a layer showing the places.
-      map.addLayer({
+      mapBox.addLayer({
         id: 'regions',
+        interactive: true,
         type: 'circle',
         source: 'covidCases',
         paint: {
-          'circle-color': ['interpolate', ['linear'], ['get', 'case'], 1, '#FCA107', 300, '#7F3121'],
-          'circle-opacity': 0.6,
-          'circle-radius': ['interpolate', ['linear'], ['get', 'case'], 1, 10, 300, 40],
+          'circle-color': ['interpolate', ['linear'], ['get', 'case'], 1, '#FCA107', largest, '#7F3121'],
+          'circle-opacity': 0.65,
+          'circle-radius': ['interpolate', ['linear'], ['get', 'case'], 1, 10, largest, Math.ceil(largest / 7)],
         },
       });
 
       // Add a layer showing the number of cases.
-      map.addLayer({
+      mapBox.addLayer({
         id: 'cases-count',
         type: 'symbol',
         source: 'covidCases',
@@ -185,7 +192,7 @@ export const Covid19: React.FC = () => {
           'text-size': 12,
         },
         paint: {
-          'text-color': 'rgba(0,0,0,0.5)',
+          'text-color': 'rgba(0,0,0,0.45)',
         },
       });
 
@@ -195,9 +202,9 @@ export const Covid19: React.FC = () => {
         closeOnClick: false,
       });
 
-      map.on('mouseenter', 'covidCases', (event: any) => {
+      mapBox.on('mouseenter', 'regions', (event: any) => {
         // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
+        mapBox.getCanvas().style.cursor = 'pointer';
 
         const coordinates = event.features[0].geometry.coordinates.slice();
         const description = `<strong>${event.features[0].properties.region}</strong>: ${event.features[0].properties.case} cases, ${event.features[0].properties.percentage}%`;
@@ -210,11 +217,11 @@ export const Covid19: React.FC = () => {
 
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+        popup.setLngLat(coordinates).setHTML(description).addTo(mapBox);
       });
 
-      map.on('mouseleave', 'covidCases', () => {
-        map.getCanvas().style.cursor = '';
+      mapBox.on('mouseleave', 'regions', () => {
+        mapBox.getCanvas().style.cursor = '';
         popup.remove();
       });
     });
@@ -260,6 +267,7 @@ export const Covid19: React.FC = () => {
         </div>
       ) : (
         <>
+          {/* Grid */}
           <Row type='flex' justify='center' gutter={16}>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Confirmed'>
@@ -291,14 +299,34 @@ export const Covid19: React.FC = () => {
           <Row type='flex' justify='center' style={{ padding: '1rem 0' }}>
             [<a href='#covid-pie-wrapper'>Age, Gender and Ethnicity Groups</a>] [<a href='#new-zealand-map'>Map</a>]
           </Row>
+          <Row type='flex' justify='center'>
+            <div className='forecast-summary'>1st case on 28-02-2020</div>
+          </Row>
+          {/* Chart */}
           <Row type='flex' justify='center' id='covid-chart-wrapper' />
           <Row type='flex' justify='center' id='covid-pie-wrapper' />
-          <div style={{ display: 'flex', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 700 }}>
-            <div>Total Cases by Regions</div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div id='new-zealand-map' />
-          </div>
+          {/* Map */}
+          <Row type='flex' justify='center'>
+            <div className='forecast-summary'>Total Cases by Regions</div>
+          </Row>
+          <Row type='flex' justify='center'>
+            <div style={{ position: 'relative' }}>
+              <div id='new-zealand-map' />
+              <div className='map-legend-overlay'>
+                <div className='map-legend-wrapper'>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <div>1</div>
+                      <div>{largestState}</div>
+                    </div>
+                    <div className='map-legend' />
+                    <div>Cases</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Row>
+          {/* Last updated */}
           <Row type='flex' justify='center'>
             <Col span={24} className={clsx('covid-cases-card', 'last-updated')}>
               Last updated: {covidState.lastUpdated}

@@ -1,51 +1,6 @@
 {
   "daily": [
     {
-      "date": "2020-02-28",
-      "newConfirmed": 1,
-      "newProbable": 0,
-      "totalConfirmed": 1,
-      "totalProbable": 0,
-      "totalRecovered": 0,
-      "totalDeath": 0
-    },
-    {
-      "date": "2020-02-29",
-      "newConfirmed": 0,
-      "newProbable": 0,
-      "totalConfirmed": 1,
-      "totalProbable": 0,
-      "totalRecovered": 0,
-      "totalDeath": 0
-    },
-    {
-      "date": "2020-03-01",
-      "newConfirmed": 0,
-      "newProbable": 0,
-      "totalConfirmed": 1,
-      "totalProbable": 0,
-      "totalRecovered": 0,
-      "totalDeath": 0
-    },
-    {
-      "date": "2020-03-02",
-      "newConfirmed": 0,
-      "newProbable": 0,
-      "totalConfirmed": 1,
-      "totalProbable": 0,
-      "totalRecovered": 0,
-      "totalDeath": 0
-    },
-    {
-      "date": "2020-03-03",
-      "newConfirmed": 0,
-      "newProbable": 0,
-      "totalConfirmed": 1,
-      "totalProbable": 0,
-      "totalRecovered": 0,
-      "totalDeath": 0
-    },
-    {
       "date": "2020-03-04",
       "newConfirmed": 1,
       "newProbable": 0,
@@ -305,6 +260,15 @@
       "totalProbable": 61,
       "totalRecovered": 82,
       "totalDeath": 1
+    },
+    {
+      "date": "2020-04-02",
+      "newConfirmed": 76,
+      "newProbable": 13,
+      "totalConfirmed": 723,
+      "totalProbable": 74,
+      "totalRecovered": 92,
+      "totalDeath": 1
     }
   ],
   "ages": {
@@ -313,67 +277,66 @@
       "male": 1
     },
     "10s": {
-      "female": 36,
-      "male": 14,
+      "female": 39,
+      "male": 15,
       "unknown": 1
     },
     "20s": {
-      "female": 111,
-      "male": 70,
-      "unknown": 2
+      "female": 122,
+      "male": 80
     },
     "30s": {
-      "female": 64,
-      "male": 39
+      "female": 70,
+      "male": 46
     },
     "40s": {
-      "female": 57,
-      "male": 56,
+      "female": 62,
+      "male": 59,
       "unknown": 1
     },
     "50s": {
-      "female": 48,
-      "male": 57,
+      "female": 57,
+      "male": 67,
       "unknown": 2
     },
     "60s": {
-      "female": 44,
-      "male": 50
+      "female": 50,
+      "male": 60
     },
     "Over 70s": {
-      "female": 19,
-      "male": 29
+      "female": 22,
+      "male": 33
     }
   },
   "location": {
-    "Auckland": 104,
-    "Bay of Plenty": 18,
-    "Canterbury": 52,
-    "Capital and Coast": 60,
-    "Counties Manukau": 53,
-    "Hawke's Bay": 16,
-    "Hutt Valley": 14,
+    "Auckland": 116,
+    "Bay of Plenty": 21,
+    "Canterbury": 53,
+    "Capital and Coast": 63,
+    "Counties Manukau": 59,
+    "Hawke's Bay": 19,
+    "Hutt Valley": 15,
     "Lakes": 11,
-    "MidCentral": 13,
-    "Nelson Marlborough": 22,
+    "MidCentral": 19,
+    "Nelson Marlborough": 27,
     "Northland": 11,
     "South Canterbury": 10,
-    "Southern": 108,
+    "Southern": 118,
     "Tairāwhiti": 1,
-    "Taranaki": 14,
-    "Waikato": 91,
+    "Taranaki": 15,
+    "Waikato": 117,
     "Wairarapa": 6,
-    "Waitemata": 98,
+    "Waitemata": 108,
     "West Coast": 3,
-    "Whanganui": 3
+    "Whanganui": 5
   },
   "ethnicity": {
-    "Asian": 53,
-    "European or Other": 510,
-    "Māori": 46,
-    "Middle Eastern / Latin American / African": 19,
-    "Pacific People": 19,
-    "Unknown": 61
+    "European or Other": 569,
+    "Unknown": 65,
+    "Asian": 63,
+    "Māori": 56,
+    "Pacific People": 23,
+    "Middle Eastern / Latin American / African": 21
   },
-  "lastUpdated": "20:25 Wednesday, 1 April 2020 (UTC)"
+  "lastUpdated": "06:02 Thursday, 2 April 2020 (UTC)"
 }
