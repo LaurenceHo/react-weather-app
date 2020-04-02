@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'prefer-spread': 'off'
   },
 };

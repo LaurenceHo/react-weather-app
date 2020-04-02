@@ -21,7 +21,7 @@ body {
   padding-top: 2rem;
 }
 
-/* Navigation bar for desktop version */
+/* Navigation bar for desktop version start */
 .nav-bar {
   padding: 0 1rem;
   z-index: 1;
@@ -39,10 +39,9 @@ body {
 .weather-search-outer {
   padding: 0 0.5rem;
 }
+/* Navigation bar for desktop version end */
 
-/* Navigation bar for desktop version */
-
-/* Navigation bar for mobile device */
+/* Navigation bar for mobile device start */
 .nav-bar-mobile {
   padding: 0 1.5rem;
 }
@@ -54,8 +53,7 @@ body {
 .ant-popover-inner-content {
   padding: 0;
 }
-
-/* Navigation bar for mobile device */
+/* Navigation bar for mobile device end */
 
 .error {
   padding: 2rem 2rem;
@@ -69,7 +67,7 @@ body {
   padding: 0 0.5rem;
 }
 
-/* Current weather section */
+/* Current weather section start */
 .current-weather-top {
   background: #fafafa;
   padding: 0.5rem 2rem;
@@ -94,8 +92,7 @@ body {
 .current-weather-icon {
   margin: 0.7rem 1rem 0 0;
 }
-
-/* Current weather section */
+/* Current weather section end */
 
 .forecast-summary {
   padding: 0.5rem 1rem;
@@ -125,7 +122,7 @@ body {
   font-weight: 700;
 }
 
-/* Weather chart section */
+/* Weather chart section start */
 #weather-chart-wrapper {
   padding: 0 2rem;
 }
@@ -147,10 +144,9 @@ body {
   font-weight: 500;
   line-height: 0.5rem;
 }
+/* Weather chart section end */
 
-/* Weather chart section */
-
-/* Covid-19 section */
+/* Covid-19 section start */
 #covid-chart-wrapper {
   padding: 0.5rem 2rem;
 }
@@ -197,9 +193,32 @@ body {
   color: red;
 }
 
+.map-legend-overlay {
+  position: absolute;
+  width: 35%;
+  top: 0;
+  left: 0;
+  padding: 10px;
+}
+
+.map-legend-wrapper {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.map-legend {
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(to right, #fca107, #7f3121);
+}
+
 .last-updated {
   font-size: 0.8rem;
 }
+/* Covid-19 section end */
 
 #windy {
   width: 100%;
