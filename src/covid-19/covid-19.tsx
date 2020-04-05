@@ -6,7 +6,7 @@ import Row from 'antd/es/row';
 import Spin from 'antd/es/spin';
 import clsx from 'clsx';
 import * as echarts from 'echarts/lib/echarts';
-import { find, isEmpty, last, map } from 'lodash';
+import { find, get, isEmpty, last, map } from 'lodash';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { ApiKey } from '../constants/api-key';
@@ -29,6 +29,7 @@ export const Covid19: React.FC = () => {
   const [errorState, setErrorState] = React.useState(null);
   const [covidState, setCovidState] = React.useState(null);
   const [largestState, setLargestState] = React.useState(0);
+  const [totalCasesState, setTotalCasesState] = React.useState(0);
 
   const renderChart = () => {
     try {
@@ -70,41 +71,83 @@ export const Covid19: React.FC = () => {
       };
       properties: {
         region: string;
-        case: number;
+        totalCases: number;
+        femaleCases: number;
+        maleCases: number;
+        unknownCases: number;
         percentage: number;
       };
     }[] = [];
 
-    let totalCases = 0;
-    Object.keys(covidState.location).forEach((key) => {
-      totalCases += covidState.location[key];
-    });
-
     const caseByRegion = {
-      Auckland: 0,
-      Wellington: 0,
-      Waikato: 0,
-      'Manawatu-Whanganui': 0,
-      Canterbury: 0,
+      Auckland: {
+        total: 0,
+        female: 0,
+        male: 0,
+        unknown: 0,
+      },
+      Wellington: {
+        total: 0,
+        female: 0,
+        male: 0,
+        unknown: 0,
+      },
+      Waikato: {
+        total: 0,
+        female: 0,
+        male: 0,
+        unknown: 0,
+      },
+      'Manawatu-Whanganui': {
+        total: 0,
+        female: 0,
+        male: 0,
+        unknown: 0,
+      },
+      Canterbury: {
+        total: 0,
+        female: 0,
+        male: 0,
+        unknown: 0,
+      },
+    };
+
+    // Calculate the totalCases
+    const totalCases = last(covidState.daily)['totalConfirmed'] + last(covidState.daily)['totalProbable'];
+    setTotalCasesState(totalCases);
+
+    const regionTotalCases = (key: string) => {
+      return (
+        get(covidState.location[key], 'female', 0) +
+        get(covidState.location[key], 'male', 0) +
+        get(covidState.location[key], 'unknown', 0)
+      );
+    };
+
+    const getCaseDataByRegion = (caseByRegion: any, key: string, region: string) => {
+      caseByRegion[region].total += regionTotalCases(key);
+      caseByRegion[region].female += get(covidState.location[key], 'female', 0);
+      caseByRegion[region].male += get(covidState.location[key], 'male', 0);
+      caseByRegion[region].unknown += get(covidState.location[key], 'unknown', 0);
     };
 
     // Prepare GeoJson data
     Object.keys(covidState.location).forEach((key) => {
       if (key === 'Auckland' || key === 'Counties Manukau' || key === 'Waitemata') {
         // Auckland region
-        caseByRegion['Auckland'] += covidState.location[key];
+        getCaseDataByRegion(caseByRegion, key, 'Auckland');
       } else if (key === 'Capital and Coast' || key === 'Hutt Valley' || key === 'Wairarapa') {
         // Wellington region
-        caseByRegion['Wellington'] += covidState.location[key];
+        getCaseDataByRegion(caseByRegion, key, 'Wellington');
       } else if (key === 'Waikato' || key === 'Lakes') {
         // Waikato region
-        caseByRegion['Waikato'] += covidState.location[key];
+        getCaseDataByRegion(caseByRegion, key, 'Waikato');
       } else if (key === 'Whanganui' || key === 'MidCentral') {
         // Manawatu-Whanganui region
-        caseByRegion['Manawatu-Whanganui'] += covidState.location[key];
+        getCaseDataByRegion(caseByRegion, key, 'Manawatu-Whanganui');
       } else if (key === 'Canterbury' || key === 'South Canterbury') {
         // Canterbury region
-        caseByRegion['Canterbury'] += covidState.location[key];
+        getCaseDataByRegion(caseByRegion, key, 'Canterbury');
       } else {
         features.push({
           type: 'Feature',
@@ -120,8 +163,11 @@ export const Covid19: React.FC = () => {
           },
           properties: {
             region: key === 'Tairāwhiti' ? 'Gisborne' : key === 'Southern' ? 'Otago Southland' : key,
-            case: covidState.location[key],
-            percentage: Math.ceil((covidState.location[key] / totalCases) * 100),
+            totalCases: regionTotalCases(key),
+            femaleCases: get(covidState.location[key], 'female', 0),
+            maleCases: get(covidState.location[key], 'male', 0),
+            unknownCases: get(covidState.location[key], 'unknown', 0),
+            percentage: Math.ceil((regionTotalCases(key) / totalCases) * 100),
           },
         });
       }
@@ -136,14 +182,17 @@ export const Covid19: React.FC = () => {
         },
         properties: {
           region: region,
-          case: caseByRegion[region],
-          percentage: Math.ceil((caseByRegion[region] / totalCases) * 100),
+          totalCases: caseByRegion[region].total,
+          femaleCases: caseByRegion[region].female,
+          maleCases: caseByRegion[region].male,
+          unknownCases: caseByRegion[region].unknown,
+          percentage: Math.ceil((caseByRegion[region].total / totalCases) * 100),
         },
       });
     });
 
     // Find the largest number in the regions
-    const largest = Math.max.apply(Math, map(features, 'properties.case'));
+    const largest = Math.max.apply(Math, map(features, 'properties.totalCases'));
     setLargestState(largest);
 
     // Initial Mapbox
@@ -175,9 +224,9 @@ export const Covid19: React.FC = () => {
         type: 'circle',
         source: 'covidCases',
         paint: {
-          'circle-color': ['interpolate', ['linear'], ['get', 'case'], 1, '#FCA107', largest, '#7F3121'],
+          'circle-color': ['interpolate', ['linear'], ['get', 'totalCases'], 1, '#FCA107', largest, '#7F3121'],
           'circle-opacity': 0.65,
-          'circle-radius': ['interpolate', ['linear'], ['get', 'case'], 1, 10, largest, Math.ceil(largest / 7)],
+          'circle-radius': ['interpolate', ['linear'], ['get', 'totalCases'], 1, 10, largest, Math.ceil(largest / 7)],
         },
       });
 
@@ -187,7 +236,7 @@ export const Covid19: React.FC = () => {
         type: 'symbol',
         source: 'covidCases',
         layout: {
-          'text-field': '{case}',
+          'text-field': '{totalCases}',
           'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
           'text-size': 12,
         },
@@ -207,7 +256,10 @@ export const Covid19: React.FC = () => {
         mapBox.getCanvas().style.cursor = 'pointer';
 
         const coordinates = event.features[0].geometry.coordinates.slice();
-        const description = `<strong>${event.features[0].properties.region}</strong>: ${event.features[0].properties.case} cases, ${event.features[0].properties.percentage}%`;
+        const description =
+          `<strong>${event.features[0].properties.region}</strong><br/>` +
+          `${event.features[0].properties.totalCases} cases, ${event.features[0].properties.percentage}%<br/>` +
+          `female: ${event.features[0].properties.femaleCases}, male: ${event.features[0].properties.maleCases}, unknown: ${event.features[0].properties.unknownCases}`;
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
         // over the copy being pointed to.
@@ -276,9 +328,7 @@ export const Covid19: React.FC = () => {
             </Col>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Cases'>
-                <div className='covid-cases-card-content'>
-                  {last(covidState.daily)['totalConfirmed'] + last(covidState.daily)['totalProbable']}
-                </div>
+                <div className='covid-cases-card-content'>{totalCasesState}</div>
               </Card>
             </Col>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>

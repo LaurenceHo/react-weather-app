@@ -24,8 +24,14 @@ export const dailyChartConfig: any = (covid19Data: any) => {
       },
     },
     legend: {
-      data: ['Total cases', 'Total recovered cases', 'New confirmed cases', 'New probable cases'],
-      top: 20,
+      data: [
+        'Total cases',
+        'Total confirmed cases',
+        'Total recovered cases',
+        'New confirmed cases',
+        'New probable cases',
+      ],
+      bottom: 5,
     },
     tooltip: {
       trigger: 'axis',
@@ -59,6 +65,12 @@ export const dailyChartConfig: any = (covid19Data: any) => {
         name: 'Total cases',
         type: 'line',
         data: map(covid19Data, (c) => c.totalConfirmed + c.totalProbable),
+        smooth: true,
+      },
+      {
+        name: 'Total confirmed cases',
+        type: 'line',
+        data: map(covid19Data, 'totalConfirmed'),
         smooth: true,
       },
       {
