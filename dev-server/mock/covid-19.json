@@ -269,74 +269,169 @@
       "totalProbable": 74,
       "totalRecovered": 92,
       "totalDeath": 1
+    },
+    {
+      "date": "2020-04-03",
+      "newConfirmed": 49,
+      "newProbable": 22,
+      "totalConfirmed": 772,
+      "totalProbable": 96,
+      "totalRecovered": 103,
+      "totalDeath": 1
+    },
+    {
+      "date": "2020-04-04",
+      "newConfirmed": 52,
+      "newProbable": 30,
+      "totalConfirmed": 824,
+      "totalProbable": 126,
+      "totalRecovered": 127,
+      "totalDeath": 1
+    },
+    {
+      "date": "2020-04-05",
+      "newConfirmed": 48,
+      "newProbable": 41,
+      "totalConfirmed": 872,
+      "totalProbable": 167,
+      "totalRecovered": 156,
+      "totalDeath": 1
     }
   ],
   "ages": {
     "child": {
-      "female": 7,
-      "male": 1
+      "female": 9,
+      "male": 4
     },
     "10s": {
-      "female": 39,
-      "male": 15,
-      "unknown": 1
+      "female": 52,
+      "male": 23
     },
     "20s": {
-      "female": 122,
-      "male": 80
+      "female": 155,
+      "male": 104,
+      "unknown": 3
     },
     "30s": {
-      "female": 70,
-      "male": 46
+      "female": 86,
+      "male": 67
     },
     "40s": {
-      "female": 62,
-      "male": 59,
-      "unknown": 1
-    },
-    "50s": {
-      "female": 57,
+      "female": 77,
       "male": 67,
       "unknown": 2
     },
+    "50s": {
+      "female": 79,
+      "male": 92,
+      "unknown": 2
+    },
     "60s": {
-      "female": 50,
-      "male": 60
+      "female": 60,
+      "male": 77
     },
     "Over 70s": {
-      "female": 22,
-      "male": 33
+      "female": 33,
+      "male": 46
+    },
+    "Unknown": {
+      "unknown": 1
     }
   },
   "location": {
-    "Auckland": 116,
-    "Bay of Plenty": 21,
-    "Canterbury": 53,
-    "Capital and Coast": 63,
-    "Counties Manukau": 59,
-    "Hawke's Bay": 19,
-    "Hutt Valley": 15,
-    "Lakes": 11,
-    "MidCentral": 19,
-    "Nelson Marlborough": 27,
-    "Northland": 11,
-    "South Canterbury": 10,
-    "Southern": 118,
-    "Tairāwhiti": 1,
-    "Taranaki": 15,
-    "Waikato": 117,
-    "Wairarapa": 6,
-    "Waitemata": 108,
-    "West Coast": 3,
-    "Whanganui": 5
+    "Auckland": {
+      "female": 76,
+      "male": 59,
+      "unknown": 2
+    },
+    "Bay of Plenty": {
+      "female": 17,
+      "male": 14
+    },
+    "Canterbury": {
+      "female": 54,
+      "male": 31,
+      "unknown": 1
+    },
+    "Capital and Coast": {
+      "female": 38,
+      "male": 42
+    },
+    "Counties Manukau": {
+      "female": 42,
+      "male": 34,
+      "unknown": 1
+    },
+    "Hawke's Bay": {
+      "female": 14,
+      "male": 15
+    },
+    "Hutt Valley": {
+      "female": 10,
+      "male": 8
+    },
+    "Lakes": {
+      "female": 6,
+      "male": 6
+    },
+    "MidCentral": {
+      "female": 12,
+      "male": 9,
+      "unknown": 1
+    },
+    "Nelson Marlborough": {
+      "female": 17,
+      "male": 17,
+      "unknown": 1
+    },
+    "Northland": {
+      "female": 10,
+      "male": 6
+    },
+    "South Canterbury": {
+      "female": 5,
+      "male": 5
+    },
+    "Southern": {
+      "female": 86,
+      "male": 74
+    },
+    "Tairāwhiti": {
+      "female": 0,
+      "male": 1
+    },
+    "Taranaki": {
+      "female": 7,
+      "male": 7
+    },
+    "Waikato": {
+      "female": 76,
+      "male": 70
+    },
+    "Wairarapa": {
+      "female": 4,
+      "male": 4
+    },
+    "Waitemata": {
+      "female": 74,
+      "male": 69,
+      "unknown": 2
+    },
+    "West Coast": {
+      "female": 1,
+      "male": 3
+    },
+    "Whanganui": {
+      "female": 2,
+      "male": 6
+    }
   },
   "ethnicity": {
-    "European or Other": 569,
-    "Unknown": 65,
-    "Asian": 63,
-    "Māori": 56,
-    "Pacific People": 23,
-    "Middle Eastern / Latin American / African": 21
+    "Asian": 87,
+    "European or Other": 765,
+    "Māori": 79,
+    "Pacific People": 33,
+    "Unknown": 75
   },
-  "lastUpdated": "06:02 Thursday, 2 April 2020 (UTC)"
+  "lastUpdated": "20:45 Sunday, 5 April 2020 (UTC)"
 }
