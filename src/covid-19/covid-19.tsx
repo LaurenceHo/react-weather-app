@@ -307,7 +307,7 @@ export const Covid19: React.FC = () => {
       {isLoadingState ? (
         <Row type='flex' justify='center' className='fetching-weather-content'>
           <Spin className='fetching-weather-spinner' size='large' />
-          <h2>Loading...</h2>
+          <h2 className='loading-text'>Loading...</h2>
         </Row>
       ) : !isEmpty(errorState) ? (
         <div>
