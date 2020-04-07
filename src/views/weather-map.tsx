@@ -185,8 +185,8 @@ export const WeatherMap: React.FC<any> = () => {
     <div>
       {weatherMapState.isLoading ? (
         <Row type='flex' justify='center' className='fetching-weather-content'>
-          <h2>Fetching location</h2>
           <Spin className='fetching-weather-spinner' size='large' />
+          <h2 className='loading-text'>Fetching location...</h2>
         </Row>
       ) : !isEmpty(weatherMapState.error) ? (
         <div>

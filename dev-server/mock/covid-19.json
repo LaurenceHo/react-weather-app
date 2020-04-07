@@ -296,43 +296,61 @@
       "totalProbable": 167,
       "totalRecovered": 156,
       "totalDeath": 1
+    },
+    {
+      "date": "2020-04-06",
+      "newConfirmed": 39,
+      "newProbable": 28,
+      "totalConfirmed": 911,
+      "totalProbable": 195,
+      "totalRecovered": 176,
+      "totalDeath": 1
+    },
+    {
+      "date": "2020-04-07",
+      "newConfirmed": 32,
+      "newProbable": 22,
+      "totalConfirmed": 943,
+      "totalProbable": 217,
+      "totalRecovered": 241,
+      "totalDeath": 1
     }
   ],
   "ages": {
     "child": {
-      "female": 9,
-      "male": 4
+      "female": 11,
+      "male": 8
     },
     "10s": {
-      "female": 52,
-      "male": 23
+      "female": 62,
+      "male": 28
     },
     "20s": {
-      "female": 155,
-      "male": 104,
-      "unknown": 3
+      "female": 169,
+      "male": 115,
+      "unknown": 2
     },
     "30s": {
-      "female": 86,
-      "male": 67
+      "female": 94,
+      "male": 81
     },
     "40s": {
-      "female": 77,
-      "male": 67,
+      "female": 89,
+      "male": 72,
       "unknown": 2
     },
     "50s": {
-      "female": 79,
-      "male": 92,
+      "female": 89,
+      "male": 100,
       "unknown": 2
     },
     "60s": {
-      "female": 60,
-      "male": 77
+      "female": 68,
+      "male": 80
     },
     "Over 70s": {
-      "female": 33,
-      "male": 46
+      "female": 35,
+      "male": 51
     },
     "Unknown": {
       "unknown": 1
@@ -340,34 +358,33 @@
   },
   "location": {
     "Auckland": {
-      "female": 76,
-      "male": 59,
-      "unknown": 2
+      "female": 85,
+      "male": 67
     },
     "Bay of Plenty": {
-      "female": 17,
-      "male": 14
+      "female": 20,
+      "male": 16
     },
     "Canterbury": {
-      "female": 54,
-      "male": 31,
+      "female": 63,
+      "male": 35,
       "unknown": 1
     },
     "Capital and Coast": {
-      "female": 38,
-      "male": 42
+      "female": 39,
+      "male": 43
     },
     "Counties Manukau": {
-      "female": 42,
-      "male": 34,
+      "female": 48,
+      "male": 39,
       "unknown": 1
     },
     "Hawke's Bay": {
-      "female": 14,
-      "male": 15
+      "female": 16,
+      "male": 17
     },
     "Hutt Valley": {
-      "female": 10,
+      "female": 12,
       "male": 8
     },
     "Lakes": {
@@ -375,26 +392,26 @@
       "male": 6
     },
     "MidCentral": {
-      "female": 12,
-      "male": 9,
+      "female": 14,
+      "male": 13,
       "unknown": 1
     },
     "Nelson Marlborough": {
-      "female": 17,
-      "male": 17,
+      "female": 22,
+      "male": 21,
       "unknown": 1
     },
     "Northland": {
-      "female": 10,
-      "male": 6
+      "female": 11,
+      "male": 7
     },
     "South Canterbury": {
       "female": 5,
       "male": 5
     },
     "Southern": {
-      "female": 86,
-      "male": 74
+      "female": 98,
+      "male": 89
     },
     "Tairāwhiti": {
       "female": 0,
@@ -405,16 +422,17 @@
       "male": 7
     },
     "Waikato": {
-      "female": 76,
-      "male": 70
+      "female": 83,
+      "male": 72,
+      "unknown": 1
     },
     "Wairarapa": {
       "female": 4,
       "male": 4
     },
     "Waitemata": {
-      "female": 74,
-      "male": 69,
+      "female": 81,
+      "male": 77,
       "unknown": 2
     },
     "West Coast": {
@@ -423,15 +441,15 @@
     },
     "Whanganui": {
       "female": 2,
-      "male": 6
+      "male": 5
     }
   },
   "ethnicity": {
-    "Asian": 87,
-    "European or Other": 765,
-    "Māori": 79,
-    "Pacific People": 33,
-    "Unknown": 75
+    "Asian": 99,
+    "European or Other": 850,
+    "Māori": 91,
+    "Pacific People": 40,
+    "Unknown": 80
   },
-  "lastUpdated": "20:45 Sunday, 5 April 2020 (UTC)"
+  "lastUpdated": "19:42 Tuesday, 7 April 2020 (UTC)"
 }

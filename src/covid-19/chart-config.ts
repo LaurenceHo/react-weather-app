@@ -14,6 +14,9 @@ export const dailyChartConfig: any = (covid19Data: any) => {
         text: 'Probable and confirmed cases in New Zealand',
         left: 'center',
         top: -5,
+        textStyle: {
+          color: 'rgba(0, 0, 0, 0.65)',
+        },
       },
     ],
     toolbox: {
@@ -129,6 +132,9 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         text: 'Age, Gender and Ethnicity Groups',
         left: 'center',
+        textStyle: {
+          color: 'rgba(0, 0, 0, 0.65)',
+        },
       },
     ],
     toolbox: {
