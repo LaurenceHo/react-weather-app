@@ -1,6 +1,7 @@
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
+import 'echarts/lib/component/grid';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/toolbox';
@@ -132,12 +133,15 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         text: 'Age, Gender and Ethnicity Groups',
         left: 'center',
+        top: 50,
         textStyle: {
           color: 'rgba(0, 0, 0, 0.65)',
         },
       },
     ],
     toolbox: {
+      top: 50,
+      right: '15%',
       feature: {
         dataView: { show: true, readOnly: false, title: 'Data view' },
         restore: { show: true, title: 'Restore' },
@@ -153,8 +157,8 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
         name: 'Gender Groups',
         type: 'pie',
         selectedMode: 'single',
-        radius: [0, '35%'],
-        center: ['30%', '45%'],
+        radius: [0, '40%'],
+        center: ['35%', '55%'],
         label: {
           position: 'inner',
         },
@@ -170,8 +174,8 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         name: 'Age Groups',
         type: 'pie',
-        radius: ['40%', '55%'],
-        center: ['30%', '45%'],
+        radius: ['45%', '60%'],
+        center: ['35%', '55%'],
         label: {
           formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
           backgroundColor: '#eee',
@@ -215,9 +219,115 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         name: 'Ethnicity Groups',
         type: 'pie',
-        radius: '50%',
-        center: ['80%', '45%'],
+        radius: '55%',
+        center: ['80%', '55%'],
         data: ethnicity,
+      },
+    ],
+  };
+};
+
+export const testsChartConfig: any = (covid19Data: any) => {
+  return {
+    title: [
+      {
+        text: 'Tests v.s Cases',
+        left: 'center',
+        top: -2,
+        textStyle: {
+          color: 'rgba(0, 0, 0, 0.65)',
+        },
+      },
+    ],
+    toolbox: {
+      feature: {
+        dataView: { show: true, readOnly: false, title: 'Data view' },
+        restore: { show: true, title: 'Restore' },
+        saveAsImage: { show: true, title: 'Save as image' },
+      },
+    },
+    legend: {
+      data: ['Total cases', 'Total tests', 'Daily tests', 'Daily cases'],
+      bottom: 5,
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        lineStyle: {
+          color: '#666666',
+          type: 'dashed',
+        },
+      },
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: map(covid19Data, 'date'),
+      },
+      {
+        type: 'category',
+        data: map(covid19Data, 'date'),
+        gridIndex: 1,
+      },
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: 'Total cases',
+        position: 'right',
+      },
+      {
+        type: 'value',
+        name: 'Total tests',
+        position: 'left',
+      },
+      {
+        type: 'value',
+        name: 'Daily cases',
+        position: 'right',
+        gridIndex: 1,
+      },
+      {
+        type: 'value',
+        name: 'Daily tests',
+        position: 'left',
+        gridIndex: 1,
+      },
+    ],
+    grid: [
+      { left: '5%', width: '40%' },
+      { left: '55%', width: '40%' },
+    ],
+    series: [
+      {
+        name: 'Total cases',
+        type: 'line',
+        data: map(covid19Data, (c) => c.totalConfirmed + c.totalProbable),
+        smooth: true,
+      },
+      {
+        name: 'Total tests',
+        type: 'bar',
+        stack: 'Tests',
+        yAxisIndex: 1,
+        data: map(covid19Data, 'totalTests'),
+      },
+      {
+        name: 'Daily tests',
+        type: 'bar',
+        data: map(covid19Data, 'newTests'),
+        xAxisIndex: 1,
+        yAxisIndex: 3,
+        gridIndex: 1,
+      },
+      {
+        name: 'Daily cases',
+        type: 'line',
+        data: map(covid19Data, (c) => c.newConfirmed + c.newProbable),
+        smooth: true,
+        xAxisIndex: 1,
+        yAxisIndex: 2,
+        gridIndex: 1,
       },
     ],
   };

@@ -11,7 +11,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { ApiKey } from '../constants/api-key';
 import { coordinates } from '../constants/coordinates';
-import { dailyChartConfig, pieChartConfig } from './chart-config';
+import { dailyChartConfig, pieChartConfig, testsChartConfig } from './chart-config';
 
 declare let process: {
   env: {
@@ -38,6 +38,9 @@ export const Covid19: React.FC = () => {
 
       const pieChart = document.getElementById('covid-pie-chart');
       pieChart.parentNode.removeChild(pieChart);
+
+      const testsChart = document.getElementById('covid-tests-chart');
+      testsChart.parentNode.removeChild(testsChart);
     } catch (err) {}
 
     // Generate div element dynamically for ECharts
@@ -51,14 +54,23 @@ export const Covid19: React.FC = () => {
     covidPieDivElement.setAttribute('class', 'covid-pie-chart');
     document.getElementById('covid-pie-wrapper').appendChild(covidPieDivElement);
 
+    const covidTestsDivElement: HTMLDivElement = document.createElement('div');
+    covidTestsDivElement.setAttribute('id', 'covid-tests-chart');
+    covidTestsDivElement.setAttribute('class', 'covid-tests-chart');
+    document.getElementById('covid-tests-wrapper').appendChild(covidTestsDivElement);
+
     let dailyChart = echarts.getInstanceByDom(covidDailyDivElement);
     let pieChart = echarts.getInstanceByDom(covidPieDivElement);
-    if (!dailyChart && !pieChart) {
+    let testsChart = echarts.getInstanceByDom(covidTestsDivElement);
+    if (!dailyChart && !pieChart && !testsChart) {
       dailyChart = echarts.init(covidDailyDivElement);
       dailyChart.setOption(dailyChartConfig(covidState.daily));
 
       pieChart = echarts.init(covidPieDivElement);
       pieChart.setOption(pieChartConfig(covidState.ages, covidState.ethnicity));
+
+      testsChart = echarts.init(covidTestsDivElement);
+      testsChart.setOption(testsChartConfig(covidState.daily));
     }
   };
 
@@ -347,7 +359,8 @@ export const Covid19: React.FC = () => {
             </Col>
           </Row>
           <Row type='flex' justify='center' style={{ padding: '1rem 0' }}>
-            [<a href='#covid-pie-wrapper'>Age, Gender and Ethnicity Groups</a>] [<a href='#new-zealand-map'>Map</a>]
+            [<a href='#covid-pie-wrapper'>Age, Gender and Ethnicity Groups</a>] [<a href='#new-zealand-map'>Map</a>] [
+            <a href='#covid-tests-wrapper'>Tests v.s Cases</a>]
           </Row>
           <Row type='flex' justify='center'>
             <div className='forecast-summary'>1st case on 28-02-2020</div>
@@ -355,9 +368,10 @@ export const Covid19: React.FC = () => {
           {/* Chart */}
           <Row type='flex' justify='center' id='covid-chart-wrapper' />
           <Row type='flex' justify='center' id='covid-pie-wrapper' />
+          <Row type='flex' justify='center' id='covid-tests-wrapper' />
           {/* Map */}
           <Row type='flex' justify='center'>
-            <div className='forecast-summary'>Total Cases by Regions</div>
+            <div className='map-title'>Total Cases by Regions</div>
           </Row>
           <Row type='flex' justify='center'>
             <div style={{ position: 'relative' }}>
