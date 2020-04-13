@@ -7,7 +7,9 @@
       "totalConfirmed": 2,
       "totalProbable": 0,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 0,
+      "totalTests": 300
     },
     {
       "date": "2020-03-05",
@@ -16,7 +18,9 @@
       "totalConfirmed": 3,
       "totalProbable": 0,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 0,
+      "totalTests": 300
     },
     {
       "date": "2020-03-06",
@@ -25,7 +29,9 @@
       "totalConfirmed": 4,
       "totalProbable": 0,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 0,
+      "totalTests": 300
     },
     {
       "date": "2020-03-07",
@@ -34,7 +40,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 0,
+      "totalTests": 300
     },
     {
       "date": "2020-03-08",
@@ -43,7 +51,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 0,
+      "totalTests": 300
     },
     {
       "date": "2020-03-09",
@@ -52,7 +62,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 12,
+      "totalTests": 312
     },
     {
       "date": "2020-03-10",
@@ -61,7 +73,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 89,
+      "totalTests": 401
     },
     {
       "date": "2020-03-11",
@@ -70,7 +84,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 83,
+      "totalTests": 484
     },
     {
       "date": "2020-03-12",
@@ -79,7 +95,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 31,
+      "totalTests": 515
     },
     {
       "date": "2020-03-13",
@@ -88,7 +106,9 @@
       "totalConfirmed": 5,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 35,
+      "totalTests": 550
     },
     {
       "date": "2020-03-14",
@@ -97,7 +117,9 @@
       "totalConfirmed": 6,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 34,
+      "totalTests": 584
     },
     {
       "date": "2020-03-15",
@@ -106,7 +128,9 @@
       "totalConfirmed": 8,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 142,
+      "totalTests": 726
     },
     {
       "date": "2020-03-16",
@@ -115,7 +139,9 @@
       "totalConfirmed": 8,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 325,
+      "totalTests": 1051
     },
     {
       "date": "2020-03-17",
@@ -124,7 +150,9 @@
       "totalConfirmed": 12,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 659,
+      "totalTests": 1071
     },
     {
       "date": "2020-03-18",
@@ -133,7 +161,9 @@
       "totalConfirmed": 20,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1209,
+      "totalTests": 2919
     },
     {
       "date": "2020-03-19",
@@ -142,7 +172,9 @@
       "totalConfirmed": 28,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1291,
+      "totalTests": 4210
     },
     {
       "date": "2020-03-20",
@@ -151,7 +183,9 @@
       "totalConfirmed": 39,
       "totalProbable": 2,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1554,
+      "totalTests": 5764
     },
     {
       "date": "2020-03-21",
@@ -160,7 +194,9 @@
       "totalConfirmed": 52,
       "totalProbable": 4,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1176,
+      "totalTests": 6940
     },
     {
       "date": "2020-03-22",
@@ -169,7 +205,9 @@
       "totalConfirmed": 66,
       "totalProbable": 7,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1256,
+      "totalTests": 8196
     },
     {
       "date": "2020-03-23",
@@ -178,7 +216,9 @@
       "totalConfirmed": 102,
       "totalProbable": 10,
       "totalRecovered": 0,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1050,
+      "totalTests": 9246
     },
     {
       "date": "2020-03-24",
@@ -187,7 +227,9 @@
       "totalConfirmed": 142,
       "totalProbable": 13,
       "totalRecovered": 12,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1544,
+      "totalTests": 10790
     },
     {
       "date": "2020-03-25",
@@ -196,7 +238,9 @@
       "totalConfirmed": 189,
       "totalProbable": 16,
       "totalRecovered": 22,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 2592,
+      "totalTests": 13382
     },
     {
       "date": "2020-03-26",
@@ -205,7 +249,9 @@
       "totalConfirmed": 262,
       "totalProbable": 21,
       "totalRecovered": 27,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 2117,
+      "totalTests": 15499
     },
     {
       "date": "2020-03-27",
@@ -214,7 +260,9 @@
       "totalConfirmed": 338,
       "totalProbable": 30,
       "totalRecovered": 37,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 2067,
+      "totalTests": 17566
     },
     {
       "date": "2020-03-28",
@@ -223,7 +271,9 @@
       "totalConfirmed": 416,
       "totalProbable": 35,
       "totalRecovered": 50,
-      "totalDeath": 0
+      "totalDeath": 0,
+      "newTests": 1809,
+      "totalTests": 19375
     },
     {
       "date": "2020-03-29",
@@ -232,7 +282,9 @@
       "totalConfirmed": 476,
       "totalProbable": 38,
       "totalRecovered": 56,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 918,
+      "totalTests": 20293
     },
     {
       "date": "2020-03-30",
@@ -241,7 +293,9 @@
       "totalConfirmed": 552,
       "totalProbable": 37,
       "totalRecovered": 63,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 1391,
+      "totalTests": 21684
     },
     {
       "date": "2020-03-31",
@@ -250,7 +304,9 @@
       "totalConfirmed": 600,
       "totalProbable": 47,
       "totalRecovered": 74,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 2093,
+      "totalTests": 23777
     },
     {
       "date": "2020-04-01",
@@ -259,7 +315,9 @@
       "totalConfirmed": 647,
       "totalProbable": 61,
       "totalRecovered": 82,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 2562,
+      "totalTests": 26339
     },
     {
       "date": "2020-04-02",
@@ -268,7 +326,9 @@
       "totalConfirmed": 723,
       "totalProbable": 74,
       "totalRecovered": 92,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 3446,
+      "totalTests": 29785
     },
     {
       "date": "2020-04-03",
@@ -277,7 +337,9 @@
       "totalConfirmed": 772,
       "totalProbable": 96,
       "totalRecovered": 103,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 3631,
+      "totalTests": 33416
     },
     {
       "date": "2020-04-04",
@@ -286,7 +348,9 @@
       "totalConfirmed": 824,
       "totalProbable": 126,
       "totalRecovered": 127,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 3093,
+      "totalTests": 36509
     },
     {
       "date": "2020-04-05",
@@ -295,7 +359,9 @@
       "totalConfirmed": 872,
       "totalProbable": 167,
       "totalRecovered": 156,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 3709,
+      "totalTests": 40218
     },
     {
       "date": "2020-04-06",
@@ -304,7 +370,9 @@
       "totalConfirmed": 911,
       "totalProbable": 195,
       "totalRecovered": 176,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 2908,
+      "totalTests": 32126
     },
     {
       "date": "2020-04-07",
@@ -313,83 +381,146 @@
       "totalConfirmed": 943,
       "totalProbable": 217,
       "totalRecovered": 241,
-      "totalDeath": 1
+      "totalDeath": 1,
+      "newTests": 4049,
+      "totalTests": 47175
+    },
+    {
+      "date": "2020-04-08",
+      "newConfirmed": 26,
+      "newProbable": 24,
+      "totalConfirmed": 969,
+      "totalProbable": 241,
+      "totalRecovered": 282,
+      "totalDeath": 1,
+      "newTests": 3990,
+      "totalTests": 51165
+    },
+    {
+      "date": "2020-04-09",
+      "newConfirmed": 23,
+      "newProbable": 6,
+      "totalConfirmed": 992,
+      "totalProbable": 247,
+      "totalRecovered": 317,
+      "totalDeath": 1,
+      "newTests": 4520,
+      "totalTests": 55685
+    },
+    {
+      "date": "2020-04-10",
+      "newConfirmed": 23,
+      "newProbable": 21,
+      "totalConfirmed": 1015,
+      "totalProbable": 268,
+      "totalRecovered": 373,
+      "totalDeath": 2,
+      "newTests": 3061,
+      "totalTests": 58746
+    },
+    {
+      "date": "2020-04-11",
+      "newConfirmed": 20,
+      "newProbable": 9,
+      "totalConfirmed": 1035,
+      "totalProbable": 277,
+      "totalRecovered": 422,
+      "totalDeath": 4,
+      "newTests": 2421,
+      "totalTests": 61167
+    },
+    {
+      "date": "2020-04-12",
+      "newConfirmed": 14,
+      "newProbable": 4,
+      "totalConfirmed": 1049,
+      "totalProbable": 281,
+      "totalRecovered": 471,
+      "totalDeath": 4,
+      "newTests": 1660,
+      "totalTests": 62827
+    },
+    {
+      "date": "2020-04-13",
+      "newConfirmed": 15,
+      "newProbable": 4,
+      "totalConfirmed": 1064,
+      "totalProbable": 285,
+      "totalRecovered": 546,
+      "totalDeath": 5,
+      "newTests": 0,
+      "totalTests": 62827
     }
   ],
   "ages": {
     "child": {
-      "female": 11,
-      "male": 8
+      "female": 15,
+      "male": 12
     },
     "10s": {
-      "female": 62,
-      "male": 28
+      "female": 68,
+      "male": 33
     },
     "20s": {
-      "female": 169,
-      "male": 115,
-      "unknown": 2
+      "female": 197,
+      "male": 133
     },
     "30s": {
-      "female": 94,
-      "male": 81
+      "female": 111,
+      "male": 94
     },
     "40s": {
-      "female": 89,
-      "male": 72,
-      "unknown": 2
+      "female": 112,
+      "male": 82,
+      "unknown": 1
     },
     "50s": {
-      "female": 89,
-      "male": 100,
-      "unknown": 2
+      "female": 107,
+      "male": 111,
+      "unknown": 1
     },
     "60s": {
-      "female": 68,
-      "male": 80
+      "female": 76,
+      "male": 84
     },
     "Over 70s": {
-      "female": 35,
-      "male": 51
-    },
-    "Unknown": {
-      "unknown": 1
+      "female": 40,
+      "male": 53
     }
   },
   "location": {
     "Auckland": {
-      "female": 85,
-      "male": 67
+      "female": 95,
+      "male": 80
     },
     "Bay of Plenty": {
-      "female": 20,
-      "male": 16
+      "female": 25,
+      "male": 17
     },
     "Canterbury": {
-      "female": 63,
-      "male": 35,
+      "female": 83,
+      "male": 46,
       "unknown": 1
     },
     "Capital and Coast": {
-      "female": 39,
-      "male": 43
+      "female": 41,
+      "male": 45
     },
     "Counties Manukau": {
-      "female": 48,
-      "male": 39,
-      "unknown": 1
+      "female": 56,
+      "male": 44
     },
     "Hawke's Bay": {
-      "female": 16,
-      "male": 17
+      "female": 20,
+      "male": 18
     },
     "Hutt Valley": {
-      "female": 12,
-      "male": 8
+      "female": 15,
+      "male": 9
     },
     "Lakes": {
-      "female": 6,
-      "male": 6
+      "female": 7,
+      "male": 7
     },
     "MidCentral": {
       "female": 14,
@@ -397,21 +528,20 @@
       "unknown": 1
     },
     "Nelson Marlborough": {
-      "female": 22,
-      "male": 21,
-      "unknown": 1
+      "female": 26,
+      "male": 22
     },
     "Northland": {
-      "female": 11,
-      "male": 7
+      "female": 15,
+      "male": 10
     },
     "South Canterbury": {
-      "female": 5,
+      "female": 6,
       "male": 5
     },
     "Southern": {
-      "female": 98,
-      "male": 89
+      "female": 109,
+      "male": 97
     },
     "Tairāwhiti": {
       "female": 0,
@@ -422,22 +552,20 @@
       "male": 7
     },
     "Waikato": {
-      "female": 83,
-      "male": 72,
-      "unknown": 1
+      "female": 96,
+      "male": 80
     },
     "Wairarapa": {
       "female": 4,
       "male": 4
     },
     "Waitemata": {
-      "female": 81,
-      "male": 77,
-      "unknown": 2
+      "female": 104,
+      "male": 88
     },
     "West Coast": {
       "female": 1,
-      "male": 3
+      "male": 4
     },
     "Whanganui": {
       "female": 2,
@@ -445,11 +573,11 @@
     }
   },
   "ethnicity": {
-    "Asian": 99,
-    "European or Other": 850,
-    "Māori": 91,
-    "Pacific People": 40,
-    "Unknown": 80
+    "Asian": 139,
+    "European or Other": 979,
+    "Māori": 110,
+    "Pacific People": 58,
+    "Unknown": 44
   },
-  "lastUpdated": "19:42 Tuesday, 7 April 2020 (UTC)"
+  "lastUpdated": "21:34 Sunday, 12 April 2020 (UTC)"
 }
