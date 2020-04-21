@@ -11,23 +11,35 @@ const CLOUD_FUNCTION_URL =
     ? 'http://localhost:3000/'
     : 'https://us-central1-reactjs-weather.cloudfunctions.net/';
 
-const checkStatus = (response: any): any => {
+const checkStatus = async (response: Response) => {
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
-    throw new Error(response.statusText);
+    let errorJson: any = null;
+    try {
+      errorJson = await response.json();
+    } catch (error) {
+      throw new Error(response.statusText);
+    }
+    if (errorJson.error) {
+      throw new Error(errorJson.error);
+    } else {
+      throw new Error(response.statusText);
+    }
   }
 };
 
-const parseJSON = (response: any): any => response.json();
+const parseJSON = (response: Response) => {
+  return response
+    .json()
+    .then((data) => data)
+    .catch(() => response);
+};
 
 export const getGeocode = (latitude: number, longitude: number, address: string): Promise<GeoCode> => {
   const requestUrl =
     `${CLOUD_FUNCTION_URL}getGeocode?lat=${latitude}&lon=${longitude}&address=` + encodeURIComponent(address);
-  return fetch(requestUrl)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((data: GeoCode) => data);
+  return fetch(requestUrl).then(checkStatus).then(parseJSON);
 };
 
 export const getWeatherByTime = (
@@ -40,8 +52,5 @@ export const getWeatherByTime = (
   const requestUrl =
     `${CLOUD_FUNCTION_URL}getWeather?lat=${latitude}&lon=${longitude}&time=${time}` +
     `&exclude=${encodeURIComponent(exclude)}&units=${encodeURIComponent(units)}`;
-  return fetch(requestUrl)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((data: any) => data);
+  return fetch(requestUrl).then(checkStatus).then(parseJSON);
 };
