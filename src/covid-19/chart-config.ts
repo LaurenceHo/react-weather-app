@@ -158,7 +158,7 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
         type: 'pie',
         selectedMode: 'single',
         radius: [0, '40%'],
-        center: ['35%', '55%'],
+        center: ['32%', '55%'],
         label: {
           position: 'inner',
         },
@@ -175,7 +175,7 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
         name: 'Age Groups',
         type: 'pie',
         radius: ['45%', '60%'],
-        center: ['35%', '55%'],
+        center: ['32%', '55%'],
         label: {
           formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
           backgroundColor: '#eee',
@@ -219,8 +219,8 @@ export const pieChartConfig: any = (agesGroup: any, ethnicityGroup: any) => {
       {
         name: 'Ethnicity Groups',
         type: 'pie',
-        radius: '55%',
-        center: ['80%', '55%'],
+        radius: '60%',
+        center: ['75%', '55%'],
         data: ethnicity,
       },
     ],
