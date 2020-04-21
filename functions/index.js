@@ -73,8 +73,9 @@ exports.getWeather = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     return request.get(requestUrl, (error, response, body) => {
       console.log('response:', body);
-      if (body.error) {
-        return res.status(body.code).send(JSON.parse(body));
+      if (error) {
+        console.log('error:', error);
+        return res.status(response.statusCode).send(JSON.parse(body));
       }
       return res.status(response.statusCode).send(JSON.parse(body));
     });
