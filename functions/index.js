@@ -29,13 +29,13 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
   }
   let requestUrl = `${GEOCODE_API_URL}${params}&key=${apiKey.googleGeocoding}`;
   requestUrl = encodeURI(requestUrl);
-  console.log(requestUrl);
+  console.log('requestUrl:', requestUrl);
   cors(req, res, () => {
     return request.get(requestUrl, (error, response, body) => {
       if (error) {
         return res.send(error);
       }
-      console.log(body);
+      console.log('response:', body);
       const geocode = JSON.parse(body);
       if (geocode.status === 'OK') {
         const results = geocode.results;
@@ -48,9 +48,9 @@ exports.getGeocode = functions.https.onRequest((req, res) => {
         };
         return res.status(200).send(geocodeResponse);
       } else if (geocode.status === 'ZERO_RESULTS') {
-        return res.status(404).send({ status: 'ERROR' });
+        return res.status(404).send({ error: 'ERROR' });
       } else {
-        return res.status(500).send({ status: 'ERROR' });
+        return res.status(500).send({ error: 'ERROR' });
       }
     });
   });
@@ -69,12 +69,14 @@ exports.getWeather = functions.https.onRequest((req, res) => {
   if (req.query.units) {
     requestUrl = `${requestUrl}&units=${req.query.units}`;
   }
+  console.log('requestUrl:', requestUrl);
   cors(req, res, () => {
     return request.get(requestUrl, (error, response, body) => {
-      if (error) {
-        return res.status(response.statusCode).send(body);
+      console.log('response:', body);
+      if (body.error) {
+        return res.status(body.code).send(JSON.parse(body));
       }
-      return res.status(200).send(JSON.parse(body));
+      return res.status(response.statusCode).send(JSON.parse(body));
     });
   });
 });

@@ -35,6 +35,7 @@ app.get('/getGeocode', (req, res) => setTimeout(() => res.send(location), 1000))
 //   )
 // );
 app.get('/getWeather', (req, res) => {
+  // res.status(403).send({ code: 403, error: 'daily usage limit exceeded' });
   if (req.query.lat === '40.7127753' && req.query.lon === '-74.0059728') {
     if (req.query.units.toLocaleLowerCase() === 'us') {
       setTimeout(() => res.send(nyWeatherUs), 1000);
