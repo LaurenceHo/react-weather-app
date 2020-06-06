@@ -1,7 +1,7 @@
+import { GithubOutlined, MenuOutlined } from '@ant-design/icons';
 import Button from 'antd/es/button';
 import Col from 'antd/es/col';
 import DatePicker from 'antd/es/date-picker';
-import Icon from 'antd/es/icon';
 import Layout from 'antd/es/layout';
 import Menu from 'antd/es/menu';
 import Popover from 'antd/es/popover';
@@ -154,7 +154,7 @@ export const NavBar: React.FC<any> = () => {
             <Button
               type='primary'
               shape='circle'
-              icon='github'
+              icon={<GithubOutlined style={{ fontSize: '30px' }} />}
               size='large'
               href='https://github.com/LaurenceHo/react-weather-app'
             />
@@ -194,13 +194,13 @@ export const NavBar: React.FC<any> = () => {
 
   const NavBarMobile = (
     <Header className='nav-bar-mobile'>
-      <Row type='flex' justify='center' align='middle'>
+      <Row justify='center' align='middle'>
         <Col span={23}>
           <img src='../assets/favicon.ico' width='33' height='30' alt='' />
         </Col>
         <Col span={1}>
           <Popover placement='bottomRight' content={<MenuContent />} trigger='click'>
-            <Icon type='menu' className='nav-bar-mobile-menu-icon' />
+            <MenuOutlined style={{ color: '#fff' }} />
           </Popover>
         </Col>
       </Row>

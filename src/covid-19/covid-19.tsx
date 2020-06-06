@@ -313,17 +313,17 @@ export const Covid19: React.FC = () => {
 
   return (
     <div>
-      <Row type='flex' justify='center' className='covid-title'>
+      <Row justify='center' className='covid-title'>
         Covid-19 in New Zealand
       </Row>
       {isLoadingState ? (
-        <Row type='flex' justify='center' className='fetching-weather-content'>
+        <Row justify='center' className='fetching-weather-content'>
           <Spin className='fetching-weather-spinner' size='large' />
           <h2 className='loading-text'>Loading...</h2>
         </Row>
       ) : !isEmpty(errorState) ? (
         <div>
-          <Row type='flex' justify='center' className='fetching-weather-content'>
+          <Row justify='center' className='fetching-weather-content'>
             <Col xs={24} sm={24} md={18} lg={16} xl={16}>
               <Alert message='Error' description={errorState} type='error' showIcon={true} />
             </Col>
@@ -332,7 +332,7 @@ export const Covid19: React.FC = () => {
       ) : (
         <>
           {/* Grid */}
-          <Row type='flex' justify='center' gutter={16}>
+          <Row justify='center' gutter={16}>
             <Col sm={6} md={6} lg={4} xl={4} xxl={3} className='covid-cases-card'>
               <Card title='Total Confirmed'>
                 <div className='covid-cases-card-content'>{last(covidState.daily)['totalConfirmed']}</div>
@@ -358,22 +358,22 @@ export const Covid19: React.FC = () => {
               </Card>
             </Col>
           </Row>
-          <Row type='flex' justify='center' style={{ padding: '1rem 0' }}>
+          <Row justify='center' style={{ padding: '1rem 0' }}>
             [<a href='#covid-pie-wrapper'>Age, Gender and Ethnicity Groups</a>] [<a href='#new-zealand-map'>Map</a>] [
             <a href='#covid-tests-wrapper'>Tests v.s Cases</a>]
           </Row>
-          <Row type='flex' justify='center'>
+          <Row justify='center'>
             <div className='forecast-summary'>1st case on 28-02-2020</div>
           </Row>
           {/* Chart */}
-          <Row type='flex' justify='center' id='covid-chart-wrapper' />
-          <Row type='flex' justify='center' id='covid-pie-wrapper' />
-          <Row type='flex' justify='center' id='covid-tests-wrapper' />
+          <Row justify='center' id='covid-chart-wrapper' />
+          <Row justify='center' id='covid-pie-wrapper' />
+          <Row justify='center' id='covid-tests-wrapper' />
           {/* Map */}
-          <Row type='flex' justify='center'>
+          <Row justify='center'>
             <div className='map-title'>Total Cases by Regions</div>
           </Row>
-          <Row type='flex' justify='center'>
+          <Row justify='center'>
             <div style={{ position: 'relative' }}>
               <div id='new-zealand-map' />
               <div className='map-legend-overlay'>
@@ -391,7 +391,7 @@ export const Covid19: React.FC = () => {
             </div>
           </Row>
           {/* Last updated */}
-          <Row type='flex' justify='center'>
+          <Row justify='center'>
             <Col span={24} className={clsx('covid-cases-card', 'last-updated')}>
               Last updated: {covidState.lastUpdated}
             </Col>

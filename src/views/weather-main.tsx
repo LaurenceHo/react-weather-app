@@ -92,7 +92,7 @@ export const WeatherMain: React.FC<any> = () => {
     if (error) {
       return (
         <div>
-          <Row type='flex' justify='center' className='fetching-weather-content'>
+          <Row justify='center' className='fetching-weather-content'>
             <Col xs={24} sm={24} md={18} lg={16} xl={16}>
               <Alert message='Error' description={error} type='error' showIcon={true} />
             </Col>
@@ -113,7 +113,7 @@ export const WeatherMain: React.FC<any> = () => {
   return (
     <div>
       {isLoading ? (
-        <Row type='flex' justify='center' className='fetching-weather-content'>
+        <Row justify='center' className='fetching-weather-content'>
           <Spin className='fetching-weather-spinner' size='large' />
           <h2 className='loading-text'>Loading...</h2>
         </Row>

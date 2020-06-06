@@ -21,7 +21,7 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({
 }: CurrentWeatherProps) => {
   return (
     <div>
-      <Row type='flex' justify='center' className='current-weather-top'>
+      <Row justify='center' className='current-weather-top'>
         <Col xs={8} sm={6} md={6} lg={4}>
           <div className='current-weather-top-item'>
             Rain: {Utils.getRain(currentWeather.precipIntensity, currentWeather.precipProbability, filter.units)}
@@ -57,10 +57,10 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({
           </div>
         </Col>
       </Row>
-      <Row type='flex' justify='center' className='current-weather-location'>
+      <Row justify='center' className='current-weather-location'>
         {location}
       </Row>
-      <Row type='flex' justify='center'>
+      <Row justify='center'>
         <Col xs={3} sm={3} md={2} lg={2} xl={1} className='current-weather-icon'>
           <WeatherIcon icon={currentWeather.icon} size={!Utils.isMobile() ? '4rem' : '3rem'} />
         </Col>
