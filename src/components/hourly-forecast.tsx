@@ -44,10 +44,10 @@ export const HourlyForecast: React.FC<HourlyForecastProps> = ({
 
   return (
     <div>
-      <Row type='flex' justify='center' className='forecast-summary'>
+      <Row justify='center' className='forecast-summary'>
         {hourlyForecast.summary}
       </Row>
-      <Row type='flex' justify='center' id='weather-chart-wrapper' />
+      <Row justify='center' id='weather-chart-wrapper' />
     </div>
   );
 };

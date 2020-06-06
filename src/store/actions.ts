@@ -85,7 +85,7 @@ const EXCLUDE = 'flags,minutely';
  * @param {string} city
  */
 export const getWeatherData = (lat: number, lon: number, city: string) => {
-  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: any) => {
+  return async (dispatch: ThunkDispatch<RootState, any, AnyAction>, getState: any) => {
     dispatch(fetchingData());
     try {
       if (lat !== 0 && lon !== 0) {

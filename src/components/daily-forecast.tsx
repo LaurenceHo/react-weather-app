@@ -33,7 +33,7 @@ export const DailyForecast: React.FC<DailyForecastProps> = ({
           <div className='daily-forecast-sub-item-summary'>{data.summary}</div>
         </div>
       </Row>
-      <Row type='flex' justify='center'>
+      <Row justify='center'>
         <Col span={8} lg={4} xl={4} xxl={4} className='daily-forecast-sub-item-wrapper'>
           <div className='daily-forecast-sub-item-summary'>Sunrise</div>
           <div className='daily-forecast-item'>
@@ -70,7 +70,7 @@ export const DailyForecast: React.FC<DailyForecastProps> = ({
         ) : null}
       </Row>
       {isMobile ? (
-        <Row type='flex' justify='center'>
+        <Row justify='center'>
           <Col span={12} className='daily-forecast-sub-item-wrapper'>
             <div className='daily-forecast-sub-item-summary'>Rain</div>
             <div className='daily-forecast-item'>
@@ -157,13 +157,13 @@ export const DailyForecast: React.FC<DailyForecastProps> = ({
 
   return (
     <div>
-      <Row type='flex' justify='center' className='forecast-title'>
+      <Row justify='center' className='forecast-title'>
         {dailyForecast.data.length} days forecast
       </Row>
-      <Row type='flex' justify='center' className='forecast-summary'>
+      <Row justify='center' className='forecast-summary'>
         {dailyForecast.summary}
       </Row>
-      <Row type='flex' justify='center' className='daily-forecast-table-outer'>
+      <Row justify='center' className='daily-forecast-table-outer'>
         <Col xs={24} sm={20} md={16} lg={12} xl={10} xxl={8}>
           {renderDailyForecastTable()}
         </Col>
