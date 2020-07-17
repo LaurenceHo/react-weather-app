@@ -13,7 +13,7 @@ import 'antd/es/row/style/css';
 import 'antd/es/select/style/css';
 import 'antd/es/spin/style/css';
 import 'antd/es/table/style/css';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { ApiKey } from './constants/api-key';

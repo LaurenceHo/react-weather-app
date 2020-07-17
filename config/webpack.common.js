@@ -31,21 +31,24 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: process.env.NODE_ENV === 'development',
-              reloadAll: true,
-            },
           },
           'css-loader',
         ],
       },
       {
         test: /\.(jpe?g|png|gif|ico)$/i,
-        use: ['file-loader'],
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
       {
         test: /\.(ttf|eot|svg|woff|woff2)(\?.+)?$/,
-        loader: 'file-loader?name=[hash:12].[ext]',
+        loader: 'file-loader',
+        options: {
+          name: '[sha512:hash:base64:7].[ext]',
+        },
       },
     ],
   },
