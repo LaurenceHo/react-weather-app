@@ -1,7 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const common = require('./webpack.common.js');
 
@@ -14,8 +14,8 @@ module.exports = merge(common, {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: '[name].[fullhash].css',
+      chunkFilename: '[id].[fullhash].css',
     }),
     /*
      * Plugin: CleanWebpackPlugin
@@ -48,13 +48,7 @@ module.exports = merge(common, {
        * See: https://webpack.js.org/plugins/terser-webpack-plugin
        */
       new TerserPlugin({
-        cache: true,
         parallel: true,
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-        },
       }),
     ],
   },
