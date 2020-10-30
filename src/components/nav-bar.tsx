@@ -1,4 +1,5 @@
-import { GithubOutlined, MenuOutlined } from '@ant-design/icons';
+import { mdiGithub, mdiMenu } from '@mdi/js';
+import Icon from '@mdi/react';
 import Button from 'antd/es/button';
 import Col from 'antd/es/col';
 import DatePicker from 'antd/es/date-picker';
@@ -154,7 +155,7 @@ export const NavBar: React.FC<any> = () => {
             <Button
               type='primary'
               shape='circle'
-              icon={<GithubOutlined style={{ fontSize: '30px' }} />}
+              icon={<Icon path={mdiGithub} title='Github' size={1} color='white' />}
               size='large'
               href='https://github.com/LaurenceHo/react-weather-app'
             />
@@ -200,7 +201,7 @@ export const NavBar: React.FC<any> = () => {
         </Col>
         <Col span={1}>
           <Popover placement='bottomRight' content={<MenuContent />} trigger='click'>
-            <MenuOutlined style={{ color: '#fff' }} />
+            <Icon path={mdiMenu} title='Github' size={1} color='white' />
           </Popover>
         </Col>
       </Row>
