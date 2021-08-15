@@ -7,16 +7,12 @@ export const About: React.FC = () => (
     <Col xs={23} sm={20} md={16} lg={14} xl={14} xxl={14}>
       <h1 className='text-center'>About</h1>
       <p>
-        This is an open source weather web application using React, Redux, Typescript, Webpack4, Ant Design and D3v5.
+        This is an open source weather web application using React Hook, Redux, Typescript, Webpack, Ant Design, D3v5, ECharts and Mapbox.
       </p>
       <p>
         Source code:
         <a href='https://github.com/LaurenceHo/react-weather-app' target='_blank' rel='noopener noreferrer'>
           GitHub
-        </a>{' '}
-        and
-        <a href='https://bitbucket.org/LaurenceHo/react-weather-app' target='_blank' rel='noopener noreferrer'>
-          BitBucket
         </a>
       </p>
       <p>Here are most important libraries (dependencies) I used:</p>

@@ -7,6 +7,7 @@ import Spin from 'antd/es/spin';
 import clsx from 'clsx';
 import * as echarts from 'echarts/lib/echarts';
 import { find, get, isEmpty, last, map } from 'lodash';
+import mapboxgl from 'mapbox-gl';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { ApiKey } from '../constants/api-key';

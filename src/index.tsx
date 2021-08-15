@@ -24,7 +24,6 @@ import { App } from './views/app';
 firebase.initializeApp({
   apiKey: ApiKey.firebase,
   authDomain: 'reactjs-weather.firebaseapp.com',
-  databaseURL: 'https://reactjs-weather.firebaseio.com',
   projectId: 'reactjs-weather',
   storageBucket: 'reactjs-weather.appspot.com',
   messagingSenderId: '120664202212',

@@ -42,7 +42,7 @@ cloud function serverless platform with React frontend app.
 * Because we don't want to use Google Cloud Function when we do local development, we write simple NodeJs Express server for
 returning mock JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
 After that, run `npm start` to start NodeJs Express Server and we can move forward to frontend development.
-* Put your [Windy API key](https://api4.windy.com/) and Mapbox API key into [`./src/constants/api-key.ts`](src/constants/api-key.ts)
+* Put your [Windy API key](https://api.windy.com/) and Mapbox API key into [`./src/constants/api-key.ts`](src/constants/api-key.ts)
 * For bundling frontend code run `npm run build`
 
 [Back to the top↑](#table-of-contents)
@@ -53,10 +53,8 @@ Please visit: [Google Cloud Functions](https://firebase.google.com/docs/function
 ## Deploy to Firebase
 * Put your Google Geocoding API Key and [dark sky API key](https://darksky.net/dev) into [`./functions/apiKey.js`](./functions/apikey.js).
 * Change the Google Cloud Function URL `CLOUD_FUNCTION_URL` in [api.ts](./src/api.ts) to your own Google Cloud Function URL.
-* Run `npm run firebase-init`
 * Visit `https://console.firebase.google.com` to create a new project
-* Add the firebase project into your local configuration `npm run firebase-add`
-* You may need to change the default project setting in the `.firebaserc`
+* Check [here](https://firebase.google.com/docs/hosting/quickstart) for further detail about how to deploy your app to Firebase
 * If you want to deploy the whole project, run `npm run firebase-deploy`
 * If you want to deploy the cloud functions only, run `npm run deploy-functions`
 
@@ -342,15 +340,15 @@ Turn off the eslint formatting rule:
 }
 ```
 
-Setup the [.prettierrc](.prettierrc)
+Append the prettier configuration in the package.json
 ```
-{
-  "jsxSingleQuote": true,
-  "jsxBracketSameLine": true,
-  "printWidth": 120,
-  "singleQuote": true,
-  "trailingComma": "es5",
-  "useTabs": false
+"prettier": {
+    "jsxSingleQuote": true,
+    "jsxBracketSameLine": true,
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "useTabs": false
 }
 ```
 
@@ -460,7 +458,7 @@ Since I put the protection for my Windy API, only the allowed domain name can us
 please feel free to apply for a new one for yourself.
 
 ### Usage
-There is no npm package for installing Windy API so we have to import source in [index.html](./src/index.html)
+There is no npm package for installing Windy API, so we have to import source in [index.html](./src/index.html)
 ```
 <head>
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
@@ -511,24 +509,17 @@ export const WeatherMap: React.FC<any> = () => {
 
 ## Mapbox
 Before starting using Mapbox, get an API for your project. Please go to 
-[Mapbox](https://www.mapbox.com/maps/) for further detail.
+[Mapbox](https://www.mapbox.com/maps/) for further detail. For JavaScript bundler installation, you can go to [here](https://www.mapbox.com/install/js/bundler-install/).
 ### Usage
 Import source in [index.html](./src/index.html):
 ```
 <head>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 </head> 
 ```
-
-Don't forget to declare Mapboxx the definition in [TypeScript Declaration File](./src/typings.d.ts):
+We can now start using mapbox:
 ```
-declare const mapboxgl: any;
-```
-
-After declare `mapboxgl` definition, we can now start using mapbox:
-```
-mapboxgl.accessToken = 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4ZmdqdGRvMDQ0ZDNkcWpnbno1MGVzcyJ9.fnjAFHv0etBrY1LeIksTnA';
+mapboxgl.accessToken = 'YOUR_MAPBOX_API_KEY';
 const map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
@@ -541,7 +532,7 @@ Then we can start using Mapbox very easily:
 ```
 export const Mapbox: React.FC = () => {
     useEffect(() => {
-        mapboxgl.accessToken = 'pk.eyJ1IjoiYmx1ZWdyYXkiLCJhIjoiY2s4ZmdqdGRvMDQ0ZDNkcWpnbno1MGVzcyJ9.fnjAFHv0etBrY1LeIksTnA';
+        mapboxgl.accessToken = 'YOUR_MAPBOX_API_KEY';
         const map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
