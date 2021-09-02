@@ -22,9 +22,6 @@ my personal interest and previous project.
 Furthermore, this project also demonstrates how to deploy the web app to Google firebase, and use Google 
 cloud function serverless platform with React frontend app.
 
-## Live demo
-[React Weather App](https://reactjs-weather.web.app/)
-
 ## Prerequisites
 1. The latest version of Nodejs and npm need to be installed
 2. Google Geocoding API Key
@@ -41,7 +38,7 @@ cloud function serverless platform with React frontend app.
 * If you want to start client using webpack dev server: `npm run start`, and visit in your browser: `http://localhost:8080`.
 * Because we don't want to use Google Cloud Function when we do local development, we write simple NodeJs Express server for
 returning mock JSON response. Move to [dev-server](dev-server) folder `cd dev-server`, and run `npm i` to install the npm modules.
-After that, run `npm start` to start NodeJs Express Server and we can move forward to frontend development.
+After that, run `npm start` to start NodeJs Express Server, and we can move forward to frontend development.
 * Put your [Windy API key](https://api.windy.com/) and Mapbox API key into [`./src/constants/api-key.ts`](src/constants/api-key.ts)
 * For bundling frontend code run `npm run build`
 
