@@ -549,3 +549,11 @@ You can find more examples from [here](https://docs.mapbox.com/mapbox-gl-js/exam
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Screenshot
+![main](./src/assets/main_page.jpeg)
+
+![main](./src/assets/mobile_page.jpeg)
+
+![covid](./src/assets/covid_page.jpeg)
+

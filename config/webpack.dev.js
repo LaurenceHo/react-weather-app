@@ -7,10 +7,10 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: '../dist',
+    allowedHosts: 'auto',
+    static: ['../src/assets'],
     historyApiFallback: true,
     hot: true,
-    inline: true,
   },
   plugins: [
     new DefinePlugin({

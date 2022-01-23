@@ -7,7 +7,8 @@ export const About: React.FC = () => (
     <Col xs={23} sm={20} md={16} lg={14} xl={14} xxl={14}>
       <h1 className='text-center'>About</h1>
       <p>
-        This is an open source weather web application using React Hook, Redux, Typescript, Webpack, Ant Design, D3v5, ECharts and Mapbox.
+        This is an open source weather web application using React v17, Redux, React Router v6, Typescript, Webpack v5,
+        Ant Design, D3 v5, ECharts and Mapbox.
       </p>
       <p>
         Source code:
@@ -22,6 +23,14 @@ export const About: React.FC = () => (
             React
           </a>
           - A JavaScript library for building user interfaces.
+        </li>
+        <li>
+          <a href='https://reactrouter.com/docs/en/v6' target='_blank' rel='noopener noreferrer'>
+            React Router
+          </a>
+          - React Router is a fully-featured client and server-side routing library for React, a JavaScript library for
+          building user interfaces. React Router runs anywhere React runs; on the web, on the server with node.js, and
+          on React Native.
         </li>
         <li>
           <a href='http://redux.js.org/' target='_blank' rel='noopener noreferrer'>
@@ -48,7 +57,7 @@ export const About: React.FC = () => (
           - D3.js is a JavaScript library for manipulating documents based on data.
         </li>
         <li>
-          <a href='https://www.echartsjs.com/en/index.html' target='_blank' rel='noopener noreferrer'>
+          <a href='https://echarts.apache.org/en/index.html' target='_blank' rel='noopener noreferrer'>
             ECharts
           </a>
           - ECharts is a free, powerful charting and visualization Javascript library offering an easy way of adding

@@ -13,15 +13,17 @@ import 'antd/es/row/style/css';
 import 'antd/es/select/style/css';
 import 'antd/es/spin/style/css';
 import 'antd/es/table/style/css';
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { ApiKey } from './constants/api-key';
 import './css/index.css';
+import store from './store';
 import { App } from './views/app';
 
 // Initialise Firebase
-firebase.initializeApp({
+initializeApp({
   apiKey: ApiKey.firebase,
   authDomain: 'reactjs-weather.firebaseapp.com',
   projectId: 'reactjs-weather',
@@ -30,4 +32,9 @@ firebase.initializeApp({
   appId: '1:120664202212:web:b733e66714cd0fde',
 });
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('app')
+);

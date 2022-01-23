@@ -1,5 +1,4 @@
-import { mdiGithub, mdiMenu } from '@mdi/js';
-import Icon from '@mdi/react';
+import { GithubOutlined, MenuOutlined } from '@ant-design/icons';
 import Button from 'antd/es/button';
 import Col from 'antd/es/col';
 import DatePicker from 'antd/es/date-picker';
@@ -11,8 +10,7 @@ import Select from 'antd/es/select';
 import * as moment from 'moment';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NavBarState, RootState } from '../constants/types';
 import { setFilter } from '../store/actions';
 import { Utils } from '../utils';
@@ -50,26 +48,35 @@ export const NavBar: React.FC<any> = () => {
     dispatch(setFilter({ ...filter, units }));
   };
 
-  const WeatherLink = withRouter(({ history }) => (
-    <Link to='/' onClick={() => history.push('/')}>
-      Weather
-    </Link>
-  ));
+  const WeatherLink = () => {
+    const navigate = useNavigate();
+    return (
+      <Link to='/' onClick={() => navigate('/')}>
+        Weather
+      </Link>
+    );
+  };
 
-  const AboutLink = withRouter(({ history }) => (
-    <Link to='/about' onClick={() => history.push('/about')}>
-      About
-    </Link>
-  ));
+  const AboutLink = () => {
+    const navigate = useNavigate();
+    return (
+      <Link to='/about' onClick={() => navigate('/about')}>
+        About
+      </Link>
+    );
+  };
 
-  const WeatherMapLink = withRouter(({ history }) => (
-    <Link to='/map' onClick={() => history.push('/map')}>
-      Map
-    </Link>
-  ));
+  const WeatherMapLink = () => {
+    const navigate = useNavigate();
+    return (
+      <Link to='/map' onClick={() => navigate('/map')}>
+        Map
+      </Link>
+    );
+  };
 
-  const MyDatePicker = withRouter(({ location }) => {
-    const pathname = location.pathname;
+  const MyDatePicker = () => {
+    const pathname = useLocation().pathname;
     const urlPath = pathname.substring(1) === '' ? 'weather' : pathname.substring(1);
 
     return (
@@ -80,19 +87,19 @@ export const NavBar: React.FC<any> = () => {
         style={{ verticalAlign: 'middle', width: '100%' }}
       />
     );
-  });
+  };
 
-  const Search = withRouter(({ location }) => {
-    const pathname = location.pathname;
+  const Search = () => {
+    const pathname = useLocation().pathname;
     const urlPath = pathname.substring(1) === '' ? 'weather' : pathname.substring(1);
 
     return (
       <WeatherSearch onSearch={handleSearch} isDisabled={isLoading || (urlPath !== 'weather' && urlPath !== 'map')} />
     );
-  });
+  };
 
-  const UnitOptions = withRouter(({ location }) => {
-    const pathname = location.pathname;
+  const UnitOptions = () => {
+    const pathname = useLocation().pathname;
     const urlPath = pathname.substring(1) === '' ? 'weather' : pathname.substring(1);
 
     return (
@@ -105,10 +112,11 @@ export const NavBar: React.FC<any> = () => {
         <Option value='us'>℉, mph</Option>
       </Select>
     );
-  });
+  };
 
-  const NavBar = withRouter(({ history, location }) => {
-    const pathname = location.pathname;
+  const NavBar = () => {
+    const navigate = useNavigate();
+    const pathname = useLocation().pathname;
     const urlPath = pathname.substring(1) === '' ? 'weather' : pathname.substring(1);
 
     return (
@@ -126,12 +134,12 @@ export const NavBar: React.FC<any> = () => {
                 <WeatherMapLink />
               </Menu.Item>
               <Menu.Item key='d3_demo_app'>
-                <Link to='/d3_demo_app' onClick={() => history.push('/d3_demo_app')}>
+                <Link to='/d3_demo_app' onClick={() => navigate('/d3_demo_app')}>
                   D3 Demo
                 </Link>
               </Menu.Item>
               <Menu.Item key='covid-19'>
-                <Link to='/covid-19' onClick={() => history.push('/covid-19')}>
+                <Link to='/covid-19' onClick={() => navigate('/covid-19')}>
                   Covid-19
                 </Link>
               </Menu.Item>
@@ -155,7 +163,7 @@ export const NavBar: React.FC<any> = () => {
             <Button
               type='primary'
               shape='circle'
-              icon={<Icon path={mdiGithub} title='Github' size={1} color='white' />}
+              icon={<GithubOutlined />}
               size='large'
               href='https://github.com/LaurenceHo/react-weather-app'
             />
@@ -163,10 +171,10 @@ export const NavBar: React.FC<any> = () => {
         </Row>
       </Header>
     );
-  });
+  };
 
-  const MenuContent = withRouter(({ location }) => {
-    const pathname = location.pathname;
+  const MenuContent = () => {
+    const pathname = useLocation().pathname;
     const urlPath = pathname.substring(1) === '' ? 'weather' : pathname.substring(1);
 
     return (
@@ -191,7 +199,7 @@ export const NavBar: React.FC<any> = () => {
         </Menu.Item>
       </Menu>
     );
-  });
+  };
 
   const NavBarMobile = (
     <Header className='nav-bar-mobile'>
@@ -201,7 +209,7 @@ export const NavBar: React.FC<any> = () => {
         </Col>
         <Col span={1}>
           <Popover placement='bottomRight' content={<MenuContent />} trigger='click'>
-            <Icon path={mdiMenu} title='Github' size={1} color='white' />
+            <Button type='primary' icon={<MenuOutlined />} size='large' />
           </Popover>
         </Col>
       </Row>
