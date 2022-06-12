@@ -24,9 +24,16 @@ export const App: React.FC<any> = () => {
             <Route path='/d3_demo_app' element={<D3DemoApp />} />
             <Route path='/d3_demo_network' element={<D3DemoNetwork />} />
             <Route path='/covid-19' element={<Covid19 />} />
-            <Route path='*' element={() => <div>Page not found!</div>} />
+            <Route
+              path='*'
+              element={
+                <div className='not-found-content'>
+                  <h1>Whoops...Page not found!</h1>
+                </div>
+              }
+            />
           </Routes>
-          <Footer className='footer'>©2022 Developed by Laurence Ho, v3.6.2</Footer>
+          <Footer className='footer'>©2022 Developed by Laurence Ho, v3.6.3</Footer>
         </Content>
       </div>
     </BrowserRouter>

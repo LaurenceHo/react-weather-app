@@ -4,22 +4,23 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ['prettier', 'react', '@typescript-eslint'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'prettier',
-    'prettier/@typescript-eslint',
-    'prettier/react',
-  ],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
+  extends: ['plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'prettier'],
   settings: {
     react: {
       version: 'detect',
     },
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -27,5 +28,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/prop-types': 'off',
     'prefer-spread': 'off',
+    'no-undef': 'off',
   },
 };

@@ -13,6 +13,7 @@ import 'antd/es/row/style/css';
 import 'antd/es/select/style/css';
 import 'antd/es/spin/style/css';
 import 'antd/es/table/style/css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { initializeApp } from 'firebase/app';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

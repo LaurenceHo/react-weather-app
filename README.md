@@ -255,7 +255,7 @@ module.exports = merge(common, {
 [Back to the top↑](#table-of-contents)
 
 ## TypeScript, Eslint and Prettier
-Since tslint will soon be deprecated in 2019, I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
+I use [eslint](https://eslint.org/) + [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) + 
 [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react) + [prettier](https://prettier.io/) for linting project.
 Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react prettier`
 
@@ -264,9 +264,9 @@ Add `@typescript-eslint/parser` to the `parser` field and `@typescript-eslint` t
 ```
 {
   "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint"
-    ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
 }
 ```
 
@@ -276,7 +276,9 @@ Because we use ReactJS, we also need to set the `parserOptions` property:
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
   }
 }  
 ```
@@ -314,9 +316,9 @@ Append `prettier` into `plugins` section:
 {
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "prettier",
     "react",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "prettier"
   ]
 }
 ```
@@ -327,9 +329,7 @@ Turn off the eslint formatting rule:
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/react"
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": "error"
@@ -506,16 +506,16 @@ export const WeatherMap: React.FC<any> = () => {
 
 ## Mapbox
 Before starting using Mapbox, get an API for your project. Please go to 
-[Mapbox](https://www.mapbox.com/maps/) for further detail. For JavaScript bundler installation, you can go to [here](https://www.mapbox.com/install/js/bundler-install/).
+[Mapbox](https://www.mapbox.com/maps/) for further detail. For JavaScript bundler installation, you can go to [here](https://docs.mapbox.com/mapbox-gl-js/guides/install/).
 ### Usage
-Import source in [index.html](./src/index.html):
+If you're using a CSS loader like webpack css-loader, you can import the CSS directly in your JavaScript:
 ```
-<head>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
-</head> 
+import 'mapbox-gl/dist/mapbox-gl.css';
 ```
 We can now start using mapbox:
 ```
+import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
+
 mapboxgl.accessToken = 'YOUR_MAPBOX_API_KEY';
 const map = new mapboxgl.Map({
     container: 'map', // container id

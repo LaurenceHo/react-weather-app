@@ -17,6 +17,12 @@ body {
   font-size: 1rem;
 }
 
+.not-found-content {
+  display:flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
 .about-content {
   padding-top: 2rem;
 }
